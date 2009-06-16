@@ -1,0 +1,22 @@
+[DEF | Define test for compiler directives | Borland.EditOptions.Pascal]
+{$IFDEF |}
+
+{$ELSE}
+
+{$ENDIF}
+
+[mdo | Message Dialog info OK | Borland.EditOptions.Pascal]
+MessageDlg( '|', mtInformation, [ mbOK ], 0 );
+[mde | Message Dialog Error | Borland.EditOptions.Pascal]
+MessageDlg( '|', mtError, [ mbOK ], 0 );
+[sep | Separator | Borland.EditOptions.Pascal]
+{--------------------------------------------------------------------------------------------------------------------------------}
+[sub | SubRoutine Separator | Borland.EditOptions.Pascal]
+|{................................................................................................................................}
+[DEBUG | Debug Directive | Borland.EditOptions.Pascal]
+{$IFDEF DEBUG}
+
+{$ELSE}
+
+{$ENDIF}
+
