@@ -1,0 +1,12 @@
+RxMemDS		->	JvMemTable
+
+DateUtil	->	JvDateUtil
+
+
+RxSpin		->	JvSpin
+			TSpinEdit		->	TJvSpinEdit
+
+ToolEdit	->	JvToolEdit
+
+CurrEdit	->	JvCurrEdit
+
