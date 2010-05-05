@@ -1,0 +1,149 @@
+[arrayd | array declaration (var) | Borland.EditOptions.Pascal]
+array[0..|] of ;
+
+[arrayc | array declaration (const) | Borland.EditOptions.Pascal]
+array[0..|] of = ();
+
+[cases | case statement | Borland.EditOptions.Pascal]
+case | of
+  : ;
+  : ;
+end;
+
+[casee | case statement (with else) | Borland.EditOptions.Pascal]
+case | of
+  : ;
+  : ;
+else ;
+end;
+
+[classf | class declaration (all parts) | Borland.EditOptions.Pascal]
+T| = class(T)
+private
+
+protected
+
+public
+
+published 
+
+end;
+
+[classd | class declaration (no parts) | Borland.EditOptions.Pascal]
+T| = class(T)
+
+end;
+
+[classc | class declaration (with Create/Destroy overrides) | Borland.EditOptions.Pascal]
+T| = class(T)
+private
+
+protected
+
+public
+  constructor Create; override;
+  destructor Destroy; override;
+published 
+
+end;
+
+[fors | for (no begin/end) | Borland.EditOptions.Pascal]
+for | :=  to  do
+
+[forb | for statement | Borland.EditOptions.Pascal]
+for | :=  to  do
+begin
+
+end;
+
+[function | function declaration | Borland.EditOptions.Pascal]
+function |(): ;
+begin
+
+end;
+
+[ifs | if (no begin/end) | Borland.EditOptions.Pascal]
+if | then
+
+[ifb | if statement | Borland.EditOptions.Pascal]
+if | then
+begin
+
+end;
+
+[ife | if then (no begin/end) else (no begin/end) | Borland.EditOptions.Pascal]
+if | then
+
+else
+
+[ifeb | if then else | Borland.EditOptions.Pascal]
+if | then
+begin
+
+end
+else
+begin
+
+end;
+
+[procedure | procedure declaration | Borland.EditOptions.Pascal]
+procedure |();
+begin
+
+end;
+
+[trye | try except | Borland.EditOptions.Pascal]
+try
+  |
+except
+
+end;
+
+[tryf | try finally | Borland.EditOptions.Pascal]
+try
+  | 
+finally
+
+end;
+
+[trycf | try finally (with Create/Free) | Borland.EditOptions.Pascal]
+|variable := typename.Create; 
+try
+
+finally
+  variable.Free;
+end;
+
+[whileb | while statement | Borland.EditOptions.Pascal]
+while | do
+begin
+
+end;
+
+[whiles | while (no begin) | Borland.EditOptions.Pascal]
+while | do
+
+[withb | with statement | Borland.EditOptions.Pascal]
+with | do
+begin
+
+end;
+
+[withs | with (no begin) | Borland.EditOptions.Pascal]
+with | do
+
+[sep | Separator | Borland.EditOptions.Pascal]
+|//----------------------------------------------------------------------------------------------------------------------
+[DEF | Define test for compiler directives | Borland.EditOptions.Pascal]
+{$IFDEF |}
+
+{$ELSE}
+
+{$ENDIF}
+
+[mdo | Message Dialog info OK | Borland.EditOptions.Pascal]
+MessageDlg( '|', mtInformation, [ mbOK ], 0 );
+[mde | Message Dialog Error | Borland.EditOptions.Pascal]
+MessageDlg( '|', mtError, [ mbOK ], 0 );
+[sub | subroutine separator/ | Borland.EditOptions.Pascal]
+|//......................................................................................................................
