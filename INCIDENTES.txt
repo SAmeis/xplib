@@ -1,0 +1,100 @@
+************* Template de Registro ************
+Compilador: Delphi 7.0 Build 8.1
+Data: 
+
+---------
+Descricão : 
+---------
+
+---------
+Solução:
+---------
+
+***************************************************************************************************
+*********** Fim Template de Registro **********
+Compilador: Delphi 7.0 Build 8.1
+Data: quinta-feira, 2 de dezembro de 2004
+
+---------
+Descricão : 
+---------
+Para algo do tipo :
+type 
+	TTTSContext = ( ttscGeneric = 0, ttscJuridical = 1, ttscPhysical = 2, ttscAddress = 4, ttscNone = 128 );
+	TTTSContexts = set of TTTSContext;
+
+ou seja enumeração inicializada, algo do tipo :
+	//FContextSelection : TTTSContexts
+	c:=TTTSContext( 0 );
+	FContextSelection:=[];
+	for i :=0  to Self.ContextListBox.Items.Count-1  do begin
+		if( Self.ContextListBox.Checked[ i ]  )then begin
+			Include( FContextSelection, c );
+		end;
+		c:=Succ( c ); //!!!!FALHA POIS SEMPRE SALTA DE 1 UNIDADE!!!!!
+	end;
+
+---------
+Solução:
+---------
+Assim devemos sempre tentar colocar potencias de 2 para usarmos a forma alternativa
+	FContextSelection:=[];
+	c:=TTTSContext( 0 );
+	for i :=0  to Self.ContextListBox.Items.Count-1  do begin
+		if( Self.ContextListBox.Checked[ i ]  )then begin
+			Include( FContextSelection, c );
+		end;
+		c:=TTTSContext( 1 shl i );
+	end;
+
+
+***************************************************************************************************
+
+
+Compilador: Delphi 7.0 Build 8.1
+Data: sábado, 20 de novembro de 2004
+
+---------
+Descricão : 
+---------
+
+Sequência incorreta de modificadores de metodos de classes, gerando erro de ordem de 
+metodos/atributos/propriedades
+
+---------
+Solução:
+---------
+Aplque o seguinte modelo:
+
+[overload;] [reintroduce;] [dynamic/virtual; ] [ abstract; ]
+
+
+***************************************************************************************************
+
+
+Compilador: Delphi 7.0 Build 8.1
+Data: sexta-feira, 5 de novembro de 2004
+
+---------
+Descricão : 
+---------
+Na compilacao de um pacote havia na clausula "finalization" de uma unit uma chamada do tipo:
+finalization
+begin
+	try
+		MessageDlg( 'Descarga do pacote', mtInformation, [ mbOK ], 0 );
+	except
+		on E    : Exception do begin
+			MessageDlg('Erro na finalization ' + E.Message, mtError, [mbOK], 0);
+			raise E;
+		end;
+	end;
+end;
+
+a qual gerava um AV em DCC70.dll na segunda compilação do pacote e/ou na carga pela IDE.
+
+---------
+Solução: 
+---------
+Remover a claúsula try/except de qualquer claúsula finalzation
+***************************************************************************************************
