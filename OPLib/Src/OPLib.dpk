@@ -1,0 +1,40 @@
+{$I OPLib.inc}
+
+package OPLib;
+
+{$R *.res}
+{$R 'OPLib.dcr'}
+{$ALIGN 8}
+{$ASSERTIONS OFF}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS OFF}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST ON}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'AAA - Object Persistence Library - (Super Library)'}
+{$LIBSUFFIX '_7_0'}
+{$IMPLICITBUILD OFF}
+
+requires
+  vcl;
+
+contains
+  IOObj in 'IOObj.pas',
+  TreeHnd in 'TreeHnd.pas',
+  ClassHnd in 'ClassHnd.pas';
+
+end.
