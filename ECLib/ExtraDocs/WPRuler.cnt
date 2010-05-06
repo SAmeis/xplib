@@ -1,0 +1,44 @@
+; This contents file was created with HelpScribble 5.0.0
+; Registered to: Eric W Chapman
+
+:BASE WPRuler.hlp
+:TITLE TWPRuler component
+:INCLUDE DELPHI3.CFG
+1 TWPRuler component
+2 About the TWPRuler component=Scribble1505
+2 TWPRuler component Reference=Scribble1500
+2 Using the TWPRuler control at runtime=Scribble1508
+2 Distributing your program=Scribble1509
+2 Properties
+3 Color=Scribble1510
+3 Indent=Scribble1515
+3 LeftMargin=Scribble1520
+3 LeftOffset=Scribble1525
+3 NumTabs=Scribble1530
+3 PageWidth=Scribble1535
+3 ProjectFolder=Scribble1540
+3 RightMargin=Scribble1545
+3 ShowIDSlider=Scribble1550
+3 ShowLMandIDSlider=Scribble1555
+3 ShowLMSlider=Scribble1560
+3 ShowRMSlider=Scribble1565
+3 TabColor=Scribble1567
+3 TabPixels=Scribble1570
+3 TabStyles=Scribble1572
+3 TabValues=Scribble1574
+3 Tabs=Scribble1575
+3 Units=Scribble1580
+2 Methods
+3 AddTab method=Scribble1581
+3 RemoveTab method=Scribble1582
+3 ClearAllTabs method=Scribble1583
+2 Events
+3 OnSliderMoved=Scribble1585
+3 OnTabAdded=Scribble1590
+3 OnTabMoved=Scribble1595
+1 TTabsEditor component
+2 TTabsEditor component Reference=Scribble1100
+2 Methods
+1 TFolderEditor component
+2 TFolderEditor component Reference=Scribble1200
+2 TDummy object
