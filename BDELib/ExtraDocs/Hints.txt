@@ -1,0 +1,299 @@
+//*************************************************************************//FORMA DE EVITAR MUDAR O NETFILEDIR
+{Usar a propriedade Session pela qual se acessa as tabelas e setar a propriedade NetFileDir do TSession}
+//*************************************************************************(*
+Call the following function on the AfterOpen event of the table. You Must
+include DBITYPES, DBIERRS, DBIPROCS in the uses clause.  To call, send as
+arguments name of TTable and TRUE/FALSE depending to show/not show deleted
+records.
+
+procedure TForm1.Table1AfterOpen(DataSet: TDataset);
+begin
+
+SetDelete(Table1, TRUE);
+
+end;
+
+procedure SetDelete(oTable:TTable; Value: Boolean);
+var
+
+rslt: DBIResult;
+szErrMsg: DBIMSG;
+
+begin
+
+try
+
+oTable.DisableControls;
+try
+
+rslt := DbiSetProp(hDBIObj(oTable.Handle), curSOFTDELETEON, LongInt(Value));
+if rslt <> DBIERR_NONE then
+begin
+
+DbiGetErrorString(rslt, szErrMsg);
+raise Exception.Create(StrPas(szErrMsg));
+
+end;
+except
+on E: EDBEngineError do ShowMessage(E.Message);
+on E: Exception do ShowMessage(E.Message);
+
+end;
+finally
+oTable.Refresh;
+oTable.EnableControls;
+
+end;
+
+end;
+*)(*
+How can I create a column in the grid to which records in a dBASE table are
+marked for deletion?
+
+
+Create a calculated field, then for the OnCalcField event of the table replace
+the calculated field you've created like so:
+
+procedure TForm1.Table1CalcFields(DataSet: TDataset);
+var
+
+RCProps : RecProps;
+Result : DBIResult;
+
+begin
+
+Result := DbiGetRecord(Table1.Handle, dbiNoLock, Nil, @RCProps);
+If RCProps.bDeleteFlag then
+
+Table1Del.Value := 'X'
+
+else
+
+Table1Del.Value := '';
+
+end;
+
+Note: You must first call the SetDelete(TTable,TRUE) function from the previous
+FAQ
+
+
+*)(*
+How can I determine the actual size of a blob field as stored in the table?
+
+
+Here is a function GetBlobSize that returns the size of a given blob, memo, or graphic field.
+An example of calling it follows: 
+
+Function GetBlobSize(Field: TBlobField): Longint;
+begin
+
+with TBlobStream.Create(Field, bmRead) do
+try
+
+Result := Seek(0, 2);
+
+finally 
+
+Free;
+
+end;
+
+end; 
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+ { This sets the Edit1 edit box to display the size of }
+ { a memo field named Notes.}
+
+Edit1.Text := IntToStr(GetBlobSize(Notes));
+
+end; 
+*)(*
+How do I show the contents of a memo field in a DBGrid?
+
+
+Use the following code for the OnDrawDataCell event of the DBGrid.
+
+Note: before running create a TMemoField object for the memo field by double clicking on the TTable component and adding the memo field.
+
+procedure TForm1.DBGrid1DrawDataCell(Sender: TObject; const Rect: TRect; Field: TField; State: TGridDrawState);
+var
+
+P  : array [0..50] of char;   {array size is number of characters needed}
+BS : tBlobStream;             {from the memo field}
+S  : String;
+
+begin
+
+If Field is TMemoField then
+begin
+
+with (Sender as TDBGrid).Canvas do
+begin {Table1Notes is the TMemoField}
+
+BS := tBlobStream.Create(Table1Notes, bmRead);
+FillChar(P,SizeOf(P),#0); {terminate the null string}
+BS.Read(P, 50); {read 50 chars from memo into blobStream}
+BS.Free;
+S := StrPas(P);
+while Pos(#13, S ) > 0 do  {remove carriage returns and}
+S[Pos(#13, S)] := ' '; 
+While Pos(#10, S) > 0 do  {line feeds}
+S[Pos(#10, S)] := ' ';
+FillRect(Rect);  {clear the cell}
+TextOut(Rect.Left, Rect.Top, S);  {fill cell with memo data}
+
+end;
+
+end;
+
+end; 
+*)(*
+How can I determine the current record number for a dataset?
+
+
+If the dataset is based upon a Paradox or dBASE table then the record number can
+be determined with a couple of calls to the BDE (as shown below).  The BDE
+doesn't support record numbering for datasets based upon SQL tables, so if your
+server supports record numbering you will need to refer to its documentation.
+The following function takes as its parameter any component derived from
+TDataset (i.e. TTable, TQuery, TStoredProc) and returns the current record
+number (greater than zero) if it is a Paradox or dBASE table.  Otherwise, the
+function returns zero.
+NOTE: for dBASE tables the record number returned is always the physical record
+number.  So, if your dataset is a TQuery or you have a range set on your dataset
+then the number returned won't necessarily be relative to the dataset being
+viewed, rather it will be based on the record's physical po sition in the
+underlying dBASE table.
+
+
+uses DbiProcs, DbiTypes, DBConsts;
+
+function RecordNumber(Dataset: TDataset): Longint;
+var
+
+CursorProps: CurProps;
+RecordProps: RECProps;
+
+begin
+
+{ Return 0 if dataset is not Paradox or dBASE }
+Result := 0;
+with Dataset do
+begin { Is the dataset active? }
+
+if State = dsInactive then DBError(SDataSetClosed);
+{ We need to make this call to grab the cursor's iSeqNums }
+Check(DbiGetCursorProps(Handle, CursorProps));
+{ Synchronize the BDE cursor with the Dataset's cursor }
+UpdateCursorPos;
+{ Fill RecordProps with the current record's properties }
+Check(DbiGetRecord(Handle, dbiNOLOCK, nil, @RecordProps));
+{ What kind of dataset are we looking at? }
+case CursorProps.iSeqNums of
+
+0: Result := RecordProps.iPhyRecNum;  { dBASE}
+1: Result := RecordProps.iSeqNum;     { Paradox }
+
+end;
+
+end;
+
+end;
+*)(*
+How do I transfer the text in a TMemo component on a form to a TMemofield in a
+Paradox table?
+
+
+
+Here is an example:
+
+procedure TForm1.Button1Click(Sender: TObject);
+var
+
+t: TTable;
+
+begin
+
+t := TTable.create(self);
+with t do
+begin
+
+DatabaseName := 'MyAlias'; {personal alias}
+TableName := 'MyTbl.db';
+open;
+edit;
+insert;
+fieldByName('TheField').assign(memo1.lines); {This is it!}
+post; {required!!!}
+close;
+
+end;  { End of the with statement. }
+
+end;
+*)(*
+How do I make an Fixed Length ASCII text table from a table?
+
+
+
+Like this:
+
+procedure TForm1.Button1Click(Sender: TObject);
+var
+
+t1, t2: tTable;  {t1 = PW table; t2 = ASCII version}
+
+begin
+
+t1 := tTable.create(self);
+with t1 do
+begin
+
+DataBaseName := 'pw'; { Personal Alias for Paradox Directory }
+tableName := 'customer.db'; { Source Table }
+open;
+
+end;
+t2 := tTable.create(se lf);
+with t2 do
+begin
+
+DataBaseName := 'pw'; { Personal Alias for Paradox Directory }
+tableName := 'asdf.txt'; 
+TableType := ttASCII; 
+createTable;
+open;
+edit;
+BatchMove(t1, batCopy);
+close;
+
+end;
+t1.close;
+
+end;
+
+
+//uses
+    BDE, DBTables;
+function GetAliasPath(nAlias:string):string;
+var
+    database : TDatabase;
+    pzDir : PChar;
+begin
+    try
+        database := TDatabase.Create(nil);
+        with database do begin
+            pzDir := StrAlloc( 255 );
+            AliasName := nAlias;
+            DatabaseName := 'temp';
+            Connected := true;
+            dbigetdirectory(Handle,true, pzDir);
+            GetAliasPath := StrPas(pzDir);
+            Connected:=false;
+        end;
+    finally
+        database.Free;
+    end;
+    StrDispose(pzDir);
+end;
+*)

@@ -1,0 +1,2 @@
+Comentarios sobre BDELib
+Este arquivo foi editado para teste de multicheckout by roger
