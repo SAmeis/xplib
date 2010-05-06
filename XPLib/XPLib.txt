@@ -1,0 +1,3 @@
+Comentarios sobre XPLib
+
+A Unit InstanceMonitor.pas foi removida deste pacote em definitivo em 2006.04.06( Roger )
