@@ -1,0 +1,55 @@
+[DSP upload]
+File Name=rjhtmpar.zip
+Replace File=rjhtmpar.zip
+File Status=Freeware
+Full Source Included=Y
+Delphi 1.0x=N
+Delphi 2.0x=N
+Delphi 3.0x=N
+Delphi 4.0x=Y
+Delphi 5.0x=Y
+C++ Builder 1.0x=N
+C++ Builder 3.0x=N
+C++ Builder 4.0x=N
+C++ Builder 5.0x=N
+Version=0.1a
+count=14
+1=rjHtmlParser includes three components for fast and flexible parsing
+2=and / or writing of HTML files: THtmlReporter, THtmlWriter, and
+3=THtmlAutoWriter. Now there is complete control over which of the 8
+4=elements (ASP, Comments, DTD, Scripts, SSI, Styles, Tags, and Text)
+5=to report and / or to write. Additional tag filters keep unwanted tags
+6=out and work for starttags as well as endtags. Reporting, writing,
+7=element settings and tag filters are completely independent of each
+8=other. rjHtmlParser correctly handles performatted text and converts
+9=HTML character entities to ASCII. The THtmlTag class
+10=maintains HTML tags for easy testing, retrieval, and manipulation of
+11=attributes and values. Search for text only or comments only with case
+12=sensitive and  insensitive Boyer-Moore-Horspool or regular
+13=expression pattern matching. Demo projects included. Designed with
+14=Delphi4, should also work with D5. D3 may need a few adjustments.
+Note=V. 0.1a now with component palette icons.
+Additional info=
+Category=Winsock & Internet
+Platform=
+Group=Component/Code
+[Versions available]
+Delphi 1.0x=
+Delphi 2.0x=
+Delphi 3.0x=
+Delphi 4.0x=
+Delphi 5.0x=
+C++ Builder 1.0x=
+C++ Builder 3.0x=
+C++ Builder 4.0x=
+C++ Builder 5.0x=
+[DSP Support]
+DSP Support=Y
+[Uploader_1]
+Author name=Ralf Junker
+Contact=
+Author E-mail=ralfjunker@gmx.de
+Author URL=
+count=0
+Author Section=
+UpdateDSP=N

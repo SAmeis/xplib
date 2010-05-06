@@ -1,0 +1,53 @@
+package INetLib;
+
+{$R *.res}
+{$R 'InetLibBtn.DCR'}
+{$ALIGN 8}
+{$ASSERTIONS OFF}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS OFF}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST ON}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'AAA - InetLib - (Super Library)'}
+{$LIBSUFFIX '_7_0'}
+{$IMPLICITBUILD OFF}
+
+requires
+  vcl,
+  vcldb,
+  bdertl,
+  inet,
+  XPLib,
+  OPLib,
+  StFLib;
+
+{%File 'INetLib.inc'}
+
+contains
+  HTMLData in 'HTMLData.pas',
+  HTMLWrtr in 'HTMLWRTR.PAS',
+  IHTML4 in 'IHTML4.pas',
+  IHTMLPas in 'IHTMLPas.pas',
+  IHTMLDir in 'IHTMLDir.pas',
+  IHTMLDB in 'IHTMLDB.pas',
+  WDBGrid in 'WDBGrid.pas',
+  WCtrls in 'WCtrls.pas',
+  WebHnd in 'WebHnd.pas',
+  WEntity in 'WEntity.pas';
+
+end.
