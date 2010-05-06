@@ -1,0 +1,29 @@
+#------------------------------------------------------------------------------
+VERSION = BWS.01
+#------------------------------------------------------------------------------
+!ifndef ROOT
+ROOT = $(MAKEDIR)\..
+!endif
+#------------------------------------------------------------------------------
+MAKE = $(ROOT)\bin\make.exe -$(MAKEFLAGS) -f$**
+DCC = $(ROOT)\bin\dcc32.exe $**
+BRCC = $(ROOT)\bin\brcc32.exe $**
+#------------------------------------------------------------------------------
+PROJECTS = StFLib_7_0.bpl DemoCypher.exe DemoSettings.exe demo.exe
+#------------------------------------------------------------------------------
+default: $(PROJECTS)
+#------------------------------------------------------------------------------
+
+StFLib_7_0.bpl: Src\StFLib.dpk
+  $(DCC)
+
+DemoCypher.exe: Demos\CypherDemo\Src\DemoCypher.dpr
+  $(DCC)
+
+DemoSettings.exe: Demos\DemoSettings\Src\DemoSettings.dpr
+  $(DCC)
+
+demo.exe: Demos\MP3Tag\demo.dpr
+  $(DCC)
+
+

@@ -1,0 +1,16 @@
+    function LSRChildNode( ParentNodeList : IXMLNodeList; const ChildName : string ) : IXMLNode;
+    //......................................................................................................................
+    var
+      p : word;
+      subpath : string;
+    begin
+      p:=Pos( PathDelim, ChildName );
+      if p > 0 then begin
+      subpath:=copy( ChildName, 1, p - Length( PathDelim ) );
+      Result:=ParentNodeList.FindNode( subpath );
+      Result:=LSRChildNode( Result, Copy( ChildName, p+Length( PathDelim ), Length( ChildName ) ) );
+     end else begin
+      subpath:=copy( ChildName, 1, p );
+      ParentNode.ChildNodes.FindNode( subpath );
+      end;
+    end;

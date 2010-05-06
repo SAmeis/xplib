@@ -1,0 +1,52 @@
+{$I StFLib.inc}
+
+package StFLib;
+
+{$R *.res}
+{$R 'StFLib.dcr'}
+{$ALIGN 8}
+{$ASSERTIONS OFF}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS OFF}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'AAA - Stream & Files - (Super Library)'}
+{$LIBSUFFIX '_7_0'}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  vcl,
+  XPLib,
+  xmlrtl,
+  inet,
+  vclx;
+
+contains
+  Modulo11 in 'Modulo11.PAS',
+  PasParser in 'PasParser.pas',
+  HKStreamRoutines in 'HKStreamRoutines.pas',
+  HKStreamCol in 'HKStreamCol.pas',
+  FileLogs in 'FileLogs.pas',
+  CryptIni in 'CryptIni.pas',
+  mp3Tag in 'mp3Tag.pas',
+  StreamHnd in 'StreamHnd.pas',
+  ConfigurationLayer in 'ConfigurationLayer.pas',
+  AppSettings in 'AppSettings.pas';
+
+end.

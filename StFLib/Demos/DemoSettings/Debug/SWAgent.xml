@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE SpeechwayMonitorAgentXML>
+<SpeechwayMonitorAgent AgentPort="2003" AgentRefreshInterval="5000" AgentDebugMode="SIM">
+
+	<NLM Teste="teste" TESTE2="TESTE2">		
+		<VPID>0001
+			<Roger ent1="ent1" ent2="entrada2">"Textparanaovazio"</Roger>
+		</VPID>
+		<Monitoring>NAO</Monitoring>
+		<NameExec>C:\sw\nuance\v8.0.0\bin\win32\nlm.exe</NameExec>
+		<ExeInBat></ExeInBat>
+		<WorkDir>c:\temp</WorkDir>
+		<ParamExec>ntk8-800-a-x46-9d6108a3c3a1</ParamExec>
+		<AutoStart>SIM</AutoStart>
+		<SleepBeforeAutoStart>1000</SleepBeforeAutoStart>
+		<InitTimeOut>5000</InitTimeOut>
+		<RestartOnError>SIM</RestartOnError>
+		<MaxRestartTries>3</MaxRestartTries>
+		<PingTimeOut>10000</PingTimeOut>
+		<Persistent>SIM</Persistent>
+		<Restarts>0</Restarts>
+		<MonitorRestarts>0</MonitorRestarts>
+		<MonitorForcedTerminate></MonitorForcedTerminate>
+		<StartTime>0</StartTime>
+		<LastPingTime>0</LastPingTime>
+		<Status>NAO VERIFICADO</Status>
+	</NLM>
+
+	<SLEEP>
+		<VPID>99002</VPID>
+		<Monitoring>SIM</Monitoring>
+		<NameExec>c:\temp\sleep.exe</NameExec>
+		<ExeInBat></ExeInBat>
+		<WorkDir>c:\temp</WorkDir>
+		<ParamExec></ParamExec>
+		<AutoStart>SIM</AutoStart>
+		<SleepBeforeAutoStart>3000</SleepBeforeAutoStart>
+		<InitTimeOut>5000</InitTimeOut>
+		<RestartOnError>SIM</RestartOnError>
+		<MaxRestartTries>3</MaxRestartTries>
+		<PingTimeOut>10000</PingTimeOut>
+		<Persistent>SIM</Persistent>
+		<Restarts>0</Restarts>
+		<MonitorRestarts>0</MonitorRestarts>
+		<MonitorForcedTerminate></MonitorForcedTerminate>
+		<StartTime>0</StartTime>
+		<LastPingTime>0</LastPingTime>
+		<Status>NAO VERIFICADO</Status>
+	</SLEEP>
+
+	<SLEEPGUI>
+		<VPID>99002</VPID>
+		<Monitoring>SIM</Monitoring>
+		<NameExec>C:\temp\sleepGUI.exe</NameExec>
+		<ExeInBat></ExeInBat>
+		<WorkDir>c:\temp</WorkDir>
+		<ParamExec></ParamExec>
+		<AutoStart>SIM</AutoStart>
+		<SleepBeforeAutoStart>5000</SleepBeforeAutoStart>
+		<InitTimeOut>5000</InitTimeOut>
+		<RestartOnError>SIM</RestartOnError>
+		<MaxRestartTries>3</MaxRestartTries>
+		<PingTimeOut>10000</PingTimeOut>
+		<Persistent>SIM</Persistent>
+		<Restarts>0</Restarts>
+		<MonitorRestarts>0</MonitorRestarts>
+		<MonitorForcedTerminate></MonitorForcedTerminate>
+		<StartTime>0</StartTime>
+		<LastPingTime>0</LastPingTime>
+		<Status>NAO VERIFICADO</Status>
+	</SLEEPGUI>
+
+		<SLEEP2>
+		<VPID>99002</VPID>
+		<Monitoring>SIM</Monitoring>
+		<NameExec>c:\temp\sleep2.exe</NameExec>
+		<ExeInBat></ExeInBat>
+		<WorkDir>c:\temp</WorkDir>
+		<ParamExec></ParamExec>
+		<AutoStart>SIM</AutoStart>
+		<SleepBeforeAutoStart>3000</SleepBeforeAutoStart>
+		<InitTimeOut>5000</InitTimeOut>
+		<RestartOnError>SIM</RestartOnError>
+		<MaxRestartTries>3</MaxRestartTries>
+		<PingTimeOut>10000</PingTimeOut>
+		<Persistent>SIM</Persistent>
+		<Restarts>0</Restarts>
+		<MonitorRestarts>0</MonitorRestarts>
+		<MonitorForcedTerminate></MonitorForcedTerminate>
+		<StartTime>0</StartTime>
+		<LastPingTime>0</LastPingTime>
+		<Status>NAO VERIFICADO</Status>
+	</SLEEP2>
+
+	<SLEEPGUI2>
+		<VPID>99002</VPID>
+		<Monitoring>SIM</Monitoring>
+		<NameExec>C:\temp\sleepGUI2.exe</NameExec>
+		<ExeInBat></ExeInBat>
+		<WorkDir>c:\temp</WorkDir>
+		<ParamExec></ParamExec>
+		<AutoStart>SIM</AutoStart>
+		<SleepBeforeAutoStart>5000</SleepBeforeAutoStart>
+		<InitTimeOut>5000</InitTimeOut>
+		<RestartOnError>SIM</RestartOnError>
+		<MaxRestartTries>3</MaxRestartTries>
+		<PingTimeOut>10000</PingTimeOut>
+		<Persistent>SIM</Persistent>
+		<Restarts>0</Restarts>
+		<MonitorRestarts>0</MonitorRestarts>
+		<MonitorForcedTerminate></MonitorForcedTerminate>
+		<StartTime>0</StartTime>
+		<LastPingTime>0</LastPingTime>
+		<Status>NAO VERIFICADO</Status>
+	</SLEEPGUI2>
+
+</SpeechwayMonitorAgent>
