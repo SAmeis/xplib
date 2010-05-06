@@ -1,0 +1,45 @@
+{$I TRELib.inc }
+
+package TRELib;
+
+{$R *.res}
+{$R 'TRELib.dcr'}
+{$ALIGN 8}
+{$ASSERTIONS OFF}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS OFF}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'AAA - TRE-Lib - (Super Library)'}
+{$LIBSUFFIX '_7_0'}
+{$IMPLICITBUILD OFF}
+{$DEFINE RELEASE}
+
+requires
+  rtl,
+  XPLib,
+  vclactnband,
+  vclx,
+  vcl,
+  designide;
+
+contains
+  TREConsts in 'TREConsts.pas',
+  TREUtils in 'TREUtils.pas';
+
+end.
