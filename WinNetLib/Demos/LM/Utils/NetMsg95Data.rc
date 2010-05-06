@@ -1,0 +1,612 @@
+#define NERR_BASE 2100
+#define NERR_NetNotStarted NERR_BASE+2
+#define NERR_UnknownServer NERR_BASE+3
+#define NERR_ShareMem NERR_BASE+4
+#define NERR_NoNetworkResource NERR_BASE+5
+#define NERR_RemoteOnly NERR_BASE+6
+#define NERR_DevNotRedirected NERR_BASE+7
+#define NERR_ServerNotStarted NERR_BASE+14
+#define NERR_ItemNotFound NERR_BASE+15
+#define NERR_UnknownDevDir NERR_BASE+16
+#define NERR_RedirectedPath NERR_BASE+17
+#define NERR_DuplicateShare NERR_BASE+18
+#define NERR_NoRoom NERR_BASE+19
+#define NERR_TooManyItems NERR_BASE+21
+#define NERR_InvalidMaxUsers NERR_BASE+22
+#define NERR_BufTooSmall NERR_BASE+23
+#define NERR_RemoteErr NERR_BASE+27
+#define NERR_LanmanIniError NERR_BASE+31
+#define NERR_NetworkError NERR_BASE+36
+#define NERR_WkstaInconsistentState NERR_BASE+37
+#define NERR_WkstaNotStarted NERR_BASE+38
+#define NERR_BrowserNotStarted NERR_BASE+39
+#define NERR_InternalError NERR_BASE+40
+#define NERR_BadTransactConfig NERR_BASE+41
+#define NERR_InvalidAPI NERR_BASE+42
+#define NERR_BadEventName NERR_BASE+43
+#define NERR_DupNameReboot NERR_BASE+44
+#define NERR_CfgCompNotFound NERR_BASE+46
+#define NERR_CfgParamNotFound NERR_BASE+47
+#define NERR_LineTooLong NERR_BASE+49
+#define NERR_QNotFound NERR_BASE+50
+#define NERR_JobNotFound NERR_BASE+51
+#define NERR_DestNotFound NERR_BASE+52
+#define NERR_DestExists NERR_BASE+53
+#define NERR_QExists NERR_BASE+54
+#define NERR_QNoRoom NERR_BASE+55
+#define NERR_JobNoRoom NERR_BASE+56
+#define NERR_DestNoRoom NERR_BASE+57
+#define NERR_DestIdle NERR_BASE+58
+#define NERR_DestInvalidOp NERR_BASE+59
+#define NERR_ProcNoRespond NERR_BASE+60
+#define NERR_SpoolerNotLoaded NERR_BASE+61
+#define NERR_DestInvalidState NERR_BASE+62
+#define NERR_QInvalidState NERR_BASE+63
+#define NERR_JobInvalidState NERR_BASE+64
+#define NERR_SpoolNoMemory NERR_BASE+65
+#define NERR_DriverNotFound NERR_BASE+66
+#define NERR_DataTypeInvalid NERR_BASE+67
+#define NERR_ProcNotFound NERR_BASE+68
+#define NERR_ServiceTableLocked NERR_BASE+80
+#define NERR_ServiceTableFull NERR_BASE+81
+#define NERR_ServiceInstalled NERR_BASE+82
+#define NERR_ServiceEntryLocked NERR_BASE+83
+#define NERR_ServiceNotInstalled NERR_BASE+84
+#define NERR_BadServiceName NERR_BASE+85
+#define NERR_ServiceCtlTimeout NERR_BASE+86
+#define NERR_ServiceCtlBusy NERR_BASE+87
+#define NERR_BadServiceProgName NERR_BASE+88
+#define NERR_ServiceNotCtrl NERR_BASE+89
+#define NERR_ServiceKillProc NERR_BASE+90
+#define NERR_ServiceCtlNotValid NERR_BASE+91
+#define NERR_NotInDispatchTbl NERR_BASE+92
+#define NERR_BadControlRecv NERR_BASE+93
+#define NERR_ServiceNotStarting NERR_BASE+94
+#define NERR_AlreadyLoggedOn NERR_BASE+100
+#define NERR_NotLoggedOn NERR_BASE+101
+#define NERR_BadUsername NERR_BASE+102
+#define NERR_BadPassword NERR_BASE+103
+#define NERR_UnableToAddName_W NERR_BASE+104
+#define NERR_UnableToAddName_F NERR_BASE+105
+#define NERR_UnableToDelName_W NERR_BASE+106
+#define NERR_UnableToDelName_F NERR_BASE+107
+#define NERR_LogonsPaused NERR_BASE+109
+#define NERR_LogonServerConflict NERR_BASE+110
+#define NERR_LogonNoUserPath NERR_BASE+111
+#define NERR_LogonScriptError NERR_BASE+112
+#define NERR_StandaloneLogon NERR_BASE+114
+#define NERR_LogonServerNotFound NERR_BASE+115
+#define NERR_LogonDomainExists NERR_BASE+116
+#define NERR_NonValidatedLogon NERR_BASE+117
+#define NERR_ACFNotFound NERR_BASE+119
+#define NERR_GroupNotFound NERR_BASE+120
+#define NERR_UserNotFound NERR_BASE+121
+#define NERR_ResourceNotFound NERR_BASE+122
+#define NERR_GroupExists NERR_BASE+123
+#define NERR_UserExists NERR_BASE+124
+#define NERR_ResourceExists NERR_BASE+125
+#define NERR_NotPrimary NERR_BASE+126
+#define NERR_ACFNotLoaded NERR_BASE+127
+#define NERR_ACFNoRoom NERR_BASE+128
+#define NERR_ACFFileIOFail NERR_BASE+129
+#define NERR_ACFTooManyLists NERR_BASE+130
+#define NERR_UserLogon NERR_BASE+131
+#define NERR_ACFNoParent NERR_BASE+132
+#define NERR_CanNotGrowSegment NERR_BASE+133
+#define NERR_SpeGroupOp NERR_BASE+134
+#define NERR_NotInCache NERR_BASE+135
+#define NERR_UserInGroup NERR_BASE+136
+#define NERR_UserNotInGroup NERR_BASE+137
+#define NERR_AccountUndefined NERR_BASE+138
+#define NERR_AccountExpired NERR_BASE+139
+#define NERR_InvalidWorkstation NERR_BASE+140
+#define NERR_InvalidLogonHours NERR_BASE+141
+#define NERR_PasswordExpired NERR_BASE+142
+#define NERR_PasswordCantChange NERR_BASE+143
+#define NERR_PasswordHistConflict NERR_BASE+144
+#define NERR_PasswordTooShort NERR_BASE+145
+#define NERR_PasswordTooRecent NERR_BASE+146
+#define NERR_InvalidDatabase NERR_BASE+147
+#define NERR_DatabaseUpToDate NERR_BASE+148
+#define NERR_SyncRequired NERR_BASE+149
+#define NERR_UseNotFound NERR_BASE+150
+#define NERR_BadAsgType NERR_BASE+151
+#define NERR_DeviceIsShared NERR_BASE+152
+#define NERR_NoComputerName NERR_BASE+170
+#define NERR_MsgAlreadyStarted NERR_BASE+171
+#define NERR_MsgInitFailed NERR_BASE+172
+#define NERR_NameNotFound NERR_BASE+173
+#define NERR_AlreadyForwarded NERR_BASE+174
+#define NERR_AddForwarded NERR_BASE+175
+#define NERR_AlreadyExists NERR_BASE+176
+#define NERR_TooManyNames NERR_BASE+177
+#define NERR_DelComputerName NERR_BASE+178
+#define NERR_LocalForward NERR_BASE+179
+#define NERR_GrpMsgProcessor NERR_BASE+180
+#define NERR_PausedRemote NERR_BASE+181
+#define NERR_BadReceive NERR_BASE+182
+#define NERR_NameInUse NERR_BASE+183
+#define NERR_MsgNotStarted NERR_BASE+184
+#define NERR_NotLocalName NERR_BASE+185
+#define NERR_NoForwardName NERR_BASE+186
+#define NERR_RemoteFull NERR_BASE+187
+#define NERR_NameNotForwarded NERR_BASE+188
+#define NERR_TruncatedBroadcast NERR_BASE+189
+#define NERR_InvalidDevice NERR_BASE+194
+#define NERR_WriteFault NERR_BASE+195
+#define NERR_DuplicateName NERR_BASE+197
+#define NERR_DeleteLater NERR_BASE+198
+#define NERR_IncompleteDel NERR_BASE+199
+#define NERR_MultipleNets NERR_BASE+200
+#define NERR_NetNameNotFound NERR_BASE+210
+#define NERR_DeviceNotShared NERR_BASE+211
+#define NERR_ClientNameNotFound NERR_BASE+212
+#define NERR_FileIdNotFound NERR_BASE+214
+#define NERR_ExecFailure NERR_BASE+215
+#define NERR_TmpFile NERR_BASE+216
+#define NERR_TooMuchData NERR_BASE+217
+#define NERR_DeviceShareConflict NERR_BASE+218
+#define NERR_BrowserTableIncomplete NERR_BASE+219
+#define NERR_NotLocalDomain NERR_BASE+220
+#define NERR_IsDfsShare NERR_BASE+221
+#define NERR_DevInvalidOpCode NERR_BASE+231
+#define NERR_DevNotFound NERR_BASE+232
+#define NERR_DevNotOpen NERR_BASE+233
+#define NERR_BadQueueDevString NERR_BASE+234
+#define NERR_BadQueuePriority NERR_BASE+235
+#define NERR_NoCommDevs NERR_BASE+237
+#define NERR_QueueNotFound NERR_BASE+238
+#define NERR_BadDevString NERR_BASE+240
+#define NERR_BadDev NERR_BASE+241
+#define NERR_InUseBySpooler NERR_BASE+242
+#define NERR_CommDevInUse NERR_BASE+243
+#define NERR_InvalidComputer NERR_BASE+251
+#define NERR_MaxLenExceeded NERR_BASE+254
+#define NERR_BadComponent NERR_BASE+256
+#define NERR_CantType NERR_BASE+257
+#define NERR_TooManyEntries NERR_BASE+262
+#define NERR_ProfileFileTooBig NERR_BASE+270
+#define NERR_ProfileOffset NERR_BASE+271
+#define NERR_ProfileCleanup NERR_BASE+272
+#define NERR_ProfileUnknownCmd NERR_BASE+273
+#define NERR_ProfileLoadErr NERR_BASE+274
+#define NERR_ProfileSaveErr NERR_BASE+275
+#define NERR_LogOverflow NERR_BASE+277
+#define NERR_LogFileChanged NERR_BASE+278
+#define NERR_LogFileCorrupt NERR_BASE+279
+#define NERR_SourceIsDir NERR_BASE+280
+#define NERR_BadSource NERR_BASE+281
+#define NERR_BadDest NERR_BASE+282
+#define NERR_DifferentServers NERR_BASE+283
+#define NERR_RunSrvPaused NERR_BASE+285
+#define NERR_ErrCommRunSrv NERR_BASE+289
+#define NERR_ErrorExecingGhost NERR_BASE+291
+#define NERR_ShareNotFound NERR_BASE+292
+#define NERR_InvalidLana NERR_BASE+300
+#define NERR_OpenFiles NERR_BASE+301
+#define NERR_ActiveConns NERR_BASE+302
+#define NERR_BadPasswordCore NERR_BASE+303
+#define NERR_DevInUse NERR_BASE+304
+#define NERR_LocalDrive NERR_BASE+305
+#define NERR_AlertExists NERR_BASE+330
+#define NERR_TooManyAlerts NERR_BASE+331
+#define NERR_NoSuchAlert NERR_BASE+332
+#define NERR_BadRecipient NERR_BASE+333
+#define NERR_AcctLimitExceeded NERR_BASE+334
+#define NERR_InvalidLogSeek NERR_BASE+340
+#define NERR_BadUasConfig NERR_BASE+350
+#define NERR_InvalidUASOp NERR_BASE+351
+#define NERR_LastAdmin NERR_BASE+352
+#define NERR_DCNotFound NERR_BASE+353
+#define NERR_LogonTrackingError NERR_BASE+354
+#define NERR_NetlogonNotStarted NERR_BASE+355
+#define NERR_CanNotGrowUASFile NERR_BASE+356
+#define NERR_TimeDiffAtDC NERR_BASE+357
+#define NERR_PasswordMismatch NERR_BASE+358
+#define NERR_NoSuchServer NERR_BASE+360
+#define NERR_NoSuchSession NERR_BASE+361
+#define NERR_NoSuchConnection NERR_BASE+362
+#define NERR_TooManyServers NERR_BASE+363
+#define NERR_TooManySessions NERR_BASE+364
+#define NERR_TooManyConnections NERR_BASE+365
+#define NERR_TooManyFiles NERR_BASE+366
+#define NERR_NoAlternateServers NERR_BASE+367
+#define NERR_TryDownLevel NERR_BASE+370
+#define NERR_UPSDriverNotStarted NERR_BASE+380
+#define NERR_UPSInvalidConfig NERR_BASE+381
+#define NERR_UPSInvalidCommPort NERR_BASE+382
+#define NERR_UPSSignalAsserted NERR_BASE+383
+#define NERR_UPSShutdownFailed NERR_BASE+384
+#define NERR_BadDosRetCode NERR_BASE+400
+#define NERR_ProgNeedsExtraMem NERR_BASE+401
+#define NERR_BadDosFunction NERR_BASE+402
+#define NERR_RemoteBootFailed NERR_BASE+403
+#define NERR_BadFileCheckSum NERR_BASE+404
+#define NERR_NoRplBootSystem NERR_BASE+405
+#define NERR_RplLoadrNetBiosErr NERR_BASE+406
+#define NERR_RplLoadrDiskErr NERR_BASE+407
+#define NERR_ImageParamErr NERR_BASE+408
+#define NERR_TooManyImageParams NERR_BASE+409
+#define NERR_NonDosFloppyUsed NERR_BASE+410
+#define NERR_RplBootRestart NERR_BASE+411
+#define NERR_RplSrvrCallFailed NERR_BASE+412
+#define NERR_CantConnectRplSrvr NERR_BASE+413
+#define NERR_CantOpenImageFile NERR_BASE+414
+#define NERR_CallingRplSrvr NERR_BASE+415
+#define NERR_StartingRplBoot NERR_BASE+416
+#define NERR_RplBootServiceTerm NERR_BASE+417
+#define NERR_RplBootStartFailed NERR_BASE+418
+#define NERR_RPL_CONNECTED NERR_BASE+419
+#define NERR_BrowserConfiguredToNotRun NERR_BASE+450
+#define NERR_RplNoAdaptersStarted NERR_BASE+510
+#define NERR_RplBadRegistry NERR_BASE+511
+#define NERR_RplBadDatabase NERR_BASE+512
+#define NERR_RplRplfilesShare NERR_BASE+513
+#define NERR_RplNotRplServer NERR_BASE+514
+#define NERR_RplCannotEnum NERR_BASE+515
+#define NERR_RplWkstaInfoCorrupted NERR_BASE+516
+#define NERR_RplWkstaNotFound NERR_BASE+517
+#define NERR_RplWkstaNameUnavailable NERR_BASE+518
+#define NERR_RplProfileInfoCorrupted NERR_BASE+519
+#define NERR_RplProfileNotFound NERR_BASE+520
+#define NERR_RplProfileNameUnavailable NERR_BASE+521
+#define NERR_RplProfileNotEmpty NERR_BASE+522
+#define NERR_RplConfigInfoCorrupted NERR_BASE+523
+#define NERR_RplConfigNotFound NERR_BASE+524
+#define NERR_RplAdapterInfoCorrupted NERR_BASE+525
+#define NERR_RplInternal NERR_BASE+526
+#define NERR_RplVendorInfoCorrupted NERR_BASE+527
+#define NERR_RplBootInfoCorrupted NERR_BASE+528
+#define NERR_RplWkstaNeedsUserAcct NERR_BASE+529
+#define NERR_RplNeedsRPLUSERAcct NERR_BASE+530
+#define NERR_RplBootNotFound NERR_BASE+531
+#define NERR_RplIncompatibleProfile NERR_BASE+532
+#define NERR_RplAdapterNameUnavailable NERR_BASE+533
+#define NERR_RplConfigNotEmpty NERR_BASE+534
+#define NERR_RplBootInUse NERR_BASE+535
+#define NERR_RplBackupDatabase NERR_BASE+536
+#define NERR_RplAdapterNotFound NERR_BASE+537
+#define NERR_RplVendorNotFound NERR_BASE+538
+#define NERR_RplVendorNameUnavailable NERR_BASE+539
+#define NERR_RplBootNameUnavailable NERR_BASE+540
+#define NERR_RplConfigNameUnavailable NERR_BASE+541
+#define NERR_DfsInternalCorruption NERR_BASE+560
+#define NERR_DfsVolumeDataCorrupt NERR_BASE+561
+#define NERR_DfsNoSuchVolume NERR_BASE+562
+#define NERR_DfsVolumeAlreadyExists NERR_BASE+563
+#define NERR_DfsAlreadyShared NERR_BASE+564
+#define NERR_DfsNoSuchShare NERR_BASE+565
+#define NERR_DfsNotALeafVolume NERR_BASE+566
+#define NERR_DfsLeafVolume NERR_BASE+567
+#define NERR_DfsVolumeHasMultipleServers NERR_BASE+568
+#define NERR_DfsCantCreateJunctionPoint NERR_BASE+569
+#define NERR_DfsServerNotDfsAware NERR_BASE+570
+#define NERR_DfsBadRenamePath NERR_BASE+571
+#define NERR_DfsVolumeIsOffline NERR_BASE+572
+#define NERR_DfsNoSuchServer NERR_BASE+573
+#define NERR_DfsCyclicalName NERR_BASE+574
+#define NERR_DfsNotSupportedInServerDfs NERR_BASE+575
+#define NERR_DfsDuplicateService NERR_BASE+576
+#define NERR_DfsCantRemoveLastServerShare NERR_BASE+577
+#define NERR_DfsVolumeIsInterDfs NERR_BASE+578
+#define NERR_DfsInconsistent NERR_BASE+579
+#define NERR_DfsServerUpgraded NERR_BASE+580
+#define NERR_DfsDataIsIdentical NERR_BASE+581
+#define NERR_DfsCantRemoveDfsRoot NERR_BASE+582
+#define NERR_DfsChildOrParentInDfs NERR_BASE+583
+#define NERR_DfsInternalError NERR_BASE+590
+#define NERR_SetupAlreadyJoined NERR_BASE+591
+#define NERR_SetupNotJoined NERR_BASE+592
+#define NERR_SetupDomainController NERR_BASE+593
+#define NERR_DefaultJoinRequired NERR_BASE+594
+#define NERR_InvalidWorkgroupName NERR_BASE+595
+#define NERR_NameUsesIncompatibleCodePage NERR_BASE+596
+#define NERR_ComputerAccountNotFound NERR_BASE+597
+
+STRINGTABLE
+BEGIN
+  NERR_NetNotStarted, "The workstation driver is not installed."
+  NERR_UnknownServer, "The server could not be located."
+  NERR_ShareMem, "An internal error occurred. The network cannot access a shared memory segment."
+  NERR_NoNetworkResource, "A network resource shortage occurred ."
+  NERR_RemoteOnly, "This operation is not supported on workstations."
+  NERR_DevNotRedirected, "The device is not connected."
+  NERR_ServerNotStarted, "The Server service is not started."
+  NERR_ItemNotFound, "The queue is empty."
+  NERR_UnknownDevDir, "The device or directory does not exist."
+  NERR_RedirectedPath, "The operation is invalid on a redirected resource."
+  NERR_DuplicateShare, "The name has already been shared."
+  NERR_NoRoom, "The server is currently out of the requested resource."
+  NERR_TooManyItems, "Requested addition of items exceeds the maximum allowed."
+  NERR_InvalidMaxUsers, "The Peer service supports only two simultaneous users."
+  NERR_BufTooSmall, "The API return buffer is too small."
+  NERR_RemoteErr, "A remote API error occurred."
+  NERR_LanmanIniError, "An error occurred when opening or reading the configuration file."
+  NERR_NetworkError, "A general network error occurred."
+  NERR_WkstaInconsistentState, "The Workstation service is in an inconsistent state. Restart the computer before restarting the Workstation service."
+  NERR_WkstaNotStarted, "The Workstation service has not been started."
+  NERR_BrowserNotStarted, "The requested information is not available."
+  NERR_InternalError, "An internal Windows NT error occurred."
+  NERR_BadTransactConfig, "The server is not configured for transactions."
+  NERR_InvalidAPI, "The requested API is not supported on the remote server."
+  NERR_BadEventName, "The event name is invalid."
+  NERR_DupNameReboot, "The computer name already exists on the network. Change it and restart the computer."
+  NERR_CfgCompNotFound, "The specified component could not be found in the configuration information."
+  NERR_CfgParamNotFound, "The specified parameter could not be found in the configuration information."
+  NERR_LineTooLong, "A line in the configuration file is too long."
+  NERR_QNotFound, "The printer does not exist."
+  NERR_JobNotFound, "The print job does not exist."
+  NERR_DestNotFound, "The printer destination cannot be found."
+  NERR_DestExists, "The printer destination already exists."
+  NERR_QExists, "The printer queue already exists."
+  NERR_QNoRoom, "No more printers can be added."
+  NERR_JobNoRoom, "No more print jobs can be added."
+  NERR_DestNoRoom, "No more printer destinations can be added."
+  NERR_DestIdle, "This printer destination is idle and cannot accept control operations."
+  NERR_DestInvalidOp, "This printer destination request contains an invalid control function."
+  NERR_ProcNoRespond, "The print processor is not responding."
+  NERR_SpoolerNotLoaded, "The spooler is not running."
+  NERR_DestInvalidState, "This operation cannot be performed on the print destination in its current state."
+  NERR_QInvalidState, "This operation cannot be performed on the printer queue in its current state."
+  NERR_JobInvalidState, "This operation cannot be performed on the print job in its current state."
+  NERR_SpoolNoMemory, "A spooler memory allocation failure occurred."
+  NERR_DriverNotFound, "The device driver does not exist."
+  NERR_DataTypeInvalid, "The data type is not supported by the print processor."
+  NERR_ProcNotFound, "The print processor is not installed."
+  NERR_ServiceTableLocked, "The service database is locked."
+  NERR_ServiceTableFull, "The service table is full."
+  NERR_ServiceInstalled, "The requested service has already been started."
+  NERR_ServiceEntryLocked, "The service does not respond to control actions."
+  NERR_ServiceNotInstalled, "The service has not been started."
+  NERR_BadServiceName, "The service name is invalid."
+  NERR_ServiceCtlTimeout, "The service is not responding to the control function."
+  NERR_ServiceCtlBusy, "The service control is busy."
+  NERR_BadServiceProgName, "The configuration file contains an invalid service program name."
+  NERR_ServiceNotCtrl, "The service could not be controlled in its present state."
+  NERR_ServiceKillProc, "The service ended abnormally."
+  NERR_ServiceCtlNotValid, "The requested pause or stop is not valid for this service."
+  NERR_NotInDispatchTbl, "The service control dispatcher could not find the service name in the dispatch table."
+  NERR_BadControlRecv, "The service control dispatcher pipe read failed."
+  NERR_ServiceNotStarting, "A thread for the new service could not be created."
+  NERR_AlreadyLoggedOn, "This workstation is already logged on to the local-area network."
+  NERR_NotLoggedOn, "The workstation is not logged on to the local-area network."
+  NERR_BadUsername, "The user name or group name parameter is invalid."
+  NERR_BadPassword, "The password parameter is invalid."
+  NERR_UnableToAddName_W, "@W The logon processor did not add the message alias."
+  NERR_UnableToAddName_F, "The logon processor did not add the message alias."
+  NERR_UnableToDelName_W, "@W The logoff processor did not delete the message alias."
+  NERR_UnableToDelName_F, "The logoff processor did not delete the message alias."
+  NERR_LogonsPaused, "Network logons are paused."
+  NERR_LogonServerConflict, "A centralized logon-server conflict occurred."
+  NERR_LogonNoUserPath, "The server is configured without a valid user path."
+  NERR_LogonScriptError, "An error occurred while loading or running the logon script."
+  NERR_StandaloneLogon, "The logon server was not specified.  Your computer will be logged on as STANDALONE."
+  NERR_LogonServerNotFound, "The logon server could not be found."
+  NERR_LogonDomainExists, "There is already a logon domain for this computer."
+  NERR_NonValidatedLogon, "The logon server could not validate the logon."
+  NERR_ACFNotFound, "The security database could not be found."
+  NERR_GroupNotFound, "The group name could not be found."
+  NERR_UserNotFound, "The user name could not be found."
+  NERR_ResourceNotFound, "The resource name could not be found."
+  NERR_GroupExists, "The group already exists."
+  NERR_UserExists, "The user account already exists."
+  NERR_ResourceExists, "The resource permission list already exists."
+  NERR_NotPrimary, "This operation is only allowed on the primary domain controller of the domain."
+  NERR_ACFNotLoaded, "The security database has not been started."
+  NERR_ACFNoRoom, "There are too many names in the user accounts database."
+  NERR_ACFFileIOFail, "A disk I/O failure occurred."
+  NERR_ACFTooManyLists, "The limit of 64 entries per resource was exceeded."
+  NERR_UserLogon, "Deleting a user with a session is not allowed."
+  NERR_ACFNoParent, "The parent directory could not be located."
+  NERR_CanNotGrowSegment, "Unable to add to the security database session cache segment."
+  NERR_SpeGroupOp, "This operation is not allowed on this special group."
+  NERR_NotInCache, "This user is not cached in user accounts database session cache."
+  NERR_UserInGroup, "The user already belongs to this group."
+  NERR_UserNotInGroup, "The user does not belong to this group."
+  NERR_AccountUndefined, "This user account is undefined."
+  NERR_AccountExpired, "This user account has expired."
+  NERR_InvalidWorkstation, "The user is not allowed to log on from this workstation."
+  NERR_InvalidLogonHours, "The user is not allowed to log on at this time."
+  NERR_PasswordExpired, "The password of this user has expired."
+  NERR_PasswordCantChange, "The password of this user cannot change."
+  NERR_PasswordHistConflict, "This password cannot be used now."
+  NERR_PasswordTooShort, "The password is shorter than required."
+  NERR_PasswordTooRecent, "The password of this user is too recent to change."
+  NERR_InvalidDatabase, "The security database is corrupted."
+  NERR_DatabaseUpToDate, "No updates are necessary to this replicant network/local security database."
+  NERR_SyncRequired, "This replicant database is outdated; synchronization is required."
+  NERR_UseNotFound, "The network connection could not be found."
+  NERR_BadAsgType, "This asg_type is invalid."
+  NERR_DeviceIsShared, "This device is currently being shared."
+  NERR_NoComputerName, "The computer name could not be added as a message alias.  The name may already exist on the network."
+  NERR_MsgAlreadyStarted, "The Messenger service is already started."
+  NERR_MsgInitFailed, "The Messenger service failed to start."
+  NERR_NameNotFound, "The message alias could not be found on the network."
+  NERR_AlreadyForwarded, "This message alias has already been forwarded."
+  NERR_AddForwarded, "This message alias has been added but is still forwarded."
+  NERR_AlreadyExists, "This message alias already exists locally."
+  NERR_TooManyNames, "The maximum number of added message aliases has been exceeded."
+  NERR_DelComputerName, "The computer name could not be deleted."
+  NERR_LocalForward, "Messages cannot be forwarded back to the same workstation."
+  NERR_GrpMsgProcessor, "An error occurred in the domain message processor."
+  NERR_PausedRemote, "The message was sent, but the recipient has paused the Messenger service."
+  NERR_BadReceive, "The message was sent but not received."
+  NERR_NameInUse, "The message alias is currently in use. Try again later."
+  NERR_MsgNotStarted, "The Messenger service has not been started."
+  NERR_NotLocalName, "The name is not on the local computer."
+  NERR_NoForwardName, "The forwarded message alias could not be found on the network."
+  NERR_RemoteFull, "The message alias table on the remote station is full."
+  NERR_NameNotForwarded, "Messages for this alias are not currently being forwarded."
+  NERR_TruncatedBroadcast, "The broadcast message was truncated."
+  NERR_InvalidDevice, "This is an invalid device name."
+  NERR_WriteFault, "A write fault occurred."
+  NERR_DuplicateName, "A duplicate message alias exists on the network."
+  NERR_DeleteLater, "@W This message alias will be deleted later."
+  NERR_IncompleteDel, "The message alias was not successfully deleted from all networks."
+  NERR_MultipleNets, "This operation is not supported on computers with multiple networks."
+  NERR_NetNameNotFound, "This shared resource does not exist."
+  NERR_DeviceNotShared, "This device is not shared."
+  NERR_ClientNameNotFound, "A session does not exist with that computer name."
+  NERR_FileIdNotFound, "There is not an open file with that identification number."
+  NERR_ExecFailure, "A failure occurred when executing a remote administration command."
+  NERR_TmpFile, "A failure occurred when opening a remote temporary file."
+  NERR_TooMuchData, "The data returned from a remote administration command has been truncated to 64K."
+  NERR_DeviceShareConflict, "This device cannot be shared as both a spooled and a non-spooled resource."
+  NERR_BrowserTableIncomplete, "The information in the list of servers may be incorrect."
+  NERR_NotLocalDomain, "The computer is not active in this domain."
+  NERR_IsDfsShare, "The share must be removed from the Distributed File System before it can be deleted."
+  NERR_DevInvalidOpCode, "The operation is invalid for this device."
+  NERR_DevNotFound, "This device cannot be shared."
+  NERR_DevNotOpen, "This device was not open."
+  NERR_BadQueueDevString, "This device name list is invalid."
+  NERR_BadQueuePriority, "The queue priority is invalid."
+  NERR_NoCommDevs, "There are no shared communication devices."
+  NERR_QueueNotFound, "The queue you specified does not exist."
+  NERR_BadDevString, "This list of devices is invalid."
+  NERR_BadDev, "The requested device is invalid."
+  NERR_InUseBySpooler, "This device is already in use by the spooler."
+  NERR_CommDevInUse, "This device is already in use as a communication device."
+  NERR_InvalidComputer, "This computer name is invalid."
+  NERR_MaxLenExceeded, "The string and prefix specified are too long."
+  NERR_BadComponent, "This path component is invalid."
+  NERR_CantType, "Could not determine the type of input."
+  NERR_TooManyEntries, "The buffer for types is not big enough."
+  NERR_ProfileFileTooBig, "Profile files cannot exceed 64K."
+  NERR_ProfileOffset, "The start offset is out of range."
+  NERR_ProfileCleanup, "The system cannot delete current connections to network resources."
+  NERR_ProfileUnknownCmd, "The system was unable to parse the command line in this file."
+  NERR_ProfileLoadErr, "An error occurred while loading the profile file."
+  NERR_ProfileSaveErr, "@W Errors occurred while saving the profile file.  The profile was partially saved."
+  NERR_LogOverflow, "Log file %1 is full."
+  NERR_LogFileChanged, "This log file has changed between reads."
+  NERR_LogFileCorrupt, "Log file %1 is corrupt."
+  NERR_SourceIsDir, "The source path cannot be a directory."
+  NERR_BadSource, "The source path is illegal."
+  NERR_BadDest, "The destination path is illegal."
+  NERR_DifferentServers, "The source and destination paths are on different servers."
+  NERR_RunSrvPaused, "The Run server you requested is paused."
+  NERR_ErrCommRunSrv, "An error occurred when communicating with a Run server."
+  NERR_ErrorExecingGhost, "An error occurred when starting a background process."
+  NERR_ShareNotFound, "The shared resource you are connected to could not be found."
+  NERR_InvalidLana, "The LAN adapter number is invalid."
+  NERR_OpenFiles, "There are open files on the connection."
+  NERR_ActiveConns, "Active connections still exist."
+  NERR_BadPasswordCore, "This share name or password is invalid."
+  NERR_DevInUse, "The device is being accessed by an active process."
+  NERR_LocalDrive, "The drive letter is in use locally."
+  NERR_AlertExists, "The specified client is already registered for the specified event."
+  NERR_TooManyAlerts, "The alert table is full."
+  NERR_NoSuchAlert, "An invalid or nonexistent alert name was raised."
+  NERR_BadRecipient, "The alert recipient is invalid."
+  NERR_AcctLimitExceeded, "A user''s session with this server has been deleted because the user''s logon hours are no longer valid."
+  NERR_InvalidLogSeek, "The log file does not contain the requested record number."
+  NERR_BadUasConfig, "The user accounts database is not configured correctly."
+  NERR_InvalidUASOp, "This operation is not permitted when the Netlogon service is running."
+  NERR_LastAdmin, "This operation is not allowed on the last administrative account."
+  NERR_DCNotFound, "Could not find domain controller for this domain."
+  NERR_LogonTrackingError, "Could not set logon information for this user."
+  NERR_NetlogonNotStarted, "The Netlogon service has not been started."
+  NERR_CanNotGrowUASFile, "Unable to add to the user accounts database."
+  NERR_TimeDiffAtDC, "This server''s clock is not synchronized with the primary domain controller''s clock."
+  NERR_PasswordMismatch, "A password mismatch has been detected."
+  NERR_NoSuchServer, "The server identification does not specify a valid server."
+  NERR_NoSuchSession, "The session identification does not specify a valid session."
+  NERR_NoSuchConnection, "The connection identification does not specify a valid connection."
+  NERR_TooManyServers, "There is no space for another entry in the table of available servers."
+  NERR_TooManySessions, "The server has reached the maximum number of sessions it supports."
+  NERR_TooManyConnections, "The server has reached the maximum number of connections it supports."
+  NERR_TooManyFiles, "The server cannot open more files because it has reached its maximum number."
+  NERR_NoAlternateServers, "There are no alternate servers registered on this server."
+  NERR_TryDownLevel, "Try down-level (remote admin protocol); version of API instead."
+  NERR_UPSDriverNotStarted, "The UPS driver could not be accessed by the UPS service."
+  NERR_UPSInvalidConfig, "The UPS service is not configured correctly."
+  NERR_UPSInvalidCommPort, "The UPS service could not access the specified Comm Port."
+  NERR_UPSSignalAsserted, "The UPS indicated a line fail or low battery situation. Service not started."
+  NERR_UPSShutdownFailed, "The UPS service failed to perform a system shut down."
+  NERR_BadDosRetCode, "The program below returned an MS-DOS error code:"
+  NERR_ProgNeedsExtraMem, "The program below needs more memory:"
+  NERR_BadDosFunction, "The program below called an unsupported MS-DOS function:"
+  NERR_RemoteBootFailed, "The workstation failed to boot."
+  NERR_BadFileCheckSum, "The file below is corrupt."
+  NERR_NoRplBootSystem, "No loader is specified in the boot-block definition file."
+  NERR_RplLoadrNetBiosErr, "NetBIOS returned an error: The NCB and SMB are dumped above."
+  NERR_RplLoadrDiskErr, "A disk I/O error occurred."
+  NERR_ImageParamErr, "Image parameter substitution failed."
+  NERR_TooManyImageParams, "Too many image parameters cross disk sector boundaries."
+  NERR_NonDosFloppyUsed, "The image was not generated from an MS-DOS diskette formatted with /S."
+  NERR_RplBootRestart, "Remote boot will be restarted later."
+  NERR_RplSrvrCallFailed, "The call to the Remoteboot server failed."
+  NERR_CantConnectRplSrvr, "Cannot connect to the Remoteboot server."
+  NERR_CantOpenImageFile, "Cannot open image file on the Remoteboot server."
+  NERR_CallingRplSrvr, "Connecting to the Remoteboot server..."
+  NERR_StartingRplBoot, "Connecting to the Remoteboot server..."
+  NERR_RplBootServiceTerm, "Remote boot service was stopped; check the error log for the cause of the problem."
+  NERR_RplBootStartFailed, "Remote boot startup failed; check the error log for the cause of the problem."
+  NERR_RPL_CONNECTED, "A second connection to a Remoteboot resource is not allowed."
+  NERR_BrowserConfiguredToNotRun, "The browser service was configured with MaintainServerList=No."
+  NERR_RplNoAdaptersStarted, "Service failed to start since none of the network adapters started with this service."
+  NERR_RplBadRegistry, "Service failed to start due to bad startup information in the registry."
+  NERR_RplBadDatabase, "Service failed to start because its database is absent or corrupt."
+  NERR_RplRplfilesShare, "Service failed to start because RPLFILES share is absent."
+  NERR_RplNotRplServer, "Service failed to start because RPLUSER group is absent."
+  NERR_RplCannotEnum, "Cannot enumerate service records."
+  NERR_RplWkstaInfoCorrupted, "Workstation record information has been corrupted."
+  NERR_RplWkstaNotFound, "Workstation record was not found."
+  NERR_RplWkstaNameUnavailable, "Workstation name is in use by some other workstation."
+  NERR_RplProfileInfoCorrupted, "Profile record information has been corrupted."
+  NERR_RplProfileNotFound, "Profile record was not found."
+  NERR_RplProfileNameUnavailable, "Profile name is in use by some other profile."
+  NERR_RplProfileNotEmpty, "There are workstations using this profile."
+  NERR_RplConfigInfoCorrupted, "Configuration record information has been corrupted."
+  NERR_RplConfigNotFound, "Configuration record was not found."
+  NERR_RplAdapterInfoCorrupted, "Adapter id record information has been corrupted."
+  NERR_RplInternal, "An internal service error has occurred."
+  NERR_RplVendorInfoCorrupted, "Vendor id record information has been corrupted."
+  NERR_RplBootInfoCorrupted, "Boot block record information has been corrupted."
+  NERR_RplWkstaNeedsUserAcct, "The user account for this workstation record is missing."
+  NERR_RplNeedsRPLUSERAcct, "The RPLUSER local group could not be found."
+  NERR_RplBootNotFound, "Boot block record was not found."
+  NERR_RplIncompatibleProfile, "Chosen profile is incompatible with this workstation."
+  NERR_RplAdapterNameUnavailable, "Chosen network adapter id is in use by some other workstation."
+  NERR_RplConfigNotEmpty, "There are profiles using this configuration."
+  NERR_RplBootInUse, "There are workstations, profiles or configurations using this boot block."
+  NERR_RplBackupDatabase, "Service failed to backup Remoteboot database."
+  NERR_RplAdapterNotFound, "Adapter record was not found."
+  NERR_RplVendorNotFound, "Vendor record was not found."
+  NERR_RplVendorNameUnavailable, "Vendor name is in use by some other vendor record."
+  NERR_RplBootNameUnavailable, "(boot name, vendor id); is in use by some other boot block record."
+  NERR_RplConfigNameUnavailable, "Configuration name is in use by some other configuration."
+  NERR_DfsInternalCorruption, "The internal database maintained by the Dfs service is corrupt"
+  NERR_DfsVolumeDataCorrupt, "One of the records in the internal Dfs database is corrupt"
+  NERR_DfsNoSuchVolume, "There is no volume whose entry path matches the input Entry Path"
+  NERR_DfsVolumeAlreadyExists, "A volume with the given name already exists"
+  NERR_DfsAlreadyShared, "The server share specified is already shared in the Dfs"
+  NERR_DfsNoSuchShare, "The indicated server share does not support the indicated Dfs volume"
+  NERR_DfsNotALeafVolume, "The operation is not valid on a non-leaf volume"
+  NERR_DfsLeafVolume, "The operation is not valid on a leaf volume"
+  NERR_DfsVolumeHasMultipleServers, "The operation is ambiguous because the volume has multiple servers"
+  NERR_DfsCantCreateJunctionPoint, "Unable to create a junction point"
+  NERR_DfsServerNotDfsAware, "The server is not Dfs Aware"
+  NERR_DfsBadRenamePath, "The specified rename target path is invalid"
+  NERR_DfsVolumeIsOffline, "The specified Dfs volume is offline"
+  NERR_DfsNoSuchServer, "The specified server is not a server for this volume"
+  NERR_DfsCyclicalName, "A cycle in the Dfs name was detected"
+  NERR_DfsNotSupportedInServerDfs, "The operation is not supported on a server-based Dfs"
+  NERR_DfsDuplicateService, "This volume is already supported by the specified server-share"
+  NERR_DfsCantRemoveLastServerShare, "Can''t remove the last server-share supporting this volume"
+  NERR_DfsVolumeIsInterDfs, "The operation is not supported for an Inter-Dfs volume"
+  NERR_DfsInconsistent, "The internal state of the Dfs Service has become inconsistent"
+  NERR_DfsServerUpgraded, "The Dfs Service has been installed on the specified server"
+  NERR_DfsDataIsIdentical, "The Dfs data being reconciled is identical"
+  NERR_DfsCantRemoveDfsRoot, "The Dfs root volume cannot be deleted - Uninstall Dfs if required"
+  NERR_DfsChildOrParentInDfs, "A child or parent directory of the share is already in a Dfs"
+  NERR_DfsInternalError, "Dfs internal error"
+  NERR_SetupAlreadyJoined, "This machine is already joined to a domain."
+  NERR_SetupNotJoined, "This machine is not currently joined to a domain."
+  NERR_SetupDomainController, "This machine is a domain controller and cannot be unjoined from a domain."
+  NERR_DefaultJoinRequired, "The destination domain controller does not support creating machine accounts in OUs"
+  NERR_InvalidWorkgroupName, "The specified workgroup name is invalid"
+  NERR_NameUsesIncompatibleCodePage, "The specified computer name is incompatible with the default language used on the domain controller"
+  NERR_ComputerAccountNotFound, "The specified computer account could not be found"
+END
+

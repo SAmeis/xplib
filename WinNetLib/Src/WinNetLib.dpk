@@ -1,0 +1,78 @@
+//*** NOTAS ***
+//Para dispor das dcu's de depuracao set DEBUG_DCU e inclua a linha abaixo na ultima posicao das diretivas do pacote. Alterando o
+// caminho de saida
+  { $ DEFINE DEBUG_DCU }
+  { $ I DEBUG.INC} //A linha acima deve suceder a ultima para DCU's de depuracao do pacote
+
+
+package WinNetLib;
+
+{$R *.res}
+{$R 'WinNetLib.dcr'}
+{$ALIGN 8}
+{$ASSERTIONS OFF}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS OFF}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'AAA - Windows Network Library - (Super Library)'}
+{$LIBSUFFIX '_7_0'}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  WinSysLib,
+  vcl,
+  XPLib,
+  vclx;
+
+{%File 'WinNetLib.inc'}
+
+contains
+  WNetSever in 'WNetSever.pas',
+  LmAccess in 'LmAccess.pas',
+  LmAlert in 'LmAlert.pas',
+  LmApibuf in 'LmApibuf.pas',
+  LmAt in 'LmAt.pas',
+  LmAudit in 'LmAudit.pas',
+  LmBrowsr in 'LmBrowsr.pas',
+  LmChdev in 'LmChdev.pas',
+  LmConfig in 'LmConfig.pas',
+  Lmcons in 'LmCons.pas',
+  LmDfs in 'LmDfs.pas',
+  LmErr in 'LmErr.pas',
+  LmErrlog in 'LmErrlog.pas',
+  LmJoin in 'LmJoin.pas',
+  LmMsg in 'LmMsg.pas',
+  LmRemUtl in 'LmRemutl.pas',
+  LmRepl in 'LmRepl.pas',
+  LmServer in 'LmServer.pas',
+  LmShare in 'LmShare.pas',
+  LmSname in 'LmSname.pas',
+  LmStats in 'LmStats.pas',
+  LmSvc in 'LmSvc.pas',
+  LmUse in 'LmUse.pas',
+  LmUseflg in 'LmUseflg.pas',
+  LmUtils in 'LmUtils.pas',
+  LmWksta in 'LmWksta.pas',
+  Svrapi in 'SvrApi.pas',
+  LmClasses in 'LmClasses.pas',
+  WNetExHnd in 'WNetExHnd.pas',
+  MS_ICMP in 'MS_ICMP.PAS';
+
+end.

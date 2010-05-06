@@ -1,0 +1,213 @@
+[API]
+Name=LanManager
+Version=unknown
+Date=31 Jan 2000
+Originated=Header files shipped with Borland C++ 5.5 Free Compiler
+URL=
+Description=LanManager API
+
+[CONVERSION1]
+FileName=Svrapi.par Svrapi.pas
+FileDate=31 Jan 2000
+Status=READY-FOR-TESTING
+Version=
+LastModify=05 Mar 2000
+OriginalFile=svrapi.h
+
+[CONVERSION2]
+FileName=Lmerr.par Lmerr.pas
+FileDate=31 Jan 2000
+Status=READY-FOR-TESTING
+Version=
+LastModify=05 Mar 2000
+OriginalFile=lmerr.h
+
+[CONVERSION3]
+FileName=Lmcons.par Lmcons.pas
+FileDate=31 Jan 2000
+Status=READY-FOR-TESTING
+Version=
+LastModify=05 Mar 2000
+OriginalFile=lmcons.h
+
+[CONVERSION4]
+FileName=Lmshare.par Lmshare.pas
+FileDate=31 Jan 2000
+Status=READY-FOR-TESTING
+Version=
+LastModify=05 Mar 2000
+OriginalFile=lmshare.h
+
+[CONVERSION5]
+FileName=Lmapibuf.par Lmapibuf.pas
+FileDate=31 Jan 2000
+Status=READY-FOR-TESTING
+Version=
+LastModify=05 Mar 2000
+OriginalFile=lmapibuf.h
+
+[CONVERSION6]
+FileName=Lmuseflg.par Lmuseflg.pas
+FileDate=31 Jan 2000
+Status=READY-FOR-TESTING
+Version=
+LastModify=05 Mar 2000
+OriginalFile=lmuseflg.h
+
+[CONVERSION7]
+FileName=Lmaccess.par Lmaccess.pas
+FileDate=31 Jan 2000
+Status=READY-FOR-TESTING
+Version=
+LastModify=05 Mar 2000
+OriginalFile=lmaccess.h
+
+[CONVERSION8]
+FileName=Lmalert.par Lmalert.pas
+FileDate=31 Jan 2000
+Status=READY-FOR-TESTING
+Version=
+LastModify=05 Mar 2000
+OriginalFile=lmalert.h
+
+[CONVERSION9]
+FileName=Lmmsg.par Lmmsg.pas
+FileDate=31 Jan 2000
+Status=READY-FOR-TESTING
+Version=
+LastModify=05 Mar 2000
+OriginalFile=lmmsg.h
+
+[CONVERSION10]
+FileName=Lmat.par Lmat.pas
+FileDate=31 Jan 2000
+Status=READY-FOR-TESTING
+Version=
+LastModify=05 Mar 2000
+OriginalFile=lmat.h
+
+[CONVERSION11]
+FileName=Lmconfig.par Lmconfig.pas
+FileDate=31 Jan 2000
+Status=READY-FOR-TESTING
+Version=
+LastModify=05 Mar 2000
+OriginalFile=lmconfig.h
+
+[CONVERSION12]
+FileName=Lmwksta.par Lmwksta.pas
+FileDate=31 Jan 2000
+Status=READY-FOR-TESTING
+Version=
+LastModify=05 Mar 2000
+OriginalFile=lmwksta.h
+
+[CONVERSION13]
+FileName=Lmuse.par Lmuse.pas
+FileDate=31 Jan 2000
+Status=READY-FOR-TESTING
+Version=
+LastModify=05 Mar 2000
+OriginalFile=lmuse.h
+
+[CONVERSION14]
+FileName=Lmremutl.par Lmremutl.pas
+FileDate=31 Jan 2000
+Status=READY-FOR-TESTING
+Version=
+LastModify=05 Mar 2000
+OriginalFile=lmremutl.h
+
+[CONVERSION15]
+FileName=Lmjoin.par Lmjoin.pas
+FileDate=31 Jan 2000
+Status=READY-FOR-TESTING
+Version=
+LastModify=05 Mar 2000
+OriginalFile=lmjoin.h
+
+[CONVERSION16]
+FileName=Lmserver.par Lmserver.pas
+FileDate=31 Jan 2000
+Status=READY-FOR-TESTING
+Version=
+LastModify=05 Mar 2000
+OriginalFile=lmserver.h
+
+[CONVERSION17]
+FileName=Lmrepl.par Lmrepl.pas
+FileDate=31 Jan 2000
+Status=READY-FOR-TESTING
+Version=
+LastModify=05 Mar 2000
+OriginalFile=lmrepl.h
+
+[CONVERSION18]
+FileName=Lmaudit.par Lmaudit.pas
+FileDate=31 Jan 2000
+Status=READY-FOR-TESTING
+Version=
+LastModify=05 Mar 2000
+OriginalFile=lmaudit.h
+
+[CONVERSION19]
+FileName=Lmsname.par Lmsname.pas
+FileDate=31 Jan 2000
+Status=READY-FOR-TESTING
+Version=
+LastModify=05 Mar 2000
+OriginalFile=lmsname.h
+
+[CONVERSION20]
+FileName=Lmsvc.par Lmsvc.pas
+FileDate=31 Jan 2000
+Status=READY-FOR-TESTING
+Version=
+LastModify=05 Mar 2000
+OriginalFile=lmsvc.h
+
+[CONVERSION21]
+FileName=Lmstats.par Lmstats.pas
+FileDate=31 Jan 2000
+Status=READY-FOR-TESTING
+Version=
+LastModify=05 Mar 2000
+OriginalFile=lmstats.h
+
+[CONVERSION22]
+FileName=Lmerrlog.par Lmerrlog.pas
+FileDate=31 Jan 2000
+Status=READY-FOR-TESTING
+Version=
+LastModify=05 Mar 2000
+OriginalFile=lmerrlog.h
+
+[CONVERSION23]
+FileName=Lmdfs.par Lmdfs.pas
+FileDate=31 Jan 2000
+Status=READY-FOR-TESTING
+Version=
+LastModify=05 Mar 2000
+OriginalFile=lmdfs.h
+
+[CONVERSION24]
+FileName=Lmbrowsr.par Lmbrowsr.pas
+FileDate=31 Jan 2000
+Status=READY-FOR-TESTING
+Version=
+LastModify=05 Mar 2000
+OriginalFile=lmbrowsr.h
+
+[CONVERSION25]
+FileName=Lmchdev.par Lmchdev.pas
+FileDate=31 Jan 2000
+Status=READY-FOR-TESTING
+Version=
+LastModify=05 Mar 2000
+OriginalFile=lmchdev.h
+
+[CONVERSION]
+MajorVersion=1
+MinorVersion=0
+Number=25
+

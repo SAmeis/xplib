@@ -1,0 +1,35 @@
+
+
+
+//Tentar inserir em WNetExHnd esta rotina
+
+void enum_names( const wchar_t *server )
+{
+     MSG_INFO_1 *buf, *cur;
+     DWORD read, total, resumeh, rc, i;
+
+     printf( "\nAvailable message-names on server %S:\n", server );
+     resumeh = 0;
+     do
+     {
+          buf = NULL;
+          rc = NetMessageNameEnum( server, 1, (BYTE **) &buf,
+               512, &read, &total, &resumeh );
+          if ( rc != ERROR_MORE_DATA && rc != ERROR_SUCCESS )
+               break;
+
+          for ( i = 0, cur = buf; i < read; ++ i, ++ cur )
+          {
+               // Note: the capital S in the format string will expect Unicode
+               // strings, as this is a program written/compiled for ANSI.
+               printf( "%S\n", cur->msgi1_name );
+          }
+
+          if ( buf != NULL )
+               NetApiBufferFree( buf );
+
+     } while ( rc == ERROR_MORE_DATA );
+
+     if ( rc != ERROR_SUCCESS )
+          printf( "NMNE() returned %lu\n", rc );
+}
