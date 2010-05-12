@@ -1,1 +1,2 @@
 Comentarios sobre ShellLib
+Alterados em 20100511
