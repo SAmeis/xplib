@@ -1,3 +1,7 @@
+*****************  Informação de migração para SVN ****************
+Passada para SVN
+
+
 ************* Template de Registro ************
 Compilador: Delphi 7.0 Build 8.1
 Data: 
