@@ -1,3 +1,4 @@
+//Revisado em 12.05.2010
 {$IFDEF ShellLib}
 	{$DEFINE DEBUG_UNIT }
 {$ENDIF}
