@@ -1,0 +1,153 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{F270408E-949C-49AF-BF69-99496A51BC36}</ProjectGuid>
+			<MainSource>XPLib.dpk</MainSource>
+			<Config Condition="'$(Config)'==''">Debug</Config>
+			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
+			<ProjectVersion>12.0</ProjectVersion>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
+			<Cfg_1>true</Cfg_1>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
+			<Cfg_2>true</Cfg_2>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Base)'!=''">
+			<DCC_ImageBase>00400000</DCC_ImageBase>
+			<DCC_DependencyCheckOutputName>..\..\..\Lib\D2010\XPLib.bpl</DCC_DependencyCheckOutputName>
+			<DesignOnlyPackage>false</DesignOnlyPackage>
+			<DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+			<DCC_DebugInformation>false</DCC_DebugInformation>
+			<DCC_UnitSearchPath>$(DLib);$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+			<DCC_UnitAlias>WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;WinTypes=Windows;WinProcs=Windows;$(DCC_UnitAlias)</DCC_UnitAlias>
+			<DCC_BplOutput>$(DLib)</DCC_BplOutput>
+			<DCC_Platform>x86</DCC_Platform>
+			<DCC_Description>AAA - XP-Lib - (Super Library)</DCC_Description>
+			<DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+			<GenPackage>true</GenPackage>
+			<DCC_S>false</DCC_S>
+			<DCC_N>true</DCC_N>
+			<DCC_DcpOutput>$(DLib)</DCC_DcpOutput>
+			<GenDll>true</GenDll>
+			<DCC_OutputNeverBuildDcps>true</DCC_OutputNeverBuildDcps>
+			<DCC_K>false</DCC_K>
+			<DCC_DcuOutput>$(DLib)</DCC_DcuOutput>
+			<DCC_ImportedDataReferences>false</DCC_ImportedDataReferences>
+			<DCC_AssertionsAtRuntime>false</DCC_AssertionsAtRuntime>
+			<DCC_F>false</DCC_F>
+			<DCC_E>false</DCC_E>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_1)'!=''">
+			<DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_2)'!=''">
+			<DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+		</PropertyGroup>
+		<ItemGroup>
+			<DelphiCompile Include="XPLib.dpk">
+				<MainSource>MainSource</MainSource>
+			</DelphiCompile>
+			<DCCReference Include="XPLib.dcr"/>
+			<DCCReference Include="rtl.dcp"/>
+			<DCCReference Include="vcl.dcp"/>
+			<DCCReference Include="vclx.dcp"/>
+			<DCCReference Include="designide.dcp"/>
+			<DCCReference Include="vclactnband.dcp"/>
+			<DCCReference Include="Super.pas"/>
+			<DCCReference Include="BinHnd.PAS"/>
+			<DCCReference Include="Str_Pas.pas"/>
+			<DCCReference Include="Cripto.pas"/>
+			<DCCReference Include="Dateoper.pas"/>
+			<DCCReference Include="CtrlsHnd.pas"/>
+			<DCCReference Include="FileHnd.pas"/>
+			<DCCReference Include="Str_Null.pas"/>
+			<DCCReference Include="DOS2Unix.pas"/>
+			<DCCReference Include="MathHnd.pas"/>
+			<DCCReference Include="Grf_Hnd.pas"/>
+			<DCCReference Include="VCLHnd.pas"/>
+			<DCCReference Include="ImgLHnd.pas"/>
+			<DCCReference Include="ColorHnd.pas"/>
+			<DCCReference Include="LBHorz.PAS"/>
+			<DCCReference Include="WinReg32.pas"/>
+			<DCCReference Include="RegCLX.pas"/>
+			<DCCReference Include="StatHnd.pas"/>
+			<DCCReference Include="AppsHnd.pas"/>
+			<DCCReference Include="AppLog.pas"/>
+			<DCCReference Include="BRRules.pas"/>
+			<DCCReference Include="PrnText.pas"/>
+			<DCCReference Include="ListHnd.pas"/>
+			<DCCReference Include="APIHnd.pas"/>
+			<DCCReference Include="MenuHnd.pas"/>
+			<DCCReference Include="XPThreads.pas"/>
+			<DCCReference Include="XPImgDesign.pas"/>
+			<DCCReference Include="XPLists.pas"/>
+			<DCCReference Include="StrHnd.pas"/>
+			<DCCReference Include="XPGraph.pas"/>
+			<DCCReference Include="XPTypes.pas"/>
+			<DCCReference Include="XPClasses.pas"/>
+			<DCCReference Include="XPFiles.pas"/>
+			<BuildConfiguration Include="Base">
+				<Key>Base</Key>
+			</BuildConfiguration>
+			<BuildConfiguration Include="Debug">
+				<Key>Cfg_2</Key>
+				<CfgParent>Base</CfgParent>
+			</BuildConfiguration>
+			<BuildConfiguration Include="Release">
+				<Key>Cfg_1</Key>
+				<CfgParent>Base</CfgParent>
+			</BuildConfiguration>
+		</ItemGroup>
+		<Import Project="$(BDS)\Bin\CodeGear.Delphi.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')"/>
+		<ProjectExtensions>
+			<Borland.Personality>Delphi.Personality.12</Borland.Personality>
+			<Borland.ProjectType>Package</Borland.ProjectType>
+			<BorlandProject>
+				<Delphi.Personality>
+					<Source>
+						<Source Name="MainSource">XPLib.dpk</Source>
+					</Source>
+					<Parameters>
+						<Parameters Name="UseLauncher">False</Parameters>
+						<Parameters Name="LoadAllSymbols">True</Parameters>
+						<Parameters Name="LoadUnspecifiedSymbols">False</Parameters>
+					</Parameters>
+					<VersionInfo>
+						<VersionInfo Name="IncludeVerInfo">True</VersionInfo>
+						<VersionInfo Name="AutoIncBuild">False</VersionInfo>
+						<VersionInfo Name="MajorVer">17</VersionInfo>
+						<VersionInfo Name="MinorVer">0</VersionInfo>
+						<VersionInfo Name="Release">2010</VersionInfo>
+						<VersionInfo Name="Build">0</VersionInfo>
+						<VersionInfo Name="Debug">False</VersionInfo>
+						<VersionInfo Name="PreRelease">False</VersionInfo>
+						<VersionInfo Name="Special">False</VersionInfo>
+						<VersionInfo Name="Private">False</VersionInfo>
+						<VersionInfo Name="DLL">False</VersionInfo>
+						<VersionInfo Name="Locale">1046</VersionInfo>
+						<VersionInfo Name="CodePage">1252</VersionInfo>
+					</VersionInfo>
+					<VersionInfoKeys>
+						<VersionInfoKeys Name="CompanyName">3E</VersionInfoKeys>
+						<VersionInfoKeys Name="FileDescription">eXtreme Programming Library</VersionInfoKeys>
+						<VersionInfoKeys Name="FileVersion">17.0.2010.0</VersionInfoKeys>
+						<VersionInfoKeys Name="InternalName"/>
+						<VersionInfoKeys Name="LegalCopyright">3E®</VersionInfoKeys>
+						<VersionInfoKeys Name="LegalTrademarks">3E®</VersionInfoKeys>
+						<VersionInfoKeys Name="OriginalFilename"/>
+						<VersionInfoKeys Name="ProductName"/>
+						<VersionInfoKeys Name="ProductVersion">7.2.2005.2</VersionInfoKeys>
+						<VersionInfoKeys Name="Comments">Rogerlais Andrade</VersionInfoKeys>
+					</VersionInfoKeys>
+				</Delphi.Personality>
+			</BorlandProject>
+			<ProjectFileVersion>12</ProjectFileVersion>
+		</ProjectExtensions>
+	</Project>

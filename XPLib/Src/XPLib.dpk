@@ -26,7 +26,6 @@ package XPLib;
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
 {$DESCRIPTION 'AAA - XP-Lib - (Super Library)'}
-{$LIBSUFFIX '_7_0'}
 {$IMPLICITBUILD OFF}
 
 requires
@@ -39,13 +38,13 @@ requires
 contains
   Super in 'Super.pas',
   BinHnd in 'BinHnd.PAS',
-  Str_pas in 'Str_Pas.pas',
-  cripto in 'Cripto.pas',
-  DateOper in 'Dateoper.pas',
+  Str_Pas in 'Str_Pas.pas',
+  Cripto in 'Cripto.pas',
+  Dateoper in 'Dateoper.pas',
   CtrlsHnd in 'CtrlsHnd.pas',
   FileHnd in 'FileHnd.pas',
   Str_Null in 'Str_Null.pas',
-  DOS2UNIX in 'DOS2Unix.pas',
+  DOS2Unix in 'DOS2Unix.pas',
   MathHnd in 'MathHnd.pas',
   Grf_Hnd in 'Grf_Hnd.pas',
   VCLHnd in 'VCLHnd.pas',
