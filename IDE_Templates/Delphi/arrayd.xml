@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<codetemplate	xmlns="http://schemas.borland.com/Delphi/2005/codetemplates"
+				version="1.0.0">
+	<template name="arrayd" invoke="manual">
+		<description>
+			array declaration (variable)
+		</description>
+		<author>
+			Embarcadero
+		</author>
+		<point name="low">
+			<text>
+				0
+			</text>
+			<hint>
+				array low bound
+			</hint>
+		</point>
+		<point name="high" default="true">
+			<text>
+				10
+			</text>
+			<hint>
+				array high bound
+			</hint>
+		</point>
+		<point name="var">
+			<script language="Delphi">
+				InvokeCodeCompletion;
+			</script>
+			<text>
+				Integer
+			</text>
+			<hint>
+				array element type
+			</hint>
+		</point>
+		<point name="name">
+			<text>
+				TMyArray
+			</text>
+			<hint>
+				array name
+			</hint>
+		</point>
+		<code language="Delphi" context="decl" delimiter="|"><![CDATA[|name|: array[|low|..|high|] of |var|;|end|]]>
+		</code>
+	</template>
+</codetemplate>

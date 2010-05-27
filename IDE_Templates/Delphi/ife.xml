@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<codetemplate	xmlns="http://schemas.borland.com/Delphi/2005/codetemplates"
+				version="1.0.0">
+	<template name="ife" invoke="manual">
+		<point name="expr">
+			<script language="Delphi">
+				InvokeCodeCompletion;
+			</script>
+			<hint>
+				conditional expression
+			</hint>
+			<text>
+				True
+			</text>
+		</point>
+
+		<point name="thencode">
+			<hint>
+				then code
+			</hint>
+			<text>
+				then code here
+			</text>
+		</point>
+		
+		<point name="elsecode">
+			<hint>
+				else code
+			</hint>
+			<text>
+				else code here
+			</text>
+		</point>
+
+		<description>
+			if then (no begin/end) else (no begin/end)
+		</description>
+		<author>
+			Embarcadero
+		</author>
+		<code language="Delphi" context="methodbody" delimiter="|"><![CDATA[if |expr| then
+|*||thencode|
+else
+|*||elsecode|
+]]>
+		</code>
+	</template>
+</codetemplate>

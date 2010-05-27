@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<codetemplate	xmlns="http://schemas.borland.com/Delphi/2005/codetemplates"
+				version="1.0.0">
+<template name="raise" invoke="auto">
+  <description>
+	Create and raise an instance of an Exception class
+  </description>
+  <author>
+	Embarcadero (with thanks to Erik Berry)
+  </author>
+  <point name="exception">
+	<script language="Delphi">InvokeCodeCompletion;</script>
+	<text>Exception</text>
+	<hint>Exception class</hint>
+  </point>
+  <point name="errormessage">
+	<text>Error Message</text>
+	<hint>Exception Message</hint>
+  </point>
+  <code language="Delphi" context="methodbody" delimiter="|">
+   <![CDATA[raise |exception|.Create('|errormessage|');|end|]]>
+  </code>
+</template>
+</codetemplate>

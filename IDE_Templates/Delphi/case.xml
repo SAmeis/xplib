@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<codetemplate	xmlns="http://schemas.borland.com/Delphi/2005/codetemplates"
+				version="1.0.0">
+	<template name="case" invoke="auto">
+		<point name="expression">
+			<script language="Delphi">
+				InvokeCodeCompletion;
+			</script>
+			<text>
+				True
+			</text>
+			<hint>
+				case expression
+			</hint>
+		</point>
+		<point name="cases" editable="false">
+			<script language="Delphi" onenter="false" onleave="true">
+				PopulateCase(|expression|);
+			</script>
+		</point>
+		<description>
+			case statement
+		</description>
+		<author>
+			Embarcadero
+		</author>
+		<code language="Delphi" context="methodbody" delimiter="|"><![CDATA[case |expression| of
+|end||*||cases|
+end;
+]]>
+		</code>
+	</template>
+</codetemplate>

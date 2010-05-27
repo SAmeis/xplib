@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<codetemplate	xmlns="http://schemas.borland.com/Delphi/2005/codetemplates"
+				version="1.0.0">
+	<template name="trye" surround="true" invoke="manual">
+		<point name="var">
+			<text>
+				E
+			</text>
+			<hint>
+				Exception variable name
+			</hint>
+		</point>
+		<point name="exception">
+			<script language="Delphi">
+				InvokeCodeCompletion;
+			</script>
+			<text>
+				Exception
+			</text>
+			<hint>
+				Exception class type
+			</hint>
+		</point>
+		<description>
+			try except
+		</description>
+		<author>
+			Embarcadero
+		</author>
+		<code language="Delphi" context="methodbody" delimiter="|"><![CDATA[try
+|selected||*||end|
+except on |var|: |exception| do
+end;
+]]>
+		</code>
+	</template>
+</codetemplate>
+

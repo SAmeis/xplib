@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<codetemplate	xmlns="http://schemas.borland.com/Delphi/2005/codetemplates"
+				version="1.0.0">
+	<template name="classf" invoke="manual">
+		<point name="classname">
+			<text>
+				MyClass
+			</text>
+			<hint>
+				class name
+			</hint>
+		</point>
+		<point name="ancestor">
+			<script language="Delphi">
+				InvokeCodeCompletion;
+			</script>
+			<text>
+				Component
+			</text>
+			<hint>
+				ancestor name
+			</hint>
+		</point>
+		<description>
+			class declaration (full)
+		</description>
+		<author>
+			Embarcadero
+		</author>
+		<code language="Delphi" context="typedecl" delimiter="|"><![CDATA[T|classname| = class(T|ancestor|)
+private
+
+protected
+
+public
+|*||end|
+published 
+
+end;
+]]>
+		</code>
+	</template>
+</codetemplate>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<codetemplate	xmlns="http://schemas.borland.com/Delphi/2005/codetemplates"
+				version="1.0.0">
+	<template name="classc" invoke="manual">
+		<point name="classname">
+			<text>
+				MyClass
+			</text>
+			<hint>
+				class name
+			</hint>
+		</point>
+		<point name="ancestor">
+			<script language="Delphi">
+				InvokeCodeCompletion;
+			</script>
+			<hint>
+				ancestor name
+			</hint>
+			<text>
+				Object
+			</text>
+		</point>
+		<description>
+			class declaration (with Create/Destroy overrides)
+		</description>
+		<author>
+			Embarcadero
+		</author>
+		<script language="Delphi" onenter="false" onleave="true">
+			InvokeClassCompletion;
+		</script>
+		<code language="Delphi" context="typedecl" delimiter="|"><![CDATA[T|classname| = class(T|ancestor|)
+private
+
+protected
+
+public
+|*|constructor Create; override;
+|*|destructor Destroy; override;
+|*||end|
+published
+
+end;
+]]>
+		</code>
+	</template>
+</codetemplate>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<codetemplate	xmlns="http://schemas.borland.com/Delphi/2005/codetemplates"
+				version="1.0.0">
+	<template name="CreateC" invoke="manual">
+		<description>
+			TComponent descendant constructor
+		</description>
+		<author>
+			Embarcadero
+		</author>
+		<script language="Delphi" onenter="false" onleave="true">
+			InvokeClassCompletion;
+		</script>
+		<code language="Delphi" context="memberdecl" delimiter="|"><![CDATA[constructor Create(AOwner: TComponent); override;]]>
+		</code>
+	</template>
+</codetemplate>

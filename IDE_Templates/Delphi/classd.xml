@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<codetemplate	xmlns="http://schemas.borland.com/Delphi/2005/codetemplates"
+				version="1.0.0">
+	<template name="classd" invoke="manual">
+		<point name="classname">
+			<text>
+				MyClass
+			</text>
+			<hint>
+				class name
+			</hint>
+		</point>
+		<point name="ancestor">
+			<script language="Delphi">
+				InvokeCodeCompletion;
+			</script>
+			<text>
+				Object
+			</text>
+			<hint>
+				ancestor name
+			</hint>
+		</point>
+		<description>
+			class declaration (no parts)
+		</description>
+		<author>
+			Embarcadero
+		</author>
+		<code language="Delphi" context="typedecl" delimiter="|"><![CDATA[T|classname| = class(T|ancestor|)
+|*||end|
+end;
+]]>
+		</code>
+	</template>
+</codetemplate>

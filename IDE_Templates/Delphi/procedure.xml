@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<codetemplate	xmlns="http://schemas.borland.com/Delphi/2005/codetemplates"
+				version="1.0.0">
+	<template name="procedure" surround="true" invoke="manual">
+		<point name="name">
+			<text>
+				MyProcedure
+			</text>
+			<hint>
+				procedure name
+			</hint>
+		</point>
+		<point name="parms">
+			<hint>
+				procedure parameters
+			</hint>
+		</point>
+		<description>
+			procedure declaration
+		</description>
+		<author>
+			Embarcadero
+		</author>
+		<code language="Delphi" context="methoddecl" delimiter="|"><![CDATA[procedure |name|(|parms|);
+begin
+|selected||*||end|
+end;
+]]>
+		</code>
+	</template>
+</codetemplate>

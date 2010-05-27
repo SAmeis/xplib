@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<codetemplate	xmlns="http://schemas.borland.com/Delphi/2005/codetemplates"
+				version="1.0.0">
+	<template name="forin" surround="true" invoke="manual">
+		<script language="Delphi" onenter="false" onleave="false" onvalidate="true">
+			ValidateForTemplate;
+		</script>
+		<point name="ident">
+			<text>
+			MyElem
+			</text>
+			<hint>
+				collection element iterator variable
+			</hint>
+		</point>
+		<point name="collection">
+			<text>
+				MyList
+			</text>
+			<hint>
+				collection to iterate
+			</hint>
+		</point>
+		<description>
+			for in loop
+		</description>
+		<author>
+			Embarcadero
+		</author>
+		<script language="Delphi" onenter="false" onleave="true">
+			DeclareVariable(|ident|);
+		</script>
+		<code language="Delphi" context="methodbody" delimiter="|"><![CDATA[for |ident| in |collection| do
+begin
+|selected||*||end|
+end;
+]]>
+		</code>
+	</template>
+</codetemplate>

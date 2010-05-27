@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<codetemplate	xmlns="http://schemas.borland.com/Delphi/2005/codetemplates"
+				version="1.0.0">
+	<template name="function" surround="true" invoke="manual">
+		<point name="name">
+			<text>
+				MyFunction
+			</text>
+			<hint>
+				function name
+			</hint>
+		</point>
+		<point name="parms">
+			<hint>
+				function parameters
+			</hint>
+		</point>
+		<point name="retval">
+			<script language="Delphi">
+				InvokeCodeCompletion;
+			</script>
+			<text>
+				Integer
+			</text>
+			<hint>
+				function return value
+			</hint>
+		</point>
+		<description>
+			function declaration
+		</description>
+		<author>
+			Embarcadero
+		</author>
+		<code language="Delphi" context="methoddecl" delimiter="|"><![CDATA[function |name|(|parms|): |retval|;
+begin
+|selected||*||end|
+end;
+]]>
+		</code>
+	</template>
+</codetemplate>

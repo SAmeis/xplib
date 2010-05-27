@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<codetemplate	xmlns="http://schemas.borland.com/Delphi/2005/codetemplates"
+				version="1.0.0">
+	<template name="todo" invoke="auto">
+		<description>A live template to create a TODO item</description>
+		<author>Bill Mullen</author>
+		<point name="Owner">
+			<text>Owner</text>
+			<hint>Enter the person responsible for this item</hint>
+		</point>
+		<point name="Category">
+			<text>General</text>
+			<hint>Enter the category for this item</hint>
+		</point>
+		<point name="ActionItem">
+			<text>ActionItem</text>
+			<hint>Enter the action to be taken</hint>
+		</point>
+		<code language="Delphi" delimiter="|">
+			<![CDATA[{TODO -o|Owner| -c|Category| : |ActionItem|}|end|]]>
+		</code>
+	</template>
+</codetemplate>
+

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<codetemplate	xmlns="http://schemas.borland.com/Delphi/2005/codetemplates"
+				version="1.0.0">
+	<template name="var" invoke="manual">
+		<point name="ident">
+			<hint>
+				variable name to declare
+			</hint>
+			<text>
+				LVar
+			</text>
+		</point>
+		<point name="type">
+			<hint>
+				variable type
+			</hint>
+			<text>
+				Integer
+			</text>
+		</point>
+		<point name="last" editable="false">
+		</point>
+		<description>
+			declare variable
+		</description>
+		<author>
+			Embarcadero
+		</author>
+		<script language="Delphi" onenter="false" onleave="true">
+			DeclareVariable(|ident|, |type|);
+			RemoveTemplate;
+		</script>
+		<code language="Delphi" context="methodbody" delimiter="|"><![CDATA[|ident|: |type|;|last|]]>
+		</code>
+	</template>
+</codetemplate>

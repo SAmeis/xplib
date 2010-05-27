@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<codetemplate	xmlns="http://schemas.borland.com/Delphi/2005/codetemplates"
+				version="1.0.0">
+	<template name="try" surround="true" invoke="auto">
+		<point name="variable">
+			<text>
+				MyClass
+			</text>
+			<hint>
+				Variable name
+			</hint>
+		</point>
+		<point name="control">
+			<script language="Delphi">
+				InvokeCodeCompletion;
+			</script>
+			<text>
+				Component
+			</text>
+			<hint>
+				Class name
+			</hint>
+		</point>
+		<point name="createparms">
+			<hint>
+				constructor parameters
+			</hint>
+						<text>
+							(Self)
+						</text>
+		</point>
+		<description>
+			try finally (with Create/Free)
+		</description>
+		<author>
+			Embarcadero
+		</author>
+		<script language="Delphi" onenter="false" onleave="true">
+			DeclareVariable(|variable|);
+		</script>
+		<code language="Delphi" context="methodbody" delimiter="|"><![CDATA[|variable| := T|control|.Create|createparms|;
+try
+|selected||*||end|
+finally
+|*||variable|.Free;
+end;
+]]>
+		</code>
+	</template>
+</codetemplate>
+

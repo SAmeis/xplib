@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<codetemplate	xmlns="http://schemas.borland.com/Delphi/2005/codetemplates"
+				version="1.0.0">
+	<template name="{" surround="true" invoke="auto">
+		<description>
+			brace comment
+		</description>
+		<author>
+			Embarcadero
+		</author>
+		<code language="Delphi" delimiter="|"><![CDATA[{
+|selected||*||end|
+}]]>
+		</code>
+	</template>
+</codetemplate>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<codetemplate	xmlns="http://schemas.borland.com/Delphi/2005/codetemplates"
+				version="1.0.0">
+	<template name="repeat" surround="true" invoke="auto">
+		<point name="expression">
+			<hint>
+				loop condition
+			</hint>
+			<text>
+				True
+			</text>
+		</point>
+		<description>
+			repeat ... until loop
+		</description>
+		<author>
+			Embarcadero
+		</author>
+		<code language="Delphi" context="methodbody" delimiter="|"><![CDATA[repeat
+|selected||*||end|
+until (|expression|);]]>
+		</code>
+	</template>
+</codetemplate>
