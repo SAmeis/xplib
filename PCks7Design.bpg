@@ -9,9 +9,8 @@ MAKE = $(ROOT)\bin\make.exe -$(MAKEFLAGS) -f$**
 DCC = $(ROOT)\bin\dcc32.exe $**
 BRCC = $(ROOT)\bin\brcc32.exe $**
 #------------------------------------------------------------------------------
-PROJECTS = XPLib_7_0.bpl OPLib_7_0.bpl GDBLib_7_0.bpl DBXLib_7_0.bpl BDELib_7_0.bpl DBOLib_7_0.bpl zip_7_0.bpl FXLib_7_0.bpl \
-  GeneralLib_7_0.bpl StFLib_7_0.bpl INetLib_7_0.bpl ShellLib_7_0.bpl WinSysLib_7_0.bpl WinNetLib_7_0.bpl ECLib_7_0.bpl DlgLib_7_0.bpl \
-  BizLib_7_0.bpl AtualCorp_7_0.bpl SIAFLib_7_0.bpl TRELib_7_0.bpl
+PROJECTS = XPLib_7_0.bpl OPLib_7_0.bpl GDBLib_7_0.bpl BDELib_7_0.bpl FXLib_7_0.bpl GeneralLib_7_0.bpl StFLib_7_0.bpl \
+  INetLib_7_0.bpl ShellLib_7_0.bpl WinSysLib_7_0.bpl WinNetLib_7_0.bpl ECLib_7_0.bpl DlgLib_7_0.bpl TRELib_7_0.bpl
 #------------------------------------------------------------------------------
 default: $(PROJECTS)
 #------------------------------------------------------------------------------
@@ -23,12 +22,6 @@ OPLib_7_0.bpl: OPLib\Src\OPLib.dpk
   $(DCC)
 
 BDELib_7_0.bpl: BDELib\Src\BDELib.dpk
-  $(DCC)
-
-DBOLib_7_0.bpl: DBO\Src\DBOLib.dpk
-  $(DCC)
-
-zip_7_0.bpl: DelZip\Vcl\zip.dpk
   $(DCC)
 
 FXLib_7_0.bpl: FXLib\Src\FXLib.dpk
@@ -49,9 +42,6 @@ INetLib_7_0.bpl: INetLib\Src\INetLib.dpk
 ShellLib_7_0.bpl: ShellLib\Src\ShellLib.dpk
   $(DCC)
 
-SIAFLib_7_0.bpl: SIAFLib\Src\SIAFLib.dpk
-  $(DCC)
-
 WinSysLib_7_0.bpl: WinSysLib\Src\WinSysLib.dpk
   $(DCC)
 
@@ -62,15 +52,6 @@ ECLib_7_0.bpl: ECLib\Src\ECLib.dpk
   $(DCC)
 
 DlgLib_7_0.bpl: DlgLib\Src\DlgLib.dpk
-  $(DCC)
-
-BizLib_7_0.bpl: BizLib\Src\BizLib.dpk
-  $(DCC)
-
-DBXLib_7_0.bpl: DBXLib\Src\DBXLib.dpk
-  $(DCC)
-
-AtualCorp_7_0.bpl: AtualCorp\Src\AtualCorp.dpk
   $(DCC)
 
 TRELib_7_0.bpl: TRE\Src\TRELib.dpk
