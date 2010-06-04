@@ -18,12 +18,12 @@ type
     TPrnText = class
     private
         Fph :      THandle;
-        FDevMode : TDeviceMode;
+        FDevMode : TDeviceModeA;
         FPrJob :   dword;
         FPrnFile : TStringList;
         FPrnFilePath : string;
         FPrnDestiny : TPrnDestiny;
-        FPrnName : string;
+        FPrnName : AnsiString;
         FDataType : string;
 
         function GetOutFilePath : string;
@@ -49,7 +49,7 @@ type
       {{
        Caminho do arquivo para impressгo.
       }
-        property PrinterName : string read FPrnName;
+        property PrinterName : AnsiString read FPrnName;
       {{
        Nome da impressora.
       }
@@ -315,8 +315,8 @@ procedure TPrnText.StartPrint(const pNameDoc : string; pCopies : Integer);
 Revision: 29/7/2005
 }
 var
-    pdi : PDocInfo1;
-    pd :  TPrinterDefaults;
+    pdi : PDocInfo1A;
+    pd :  TPrinterDefaultsA;
 begin
     { TODO -oRoger -cFUTURE : Verificar o modo de tracao da impressora Epson }
 
@@ -332,14 +332,14 @@ begin
     // na Propiedade da Impressora->Avanзados->Processador de Impressгo.
     pd.pDevMode      := @FDevMode;
     pd.DesiredAccess := PRINTER_ACCESS_USE;
-    if OpenPrinter(PChar(FPrnName), Fph, @pd) then begin
+    if OpenPrinterA(PAnsiChar(FPrnName), Fph, @pd) then begin
         new(pdi);  { TODO -oRoger -cLIB : Tentar usar var local da pilha para alimentar este parametro da API do Spool do Windows }
         with pdi^ do begin
-            pDocName := PChar(pNameDoc);
+            pDocName := PAnsiChar(pNameDoc);
             if (FPrnFilePath = EmptyStr) then begin
                 pOutputFile := nil;
             end else begin
-                pOutputFile := PChar(FPrnFilePath);
+                pOutputFile := PAnsiChar(FPrnFilePath);
             end;
             pDatatype := PAnsiChar(FDataType);
         end;
@@ -473,7 +473,7 @@ Revision: 17/8/2006 - Roger
 begin
     SetLength(Result, Length(AnsiStr));
     if Length(Result) > 0 then begin
-        AnsiToOem(PChar(AnsiStr), PChar(Result));
+        AnsiToOem(PAnsiChar(AnsiStr), PAnsiChar(Result));
     end;
     //comantario original do autor russo
     //OemToAnsi преобразует 15->253, а AnsiToOem 253->15 не делает, поэтому теряется код сжатия (замечено на русской Windows 95)
@@ -483,7 +483,7 @@ end;
 class function TPrnText.WinString(const str : string) : string;
 begin
     if (str <> EmptyStr) then begin
-        OemToAnsi(PChar(str), PChar(str));
+        OemToAnsi(PAnsiChar(str), PAnsiChar(str));
         Result := str;
     end else begin
         Result := EmptyStr;

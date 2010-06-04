@@ -96,7 +96,7 @@ type
     private
         FBuffer : PAnsiChar;
         FBufferSize : Integer;
-        FEol :    string;
+        FEol :    AnsiString;
         FMaxBufferSize : Integer;
         FOffSet : Integer;
         FStream : TStream;
@@ -115,10 +115,10 @@ type
         function ReadStringWord : string;
         procedure Reset;
         procedure Seek(pos : int64);
-        function Search(const Str : string) : boolean; overload;
+        function Search(const Str : AnsiString) : boolean; overload;
         function Search(const Str : string; SkipStr : boolean) : boolean; overload;
         procedure SetWordDelimiters(WordDelimiters : PSysCharSet);
-        property Eol : string read FEol write FEol;
+        property Eol : AnsiString read FEol write FEol;
         property EoS : boolean read GetEoS;
         property Position : int64 read GetPosition;
         property Size : int64 read GetSize;
@@ -489,11 +489,20 @@ Retorna a palavra imediatamente seguinte ao ponteiro interno.
 AINDA A SER IMPLEMENTADO!!!
 }
 var
-    c : char;
+{$IFDEF VER210} //Delphi 201
+    c : Ansichar;
+{$ELSE}
+    c : Char;
+{$ENDIF}
+
 begin
     Result := EmptyStr;
     repeat
+        {$IFDEF VER210} //Delphi 2010
+          c      := ReadChar;
+        {$ELSE}
         c      := ReadChar;
+        {$ENDIF}
         Result := Result + c;
     until c in self.FWordDelimiters^;
     Delete(Result, Length(Result), 1);
@@ -691,7 +700,7 @@ begin
     end;
 end;
 
-function TBufferedStringStream.Search(const Str : string) : boolean;
+function TBufferedStringStream.Search(const Str : AnsiString) : boolean;
 {{
 Busca pela cadeia passada.
 Se encontrada posiciona o cursor no seu inicio e retorna true.

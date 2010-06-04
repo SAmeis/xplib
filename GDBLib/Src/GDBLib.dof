@@ -158,8 +158,9 @@ Item2=C:\sw\WorkDir\Lib.7
 Item3=C:\Local\Lib.7
 Item4=C:\Local\Lib.6
 [HistoryLists\hlOutputDirectorry]
-Count=1
-Item0=..\Debug
+Count=2
+Item0=S:\Src\Out
+Item1=..\Debug
 [HistoryLists\hlBPLOutput]
 Count=4
 Item0=$(DLib)
