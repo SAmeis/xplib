@@ -21,7 +21,7 @@
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Base)'!=''">
 			<DCC_ImageBase>00400000</DCC_ImageBase>
-			<DCC_DependencyCheckOutputName>..\..\..\Lib\D2010\XPLib.bpl</DCC_DependencyCheckOutputName>
+			<DCC_DependencyCheckOutputName>%DLib%\XPLib.bpl</DCC_DependencyCheckOutputName>
 			<DesignOnlyPackage>false</DesignOnlyPackage>
 			<DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
 			<DCC_DebugInformation>false</DCC_DebugInformation>
@@ -29,7 +29,7 @@
 			<DCC_UnitAlias>WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;WinTypes=Windows;WinProcs=Windows;$(DCC_UnitAlias)</DCC_UnitAlias>
 			<DCC_BplOutput>$(DLib)</DCC_BplOutput>
 			<DCC_Platform>x86</DCC_Platform>
-			<DCC_Description>AAA - XP-Lib - (Super Library)</DCC_Description>
+			<DCC_Description>AAA - XP-Lib - (Super Library)2</DCC_Description>
 			<DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
 			<GenPackage>true</GenPackage>
 			<DCC_S>false</DCC_S>
