@@ -9,16 +9,13 @@ MAKE = $(ROOT)\bin\make.exe -$(MAKEFLAGS) -f$**
 DCC = $(ROOT)\bin\dcc32.exe $**
 BRCC = $(ROOT)\bin\brcc32.exe $**
 #------------------------------------------------------------------------------
-PROJECTS = XPLib_7_0.bpl OPLib_7_0.bpl GDBLib_7_0.bpl BDELib_7_0.bpl FXLib_7_0.bpl GeneralLib_7_0.bpl StFLib_7_0.bpl \
+PROJECTS = XPLibD7.bpl OPLibD7_7_0.bpl GDBLib_7_0.bpl BDELib_7_0.bpl FXLib_7_0.bpl GeneralLib_7_0.bpl StFLib_7_0.bpl \
   INetLib_7_0.bpl ShellLib_7_0.bpl WinSysLib_7_0.bpl WinNetLib_7_0.bpl ECLib_7_0.bpl DlgLib_7_0.bpl TRELib_7_0.bpl
 #------------------------------------------------------------------------------
 default: $(PROJECTS)
 #------------------------------------------------------------------------------
 
-XPLib_7_0.bpl: XPLib\Src\XPLib.dpk
-  $(DCC)
-
-OPLib_7_0.bpl: OPLib\Src\OPLib.dpk
+OPLibD7_7_0.bpl: OPLib\Src\OPLibD7.dpk
   $(DCC)
 
 BDELib_7_0.bpl: BDELib\Src\BDELib.dpk
@@ -55,6 +52,9 @@ DlgLib_7_0.bpl: DlgLib\Src\DlgLib.dpk
   $(DCC)
 
 TRELib_7_0.bpl: TRE\Src\TRELib.dpk
+  $(DCC)
+
+XPLibD7.bpl: XPLib\Src\XPLibD7.dpk
   $(DCC)
 
 

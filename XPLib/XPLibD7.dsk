@@ -1,36 +1,36 @@
 [Closed Files]
-File_0=SourceModule,'C:\Sw\WorkDir\Pcks.7\XPLib\Demos\MasterDemo\AppLog\AppLogDemoForm.pas',0,1,19,66,28,1,0
-File_1=SourceModule,'C:\Sw\WorkDir\Pcks.7\XPLib\Src\FileHnd.pas',0,1,2281,28,2270,0,0
-File_2=SourceModule,'C:\Sw\WorkDir\Pcks.7\XPLib\Demos\MasterDemo\FileHnd\TestFileHnd.pas',0,1,22,1,38,0,0
+File_0=SourceModule,'C:\Sw\WorkDir\Pcks\XPLib\Demos\MasterDemo\AppLog\AppLogDemoForm.pas',0,1,19,66,28,1,0
+File_1=SourceModule,'C:\Sw\WorkDir\Pcks\XPLib\Src\FileHnd.pas',0,1,2281,28,2270,0,0
+File_2=SourceModule,'C:\Sw\WorkDir\Pcks\XPLib\Demos\MasterDemo\FileHnd\TestFileHnd.pas',0,1,22,1,38,0,0
 File_3=SourceModule,'c:\arquivos de programas\borland\delphi7\source\rtl\Sys\sysutils.pas',0,1,670,1,688,0,0
-File_4=SourceModule,'C:\Sw\WorkDir\Pcks.7\XPLib\src\AppLog.pas',0,1,420,90,423,0,0
-File_5=SourceModule,'C:\Sw\WorkDir\Pcks.7\XPLib\Src\CtrlsHnd.pas',0,1,197,83,199,0,0
+File_4=SourceModule,'C:\Sw\WorkDir\Pcks\XPLib\src\AppLog.pas',0,1,420,90,423,0,0
+File_5=SourceModule,'C:\Sw\WorkDir\Pcks\XPLib\Src\CtrlsHnd.pas',0,1,197,83,199,0,0
 File_6=SourceModule,'c:\arquivos de programas\borland\delphi6\source\vcl\Forms.pas',0,1,6928,14,6936,0,0
 File_7=SourceModule,'S:\Src\DELPHI\Pcks.6\XPLib\Src\WinSaver.pas',0,1,1,40,12,0,0
 
 [Modules]
-Module0=C:\Sw\WorkDir\Pcks.7\XPLib\Demos\MasterDemo\WinRegistry\WinRegDemo.pas
-Module1=C:\Sw\WorkDir\Pcks.7\XPLib\Demos\MasterDemo\MasterDemoForm.pas
-Module2=C:\Sw\WorkDir\Pcks.7\XPLib\Demos\MasterDemo\CtrlsHnd\TestCtrlsHnd.pas
+Module0=C:\Sw\WorkDir\Pcks\XPLib\Demos\MasterDemo\WinRegistry\WinRegDemo.pas
+Module1=C:\Sw\WorkDir\Pcks\XPLib\Demos\MasterDemo\MasterDemoForm.pas
+Module2=C:\Sw\WorkDir\Pcks\XPLib\Demos\MasterDemo\CtrlsHnd\TestCtrlsHnd.pas
 Module3=c:\arquivos de programas\borland\delphi7\source\rtl\Sys\system.pas
 Module4=c:\arquivos de programas\borland\delphi7\source\rtl\common\Registry.pas
-Module5=C:\Sw\WorkDir\Pcks.7\XPLib\Src\WinReg32.pas
-Module6=C:\Sw\WorkDir\Pcks.7\XPLib\Src\XPLib.dpk
+Module5=C:\Sw\WorkDir\Pcks\XPLib\Src\WinReg32.pas
+Module6=C:\Sw\WorkDir\Pcks\XPLib\Src\XPLib.dpk
 Count=7
 EditWindowCount=1
 PackageWindowCount=1
 
-[C:\Sw\WorkDir\Pcks.7\XPLib\Demos\MasterDemo\WinRegistry\WinRegDemo.pas]
+[C:\Sw\WorkDir\Pcks\XPLib\Demos\MasterDemo\WinRegistry\WinRegDemo.pas]
 ModuleType=SourceModule
 FormState=0
 FormOnTop=0
 
-[C:\Sw\WorkDir\Pcks.7\XPLib\Demos\MasterDemo\MasterDemoForm.pas]
+[C:\Sw\WorkDir\Pcks\XPLib\Demos\MasterDemo\MasterDemoForm.pas]
 ModuleType=SourceModule
 FormState=0
 FormOnTop=0
 
-[C:\Sw\WorkDir\Pcks.7\XPLib\Demos\MasterDemo\CtrlsHnd\TestCtrlsHnd.pas]
+[C:\Sw\WorkDir\Pcks\XPLib\Demos\MasterDemo\CtrlsHnd\TestCtrlsHnd.pas]
 ModuleType=SourceModule
 FormState=0
 FormOnTop=0
@@ -45,21 +45,21 @@ ModuleType=SourceModule
 FormState=0
 FormOnTop=0
 
-[C:\Sw\WorkDir\Pcks.7\XPLib\Src\WinReg32.pas]
+[C:\Sw\WorkDir\Pcks\XPLib\Src\WinReg32.pas]
 ModuleType=SourceModule
 FormState=0
 FormOnTop=0
 
-[C:\Sw\WorkDir\Pcks.7\XPLib\Src\XPLib.dpk]
+[C:\Sw\WorkDir\Pcks\XPLib\Src\XPLib.dpk]
 ModuleType=PackageEditModule
 FormState=0
 FormOnTop=0
 
-[C:\Sw\WorkDir\Pcks.7\XPLib\XPLib.bpg]
+[C:\Sw\WorkDir\Pcks\XPLib\XPLib.bpg]
 FormState=0
 FormOnTop=0
 
-[C:\Sw\WorkDir\Pcks.7\XPLib\Demos\MasterDemo\XPLibDemo.dpr]
+[C:\Sw\WorkDir\Pcks\XPLib\Demos\MasterDemo\XPLibDemo.dpr]
 FormState=0
 FormOnTop=0
 
@@ -93,35 +93,35 @@ BottomPanelClients=DockSite1
 BottomPanelData=0000040000000000000000000000000000000000000000000001000000000000000009000000446F636B5369746531FFFFFFFF
 
 [View0]
-Module=C:\Sw\WorkDir\Pcks.7\XPLib\Src\XPLib.dpk
+Module=C:\Sw\WorkDir\Pcks\XPLib\Src\XPLib.dpk
 CursorX=1
 CursorY=1
 TopLine=1
 LeftCol=1
 
 [View1]
-Module=C:\Sw\WorkDir\Pcks.7\XPLib\Demos\MasterDemo\MasterDemoForm.pas
+Module=C:\Sw\WorkDir\Pcks\XPLib\Demos\MasterDemo\MasterDemoForm.pas
 CursorX=1
 CursorY=47
 TopLine=1
 LeftCol=1
 
 [View2]
-Module=C:\Sw\WorkDir\Pcks.7\XPLib\Demos\MasterDemo\CtrlsHnd\TestCtrlsHnd.pas
+Module=C:\Sw\WorkDir\Pcks\XPLib\Demos\MasterDemo\CtrlsHnd\TestCtrlsHnd.pas
 CursorX=17
 CursorY=77
 TopLine=52
 LeftCol=1
 
 [View3]
-Module=C:\Sw\WorkDir\Pcks.7\XPLib\Demos\MasterDemo\WinRegistry\WinRegDemo.pas
+Module=C:\Sw\WorkDir\Pcks\XPLib\Demos\MasterDemo\WinRegistry\WinRegDemo.pas
 CursorX=52
 CursorY=64
 TopLine=48
 LeftCol=1
 
 [View4]
-Module=C:\Sw\WorkDir\Pcks.7\XPLib\Src\WinReg32.pas
+Module=C:\Sw\WorkDir\Pcks\XPLib\Src\WinReg32.pas
 CursorX=101
 CursorY=480
 TopLine=470
@@ -161,7 +161,7 @@ TextLabels=1
 Toolbar=1
 SectionWidth0=150
 SectionWidth1=210
-Module=C:\Sw\WorkDir\Pcks.7\XPLib\Src\XPLib.dpk
+Module=C:\Sw\WorkDir\Pcks\XPLib\Src\XPLib.dpk
 
 [Watches]
 Count=1
@@ -187,9 +187,9 @@ Dockable=1
 
 [Breakpoints]
 Count=3
-Breakpoint0='C:\Sw\WorkDir\Pcks.7\XPLib\Src\FileHnd.pas',2275,'',0,1,'',1,0,0,'',1,'','',''
-Breakpoint1='C:\Sw\WorkDir\Pcks.7\XPLib\Src\WinReg32.pas',484,'',0,1,'',1,0,0,'',1,'','',''
-Breakpoint2='C:\Sw\WorkDir\Pcks.7\XPLib\Demos\MasterDemo\WinRegistry\WinRegDemo.pas',57,'',0,1,'',1,0,0,'',1,'','',''
+Breakpoint0='C:\Sw\WorkDir\Pcks\XPLib\Src\FileHnd.pas',2275,'',0,1,'',1,0,0,'',1,'','',''
+Breakpoint1='C:\Sw\WorkDir\Pcks\XPLib\Src\WinReg32.pas',484,'',0,1,'',1,0,0,'',1,'','',''
+Breakpoint2='C:\Sw\WorkDir\Pcks\XPLib\Demos\MasterDemo\WinRegistry\WinRegDemo.pas',57,'',0,1,'',1,0,0,'',1,'','',''
 
 [AddressBreakpoints]
 Count=0

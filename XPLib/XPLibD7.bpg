@@ -9,12 +9,12 @@ MAKE = $(ROOT)\bin\make.exe -$(MAKEFLAGS) -f$**
 DCC = $(ROOT)\bin\dcc32.exe $**
 BRCC = $(ROOT)\bin\brcc32.exe $**
 #------------------------------------------------------------------------------
-PROJECTS = XPLib_7_0.bpl XPLibDemo.exe
+PROJECTS = XPLibD7.bpl XPLibDemo.exe
 #------------------------------------------------------------------------------
 default: $(PROJECTS)
 #------------------------------------------------------------------------------
 
-XPLib_7_0.bpl: Src\XPLib.dpk
+XPLibD7.bpl: Src\XPLibD7.dpk
   $(DCC)
 
 XPLibDemo.exe: Demos\MasterDemo\XPLibDemo.dpr
