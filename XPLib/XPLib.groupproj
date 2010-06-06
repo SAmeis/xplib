@@ -1,9 +1,9 @@
 ﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 		<PropertyGroup>
-			<ProjectGuid>{D7FC5890-5637-447A-8825-C61888ED8210}</ProjectGuid>
+			<ProjectGuid>{D659CDC6-D65D-4B98-993C-C78C7F2344E7}</ProjectGuid>
 		</PropertyGroup>
 		<ItemGroup>
-			<Projects Include="Src\XPLib.dproj">
+			<Projects Include="Src\XPLibD14.dproj">
 				<Dependencies/>
 			</Projects>
 			<Projects Include="Demos\MasterDemo\XPLibDemo.dproj">
@@ -17,14 +17,14 @@
 				<Default.Personality/>
 			</BorlandProject>
 		</ProjectExtensions>
-		<Target Name="XPLib">
-			<MSBuild Projects="Src\XPLib.dproj"/>
+		<Target Name="XPLibD14">
+			<MSBuild Projects="Src\XPLibD14.dproj"/>
 		</Target>
-		<Target Name="XPLib:Clean">
-			<MSBuild Targets="Clean" Projects="Src\XPLib.dproj"/>
+		<Target Name="XPLibD14:Clean">
+			<MSBuild Targets="Clean" Projects="Src\XPLibD14.dproj"/>
 		</Target>
-		<Target Name="XPLib:Make">
-			<MSBuild Targets="Make" Projects="Src\XPLib.dproj"/>
+		<Target Name="XPLibD14:Make">
+			<MSBuild Targets="Make" Projects="Src\XPLibD14.dproj"/>
 		</Target>
 		<Target Name="XPLibDemo">
 			<MSBuild Projects="Demos\MasterDemo\XPLibDemo.dproj"/>
@@ -36,13 +36,13 @@
 			<MSBuild Targets="Make" Projects="Demos\MasterDemo\XPLibDemo.dproj"/>
 		</Target>
 		<Target Name="Build">
-			<CallTarget Targets="XPLib;XPLibDemo"/>
+			<CallTarget Targets="XPLibD14;XPLibDemo"/>
 		</Target>
 		<Target Name="Clean">
-			<CallTarget Targets="XPLib:Clean;XPLibDemo:Clean"/>
+			<CallTarget Targets="XPLibD14:Clean;XPLibDemo:Clean"/>
 		</Target>
 		<Target Name="Make">
-			<CallTarget Targets="XPLib:Make;XPLibDemo:Make"/>
+			<CallTarget Targets="XPLibD14:Make;XPLibDemo:Make"/>
 		</Target>
 		<Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 	</Project>
