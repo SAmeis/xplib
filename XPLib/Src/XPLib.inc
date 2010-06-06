@@ -9,13 +9,6 @@
 
 //************** START COMMON PART **************
 
-//***** Definicao do sufixo de biblioteca de modo a diferenciar as versoes do delhi de modo a evitar conflito de nomes
-{$IFDEF VER210}     //Delphi 2010
-{$LIBSUFFIX '_14_0'}
-{$ENDIF}
-
-
-
 //Alinhamento de 64 bits ( para os novos processadores e os atuais )
 {$A8}
 

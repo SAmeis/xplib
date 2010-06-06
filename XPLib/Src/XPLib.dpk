@@ -26,7 +26,7 @@ package XPLib;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'AAA - XP-Lib - (Super Library)2'}
+{$DESCRIPTION 'AAA - XP-Lib - (Super Library)'}
 {$IMPLICITBUILD OFF}
 
 
