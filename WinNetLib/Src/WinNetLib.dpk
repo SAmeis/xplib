@@ -1,9 +1,4 @@
-//*** NOTAS ***
-//Para dispor das dcu's de depuracao set DEBUG_DCU e inclua a linha abaixo na ultima posicao das diretivas do pacote. Alterando o
-// caminho de saida
-  { $ DEFINE DEBUG_DCU }
-  { $ I DEBUG.INC} //A linha acima deve suceder a ultima para DCU's de depuracao do pacote
-
+{$I WinNetLib.inc }
 
 package WinNetLib;
 

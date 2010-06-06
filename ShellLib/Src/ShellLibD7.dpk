@@ -1,0 +1,48 @@
+{$I ShellLib.inc}
+
+package ShellLibD7;
+
+{$R *.res}
+{$R 'ShellLib.dcr'}
+{$ALIGN 8}
+{$ASSERTIONS OFF}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS OFF}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'AAA - Shell Tools - Delphi 7'}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  vcl,
+  vclx,
+  DesignIDE,
+  XPLibD7;
+
+{%File 'ShellLib.inc'}
+
+contains
+  ShellFilesHnd in 'ShellFilesHnd.pas',
+  ShellFileOper in 'ShellFileOper.pas',
+  ShellPIDL in 'ShellPIDL.pas',
+  ShellDlgReg in 'ShellDlgReg.pas',
+  ShellDialogs in 'ShellDialogs.pas',
+  ShellShlDlg in 'ShellShlDlg.pas';
+
+end.

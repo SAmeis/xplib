@@ -1,0 +1,52 @@
+{$I ECLib.inc }
+
+package ECLibD7;
+
+{$R *.res}
+{$R 'ECLib.dcr'}
+{$ALIGN 8}
+{$ASSERTIONS OFF}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS OFF}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'AAA - Enhanced Controls - Delphi 7'}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  vcl,
+  vclx,
+  XPLibD7,
+  OPLibD7;
+
+contains
+  CpltComboBox in 'CpltComboBox.pas',
+  CURREDT in 'CurrEdt.pas',
+  StpPanel in 'StpPanel.pas',
+  RsRuler in 'RsRuler.pas',
+  EnhGrids in 'EnhGrids.pas',
+  TrcCtrls in 'TrcCtrls.pas',
+  Wrapgrid in 'WrapGrid.PAS',
+  Operatrs in 'Operatrs.pas',
+  CheckCombo in 'CheckCombo.pas',
+  DosMove in 'DOSMOVE.PAS',
+  XPSpinControls in 'XPSpinControls.pas',
+  DsgECLibRegister in 'DsgECLibRegister.pas';
+
+end.

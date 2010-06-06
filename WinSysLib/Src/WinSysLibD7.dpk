@@ -1,0 +1,57 @@
+{$I WinSysLib.inc }
+
+package WinSysLibD7;
+
+{$R *.res}
+{$R 'WinSysLib.dcr'}
+{$ALIGN 8}
+{$ASSERTIONS OFF}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS OFF}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'AAA - Windows Systems Tools - Delphi 7'}
+{$IMPLICITBUILD OFF}
+{$DEFINE WINNT}
+
+requires
+  rtl,
+  vcl,
+  vclx,
+  XPLibD7,
+  StFLibD7,
+  vcljpg,
+  vclactnband,
+  designide;
+
+contains
+  WinDisks in 'WinDisks.pas',
+  WinFilesHnd in 'WinFilesHnd.pas',
+  WinHnd in 'WinHnd.pas',
+  Win_dos in 'Win_DOS.pas',
+  Winsaver in 'WinSaver.pas',
+  WinStealth in 'WinStealth.pas',
+  WinTrayIcon in 'WinTrayIcon.pas',
+  FileInfo in 'FileInfo.pas',
+  WinMMedia in 'WinMMedia.PAS',
+  WinNetHnd in 'WinNetHnd.pas',
+  WinProcess in 'WinProcess.pas',
+  WinODBC in 'WinODBC.pas',
+  InstanceMonitor in 'InstanceMonitor.pas';
+
+end.

@@ -135,10 +135,11 @@ ProductName=
 ProductVersion=7.2.2005.2
 Comments=Rogerlais Andrade
 [HistoryLists\hlConditionals]
-Count=3
+Count=4
 Item0=RELEASE
-Item1=DEBUG;DEBUG_ALL
-Item2=DEBUG_DCU
+Item1=WINNT
+Item2=DEBUG;DEBUG_ALL
+Item3=DEBUG_DCU
 [HistoryLists\hlUnitAliases]
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
@@ -158,14 +159,16 @@ Item2=C:\sw\WorkDir\Lib.7
 Item3=C:\Local\Lib.7
 Item4=C:\Local\Lib.6
 [HistoryLists\hlOutputDirectorry]
-Count=1
-Item0=..\Debug
+Count=2
+Item0=S:\Src\Out
+Item1=..\Debug
 [HistoryLists\hlBPLOutput]
-Count=4
+Count=5
 Item0=$(DLib)
-Item1=C:\sw\WorkDir\Lib.7
-Item2=C:\Local\Lib.7
-Item3=C:\Local\Lib.6
+Item1=$(DLib)$
+Item2=C:\sw\WorkDir\Lib.7
+Item3=C:\Local\Lib.7
+Item4=C:\Local\Lib.6
 [HistoryLists\hlDCPOutput]
 Count=4
 Item0=$(DLib)

@@ -161,11 +161,12 @@ Item4=C:\Local\Lib.6
 Count=1
 Item0=..\Debug
 [HistoryLists\hlBPLOutput]
-Count=4
-Item0=$(DLib)
-Item1=C:\sw\WorkDir\Lib.7
-Item2=C:\Local\Lib.7
-Item3=C:\Local\Lib.6
+Count=5
+Item0=$(DLib)$
+Item1=$(DLib)
+Item2=C:\sw\WorkDir\Lib.7
+Item3=C:\Local\Lib.7
+Item4=C:\Local\Lib.6
 [HistoryLists\hlDCPOutput]
 Count=4
 Item0=$(DLib)

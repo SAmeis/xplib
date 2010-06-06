@@ -9,8 +9,8 @@ MAKE = $(ROOT)\bin\make.exe -$(MAKEFLAGS) -f$**
 DCC = $(ROOT)\bin\dcc32.exe $**
 BRCC = $(ROOT)\bin\brcc32.exe $**
 #------------------------------------------------------------------------------
-PROJECTS = XPLibD7.bpl OPLibD7_7_0.bpl GDBLib_7_0.bpl BDELib_7_0.bpl FXLib_7_0.bpl GeneralLib_7_0.bpl StFLib_7_0.bpl \
-  INetLib_7_0.bpl ShellLib_7_0.bpl WinSysLib_7_0.bpl WinNetLib_7_0.bpl ECLib_7_0.bpl DlgLib_7_0.bpl TRELib_7_0.bpl
+PROJECTS = XPLibD7.bpl OPLibD7_7_0.bpl GDBLib_7_0.bpl BDELibD7_7_0.bpl FXLibD7_7_0.bpl GeneralLibD7_7_0.bpl StFLibD7_7_0.bpl \
+  INetLibD7_7_0.bpl ShellLibD7_7_0.bpl WinSysLibD7_7_0.bpl WinNetLibD7_7_0.bpl ECLibD7_7_0.bpl DlgLibD7_7_0.bpl TRELibD7_7_0.bpl
 #------------------------------------------------------------------------------
 default: $(PROJECTS)
 #------------------------------------------------------------------------------
@@ -18,40 +18,40 @@ default: $(PROJECTS)
 OPLibD7_7_0.bpl: OPLib\Src\OPLibD7.dpk
   $(DCC)
 
-BDELib_7_0.bpl: BDELib\Src\BDELib.dpk
+BDELibD7_7_0.bpl: BDELib\Src\BDELibD7.dpk
   $(DCC)
 
-FXLib_7_0.bpl: FXLib\Src\FXLib.dpk
+FXLibD7_7_0.bpl: FXLib\Src\FXLibD7.dpk
   $(DCC)
 
 GDBLib_7_0.bpl: GDBLib\Src\GDBLib.dpk
   $(DCC)
 
-GeneralLib_7_0.bpl: GeneralLib\Src\GeneralLib.dpk
+GeneralLibD7_7_0.bpl: GeneralLib\Src\GeneralLibD7.dpk
   $(DCC)
 
-StFLib_7_0.bpl: StFLib\Src\StFLib.dpk
+StFLibD7_7_0.bpl: StFLib\Src\StFLibD7.dpk
   $(DCC)
 
-INetLib_7_0.bpl: INetLib\Src\INetLib.dpk
+INetLibD7_7_0.bpl: INetLib\Src\INetLibD7.dpk
   $(DCC)
 
-ShellLib_7_0.bpl: ShellLib\Src\ShellLib.dpk
+ShellLibD7_7_0.bpl: ShellLib\Src\ShellLibD7.dpk
   $(DCC)
 
-WinSysLib_7_0.bpl: WinSysLib\Src\WinSysLib.dpk
+WinSysLibD7_7_0.bpl: WinSysLib\Src\WinSysLibD7.dpk
   $(DCC)
 
-WinNetLib_7_0.bpl: WinNetLib\Src\WinNetLib.dpk
+WinNetLibD7_7_0.bpl: WinNetLib\Src\WinNetLibD7.dpk
   $(DCC)
 
-ECLib_7_0.bpl: ECLib\Src\ECLib.dpk
+ECLibD7_7_0.bpl: ECLib\Src\ECLibD7.dpk
   $(DCC)
 
-DlgLib_7_0.bpl: DlgLib\Src\DlgLib.dpk
+DlgLibD7_7_0.bpl: DlgLib\Src\DlgLibD7.dpk
   $(DCC)
 
-TRELib_7_0.bpl: TRE\Src\TRELib.dpk
+TRELibD7_7_0.bpl: TRE\Src\TRELibD7.dpk
   $(DCC)
 
 XPLibD7.bpl: XPLib\Src\XPLibD7.dpk
