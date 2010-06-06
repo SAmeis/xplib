@@ -1,6 +1,6 @@
 {$I OPLib.inc}
 
-package OPLib;
+package OPLibD14;
 
 {$R *.res}
 {$R 'OPLib.dcr'}
@@ -25,8 +25,7 @@ package OPLib;
 {$WRITEABLECONST ON}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'AAA - Object Persistence Library - (Super Library)'}
-{$LIBSUFFIX '_7_0'}
+{$DESCRIPTION 'AAA - Object Persistence Library - Delphi 2010'}
 {$IMPLICITBUILD OFF}
 
 requires
