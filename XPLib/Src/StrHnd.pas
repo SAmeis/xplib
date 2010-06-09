@@ -124,10 +124,29 @@ type
         property Size : int64 read GetSize;
     end;
 
+
+{$IFDEF VER150} //Delphi 7
+function AnsiStrAlloc(Size: Cardinal): PAnsiChar;
+{$ENDIF}
+
+
+
 implementation
 
 uses
     Math, Str_Pas, StrUtils;
+
+{$IFDEF VER150} //Delphi 7
+function AnsiStrAlloc(Size: Cardinal): PAnsiChar;
+begin
+  Inc(Size, SizeOf(Cardinal));
+  GetMem(Result, Size);              
+  Cardinal(Pointer(Result)^) := Size;
+  Inc(Result, SizeOf(Cardinal));
+  system
+end;
+{$ENDIF}
+
 
 {-**********************************************************************
 ************************************************************************
