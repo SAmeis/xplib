@@ -199,7 +199,7 @@ type
     private
         { Private-Deklarationen }
         FHeight :   integer;
-        FText :     string;
+        FText :     AnsiString;
         FTop :      integer;
         FLeft :     integer;
         FModul :    integer;
@@ -226,7 +226,7 @@ type
         function Code_2_5_interleaved : string;
         function Code_2_5_industrial : string;
         function Code_2_5_matrix : string;
-        function Code_39 : string;
+        function Code_39 : AnsiString;
         function Code_39Extended : string;
         function Code_128 : string;
         function Code_93 : string;
@@ -254,7 +254,7 @@ type
         procedure SetRatio(const Value : double);
         procedure SetTyp(const Value : TBarcodeType);
         procedure SetAngle(const Value : double);
-        procedure SetText(const Value : string);
+        procedure SetText(const Value : AnsiString);
         procedure SetShowText(const Value : TBarcodeOption);
         procedure SetTop(const Value : integer);
         procedure SetLeft(const Value : integer);
@@ -285,7 +285,7 @@ type
         { Published-Deklarationen }
         { Height of Barcode (Pixel)}
         property Height : integer Read FHeight Write SetHeight;
-        property Text : string Read FText Write SetText;
+        property Text : AnsiString Read FText Write SetText;
         property Top : integer Read FTop Write SetTop;
         property Left : integer Read FLeft Write SetLeft;
         { Width of the smallest line in a Barcode }
@@ -1078,13 +1078,13 @@ begin
 end;
 
 
-function TAsBarcode.Code_39 : string;
+function TAsBarcode.Code_39 : AnsiString;
 
 type
     TCode39 =
         record
-        c:    char;
-        Data: array[0..9] of char;
+        c:    AnsiChar;
+        Data: array[0..9] of AnsiChar;
         chk:  shortint;
     end;
 
@@ -1137,7 +1137,7 @@ const
         );
 
 
-    function FindIdx(z : char) : integer;
+    function FindIdx(z : AnsiChar) : integer;
     var
         i : integer;
     begin
@@ -1232,7 +1232,7 @@ function TAsBarcode.Code_128 : string;
 type
     TCode128 =
         record
-        a, b: char;
+        a, b: AnsiChar;
         c:    string[2];
         Data: string[6];
     end;
@@ -1350,10 +1350,10 @@ const
     Stop   = '2331112';
 
     {find Code 128 Codeset A or B}
-    function Find_Code128AB(c : char) : integer;
+    function Find_Code128AB(c : AnsiChar) : integer;
     var
         i : integer;
-        v : char;
+        v : AnsiChar;
     begin
         for i := 0 to High(tabelle_128) do begin
             if FTyp = bcCode128A then    begin
@@ -1476,8 +1476,8 @@ function TAsBarcode.Code_93 : string;
 type
     TCode93 =
         record
-        c:    char;
-        Data: array[0..5] of char;
+        c:    AnsiChar;
+        Data: array[0..5] of AnsiChar;
     end;
 
 const
@@ -1533,7 +1533,7 @@ const
 
 
     {find Code 93}
-    function Find_Code93(c : char) : integer;
+    function Find_Code93(c : AnsiChar) : integer;
     var
         i : integer;
     begin
@@ -1727,8 +1727,8 @@ function TAsBarcode.Code_Codabar : string;
 type
     TCodabar =
         record
-        c:    char;
-        Data: array[0..6] of char;
+        c:    AnsiChar;
+        Data: array[0..6] of AnsiChar;
     end;
 
 const
@@ -1758,7 +1758,7 @@ const
 
 
     {find Codabar}
-    function Find_Codabar(c : char) : integer;
+    function Find_Codabar(c : AnsiChar) : integer;
     var
         i : integer;
     begin
@@ -2313,7 +2313,7 @@ begin
     end;
 end;
 
-procedure TAsBarcode.SetText(const Value : string);
+procedure TAsBarcode.SetText(const Value : AnsiString);
 begin
     if Value <> FText then   begin
         FText := Value;

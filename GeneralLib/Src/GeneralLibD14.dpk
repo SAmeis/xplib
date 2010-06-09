@@ -1,6 +1,6 @@
 {$I GeneralLib.inc }
 
-package GeneralLib;
+package GeneralLibD14;
 
 {$R *.res}
 {$R 'GeneralLib.dcr'}
@@ -25,8 +25,7 @@ package GeneralLib;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'AAA - General Imports - ( Super Library )'}
-{$LIBSUFFIX '_7_0'}
+{$DESCRIPTION 'AAA - General Imports - Delphi 2010'}
 {$IMPLICITBUILD OFF}
 
 requires
@@ -34,11 +33,12 @@ requires
   vcl,
   dbrtl,
   bdertl,
-  qrpt,
-  vclx;
+  vclx,
+  vclimg,
+  QR5RunD2010;
 
 contains
-  QrAConst in 'Qraconst.pas',
+  Qraconst in 'Qraconst.pas',
   QrAngLbl in 'QrAngLbl.pas',
   Barcode in 'Barcode.pas',
   qrBarcode in 'qrBarcode.pas',
