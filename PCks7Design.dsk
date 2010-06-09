@@ -1,39 +1,73 @@
 [Closed Files]
-File_0=SourceModule,'C:\Sw\WorkDir\Pcks\XPLib\Src\XPLibD7.inc',0,1,1,1,12,0,0
-File_1=SourceModule,'C:\Sw\WorkDir\Pcks.7\WinSysLib\Src\WinFilesHnd.pas',0,1,3,1,6,0,0
-File_2=SourceModule,'C:\Sw\WorkDir\Pcks.7\AtualCorp\Src\Modules\acDMTransactionMgr.pas',0,1,362,94,369,0,0
-File_3=SourceModule,'C:\Sw\WorkDir\Pcks.7\DlgLib\Src\SimpleProgress.pas',0,1,14,74,19,1,0
-File_4=SourceModule,'C:\Sw\WorkDir\Pcks.7\WinSysLib\Src\InstanceMonitor.pas',0,1,75,17,85,0,0
-File_5=SourceModule,'C:\Sw\WorkDir\Pcks.7\XPLib\Src\APIHnd.pas',0,1,2,61,18,0,0
-File_6=SourceModule,'C:\Sw\WorkDir\Pcks.7\WinSysLib\Src\WinODBC.pas',0,1,1,52,7,0,0
-File_7=SourceModule,'C:\Sw\WorkDir\Pcks.7\WinSysLib\Src\WinHnd.pas',0,1,21,60,37,0,0
-File_8=SourceModule,'C:\Sw\WorkDir\Pcks.7\WinNetLib\Src\WNetExHnd.pas',0,1,83,17,98,0,0
-File_9=SourceModule,'C:\Sw\WorkDir\Pcks.7\DelZip\Vcl\SFX\SFXInterface.pas',0,1,1,63,7,0,0
+File_0=SourceModule,'c:\program files\borland\delphi7\source\rtl\Sys\System.pas',0,1,33,19,58,0,0
+File_1=SourceModule,'C:\Sw\WorkDir\Pcks\GeneralLib\Src\GeneralLib.inc',0,1,1,16,1,0,0
+File_2=SourceModule,'C:\Sw\WorkDir\Pcks\FXLib\Src\FXLib.inc',0,1,1,1,1,0,0
+File_3=SourceModule,'C:\Sw\WorkDir\Pcks\OPLib\Src\OPLibD7.inc',0,1,1,43,49,0,0
+File_4=SourceModule,'C:\Sw\WorkDir\Pcks\XPLib\Src\XPLibD7.inc',0,1,1,1,12,0,0
+File_5=SourceModule,'C:\Sw\WorkDir\Pcks.7\WinSysLib\Src\WinFilesHnd.pas',0,1,3,1,6,0,0
+File_6=SourceModule,'C:\Sw\WorkDir\Pcks.7\AtualCorp\Src\Modules\acDMTransactionMgr.pas',0,1,362,94,369,0,0
+File_7=SourceModule,'C:\Sw\WorkDir\Pcks.7\DlgLib\Src\SimpleProgress.pas',0,1,14,74,19,1,0
+File_8=SourceModule,'C:\Sw\WorkDir\Pcks.7\WinSysLib\Src\InstanceMonitor.pas',0,1,75,17,85,0,0
+File_9=SourceModule,'C:\Sw\WorkDir\Pcks.7\XPLib\Src\APIHnd.pas',0,1,2,61,18,0,0
 
 [Modules]
-Module0=C:\Sw\WorkDir\Pcks\XPLib\Src\XPLibD7.dpk
-Module1=C:\Sw\WorkDir\Pcks\OPLib\Src\OPLibD7.dpk
-Module2=C:\Sw\WorkDir\Pcks\OPLib\Src\OPLibD7.inc
-Count=3
+Module0=C:\Sw\WorkDir\Pcks\XPLib\Src\StrHnd.pas
+Module1=C:\Sw\WorkDir\Pcks\StFLib\Src\AppSettings.pas
+Module2=C:\Sw\WorkDir\Pcks\StFLib\Src\StFLibD7.dpk
+Module3=C:\Sw\WorkDir\Pcks\DlgLib\Src\ThreadProgressForm.pas
+Count=4
 EditWindowCount=1
-PackageWindowCount=14
+PackageWindowCount=15
 
-[C:\Sw\WorkDir\Pcks\XPLib\Src\XPLibD7.dpk]
-ModuleType=PackageEditModule
-FormState=0
-FormOnTop=0
-
-[C:\Sw\WorkDir\Pcks\OPLib\Src\OPLibD7.dpk]
-ModuleType=PackageEditModule
-FormState=0
-FormOnTop=0
-
-[C:\Sw\WorkDir\Pcks\OPLib\Src\OPLibD7.inc]
+[C:\Sw\WorkDir\Pcks\XPLib\Src\StrHnd.pas]
 ModuleType=SourceModule
 FormState=0
 FormOnTop=0
 
-[C:\Sw\WorkDir\Pcks\TRE\Src\TRELib.dpk]
+[C:\Sw\WorkDir\Pcks\StFLib\Src\AppSettings.pas]
+ModuleType=SourceModule
+FormState=0
+FormOnTop=0
+
+[C:\Sw\WorkDir\Pcks\StFLib\Src\StFLibD7.dpk]
+ModuleType=PackageEditModule
+FormState=0
+FormOnTop=0
+
+[C:\Sw\WorkDir\Pcks\DlgLib\Src\ThreadProgressForm.pas]
+ModuleType=SourceModule
+FormState=0
+FormOnTop=0
+
+[C:\Sw\WorkDir\Pcks\GeneralLib\Src\GeneralLibD7.dpk]
+FormState=0
+FormOnTop=0
+
+[C:\Sw\WorkDir\Pcks\TRE\Src\TRELibD7.dpk]
+FormState=0
+FormOnTop=0
+
+[C:\Sw\WorkDir\Pcks\DlgLib\Src\DlgLibD7.dpk]
+FormState=0
+FormOnTop=0
+
+[C:\Sw\WorkDir\Pcks\ECLib\Src\ECLibD7.dpk]
+FormState=0
+FormOnTop=0
+
+[C:\Sw\WorkDir\Pcks\WinNetLib\Src\WinNetLibD7.dpk]
+FormState=0
+FormOnTop=0
+
+[C:\Sw\WorkDir\Pcks\WinSysLib\Src\WinSysLibD7.dpk]
+FormState=0
+FormOnTop=0
+
+[C:\Sw\WorkDir\Pcks\ShellLib\Src\ShellLibD7.dpk]
+FormState=0
+FormOnTop=0
+
+[C:\Sw\WorkDir\Pcks\INetLib\Src\INetLibD7.dpk]
 FormState=0
 FormOnTop=0
 
@@ -41,56 +75,37 @@ FormOnTop=0
 FormState=0
 FormOnTop=0
 
+[C:\Sw\WorkDir\Pcks\XPLib\Src\XPLibD7.dpk]
+FormState=0
+FormOnTop=0
+
+[C:\Sw\WorkDir\Pcks\OPLib\Src\OPLibD7.dpk]
+FormState=0
+FormOnTop=0
+
 [C:\Sw\WorkDir\Pcks\GDBLib\Src\GDBLib.dpk]
 FormState=0
 FormOnTop=0
 
-[C:\Sw\WorkDir\Pcks\BDELib\Src\BDELib.dpk]
+[C:\Sw\WorkDir\Pcks\BDELib\Src\BDELibD7.dpk]
 FormState=0
 FormOnTop=0
 
-[C:\Sw\WorkDir\Pcks\FXLib\Src\FXLib.dpk]
+[C:\Sw\WorkDir\Pcks\FXLib\Src\FXLibD7.dpk]
 FormState=0
 FormOnTop=0
 
-[C:\Sw\WorkDir\Pcks\GeneralLib\Src\GeneralLib.dpk]
-FormState=0
-FormOnTop=0
-
-[C:\Sw\WorkDir\Pcks\StFLib\Src\StFLib.dpk]
-FormState=0
-FormOnTop=0
-
-[C:\Sw\WorkDir\Pcks\INetLib\Src\INetLib.dpk]
-FormState=0
-FormOnTop=0
-
-[C:\Sw\WorkDir\Pcks\ShellLib\Src\ShellLib.dpk]
-FormState=0
-FormOnTop=0
-
-[C:\Sw\WorkDir\Pcks\WinSysLib\Src\WinSysLib.dpk]
-FormState=0
-FormOnTop=0
-
-[C:\Sw\WorkDir\Pcks\WinNetLib\Src\WinNetLib.dpk]
-FormState=0
-FormOnTop=0
-
-[C:\Sw\WorkDir\Pcks\ECLib\Src\ECLib.dpk]
-FormState=0
-FormOnTop=0
-
-[C:\Sw\WorkDir\Pcks\DlgLib\Src\DlgLib.dpk]
+[C:\Sw\WorkDir\Pcks\GDBLib\Src\GDBLibD7.dpk]
 FormState=0
 FormOnTop=0
 
 [EditWindow0]
-ViewCount=3
-CurrentView=1
+ViewCount=4
+CurrentView=2
 View0=0
 View1=1
 View2=2
+View3=3
 CodeExplorer=CodeExplorer@EditWindow0
 MessageView=MessageView@EditWindow0
 Create=1
@@ -98,11 +113,11 @@ Visible=1
 State=0
 Left=0
 Top=87
-Width=1862
+Width=1910
 Height=965
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1846
+ClientWidth=1894
 ClientHeight=927
 LeftPanelSize=380
 LeftPanelClients=DockSite0
@@ -112,27 +127,34 @@ RightPanelClients=ProjectManager
 RightPanelData=000004000000000000000000000000000000000000000000000100000000000000001200000050726F6A6563744D616E61676572466F726DFFFFFFFF
 BottomPanelSize=0
 BottomPanelClients=MessageView@EditWindow0
-BottomPanelData=00000400010000000B0000004D6573736167655669657700000000000000000000000000000000000100000000000000000B0000004D65737361676556696577FFFFFFFF
+BottomPanelData=00000400010000000B0000004D657373616765566965776607000000000000028B0000000000000001000000000000000000000000010000000080060000000000000100000000660700000B0000004D65737361676556696577FFFFFFFF
 
 [View0]
-Module=C:\Sw\WorkDir\Pcks\OPLib\Src\OPLibD7.dpk
-CursorX=13
-CursorY=6
+Module=C:\Sw\WorkDir\Pcks\StFLib\Src\StFLibD7.dpk
+CursorX=16
+CursorY=1
 TopLine=1
 LeftCol=1
 
 [View1]
-Module=C:\Sw\WorkDir\Pcks\XPLib\Src\XPLibD7.dpk
-CursorX=13
-CursorY=7
-TopLine=1
+Module=C:\Sw\WorkDir\Pcks\StFLib\Src\AppSettings.pas
+CursorX=28
+CursorY=2608
+TopLine=2588
 LeftCol=1
 
 [View2]
-Module=C:\Sw\WorkDir\Pcks\OPLib\Src\OPLibD7.inc
-CursorX=16
-CursorY=1
-TopLine=1
+Module=C:\Sw\WorkDir\Pcks\XPLib\Src\StrHnd.pas
+CursorX=48
+CursorY=141
+TopLine=118
+LeftCol=1
+
+[View3]
+Module=C:\Sw\WorkDir\Pcks\DlgLib\Src\ThreadProgressForm.pas
+CursorX=19
+CursorY=134
+TopLine=109
 LeftCol=1
 
 [PackageWindow0]
@@ -155,7 +177,7 @@ TextLabels=1
 Toolbar=1
 SectionWidth0=150
 SectionWidth1=210
-Module=C:\Sw\WorkDir\Pcks\XPLib\Src\XPLibD7.dpk
+Module=C:\Sw\WorkDir\Pcks\StFLib\Src\StFLibD7.dpk
 
 [PackageWindow1]
 Create=1
@@ -177,7 +199,7 @@ TextLabels=1
 Toolbar=1
 SectionWidth0=150
 SectionWidth1=210
-Module=C:\Sw\WorkDir\Pcks\OPLib\Src\OPLibD7.dpk
+Module=C:\Sw\WorkDir\Pcks\GeneralLib\Src\GeneralLibD7.dpk
 
 [PackageWindow2]
 Create=1
@@ -199,7 +221,7 @@ TextLabels=1
 Toolbar=1
 SectionWidth0=150
 SectionWidth1=210
-Module=C:\Sw\WorkDir\Pcks\TRE\Src\TRELib.dpk
+Module=C:\Sw\WorkDir\Pcks\TRE\Src\TRELibD7.dpk
 
 [PackageWindow3]
 Create=1
@@ -221,7 +243,7 @@ TextLabels=1
 Toolbar=1
 SectionWidth0=150
 SectionWidth1=210
-Module=C:\Sw\WorkDir\Pcks\GDBLib\Src\GDBLib.dpk
+Module=C:\Sw\WorkDir\Pcks\DlgLib\Src\DlgLibD7.dpk
 
 [PackageWindow4]
 Create=1
@@ -243,7 +265,7 @@ TextLabels=1
 Toolbar=1
 SectionWidth0=150
 SectionWidth1=210
-Module=C:\Sw\WorkDir\Pcks\BDELib\Src\BDELib.dpk
+Module=C:\Sw\WorkDir\Pcks\ECLib\Src\ECLibD7.dpk
 
 [PackageWindow5]
 Create=1
@@ -265,7 +287,7 @@ TextLabels=1
 Toolbar=1
 SectionWidth0=150
 SectionWidth1=210
-Module=C:\Sw\WorkDir\Pcks\FXLib\Src\FXLib.dpk
+Module=C:\Sw\WorkDir\Pcks\WinNetLib\Src\WinNetLibD7.dpk
 
 [PackageWindow6]
 Create=1
@@ -287,7 +309,7 @@ TextLabels=1
 Toolbar=1
 SectionWidth0=150
 SectionWidth1=210
-Module=C:\Sw\WorkDir\Pcks\GeneralLib\Src\GeneralLib.dpk
+Module=C:\Sw\WorkDir\Pcks\WinSysLib\Src\WinSysLibD7.dpk
 
 [PackageWindow7]
 Create=1
@@ -309,7 +331,7 @@ TextLabels=1
 Toolbar=1
 SectionWidth0=150
 SectionWidth1=210
-Module=C:\Sw\WorkDir\Pcks\StFLib\Src\StFLib.dpk
+Module=C:\Sw\WorkDir\Pcks\ShellLib\Src\ShellLibD7.dpk
 
 [PackageWindow8]
 Create=1
@@ -331,14 +353,14 @@ TextLabels=1
 Toolbar=1
 SectionWidth0=150
 SectionWidth1=210
-Module=C:\Sw\WorkDir\Pcks\INetLib\Src\INetLib.dpk
+Module=C:\Sw\WorkDir\Pcks\INetLib\Src\INetLibD7.dpk
 
 [PackageWindow9]
 Create=1
 Visible=0
 State=0
-Left=252
-Top=241
+Left=594
+Top=258
 Width=368
 Height=244
 MaxLeft=-1
@@ -352,8 +374,8 @@ StatusBar=0
 TextLabels=1
 Toolbar=1
 SectionWidth0=150
-SectionWidth1=210
-Module=C:\Sw\WorkDir\Pcks\ShellLib\Src\ShellLib.dpk
+SectionWidth1=202
+Module=C:\Sw\WorkDir\Pcks\XPLib\Src\XPLibD7.dpk
 
 [PackageWindow10]
 Create=1
@@ -375,7 +397,7 @@ TextLabels=1
 Toolbar=1
 SectionWidth0=150
 SectionWidth1=210
-Module=C:\Sw\WorkDir\Pcks\WinSysLib\Src\WinSysLib.dpk
+Module=C:\Sw\WorkDir\Pcks\OPLib\Src\OPLibD7.dpk
 
 [PackageWindow11]
 Create=1
@@ -397,7 +419,7 @@ TextLabels=1
 Toolbar=1
 SectionWidth0=150
 SectionWidth1=210
-Module=C:\Sw\WorkDir\Pcks\WinNetLib\Src\WinNetLib.dpk
+Module=C:\Sw\WorkDir\Pcks\GDBLib\Src\GDBLib.dpk
 
 [PackageWindow12]
 Create=1
@@ -419,7 +441,7 @@ TextLabels=1
 Toolbar=1
 SectionWidth0=150
 SectionWidth1=210
-Module=C:\Sw\WorkDir\Pcks\ECLib\Src\ECLib.dpk
+Module=C:\Sw\WorkDir\Pcks\BDELib\Src\BDELibD7.dpk
 
 [PackageWindow13]
 Create=1
@@ -441,7 +463,29 @@ TextLabels=1
 Toolbar=1
 SectionWidth0=150
 SectionWidth1=210
-Module=C:\Sw\WorkDir\Pcks\DlgLib\Src\DlgLib.dpk
+Module=C:\Sw\WorkDir\Pcks\FXLib\Src\FXLibD7.dpk
+
+[PackageWindow14]
+Create=1
+Visible=0
+State=0
+Left=252
+Top=241
+Width=368
+Height=244
+MaxLeft=-1
+MaxTop=-1
+ClientWidth=352
+ClientHeight=210
+TBDockHeight=244
+LRDockWidth=368
+Dockable=1
+StatusBar=0
+TextLabels=1
+Toolbar=1
+SectionWidth0=150
+SectionWidth1=210
+Module=C:\Sw\WorkDir\Pcks\GDBLib\Src\GDBLibD7.dpk
 
 [Watches]
 Count=0
@@ -458,11 +502,11 @@ Visible=1
 State=0
 Left=0
 Top=0
-Width=1858
+Width=1915
 Height=122
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1842
+ClientWidth=1899
 ClientHeight=84
 
 [ProjectManager]
@@ -568,13 +612,13 @@ Visible=0
 State=0
 Left=12
 Top=0
-Width=1652
-Height=85
+Width=1882
+Height=139
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1652
-ClientHeight=85
-TBDockHeight=85
+ClientWidth=1882
+ClientHeight=139
+TBDockHeight=139
 LRDockWidth=443
 Dockable=1
 
@@ -602,5 +646,5 @@ ActiveTab=Object Inspector
 TabDockClients=PropertyInspector,ObjectTree,CodeExplorer@EditWindow0
 
 [ActiveProject]
-ActiveProject=1
+ActiveProject=7
 
