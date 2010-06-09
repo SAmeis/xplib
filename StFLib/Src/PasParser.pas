@@ -19,12 +19,12 @@ uses
 
 const
     { TParser special tokens }
-    toEOF = Char(0);
-    toIdentifier = Char(1);
-    toReserved = Char(2);
-    toString = Char(3);
-    toComment = Char(4);
-    toNumber = Char(5);
+    toEOF = AnsiChar(0);
+    toIdentifier = AnsiChar(1);
+    toReserved = AnsiChar(2);
+    toString = AnsiChar(3);
+    toComment = AnsiChar(4);
+    toNumber = AnsiChar(5);
 
 type
     { TPascalParser }
@@ -32,33 +32,33 @@ type
     private
         FStream : TStream;
         FOrigin : Longint;
-        FBuffer : PChar;
-        FBufPtr : PChar;
-        FBufEnd : PChar;
-        FSourcePtr : PChar;
-        FSourceEnd : PChar;
-        FTokenPtr : PChar;
-        FStringPtr : PChar;
+        FBuffer : PAnsiChar;
+        FBufPtr : PAnsiChar;
+        FBufEnd : PAnsiChar;
+        FSourcePtr : PAnsiChar;
+        FSourceEnd : PAnsiChar;
+        FTokenPtr : PAnsiChar;
+        FStringPtr : PAnsiChar;
         FSourceLine : Integer;
-        FSaveChar : Char;
-        FToken :  Char;
+        FSaveChar : AnsiChar;
+        FToken :  AnsiChar;
         FWantAsSource : Boolean;
         procedure ReadBuffer;
         procedure SkipBlanks;
     public
         constructor Create(stmStream : TStream; bWantAsSource : Boolean);
         destructor Destroy; override;
-        procedure CheckToken(cToken : Char);
+        procedure CheckToken(cToken : AnsiChar);
         procedure CheckTokenSymbol(const sSymbol : string);
         procedure ErrorStr(const sMessage : string);
-        function NextToken : Char;
+        function NextToken : AnsiChar;
         function SourcePos : Longint;
         function TokenFloat : Extended;
         function TokenInt : Longint;
         function TokenString : string;
         function TokenSymbolIs(const sSymbol : string) : Boolean;
         property SourceLine : Integer read FSourceLine;
-        property Token : Char read FToken;
+        property Token : AnsiChar read FToken;
         property WantAsSource : Boolean read FWantAsSource write FWantAsSource;
     end;
 
@@ -109,23 +109,23 @@ begin
     end;
 end;
 
-procedure TPascalParser.CheckToken(cToken : Char);
+procedure TPascalParser.CheckToken(cToken : AnsiChar);
 begin
     if Token <> cToken then begin
         case cToken of
-            toIdentifier    : begin
+            PasParser.toIdentifier    : begin
                 ErrorStr(sIdentifierExpected);
             end;
-            toReserved    : begin
+            PasParser.toReserved    : begin
                 ErrorStr(sReservedExpected);
             end;
-            toString    : begin
+            PasParser.toString    : begin
                 ErrorStr(sStringExpected);
             end;
-            toComment    : begin
+            PasParser.toComment    : begin
                 ErrorStr(sCommentExpected);
             end;
-            toNumber    : begin
+            PasParser.toNumber    : begin
                 ErrorStr(sNumberExpected);
             end;
             else begin
@@ -147,10 +147,10 @@ begin
     raise EParserError.Create(Format(sParserError, [FSourceLine, sMessage]));
 end;
 
-function TPascalParser.NextToken : Char;
+function TPascalParser.NextToken : AnsiChar;
 var
     i : Integer;
-    p, s : PChar;
+    p, s : PAnsiChar;
 begin
     SkipBlanks;
     p := FSourcePtr;
@@ -181,7 +181,7 @@ begin
                             end;
                         end;
                         if not WantAsSource then begin
-                            s^ := Chr(i);
+                            s^ := AnsiChar(i);
                             Inc(s);
                         end;
                     end;
@@ -218,7 +218,7 @@ begin
                 end;
             end;
             FStringPtr := s;
-            Result := toString;
+            Result := PasParser.toString;
         end;
         '{'    :                      { Comment } begin
             s := p;
@@ -338,7 +338,7 @@ begin
             end;
             Result := toNumber;
         end;
-        else     { Single character } begin
+        else     { Single AnsiCharacter } begin
             Result := p^;
         end;
             if Result <> toEOF then begin
@@ -422,7 +422,7 @@ function TPascalParser.TokenString : string;
 var
     i : Integer;
 begin
-    if FToken in [toString, toComment] then begin
+    if FToken in [PasParser.toString, PasParser.toComment] then begin
         i := FStringPtr - FTokenPtr;
     end else begin
         i := FSourcePtr - FTokenPtr;

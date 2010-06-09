@@ -2605,10 +2605,10 @@ begin
     contentSize := 2 * (Qtd + 1);
     try
         Result  := BinStream.Read(Buffer^, Qtd);
-        content := StrAlloc(contentSize);
+        content := AnsiStrAlloc(contentSize);
         try
             BinToHex(Buffer, content, contentSize);  //Representacao Hexa do fluxo de bytes
-            Self.WriteString(Self.FKeyPrefix + Name, content);
+            Self.WriteString(Self.FKeyPrefix + Name, String(content));
         finally
             StrDispose(content);
         end;
@@ -2669,7 +2669,7 @@ Name : Nome da entrada a ser escrita.
 Value : Valor do string a ser escrita.
 }
 begin
-    SetAttributeValue(FileHnd.ConcatPath([ Self.FKeyPrefix ,Name]), Value);
+    SetAttributeValue(TFileHnd.ConcatPath([ Self.FKeyPrefix ,Name]), Value);
 end;
 
 

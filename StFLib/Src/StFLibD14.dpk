@@ -1,6 +1,6 @@
 {$I StFLib.inc}
 
-package StFLib;
+package StFLibD14;
 
 {$R *.res}
 {$R 'StFLib.dcr'}
@@ -25,8 +25,7 @@ package StFLib;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'AAA - Stream & Files - (Super Library)'}
-{$LIBSUFFIX '_7_0'}
+{$DESCRIPTION 'AAA - Stream & Files - Delphi 2010'}
 {$IMPLICITBUILD OFF}
 
 requires
