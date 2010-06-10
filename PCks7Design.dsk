@@ -11,13 +11,18 @@ File_8=SourceModule,'C:\Sw\WorkDir\Pcks.7\WinSysLib\Src\InstanceMonitor.pas',0,1
 File_9=SourceModule,'C:\Sw\WorkDir\Pcks.7\XPLib\Src\APIHnd.pas',0,1,2,61,18,0,0
 
 [Modules]
-Module0=C:\Sw\WorkDir\Pcks\XPLib\Src\StrHnd.pas
-Module1=C:\Sw\WorkDir\Pcks\StFLib\Src\AppSettings.pas
-Module2=C:\Sw\WorkDir\Pcks\StFLib\Src\StFLibD7.dpk
-Module3=C:\Sw\WorkDir\Pcks\DlgLib\Src\ThreadProgressForm.pas
+Module0=C:\Sw\WorkDir\Pcks\DlgLib\Src\ThreadProgressForm.pas
+Module1=C:\Sw\WorkDir\Pcks\XPLib\Src\StrHnd.pas
+Module2=C:\Sw\WorkDir\Pcks\StFLib\Src\AppSettings.pas
+Module3=C:\Sw\WorkDir\Pcks\StFLib\Src\StFLibD7.dpk
 Count=4
 EditWindowCount=1
 PackageWindowCount=15
+
+[C:\Sw\WorkDir\Pcks\DlgLib\Src\ThreadProgressForm.pas]
+ModuleType=SourceModule
+FormState=1
+FormOnTop=0
 
 [C:\Sw\WorkDir\Pcks\XPLib\Src\StrHnd.pas]
 ModuleType=SourceModule
@@ -31,43 +36,6 @@ FormOnTop=0
 
 [C:\Sw\WorkDir\Pcks\StFLib\Src\StFLibD7.dpk]
 ModuleType=PackageEditModule
-FormState=0
-FormOnTop=0
-
-[C:\Sw\WorkDir\Pcks\DlgLib\Src\ThreadProgressForm.pas]
-ModuleType=SourceModule
-FormState=0
-FormOnTop=0
-
-[C:\Sw\WorkDir\Pcks\GeneralLib\Src\GeneralLibD7.dpk]
-FormState=0
-FormOnTop=0
-
-[C:\Sw\WorkDir\Pcks\TRE\Src\TRELibD7.dpk]
-FormState=0
-FormOnTop=0
-
-[C:\Sw\WorkDir\Pcks\DlgLib\Src\DlgLibD7.dpk]
-FormState=0
-FormOnTop=0
-
-[C:\Sw\WorkDir\Pcks\ECLib\Src\ECLibD7.dpk]
-FormState=0
-FormOnTop=0
-
-[C:\Sw\WorkDir\Pcks\WinNetLib\Src\WinNetLibD7.dpk]
-FormState=0
-FormOnTop=0
-
-[C:\Sw\WorkDir\Pcks\WinSysLib\Src\WinSysLibD7.dpk]
-FormState=0
-FormOnTop=0
-
-[C:\Sw\WorkDir\Pcks\ShellLib\Src\ShellLibD7.dpk]
-FormState=0
-FormOnTop=0
-
-[C:\Sw\WorkDir\Pcks\INetLib\Src\INetLibD7.dpk]
 FormState=0
 FormOnTop=0
 
@@ -95,13 +63,45 @@ FormOnTop=0
 FormState=0
 FormOnTop=0
 
+[C:\Sw\WorkDir\Pcks\GeneralLib\Src\GeneralLibD7.dpk]
+FormState=0
+FormOnTop=0
+
+[C:\Sw\WorkDir\Pcks\INetLib\Src\INetLibD7.dpk]
+FormState=0
+FormOnTop=0
+
+[C:\Sw\WorkDir\Pcks\ShellLib\Src\ShellLibD7.dpk]
+FormState=0
+FormOnTop=0
+
+[C:\Sw\WorkDir\Pcks\WinSysLib\Src\WinSysLibD7.dpk]
+FormState=0
+FormOnTop=0
+
+[C:\Sw\WorkDir\Pcks\WinNetLib\Src\WinNetLibD7.dpk]
+FormState=0
+FormOnTop=0
+
+[C:\Sw\WorkDir\Pcks\ECLib\Src\ECLibD7.dpk]
+FormState=0
+FormOnTop=0
+
+[C:\Sw\WorkDir\Pcks\DlgLib\Src\DlgLibD7.dpk]
+FormState=0
+FormOnTop=0
+
+[C:\Sw\WorkDir\Pcks\TRE\Src\TRELibD7.dpk]
+FormState=0
+FormOnTop=0
+
 [C:\Sw\WorkDir\Pcks\GDBLib\Src\GDBLibD7.dpk]
 FormState=0
 FormOnTop=0
 
 [EditWindow0]
 ViewCount=4
-CurrentView=2
+CurrentView=3
 View0=0
 View1=1
 View2=2
@@ -113,21 +113,21 @@ Visible=1
 State=0
 Left=0
 Top=87
-Width=1910
+Width=1280
 Height=965
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1894
-ClientHeight=927
-LeftPanelSize=380
+ClientWidth=1272
+ClientHeight=931
+LeftPanelSize=216
 LeftPanelClients=DockSite0
 LeftPanelData=00000400000000002B02000000000000009F0300000000000001000000002B02000009000000446F636B5369746530FFFFFFFF
-RightPanelSize=351
+RightPanelSize=183
 RightPanelClients=ProjectManager
 RightPanelData=000004000000000000000000000000000000000000000000000100000000000000001200000050726F6A6563744D616E61676572466F726DFFFFFFFF
-BottomPanelSize=0
+BottomPanelSize=139
 BottomPanelClients=MessageView@EditWindow0
-BottomPanelData=00000400010000000B0000004D657373616765566965776607000000000000028B0000000000000001000000000000000000000000010000000080060000000000000100000000660700000B0000004D65737361676556696577FFFFFFFF
+BottomPanelData=0000040000000000F804000000000000028B000000000000000100000000000000000000000001000000008006000000000000010000000066070000000000000100000000F80400000B0000004D65737361676556696577FFFFFFFF
 
 [View0]
 Module=C:\Sw\WorkDir\Pcks\StFLib\Src\StFLibD7.dpk
@@ -145,16 +145,16 @@ LeftCol=1
 
 [View2]
 Module=C:\Sw\WorkDir\Pcks\XPLib\Src\StrHnd.pas
-CursorX=48
-CursorY=141
+CursorX=34
+CursorY=139
 TopLine=118
 LeftCol=1
 
 [View3]
 Module=C:\Sw\WorkDir\Pcks\DlgLib\Src\ThreadProgressForm.pas
-CursorX=19
-CursorY=134
-TopLine=109
+CursorX=56
+CursorY=126
+TopLine=91
 LeftCol=1
 
 [PackageWindow0]
@@ -167,8 +167,8 @@ Width=368
 Height=244
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=352
-ClientHeight=210
+ClientWidth=360
+ClientHeight=218
 TBDockHeight=244
 LRDockWidth=368
 Dockable=1
@@ -183,14 +183,14 @@ Module=C:\Sw\WorkDir\Pcks\StFLib\Src\StFLibD7.dpk
 Create=1
 Visible=0
 State=0
-Left=252
-Top=241
+Left=594
+Top=258
 Width=368
 Height=244
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=352
-ClientHeight=210
+ClientWidth=360
+ClientHeight=218
 TBDockHeight=244
 LRDockWidth=368
 Dockable=1
@@ -198,8 +198,8 @@ StatusBar=0
 TextLabels=1
 Toolbar=1
 SectionWidth0=150
-SectionWidth1=210
-Module=C:\Sw\WorkDir\Pcks\GeneralLib\Src\GeneralLibD7.dpk
+SectionWidth1=202
+Module=C:\Sw\WorkDir\Pcks\XPLib\Src\XPLibD7.dpk
 
 [PackageWindow2]
 Create=1
@@ -211,8 +211,8 @@ Width=368
 Height=244
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=352
-ClientHeight=210
+ClientWidth=360
+ClientHeight=218
 TBDockHeight=244
 LRDockWidth=368
 Dockable=1
@@ -221,7 +221,7 @@ TextLabels=1
 Toolbar=1
 SectionWidth0=150
 SectionWidth1=210
-Module=C:\Sw\WorkDir\Pcks\TRE\Src\TRELibD7.dpk
+Module=C:\Sw\WorkDir\Pcks\OPLib\Src\OPLibD7.dpk
 
 [PackageWindow3]
 Create=1
@@ -233,8 +233,8 @@ Width=368
 Height=244
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=352
-ClientHeight=210
+ClientWidth=360
+ClientHeight=218
 TBDockHeight=244
 LRDockWidth=368
 Dockable=1
@@ -243,7 +243,7 @@ TextLabels=1
 Toolbar=1
 SectionWidth0=150
 SectionWidth1=210
-Module=C:\Sw\WorkDir\Pcks\DlgLib\Src\DlgLibD7.dpk
+Module=C:\Sw\WorkDir\Pcks\GDBLib\Src\GDBLib.dpk
 
 [PackageWindow4]
 Create=1
@@ -255,8 +255,8 @@ Width=368
 Height=244
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=352
-ClientHeight=210
+ClientWidth=360
+ClientHeight=218
 TBDockHeight=244
 LRDockWidth=368
 Dockable=1
@@ -265,7 +265,7 @@ TextLabels=1
 Toolbar=1
 SectionWidth0=150
 SectionWidth1=210
-Module=C:\Sw\WorkDir\Pcks\ECLib\Src\ECLibD7.dpk
+Module=C:\Sw\WorkDir\Pcks\BDELib\Src\BDELibD7.dpk
 
 [PackageWindow5]
 Create=1
@@ -277,8 +277,8 @@ Width=368
 Height=244
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=352
-ClientHeight=210
+ClientWidth=360
+ClientHeight=218
 TBDockHeight=244
 LRDockWidth=368
 Dockable=1
@@ -287,7 +287,7 @@ TextLabels=1
 Toolbar=1
 SectionWidth0=150
 SectionWidth1=210
-Module=C:\Sw\WorkDir\Pcks\WinNetLib\Src\WinNetLibD7.dpk
+Module=C:\Sw\WorkDir\Pcks\FXLib\Src\FXLibD7.dpk
 
 [PackageWindow6]
 Create=1
@@ -299,8 +299,8 @@ Width=368
 Height=244
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=352
-ClientHeight=210
+ClientWidth=360
+ClientHeight=218
 TBDockHeight=244
 LRDockWidth=368
 Dockable=1
@@ -309,7 +309,7 @@ TextLabels=1
 Toolbar=1
 SectionWidth0=150
 SectionWidth1=210
-Module=C:\Sw\WorkDir\Pcks\WinSysLib\Src\WinSysLibD7.dpk
+Module=C:\Sw\WorkDir\Pcks\GeneralLib\Src\GeneralLibD7.dpk
 
 [PackageWindow7]
 Create=1
@@ -321,8 +321,8 @@ Width=368
 Height=244
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=352
-ClientHeight=210
+ClientWidth=360
+ClientHeight=218
 TBDockHeight=244
 LRDockWidth=368
 Dockable=1
@@ -331,7 +331,7 @@ TextLabels=1
 Toolbar=1
 SectionWidth0=150
 SectionWidth1=210
-Module=C:\Sw\WorkDir\Pcks\ShellLib\Src\ShellLibD7.dpk
+Module=C:\Sw\WorkDir\Pcks\INetLib\Src\INetLibD7.dpk
 
 [PackageWindow8]
 Create=1
@@ -343,8 +343,8 @@ Width=368
 Height=244
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=352
-ClientHeight=210
+ClientWidth=360
+ClientHeight=218
 TBDockHeight=244
 LRDockWidth=368
 Dockable=1
@@ -353,20 +353,20 @@ TextLabels=1
 Toolbar=1
 SectionWidth0=150
 SectionWidth1=210
-Module=C:\Sw\WorkDir\Pcks\INetLib\Src\INetLibD7.dpk
+Module=C:\Sw\WorkDir\Pcks\ShellLib\Src\ShellLibD7.dpk
 
 [PackageWindow9]
 Create=1
 Visible=0
 State=0
-Left=594
-Top=258
+Left=252
+Top=241
 Width=368
 Height=244
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=352
-ClientHeight=210
+ClientWidth=360
+ClientHeight=218
 TBDockHeight=244
 LRDockWidth=368
 Dockable=1
@@ -374,8 +374,8 @@ StatusBar=0
 TextLabels=1
 Toolbar=1
 SectionWidth0=150
-SectionWidth1=202
-Module=C:\Sw\WorkDir\Pcks\XPLib\Src\XPLibD7.dpk
+SectionWidth1=210
+Module=C:\Sw\WorkDir\Pcks\WinSysLib\Src\WinSysLibD7.dpk
 
 [PackageWindow10]
 Create=1
@@ -387,8 +387,8 @@ Width=368
 Height=244
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=352
-ClientHeight=210
+ClientWidth=360
+ClientHeight=218
 TBDockHeight=244
 LRDockWidth=368
 Dockable=1
@@ -397,7 +397,7 @@ TextLabels=1
 Toolbar=1
 SectionWidth0=150
 SectionWidth1=210
-Module=C:\Sw\WorkDir\Pcks\OPLib\Src\OPLibD7.dpk
+Module=C:\Sw\WorkDir\Pcks\WinNetLib\Src\WinNetLibD7.dpk
 
 [PackageWindow11]
 Create=1
@@ -409,8 +409,8 @@ Width=368
 Height=244
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=352
-ClientHeight=210
+ClientWidth=360
+ClientHeight=218
 TBDockHeight=244
 LRDockWidth=368
 Dockable=1
@@ -419,7 +419,7 @@ TextLabels=1
 Toolbar=1
 SectionWidth0=150
 SectionWidth1=210
-Module=C:\Sw\WorkDir\Pcks\GDBLib\Src\GDBLib.dpk
+Module=C:\Sw\WorkDir\Pcks\ECLib\Src\ECLibD7.dpk
 
 [PackageWindow12]
 Create=1
@@ -431,8 +431,8 @@ Width=368
 Height=244
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=352
-ClientHeight=210
+ClientWidth=360
+ClientHeight=218
 TBDockHeight=244
 LRDockWidth=368
 Dockable=1
@@ -441,7 +441,7 @@ TextLabels=1
 Toolbar=1
 SectionWidth0=150
 SectionWidth1=210
-Module=C:\Sw\WorkDir\Pcks\BDELib\Src\BDELibD7.dpk
+Module=C:\Sw\WorkDir\Pcks\DlgLib\Src\DlgLibD7.dpk
 
 [PackageWindow13]
 Create=1
@@ -453,8 +453,8 @@ Width=368
 Height=244
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=352
-ClientHeight=210
+ClientWidth=360
+ClientHeight=218
 TBDockHeight=244
 LRDockWidth=368
 Dockable=1
@@ -463,7 +463,7 @@ TextLabels=1
 Toolbar=1
 SectionWidth0=150
 SectionWidth1=210
-Module=C:\Sw\WorkDir\Pcks\FXLib\Src\FXLibD7.dpk
+Module=C:\Sw\WorkDir\Pcks\TRE\Src\TRELibD7.dpk
 
 [PackageWindow14]
 Create=1
@@ -475,8 +475,8 @@ Width=368
 Height=244
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=352
-ClientHeight=210
+ClientWidth=360
+ClientHeight=218
 TBDockHeight=244
 LRDockWidth=368
 Dockable=1
@@ -502,12 +502,12 @@ Visible=1
 State=0
 Left=0
 Top=0
-Width=1915
-Height=122
+Width=1280
+Height=112
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1899
-ClientHeight=84
+ClientWidth=1272
+ClientHeight=78
 
 [ProjectManager]
 Create=1
@@ -515,14 +515,14 @@ Visible=1
 State=0
 Left=0
 Top=12
-Width=351
-Height=915
+Width=183
+Height=777
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=351
-ClientHeight=915
+ClientWidth=183
+ClientHeight=777
 TBDockHeight=313
-LRDockWidth=351
+LRDockWidth=183
 Dockable=1
 
 [AlignmentPalette]
@@ -544,18 +544,18 @@ Visible=1
 State=0
 Left=0
 Top=0
-Width=372
-Height=886
+Width=189
+Height=769
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=372
-ClientHeight=886
+ClientWidth=189
+ClientHeight=769
 TBDockHeight=915
 LRDockWidth=190
 Dockable=1
-SplitPos=131
+SplitPos=102
 ArrangeBy=Name
-SelectedItem=
+SelectedItem=Caption
 ExpandedItems=
 HiddenCategories=
 
@@ -565,12 +565,12 @@ Visible=1
 State=0
 Left=0
 Top=0
-Width=372
-Height=886
+Width=189
+Height=769
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=372
-ClientHeight=886
+ClientWidth=189
+ClientHeight=769
 TBDockHeight=915
 LRDockWidth=283
 Dockable=1
@@ -596,27 +596,27 @@ Visible=1
 State=0
 Left=0
 Top=0
-Width=372
-Height=886
+Width=189
+Height=769
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=372
-ClientHeight=886
+ClientWidth=189
+ClientHeight=769
 TBDockHeight=915
 LRDockWidth=205
 Dockable=1
 
 [MessageView@EditWindow0]
 Create=1
-Visible=0
+Visible=1
 State=0
 Left=12
 Top=0
-Width=1882
+Width=1260
 Height=139
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1882
+ClientWidth=1260
 ClientHeight=139
 TBDockHeight=139
 LRDockWidth=443
@@ -632,19 +632,19 @@ Visible=1
 State=0
 Left=0
 Top=12
-Width=380
-Height=915
+Width=216
+Height=777
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=380
-ClientHeight=915
+ClientWidth=216
+ClientHeight=777
 TBDockHeight=949
-LRDockWidth=380
+LRDockWidth=216
 Dockable=1
-TabPosition=0
+TabPosition=3
 ActiveTab=Object Inspector
 TabDockClients=PropertyInspector,ObjectTree,CodeExplorer@EditWindow0
 
 [ActiveProject]
-ActiveProject=7
+ActiveProject=1
 
