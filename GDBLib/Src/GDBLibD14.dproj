@@ -1,7 +1,7 @@
 ﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 		<PropertyGroup>
 			<ProjectGuid>{633ACBF4-5400-4827-B176-FC713FCCDA3B}</ProjectGuid>
-			<MainSource>GDBLib.dpk</MainSource>
+			<MainSource>GDBLibD14.dpk</MainSource>
 			<Config Condition="'$(Config)'==''">Debug</Config>
 			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
 			<ProjectVersion>12.0</ProjectVersion>
@@ -20,16 +20,16 @@
 			<Base>true</Base>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Base)'!=''">
+			<DesignOnlyPackage>false</DesignOnlyPackage>
 			<DCC_ImageBase>00400000</DCC_ImageBase>
-			<DCC_DependencyCheckOutputName>..\..\..\Lib\D2010\GDBLib_7_1.bpl</DCC_DependencyCheckOutputName>
-			<DllSuffix>_7_1</DllSuffix>
+			<DCC_DependencyCheckOutputName>..\..\..\Lib\D2010\GDBLibD14.bpl</DCC_DependencyCheckOutputName>
 			<DebugSourcePath>$(DLib);$(DebugSourcePath)</DebugSourcePath>
 			<DCC_DebugInformation>false</DCC_DebugInformation>
 			<DCC_UnitSearchPath>$(DLib);$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
 			<DCC_UnitAlias>WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;WinTypes=Windows;WinProcs=Windows;$(DCC_UnitAlias)</DCC_UnitAlias>
 			<DCC_BplOutput>$(DLib)</DCC_BplOutput>
 			<DCC_Platform>x86</DCC_Platform>
-			<DCC_Description>AAA - Generic Database Library - (Super Library)</DCC_Description>
+			<DCC_Description>AAA - Generic Database Library - Delphi 2010)</DCC_Description>
 			<DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
 			<DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
 			<DCC_S>false</DCC_S>
@@ -51,7 +51,7 @@
 			<DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
 		</PropertyGroup>
 		<ItemGroup>
-			<DelphiCompile Include="GDBLib.dpk">
+			<DelphiCompile Include="GDBLibD14.dpk">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
 			<DCCReference Include="GDBLib.dcr"/>
@@ -85,7 +85,7 @@
 			<BorlandProject>
 				<Delphi.Personality>
 					<Source>
-						<Source Name="MainSource">GDBLib.dpk</Source>
+						<Source Name="MainSource">GDBLibD14.dpk</Source>
 					</Source>
 					<Parameters>
 						<Parameters Name="UseLauncher">False</Parameters>

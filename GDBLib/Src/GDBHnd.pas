@@ -354,7 +354,7 @@ Revision: 25/7/2005
 var
     FieldCount : Integer;
     Fields :     TList;
-    Bookmark :   TBookmarkStr;
+		Bookmark :   TBookmark;
 
     function LSRCompareField(Field : TField; Value : variant) : boolean;
     var
@@ -424,9 +424,9 @@ begin
                     end;
                 end;
             finally
-                if not Result and DataSet.BookmarkValid(PChar(Bookmark)) then begin
+								if not Result and DataSet.BookmarkValid(Bookmark) then begin
                     DataSet.Bookmark := Bookmark;
-                end;
+								end;
             end;
         finally
             DataSet.EnableControls;

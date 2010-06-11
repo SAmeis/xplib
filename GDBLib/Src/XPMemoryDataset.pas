@@ -111,45 +111,45 @@ type
         procedure SetLoadStructure(Value : boolean);
         function GetMemoryRecord(Index : Integer) : TXPMemoryRecord;
     protected
-        function AllocRecordBuffer : PChar; override;
+        function AllocRecordBuffer : PByte; override;
         procedure AssignMemoryRecord(Rec : TXPMemoryRecord; Buffer : PChar);
-        procedure ClearCalcFields(Buffer : PChar); override;
+        procedure ClearCalcFields(Buffer : TRecordBuffer); override;
         procedure CloseBlob(Field : TField); override;
         function CompareFields(Data1, Data2 : Pointer; FieldType : TFieldType; CaseInsensitive : boolean) : Integer; virtual;
         function CompareRecords(Item1, Item2 : TXPMemoryRecord) : Integer; virtual;
         procedure DataConvert(Field : TField; Source, Dest : Pointer; ToNative : boolean); override;
         function FindFieldData(Buffer : Pointer; Field : TField) : Pointer;
-        procedure FreeRecordBuffer(var Buffer : PChar); override;
+        procedure FreeRecordBuffer(var Buffer : TRecordBuffer); override;
         function GetActiveRecBuf(var RecBuf : PChar) : boolean; virtual;
         function GetBlobData(Field : TField; Buffer : PChar) : TMemBlobData;
-        procedure GetBookmarkData(Buffer : PChar; Data : Pointer); override;
-        function GetBookmarkFlag(Buffer : PChar) : TBookmarkFlag; override;
+        procedure GetBookmarkData(Buffer : TRecordBuffer; Data : Pointer); override;
+        function GetBookmarkFlag(Buffer : TRecordBuffer) : TBookmarkFlag; override;
         function GetIsIndexField(Field : TField) : boolean; override;
         function GetRecNo : Integer; override;
-        function GetRecord(Buffer : PChar; GetMode : TGetMode; DoCheck : boolean) : TGetResult; override;
+        function GetRecord(Buffer : TRecordBuffer; GetMode : TGetMode; DoCheck : boolean) : TGetResult; override;
         function GetRecordCount : Integer; override;
         function GetRecordSize : Word; override;
         procedure InitFieldDefsFromFields;
-        procedure InitRecord(Buffer : PChar); override;
+        procedure InitRecord(Buffer : TRecordBuffer); override;
         procedure InternalAddRecord(Buffer : Pointer; Append : boolean); override;
         procedure InternalClose; override;
         procedure InternalDelete; override;
         procedure InternalFirst; override;
-        procedure InternalGotoBookmark(Bookmark : TBookmark); override;
+        procedure InternalGotoBookmark(Bookmark : Pointer); override;
         procedure InternalHandleException; override;
         procedure InternalInitFieldDefs; override;
-        procedure InternalInitRecord(Buffer : PChar); override;
+        procedure InternalInitRecord(Buffer : TRecordBuffer); override;
         procedure InternalLast; override;
         procedure InternalOpen; override;
         procedure InternalPost; override;
-        procedure InternalSetToRecord(Buffer : PChar); override;
+        procedure InternalSetToRecord(Buffer : TRecordBuffer); override;
         function IsCursorOpen : boolean; override;
         procedure OpenCursor(InfoQuery : boolean); override;
         procedure RecordToBuffer(Rec : TXPMemoryRecord; Buffer : PChar);
         procedure SetAutoIncFields(Buffer : PChar); virtual;
         procedure SetBlobData(Field : TField; Buffer : PChar; Value : TMemBlobData);
-        procedure SetBookmarkData(Buffer : PChar; Data : Pointer); override;
-        procedure SetBookmarkFlag(Buffer : PChar; Value : TBookmarkFlag); override;
+        procedure SetBookmarkData(Buffer : TRecordBuffer; Data : Pointer); override;
+        procedure SetBookmarkFlag(Buffer : TRecordBuffer; Value : TBookmarkFlag); override;
         procedure SetFieldData(Field : TField; Buffer : Pointer); override;
         procedure SetFiltered(Value : boolean); override;
         procedure SetMemoryRecordData(Buffer : PChar; Pos : Integer); virtual;
@@ -168,7 +168,7 @@ type
         function CreateBlobStream(Field : TField; Mode : TBlobStreamMode) : TStream; override;
         procedure EmptyTable;
         function FindDeleted(KeyValues : variant) : Integer;
-        function GetCurrentRecord(Buffer : PChar) : boolean; override;
+        function GetCurrentRecord(Buffer : TRecordBuffer) : boolean; override;
         function GetFieldData(Field : TField; Buffer : Pointer) : boolean; override;
         function IsDeleted(out Index : Integer) : boolean;
         function IsInserted : boolean;
@@ -943,7 +943,7 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-function TXPMemoryDataset.AllocRecordBuffer : PChar;
+function TXPMemoryDataset.AllocRecordBuffer : PByte;
 begin
     Result := StrAlloc(FRecBufSize);
     if BlobFieldCount > 0 then begin
@@ -963,9 +963,9 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-procedure TXPMemoryDataset.ClearCalcFields(Buffer : PChar);
+procedure TXPMemoryDataset.ClearCalcFields(Buffer : TRecordBuffer);
 begin
-    FillChar(Buffer[FRecordSize], CalcFieldsSize, 0);
+		FillChar(Buffer[FRecordSize], CalcFieldsSize, 0);
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
@@ -1167,9 +1167,9 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-procedure TXPMemoryDataset.FreeRecordBuffer(var Buffer : PChar);
+procedure TXPMemoryDataset.FreeRecordBuffer(var Buffer : TRecordBuffer);
 begin
-    if BlobFieldCount > 0 then begin
+		if BlobFieldCount > 0 then begin
         Finalize(PMemBlobArray(Buffer + FBlobOfs)[0], BlobFieldCount);
     end;
     StrDispose(Buffer);
@@ -1210,15 +1210,15 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-procedure TXPMemoryDataset.GetBookmarkData(Buffer : PChar; Data : Pointer);
+procedure TXPMemoryDataset.GetBookmarkData(Buffer : TRecordBuffer; Data : Pointer);
 begin
-    Move(PXPMemBookmarkInfo(Buffer + FBookmarkOfs)^.BookmarkData, Data^, SizeOf(TBookmarkData));
+		Move(PXPMemBookmarkInfo(Buffer + FBookmarkOfs)^.BookmarkData, Data^, SizeOf(TBookmarkData));
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-function TXPMemoryDataset.GetBookmarkFlag(Buffer : PChar) : TBookmarkFlag;
+function TXPMemoryDataset.GetBookmarkFlag(Buffer : TRecordBuffer) : TBookmarkFlag;
 begin
-    Result := PXPMemBookmarkInfo(Buffer + FBookmarkOfs)^.BookmarkFlag;
+		Result := PXPMemBookmarkInfo(Buffer + FBookmarkOfs)^.BookmarkFlag;
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
@@ -1244,11 +1244,11 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-function TXPMemoryDataset.GetRecord(Buffer : PChar; GetMode : TGetMode; DoCheck : boolean) : TGetResult;
+function TXPMemoryDataset.GetRecord(Buffer : TRecordBuffer; GetMode : TGetMode; DoCheck : boolean) : TGetResult;
 var
     Accept : boolean;
 begin
-    Result := grOk;
+		Result := grOk;
     Accept := True;
     case GetMode of
         gmPrior : begin
@@ -1340,11 +1340,11 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-procedure TXPMemoryDataset.InitRecord(Buffer : PChar);
+procedure TXPMemoryDataset.InitRecord(Buffer : TRecordBuffer);
 var
     BInfo : PXPMemBookmarkInfo;
 begin
-    inherited InitRecord(Buffer);
+		inherited InitRecord(Buffer);
     BInfo := PXPMemBookmarkInfo(Buffer + FBookmarkOfs);
     BInfo^.BookmarkData := Low(Integer);
     BInfo^.BookmarkFlag := bfInserted;
@@ -1458,13 +1458,13 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-procedure TXPMemoryDataset.InternalGotoBookmark(Bookmark : TBookmark);
+procedure TXPMemoryDataset.InternalGotoBookmark(Bookmark : Pointer);
 var
     Rec :     TXPMemoryRecord;
     SavePos : Integer;
     Accept :  boolean;
 begin
-    Rec := FindRecordID(TBookmarkData(Bookmark^));
+		Rec := FindRecordID(TBookmarkData(Bookmark^));
     if Rec <> nil then begin
         Accept  := True;
         SavePos := FRecordPos;
@@ -1494,11 +1494,11 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-procedure TXPMemoryDataset.InternalInitRecord(Buffer : PChar);
+procedure TXPMemoryDataset.InternalInitRecord(Buffer : TRecordBuffer);
 var
     I : Integer;
 begin
-    FillChar(Buffer^, FBlobOfs, 0);
+		FillChar(Buffer^, FBlobOfs, 0);
     for I := 0 to BlobFieldCount - 1 do begin
         PMemBlobArray(Buffer + FBlobOfs)[I] := '';
     end;
@@ -1592,9 +1592,9 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-procedure TXPMemoryDataset.InternalSetToRecord(Buffer : PChar);
+procedure TXPMemoryDataset.InternalSetToRecord(Buffer : TRecordBuffer);
 begin
-    InternalGotoBookmark(@PXPMemBookmarkInfo(Buffer + FBookmarkOfs)^.BookmarkData);
+		InternalGotoBookmark(@PXPMemBookmarkInfo(Buffer + FBookmarkOfs)^.BookmarkData);
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
@@ -1668,15 +1668,15 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-procedure TXPMemoryDataset.SetBookmarkData(Buffer : PChar; Data : Pointer);
+procedure TXPMemoryDataset.SetBookmarkData(Buffer : TRecordBuffer; Data : Pointer);
 begin
-    Move(Data^, PXPMemBookmarkInfo(Buffer + FBookmarkOfs)^.BookmarkData, SizeOf(TBookmarkData));
+		Move(Data^, PXPMemBookmarkInfo(Buffer + FBookmarkOfs)^.BookmarkData, SizeOf(TBookmarkData));
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-procedure TXPMemoryDataset.SetBookmarkFlag(Buffer : PChar; Value : TBookmarkFlag);
+procedure TXPMemoryDataset.SetBookmarkFlag(Buffer : TRecordBuffer; Value : TBookmarkFlag);
 begin
-    PXPMemBookmarkInfo(Buffer + FBookmarkOfs)^.BookmarkFlag := Value;
+		PXPMemBookmarkInfo(Buffer + FBookmarkOfs)^.BookmarkFlag := Value;
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}

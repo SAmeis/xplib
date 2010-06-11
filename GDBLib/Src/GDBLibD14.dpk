@@ -1,6 +1,6 @@
 {$I GDBLib.inc }
 
-package GDBLib;
+package GDBLibD14;
 
 {$R *.res}
 {$R 'GDBLib.dcr'}
@@ -25,7 +25,7 @@ package GDBLib;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'AAA - Generic Database Library - (Super Library)'}
+{$DESCRIPTION 'AAA - Generic Database Library - Delphi 2010)'}
 {$IMPLICITBUILD OFF}
 
 requires
