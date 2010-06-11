@@ -3,22 +3,16 @@
 			<ProjectGuid>{B096FF48-BA4D-4ADC-9143-64078F1708E8}</ProjectGuid>
 		</PropertyGroup>
 		<ItemGroup>
-			<Projects Include="OPLib\Src\OPLib.dproj">
+			<Projects Include="XPLib\Src\XPLibD14.dproj">
 				<Dependencies/>
 			</Projects>
-			<Projects Include="GDBLib\Src\GDBLib.dproj">
+			<Projects Include="OPLib\Src\OPLibD14.dproj">
 				<Dependencies/>
 			</Projects>
 			<Projects Include="BDELib\Src\BDELib.dproj">
 				<Dependencies/>
 			</Projects>
 			<Projects Include="FXLib\Src\FXLib.dproj">
-				<Dependencies/>
-			</Projects>
-			<Projects Include="GeneralLib\Src\GeneralLib.dproj">
-				<Dependencies/>
-			</Projects>
-			<Projects Include="StFLib\Src\StFLib.dproj">
 				<Dependencies/>
 			</Projects>
 			<Projects Include="INetLib\Src\INetLib.dproj">
@@ -50,23 +44,23 @@
 				<Default.Personality/>
 			</BorlandProject>
 		</ProjectExtensions>
-		<Target Name="OPLib">
-			<MSBuild Projects="OPLib\Src\OPLib.dproj"/>
+		<Target Name="XPLibD14">
+			<MSBuild Projects="XPLib\Src\XPLibD14.dproj"/>
 		</Target>
-		<Target Name="OPLib:Clean">
-			<MSBuild Targets="Clean" Projects="OPLib\Src\OPLib.dproj"/>
+		<Target Name="XPLibD14:Clean">
+			<MSBuild Targets="Clean" Projects="XPLib\Src\XPLibD14.dproj"/>
 		</Target>
-		<Target Name="OPLib:Make">
-			<MSBuild Targets="Make" Projects="OPLib\Src\OPLib.dproj"/>
+		<Target Name="XPLibD14:Make">
+			<MSBuild Targets="Make" Projects="XPLib\Src\XPLibD14.dproj"/>
 		</Target>
-		<Target Name="GDBLib">
-			<MSBuild Projects="GDBLib\Src\GDBLib.dproj"/>
+		<Target Name="OPLibD14">
+			<MSBuild Projects="OPLib\Src\OPLibD14.dproj"/>
 		</Target>
-		<Target Name="GDBLib:Clean">
-			<MSBuild Targets="Clean" Projects="GDBLib\Src\GDBLib.dproj"/>
+		<Target Name="OPLibD14:Clean">
+			<MSBuild Targets="Clean" Projects="OPLib\Src\OPLibD14.dproj"/>
 		</Target>
-		<Target Name="GDBLib:Make">
-			<MSBuild Targets="Make" Projects="GDBLib\Src\GDBLib.dproj"/>
+		<Target Name="OPLibD14:Make">
+			<MSBuild Targets="Make" Projects="OPLib\Src\OPLibD14.dproj"/>
 		</Target>
 		<Target Name="BDELib">
 			<MSBuild Projects="BDELib\Src\BDELib.dproj"/>
@@ -85,24 +79,6 @@
 		</Target>
 		<Target Name="FXLib:Make">
 			<MSBuild Targets="Make" Projects="FXLib\Src\FXLib.dproj"/>
-		</Target>
-		<Target Name="GeneralLib">
-			<MSBuild Projects="GeneralLib\Src\GeneralLib.dproj"/>
-		</Target>
-		<Target Name="GeneralLib:Clean">
-			<MSBuild Targets="Clean" Projects="GeneralLib\Src\GeneralLib.dproj"/>
-		</Target>
-		<Target Name="GeneralLib:Make">
-			<MSBuild Targets="Make" Projects="GeneralLib\Src\GeneralLib.dproj"/>
-		</Target>
-		<Target Name="StFLib">
-			<MSBuild Projects="StFLib\Src\StFLib.dproj"/>
-		</Target>
-		<Target Name="StFLib:Clean">
-			<MSBuild Targets="Clean" Projects="StFLib\Src\StFLib.dproj"/>
-		</Target>
-		<Target Name="StFLib:Make">
-			<MSBuild Targets="Make" Projects="StFLib\Src\StFLib.dproj"/>
 		</Target>
 		<Target Name="INetLib">
 			<MSBuild Projects="INetLib\Src\INetLib.dproj"/>
@@ -168,13 +144,13 @@
 			<MSBuild Targets="Make" Projects="TRE\Src\TRELib.dproj"/>
 		</Target>
 		<Target Name="Build">
-			<CallTarget Targets="OPLib;GDBLib;BDELib;FXLib;GeneralLib;StFLib;INetLib;ShellLib;WinSysLib;WinNetLib;ECLib;DlgLib;TRELib"/>
+			<CallTarget Targets="XPLibD14;OPLibD14;BDELib;FXLib;INetLib;ShellLib;WinSysLib;WinNetLib;ECLib;DlgLib;TRELib"/>
 		</Target>
 		<Target Name="Clean">
-			<CallTarget Targets="OPLib:Clean;GDBLib:Clean;BDELib:Clean;FXLib:Clean;GeneralLib:Clean;StFLib:Clean;INetLib:Clean;ShellLib:Clean;WinSysLib:Clean;WinNetLib:Clean;ECLib:Clean;DlgLib:Clean;TRELib:Clean"/>
+			<CallTarget Targets="XPLibD14:Clean;OPLibD14:Clean;BDELib:Clean;FXLib:Clean;INetLib:Clean;ShellLib:Clean;WinSysLib:Clean;WinNetLib:Clean;ECLib:Clean;DlgLib:Clean;TRELib:Clean"/>
 		</Target>
 		<Target Name="Make">
-			<CallTarget Targets="OPLib:Make;GDBLib:Make;BDELib:Make;FXLib:Make;GeneralLib:Make;StFLib:Make;INetLib:Make;ShellLib:Make;WinSysLib:Make;WinNetLib:Make;ECLib:Make;DlgLib:Make;TRELib:Make"/>
+			<CallTarget Targets="XPLibD14:Make;OPLibD14:Make;BDELib:Make;FXLib:Make;INetLib:Make;ShellLib:Make;WinSysLib:Make;WinNetLib:Make;ECLib:Make;DlgLib:Make;TRELib:Make"/>
 		</Target>
 		<Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 	</Project>

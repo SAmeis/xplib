@@ -26,7 +26,6 @@ package GDBLib;
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
 {$DESCRIPTION 'AAA - Generic Database Library - (Super Library)'}
-{$LIBSUFFIX '_7_1'}
 {$IMPLICITBUILD OFF}
 
 requires

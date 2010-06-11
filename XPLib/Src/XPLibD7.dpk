@@ -29,7 +29,6 @@ package XPLibD7;
 {$DESCRIPTION 'AAA - XP-Lib - Delphi 7'}
 {$IMPLICITBUILD OFF}
 
-
 requires
   rtl,
   vcl,
