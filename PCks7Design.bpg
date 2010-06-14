@@ -9,7 +9,7 @@ MAKE = $(ROOT)\bin\make.exe -$(MAKEFLAGS) -f$**
 DCC = $(ROOT)\bin\dcc32.exe $**
 BRCC = $(ROOT)\bin\brcc32.exe $**
 #------------------------------------------------------------------------------
-PROJECTS = XPLibD7.bpl OPLibD7_7_0.bpl GDBLib_7_0.bpl BDELibD7_7_0.bpl FXLibD7_7_0.bpl GeneralLibD7_7_0.bpl StFLibD7_7_0.bpl \
+PROJECTS = XPLibD7.bpl OPLibD7_7_0.bpl GDBLibD7.bpl BDELibD7_7_0.bpl FXLibD7_7_0.bpl GeneralLibD7_7_0.bpl StFLibD7_7_0.bpl \
   INetLibD7_7_0.bpl ShellLibD7_7_0.bpl WinSysLibD7_7_0.bpl WinNetLibD7_7_0.bpl ECLibD7_7_0.bpl DlgLibD7_7_0.bpl TRELibD7_7_0.bpl
 #------------------------------------------------------------------------------
 default: $(PROJECTS)
@@ -22,9 +22,6 @@ BDELibD7_7_0.bpl: BDELib\Src\BDELibD7.dpk
   $(DCC)
 
 FXLibD7_7_0.bpl: FXLib\Src\FXLibD7.dpk
-  $(DCC)
-
-GDBLib_7_0.bpl: GDBLib\Src\GDBLib.dpk
   $(DCC)
 
 GeneralLibD7_7_0.bpl: GeneralLib\Src\GeneralLibD7.dpk
@@ -55,6 +52,9 @@ TRELibD7_7_0.bpl: TRE\Src\TRELibD7.dpk
   $(DCC)
 
 XPLibD7.bpl: XPLib\Src\XPLibD7.dpk
+  $(DCC)
+
+GDBLibD7.bpl: GDBLib\Src\GDBLibD7.dpk
   $(DCC)
 
 

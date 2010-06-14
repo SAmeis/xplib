@@ -109,7 +109,7 @@ type
 	end;
 
 
-procedure BDEDbaseExpressionCreateIndex(Table : TTable; IdxTagName, IdxExpression : PChar; Descending : boolean = FALSE; Unique :
+procedure BDEDbaseExpressionCreateIndex(Table : TTable; IdxTagName, IdxExpression : PAnsiChar; Descending : boolean = FALSE; Unique :
 	boolean = FALSE; Maintained : boolean = TRUE);
 
 procedure BDEDbaseFieldsCreateIndex(Table : TTable; const IdxTagName, FieldName : string);
@@ -145,7 +145,7 @@ uses
 	Windows, Str_Null, FileHnd, StrHnd, Str_Pas;
 
 
-procedure BDEDbaseExpressionCreateIndex(Table : TTable; IdxTagName, IdxExpression : PChar;
+procedure BDEDbaseExpressionCreateIndex(Table : TTable; IdxTagName, IdxExpression : PAnsiChar;
 	Descending : boolean = FALSE;
 	Unique : boolean = FALSE;
 	Maintained : boolean = TRUE);
@@ -182,7 +182,7 @@ begin
 		NewIndex.szKeyCond := '';
 		NewIndex.bCaseInsensitive := FALSE;
 		NewIndex.iBlockSize := 0;
-		Check(DbiAddIndex(Table.dbhandle, Table.handle, PChar(Table.TableName), szDBASE, NewIndex, NIL));
+		Check(DbiAddIndex(Table.dbhandle, Table.handle, PAnsiChar(Table.TableName), szDBASE, NewIndex, NIL));
 	finally
 		if not OldExc then begin
 			Table.Active := FALSE;
@@ -218,7 +218,7 @@ begin
 		Fld := Table.FieldByName(FieldName); //Erro se nao encontrar
 		NewIndex.aiKeyFld[0] := Fld.FieldNo;
 		with NewIndex do begin
-			StrLCopy(szTagName, PChar(IdxTagName), DBIMAXNAMELEN);
+			StrLCopy(szTagName, PAnsiChar(IdxTagName), DBIMAXNAMELEN);
 			bPrimary := FALSE;
 			bUnique  := FALSE;
 			bDescending := FALSE;
@@ -231,7 +231,7 @@ begin
 			bCaseInsensitive := FALSE;
 			iBlockSize := 0;
 		end;
-		Check(DbiAddIndex(Table.dbhandle, Table.handle, PChar(Table.TableName), szDBASE, NewIndex, NIL));
+		Check(DbiAddIndex(Table.dbhandle, Table.handle, PAnsiChar(Table.TableName), szDBASE, NewIndex, NIL));
 	finally
 		if not OldExc then begin
 			Table.Active := FALSE;
@@ -384,8 +384,8 @@ begin
 		raise EDatabaseError.CreateFmt('Tabela %s para restruturação deve estar aberta no modo exclusivo',
 			[Table.TableName]);
 	end;
-	if (StrComp(FieldRecInfo.szName, PChar(EmptyStr)) = 0) then begin  //Garante referencia ao nome do campo
-		StrLCopy(FieldRecInfo.szName, PChar(Field.FieldName), DBIMAXNAMELEN);
+	if (StrComp(FieldRecInfo.szName, PAnsiChar(EmptyStr)) = 0) then begin  //Garante referencia ao nome do campo
+		StrLCopy(FieldRecInfo.szName, PAnsiChar(Field.FieldName), DBIMAXNAMELEN);
 	end;
 	Check(DbiGetCursorProps(Table.Handle, Props));
 	pFields := AllocMem(Table.FieldCount * sizeof(FLDDesc));
@@ -442,7 +442,7 @@ var
 	FCurProp : CurProps;   //FCurProp holds information about the structure of the table
 	TblDesc : CRTblDesc; //Specific information about the table structure, indexes, etc.
 	hDb : hDbiDB; //Uses as a handle to the database
-	TablePath : array[0..dbiMaxPathLen] of Char; { Path to the currently opened table }
+	TablePath : array[0..dbiMaxPathLen] of AnsiChar; { Path to the currently opened table }
 	OldExclusive, OldState : boolean;
 begin
 	OldState := Table.Active;
@@ -515,9 +515,9 @@ begin
 		Fld := Table.FieldByName(FName); //Erro se nao encontrar
 		NewIndex.aiKeyFld[i] := Fld.FieldNo;
 	end;
-	StrLCopy(NewIndex.szName, PChar(IdxName), DBIMAXTBLNAMELEN);
+	StrLCopy(NewIndex.szName, PAnsiChar(IdxName), DBIMAXTBLNAMELEN);
 	with NewIndex do begin
-		StrLCopy(szTagName, PChar(IdxName), DBIMAXNAMELEN);
+		StrLCopy(szTagName, PAnsiChar(IdxName), DBIMAXNAMELEN);
 		bPrimary := Primary;
 		bUnique  := Unique;
 		bDescending := Descending;
@@ -530,7 +530,7 @@ begin
 		bCaseInsensitive := CaseInsensitive;
 		iBlockSize := 0;
 	end;
-	Check(DbiAddIndex(Table.dbhandle, Table.handle, PChar(Table.TableName), szDBASE, NewIndex, NIL));
+	Check(DbiAddIndex(Table.dbhandle, Table.handle, PAnsiChar(Table.TableName), szDBASE, NewIndex, NIL));
 end;
 
 procedure BDESetSessionDirs(ASession : TSession; const ANetDir, APrivDir : string);
@@ -574,13 +574,13 @@ Copia uma tabela para uma dada pasta, se o nome nao for dado usa o mesmo
 var
 	WasActive : Boolean;
 	WasExclusive : Boolean;
-	SrcName, DestFile : PChar;
+	SrcName, DestFile : PAnsiChar;
 begin
-	SrcName := StrAllocString(Table.TableName);
+	SrcName := StrAllocAnsiString(Table.TableName);
 	if DestName = NIL then begin
-		DestFile := StrAllocString(TFileHnd.ConcatPath([DestDir, ExtractFileName(Table.TableName)]));
+		DestFile := StrAllocAnsiString(TFileHnd.ConcatPath([DestDir, ExtractFileName(Table.TableName)]));
 	end else begin
-		DestFile := StrAllocString(TFileHnd.ConcatPath([DestDir, string(DestName)]));
+		DestFile := StrAllocAnsiString(TFileHnd.ConcatPath([DestDir, string(DestName)]));
 	end;
 	try
 		if not DirectoryExists(DestDir) then begin
@@ -597,7 +597,7 @@ begin
 				try
 					Exclusive := TRUE;
 					Open;
-					Check(BDE.DbiCopyTable(DBHandle, TRUE, SrcName, NIL, PChar(DestFile)));
+					Check(BDE.DbiCopyTable(DBHandle, TRUE, SrcName, NIL, PAnsiChar(DestFile)));
 				finally
 					if not (WasActive and WasExclusive) then begin
 						Close;
@@ -732,11 +732,11 @@ Returns a path for a specific BDE Alias
 }
 var
 	database : TDatabase;
-	pzDir : PChar;
+	pzDir : PAnsiChar;
 begin
 	database := TDatabase.Create(NIL);
 	try
-		pzDir := StrAlloc(MAX_PATH);
+		pzDir := AnsiStrAlloc(MAX_PATH);
 		try
 			with database do begin
 				AliasName := AAliasName;

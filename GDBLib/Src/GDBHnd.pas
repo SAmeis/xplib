@@ -409,9 +409,13 @@ begin
         if Result then begin
             Exit;
         end;
-        DataSet.DisableControls;
-        try
-            Bookmark := DataSet.Bookmark;
+		 DataSet.DisableControls;
+		 try
+			 {$IF CompilerVersion > 15.00} //Delphi 2007+
+			 Bookmark := DataSet.Bookmark;
+			 {$ELSE}
+			 Bookmark := PChar(DataSet.Bookmark);
+			 {$IFEND}
             try
                 with DataSet do begin
                     First;
@@ -424,9 +428,13 @@ begin
                     end;
                 end;
             finally
-								if not Result and DataSet.BookmarkValid(Bookmark) then begin
-                    DataSet.Bookmark := Bookmark;
-								end;
+				if not Result and DataSet.BookmarkValid(Bookmark) then begin
+					{$IF CompilerVersion > 15.00} //Delphi 2007+
+					DataSet.Bookmark := Bookmark;
+					{$ELSE}
+					DataSet.Bookmark := PChar(Bookmark);
+					{$IFEND}
+				end;
             end;
         finally
             DataSet.EnableControls;

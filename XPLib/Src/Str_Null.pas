@@ -14,20 +14,26 @@ interface
 uses
     SysUtils, Windows;
 
-function StrAllocString(Str : string) : PChar;
+function StrAllocString(Str : string) : PChar; deprecated;
+function StrAllocAnsiString(Str : AnsiString) : PAnsiChar;
 
 //Converte o mapa de caracteres para o tipo especificado pelo sistema operacional
 function StrConvertToOEM(Str : PChar) : PChar;
 
 implementation
 
-function StrAllocString(Str : string) : PChar;
+function StrAllocString(Str : string) : PChar; deprecated;
     //----------------------------------------------------------------------------------------------------------------------
 begin
     Result := StrAlloc(Length(Str) + 1);
     StrPCopy(Result, Str);
 end;
 
+function StrAllocAnsiString(Str : AnsiString) : PAnsiChar;
+begin
+    Result := AnsiStrAlloc(Length(Str) + 1);
+    StrPCopy(Result, Str);
+end;
 function StrConvertToOEM(Str : PChar) : PChar;
 {{
 Aloca e converte o mapa de caracteres para o tipo especificado pelo sistema operacional

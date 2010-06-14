@@ -36,53 +36,64 @@ uses
     SysUtils, Classes, DB, Variants;
 
 type
+{$IF CompilerVersion> 15.00}//Delphi 2007+
+    TMDSRecBuffer  = TRecordBuffer;
+    PMDSPByte      = PByte;
+    TMDSBufferData = byte;
+{$ELSE} //Delphi 7 ou inferior
+    TMDSRecBuffer = PAnsiChar;
+    PMDSPByte = PChar;
+    TMDSBufferData = Char;
+{$IFEND}
+
+type
     //----------------- Added by CFZ 2004/03/03 ------------------
-    TPVariant      = ^variant;
-    TApplyMode     = (amNone, amAppend, amMerge);
-    TRecordStatus  = (rsOriginal, rsUpdated, rsInserted, rsDeleted);
+    TPVariant       = ^variant;
+    TApplyMode      = (amNone, amAppend, amMerge);
+    TRecordStatus   = (rsOriginal, rsUpdated, rsInserted, rsDeleted);
     //------------------------------------------------------------
-    TMemBlobData   = string;
-    TMemBlobArray  = array [0..0] of TMemBlobData;
-    PMemBlobArray  = ^TMemBlobArray;
+    TMemBlobData    = string;
+    TMemBlobArray   = array [0..0] of TMemBlobData;
+    PMemBlobArray   = ^TMemBlobArray;
     TXPMemoryRecord = class;
-    TLoadMode      = (lmCopy, lmAppend);
-    TSaveLoadState = (slsNone, slsLoading, slsSaving);
+    TLoadMode       = (lmCopy, lmAppend);
+    TSaveLoadState  = (slsNone, slsLoading, slsSaving);
     TCompareRecords = function(Item1, Item2 : TXPMemoryRecord) : Integer of object;
 
     TXPMemoryDataset = class(TDataSet)
     private
-        FActive :      boolean;
-        FAfterApply :  TDatasetNotifyEvent;
-        FApplyMode :   TApplyMode;
-        FAutoInc :     longint;
+        FActive :           boolean;
+        FAfterApply :       TDatasetNotifyEvent;
+        FApplyMode :        TApplyMode;
+        FAutoInc :          longint;
         FAutoIncAsInteger : boolean;
-        FAutoIncField : TField;
-        FBeforeApply : TDatasetNotifyEvent;
-        FBlobOfs :     Integer;
-        FBookmarkOfs : Integer;
+        FAutoIncField :     TField;
+        FBeforeApply :      TDatasetNotifyEvent;
+        FBlobOfs :          Integer;
+        FBookmarkOfs :      Integer;
         FCaseInsensitiveSort : boolean;
-        FDataSet :     TDataSet;
-        FDeletedValues : TList;
-        FDescendingSort : boolean;
-        FExactApply :  boolean;
-        FIndexList :   TList;
-        FInOpen :      boolean;
-        FInRefresh :   boolean;
-        FKeyFieldNames : string;
-        FLastID :      Integer;
-        FLoadRecords : boolean;
-        FLoadStructure : boolean;
-        FOffsets :     PWordArray;
-        FRecBufSize :  Integer;
-        FRecordPos :   Integer;
-        FRecords :     TList;
-        FRecordSize :  Integer;
-        FRowsAffected : Integer;
-        FRowsChanged : Integer;
-        FRowsOriginals : Integer;
-        FSaveLoadState : TSaveLoadState;
-        FSrcAutoIncField : TField;
-        FStatusName :  string;
+        FDataSet :          TDataSet;
+        FDeletedValues :    TList;
+        FDescendingSort :   boolean;
+        FExactApply :       boolean;
+        FIndexList :        TList;
+        FInOpen :           boolean;
+        FInRefresh :        boolean;
+        FKeyFieldNames :    string;
+        FLastID :           Integer;
+        FLoadRecords :      boolean;
+        FLoadStructure :    boolean;
+        FOffsets :          PWordArray;
+        FRecBufSize :       Integer;
+        FRecordPos :        Integer;
+        FRecords :          TList;
+        FRecordSize :       Integer;
+        FRowsAffected :     Integer;
+        FRowsChanged :      Integer;
+        FRowsOriginals :    Integer;
+        FSaveLoadState :    TSaveLoadState;
+        FSrcAutoIncField :  TField;
+        FStatusName :       string;
         function AddRecord : TXPMemoryRecord;
         procedure AddStatusField;
         function CalcRecordSize : Integer;
@@ -111,26 +122,30 @@ type
         procedure SetLoadStructure(Value : boolean);
         function GetMemoryRecord(Index : Integer) : TXPMemoryRecord;
     protected
-        function AllocRecordBuffer : PByte; override;
-        procedure AssignMemoryRecord(Rec : TXPMemoryRecord; Buffer : PChar);
-        procedure ClearCalcFields(Buffer : TRecordBuffer); override;
+        function AllocRecordBuffer : PMDSPByte; override;
+        procedure ClearCalcFields(Buffer : TMDSRecBuffer); override;
+        procedure FreeRecordBuffer(var Buffer : TMDSRecBuffer); override;
+        procedure GetBookmarkData(Buffer : TMDSRecBuffer; Data : Pointer); override;
+        function GetBookmarkFlag(Buffer : TMDSRecBuffer) : TBookmarkFlag; override;
+        function GetRecord(Buffer : TMDSRecBuffer; GetMode : TGetMode; DoCheck : boolean) : TGetResult; override;
+        procedure InitRecord(Buffer : TMDSRecBuffer); override;
+        procedure InternalInitRecord(Buffer : TMDSRecBuffer); override;
+        procedure InternalSetToRecord(Buffer : TMDSRecBuffer); override;
+        procedure SetBookmarkData(Buffer : TMDSRecBuffer; Data : Pointer); override;
+        procedure SetBookmarkFlag(Buffer : TMDSRecBuffer; Value : TBookmarkFlag); override;
+        procedure AssignMemoryRecord(Rec : TXPMemoryRecord; Buffer : TMDSRecBuffer);
         procedure CloseBlob(Field : TField); override;
         function CompareFields(Data1, Data2 : Pointer; FieldType : TFieldType; CaseInsensitive : boolean) : Integer; virtual;
         function CompareRecords(Item1, Item2 : TXPMemoryRecord) : Integer; virtual;
         procedure DataConvert(Field : TField; Source, Dest : Pointer; ToNative : boolean); override;
         function FindFieldData(Buffer : Pointer; Field : TField) : Pointer;
-        procedure FreeRecordBuffer(var Buffer : TRecordBuffer); override;
-        function GetActiveRecBuf(var RecBuf : PChar) : boolean; virtual;
-        function GetBlobData(Field : TField; Buffer : PChar) : TMemBlobData;
-        procedure GetBookmarkData(Buffer : TRecordBuffer; Data : Pointer); override;
-        function GetBookmarkFlag(Buffer : TRecordBuffer) : TBookmarkFlag; override;
+        function GetActiveRecBuf(var RecBuf : TMDSRecBuffer) : boolean; virtual;
+        function GetBlobData(Field : TField; Buffer : TMDSRecBuffer) : TMemBlobData;
         function GetIsIndexField(Field : TField) : boolean; override;
         function GetRecNo : Integer; override;
-        function GetRecord(Buffer : TRecordBuffer; GetMode : TGetMode; DoCheck : boolean) : TGetResult; override;
         function GetRecordCount : Integer; override;
         function GetRecordSize : Word; override;
         procedure InitFieldDefsFromFields;
-        procedure InitRecord(Buffer : TRecordBuffer); override;
         procedure InternalAddRecord(Buffer : Pointer; Append : boolean); override;
         procedure InternalClose; override;
         procedure InternalDelete; override;
@@ -138,21 +153,17 @@ type
         procedure InternalGotoBookmark(Bookmark : Pointer); override;
         procedure InternalHandleException; override;
         procedure InternalInitFieldDefs; override;
-        procedure InternalInitRecord(Buffer : TRecordBuffer); override;
         procedure InternalLast; override;
         procedure InternalOpen; override;
         procedure InternalPost; override;
-        procedure InternalSetToRecord(Buffer : TRecordBuffer); override;
         function IsCursorOpen : boolean; override;
         procedure OpenCursor(InfoQuery : boolean); override;
-        procedure RecordToBuffer(Rec : TXPMemoryRecord; Buffer : PChar);
-        procedure SetAutoIncFields(Buffer : PChar); virtual;
-        procedure SetBlobData(Field : TField; Buffer : PChar; Value : TMemBlobData);
-        procedure SetBookmarkData(Buffer : TRecordBuffer; Data : Pointer); override;
-        procedure SetBookmarkFlag(Buffer : TRecordBuffer; Value : TBookmarkFlag); override;
+        procedure RecordToBuffer(Rec : TXPMemoryRecord; Buffer : TMDSRecBuffer);
+        procedure SetAutoIncFields(Buffer : TMDSRecBuffer); virtual;
+        procedure SetBlobData(Field : TField; Buffer : TMDSRecBuffer; Value : TMemBlobData);
         procedure SetFieldData(Field : TField; Buffer : Pointer); override;
         procedure SetFiltered(Value : boolean); override;
-        procedure SetMemoryRecordData(Buffer : PChar; Pos : Integer); virtual;
+        procedure SetMemoryRecordData(Buffer : TMDSRecBuffer; Pos : Integer); virtual;
         procedure SetOnFilterRecord(const Value : TFilterRecordEvent); override;
         procedure SetRecNo(Value : Integer); override;
         property Records[Index : Integer] : TXPMemoryRecord read GetMemoryRecord;
@@ -168,7 +179,11 @@ type
         function CreateBlobStream(Field : TField; Mode : TBlobStreamMode) : TStream; override;
         procedure EmptyTable;
         function FindDeleted(KeyValues : variant) : Integer;
+         {$IF CompilerVersion> 15.00}//Delphi 2007+
         function GetCurrentRecord(Buffer : TRecordBuffer) : boolean; override;
+         {$ELSE} //Delphi 7 ou inferior
+        function GetCurrentRecord(Buffer : PChar) : boolean; override;
+		 {$IFEND}
         function GetFieldData(Field : TField; Buffer : Pointer) : boolean; override;
         function IsDeleted(out Index : Integer) : boolean;
         function IsInserted : boolean;
@@ -227,7 +242,7 @@ type
 
     TXPMemBlobStream = class(TStream)
     private
-        FBuffer :   PChar;
+        FBuffer :   TMDSRecBuffer;
         FCached :   boolean;
         FDataSet :  TXPMemoryDataset;
         FField :    TBlobField;
@@ -248,9 +263,9 @@ type
 
     TXPMemoryRecord = class(TPersistent)
     private
-        FBlobs : Pointer;
-        FData :  Pointer;
-        FID :    Integer;
+        FBlobs :      Pointer;
+        FData :       Pointer;
+        FID :         Integer;
         FMemoryData : TXPMemoryDataset;
         procedure SetMemoryData(Value : TXPMemoryDataset; UpdateParent : boolean);
         function GetIndex : Integer;
@@ -292,7 +307,7 @@ const
     ftBlobTypes = [ftBlob, ftMemo, ftGraphic, ftFmtMemo, ftParadoxOle, ftDBaseOle, ftTypedBinary, ftOraBlob, ftOraClob];
 
     ftSupported = [ftString, ftSmallint, ftInteger, ftWord, ftBoolean, ftFloat, ftCurrency, ftDate, ftTime, ftDateTime, ftAutoInc,
-        ftBCD, ftBytes, ftVarBytes, ftADT, ftFixedChar, ftWideString, ftLargeint, ftVariant, ftGuid, ftTimeStamp ] + ftBlobTypes;
+        ftBCD, ftBytes, ftVarBytes, ftADT, ftFixedChar, ftWideString, ftLargeint, ftVariant, ftGuid, ftTimeStamp] + ftBlobTypes;
 
     fkStoredFields = [fkData];
 
@@ -386,7 +401,8 @@ begin
                 ftTimeStamp : begin
                     Result := SizeOf(TSQLTimeStamp);
                 end;
-                else begin
+                else
+                begin
                     DatabaseError('Tipo de campo não pode ter seu comprimento calculado.');
                 end;
             end;
@@ -850,7 +866,11 @@ end;
 {--------------------------------------------------------------------------------------------------------------------------------}
 procedure TXPMemoryDataset.Sort;
 var
-    Pos : TBookmarkStr;
+{$IF CompilerVersion> 15.00}//Delphi 2007+
+    Pos : TBookmark;
+{$ELSE} //Delphi 7 ou inferior
+Pos : TBookmarkStr;
+{$IFEND}
 begin
     if Active and (FRecords <> nil) and (FRecords.Count > 0) then begin
         Pos := Bookmark;
@@ -943,16 +963,7 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-function TXPMemoryDataset.AllocRecordBuffer : PByte;
-begin
-    Result := StrAlloc(FRecBufSize);
-    if BlobFieldCount > 0 then begin
-        Initialize(PMemBlobArray(Result + FBlobOfs)[0], BlobFieldCount);
-    end;
-end;
-
-{--------------------------------------------------------------------------------------------------------------------------------}
-procedure TXPMemoryDataset.AssignMemoryRecord(Rec : TXPMemoryRecord; Buffer : PChar);
+procedure TXPMemoryDataset.AssignMemoryRecord(Rec : TXPMemoryRecord; Buffer : TMDSRecBuffer);
 var
     I : Integer;
 begin
@@ -960,12 +971,6 @@ begin
     for I := 0 to BlobFieldCount - 1 do begin
         PMemBlobArray(Rec.FBlobs)[I] := PMemBlobArray(Buffer + FBlobOfs)[I];
     end;
-end;
-
-{--------------------------------------------------------------------------------------------------------------------------------}
-procedure TXPMemoryDataset.ClearCalcFields(Buffer : TRecordBuffer);
-begin
-		FillChar(Buffer[FRecordSize], CalcFieldsSize, 0);
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
@@ -1002,42 +1007,48 @@ begin
         ftSmallint : begin
             if smallint(Data1^) > smallint(Data2^) then begin
                 Result := 1;
-            end else if smallint(Data1^) < smallint(Data2^) then begin
+            end else
+            if smallint(Data1^) < smallint(Data2^) then begin
                 Result := -1;
             end;
         end;
         ftInteger, ftDate, ftTime, ftAutoInc : begin
             if longint(Data1^) > longint(Data2^) then begin
                 Result := 1;
-            end else if longint(Data1^) < longint(Data2^) then begin
+            end else
+            if longint(Data1^) < longint(Data2^) then begin
                 Result := -1;
             end;
         end;
         ftWord : begin
             if Word(Data1^) > Word(Data2^) then begin
                 Result := 1;
-            end else if Word(Data1^) < Word(Data2^) then begin
+            end else
+            if Word(Data1^) < Word(Data2^) then begin
                 Result := -1;
             end;
         end;
         ftBoolean : begin
             if wordbool(Data1^) and not wordbool(Data2^) then begin
                 Result := 1;
-            end else if not wordbool(Data1^) and wordbool(Data2^) then begin
+            end else
+            if not wordbool(Data1^) and wordbool(Data2^) then begin
                 Result := -1;
             end;
         end;
         ftFloat, ftCurrency : begin
             if double(Data1^) > double(Data2^) then begin
                 Result := 1;
-            end else if double(Data1^) < double(Data2^) then begin
+            end else
+            if double(Data1^) < double(Data2^) then begin
                 Result := -1;
             end;
         end;
         ftDateTime : begin
             if TDateTime(Data1^) > TDateTime(Data2^) then begin
                 Result := 1;
-            end else if TDateTime(Data1^) < TDateTime(Data2^) then begin
+            end else
+            if TDateTime(Data1^) < TDateTime(Data2^) then begin
                 Result := -1;
             end;
         end;
@@ -1060,7 +1071,8 @@ begin
         ftLargeint : begin
             if int64(Data1^) > int64(Data2^) then begin
                 Result := 1;
-            end else if int64(Data1^) < int64(Data2^) then begin
+            end else
+            if int64(Data1^) < int64(Data2^) then begin
                 Result := -1;
             end;
         end;
@@ -1071,13 +1083,15 @@ begin
             Result := CompareText(PChar(Data1), PChar(Data2));
         end;
         ftTimeStamp : begin
-            if( SQLTimeStampToDateTime(PSQLTimeStamp(Data1)^) = SQLTimeStampToDateTime(PSQLTimeStamp(Data2)^) )then begin
-                Result:=0;
+            if (SQLTimeStampToDateTime(PSQLTimeStamp(Data1)^) = SQLTimeStampToDateTime(PSQLTimeStamp(Data2)^)) then
+            begin
+                Result := 0;
             end else begin
-                if( SQLTimeStampToDateTime(PSQLTimeStamp(Data1)^) > SQLTimeStampToDateTime(PSQLTimeStamp(Data2)^))then begin
-                    Result:=1;
+                if (SQLTimeStampToDateTime(PSQLTimeStamp(Data1)^) > SQLTimeStampToDateTime(PSQLTimeStamp(Data2)^)) then
+                begin
+                    Result := 1;
                 end else begin
-                    Result:=-1;
+                    Result := -1;
                 end;
             end;
         end;
@@ -1104,9 +1118,11 @@ begin
                         Inc(Data2);
                         Result := CompareFields(Data1, Data2, F.DataType,
                             FCaseInsensitiveSort);
-                    end else if Data1[0] <> #0 then begin
+                    end else
+                    if Data1[0] <> #0 then begin
                         Result := 1;
-                    end else if Data2[0] <> #0 then begin
+                    end else
+                    if Data2[0] <> #0 then begin
                         Result := -1;
                     end;
                     if FDescendingSort then begin
@@ -1122,7 +1138,8 @@ begin
     if Result = 0 then begin
         if Item1.ID > Item2.ID then begin
             Result := 1;
-        end else if Item1.ID < Item2.ID then begin
+        end else
+        if Item1.ID < Item2.ID then begin
             Result := -1;
         end;
         if FDescendingSort then begin
@@ -1167,17 +1184,7 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-procedure TXPMemoryDataset.FreeRecordBuffer(var Buffer : TRecordBuffer);
-begin
-		if BlobFieldCount > 0 then begin
-        Finalize(PMemBlobArray(Buffer + FBlobOfs)[0], BlobFieldCount);
-    end;
-    StrDispose(Buffer);
-    Buffer := nil;
-end;
-
-{--------------------------------------------------------------------------------------------------------------------------------}
-function TXPMemoryDataset.GetActiveRecBuf(var RecBuf : PChar) : boolean;
+function TXPMemoryDataset.GetActiveRecBuf(var RecBuf : TMDSRecBuffer) : boolean;
 begin
     case State of
         dsBrowse : begin
@@ -1196,7 +1203,8 @@ begin
         dsFilter : begin
             RecBuf := TempBuffer;
         end;
-        else begin
+        else
+        begin
             RecBuf := nil;
         end;
     end;
@@ -1204,21 +1212,9 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-function TXPMemoryDataset.GetBlobData(Field : TField; Buffer : PChar) : TMemBlobData;
+function TXPMemoryDataset.GetBlobData(Field : TField; Buffer : TMDSRecBuffer) : TMemBlobData;
 begin
     Result := PMemBlobArray(Buffer + FBlobOfs)[Field.Offset];
-end;
-
-{--------------------------------------------------------------------------------------------------------------------------------}
-procedure TXPMemoryDataset.GetBookmarkData(Buffer : TRecordBuffer; Data : Pointer);
-begin
-		Move(PXPMemBookmarkInfo(Buffer + FBookmarkOfs)^.BookmarkData, Data^, SizeOf(TBookmarkData));
-end;
-
-{--------------------------------------------------------------------------------------------------------------------------------}
-function TXPMemoryDataset.GetBookmarkFlag(Buffer : TRecordBuffer) : TBookmarkFlag;
-begin
-		Result := PXPMemBookmarkInfo(Buffer + FBookmarkOfs)^.BookmarkFlag;
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
@@ -1240,64 +1236,6 @@ begin
         Result := 1;
     end else begin
         Result := FRecordPos + 1;
-    end;
-end;
-
-{--------------------------------------------------------------------------------------------------------------------------------}
-function TXPMemoryDataset.GetRecord(Buffer : TRecordBuffer; GetMode : TGetMode; DoCheck : boolean) : TGetResult;
-var
-    Accept : boolean;
-begin
-		Result := grOk;
-    Accept := True;
-    case GetMode of
-        gmPrior : begin
-            if FRecordPos <= 0 then begin
-                Result     := grBOF;
-                FRecordPos := -1;
-            end else begin
-                repeat
-                    Dec(FRecordPos);
-                    if Filtered then begin
-                        Accept := RecordFilter;
-                    end;
-                until Accept or (FRecordPos < 0);
-                if not Accept then begin
-                    Result     := grBOF;
-                    FRecordPos := -1;
-                end;
-            end;
-        end;
-        gmCurrent : begin
-            if (FRecordPos < 0) or (FRecordPos >= RecordCount) then begin
-                Result := grError;
-            end else if Filtered then begin
-                if not RecordFilter then begin
-                    Result := grError;
-                end;
-            end;
-        end;
-        gmNext : begin
-            if FRecordPos >= RecordCount - 1 then begin
-                Result := grEOF;
-            end else begin
-                repeat
-                    Inc(FRecordPos);
-                    if Filtered then begin
-                        Accept := RecordFilter;
-                    end;
-                until Accept or (FRecordPos > RecordCount - 1);
-                if not Accept then begin
-                    Result     := grEOF;
-                    FRecordPos := RecordCount - 1;
-                end;
-            end;
-        end;
-    end;
-    if Result = grOk then begin
-        RecordToBuffer(Records[FRecordPos], Buffer);
-    end else if (Result = grError) and DoCheck then begin
-        Error(RsEMemNoRecords);
     end;
 end;
 
@@ -1337,17 +1275,6 @@ begin
             Inc(Offset, CalcFieldLen(FieldDefList[I].DataType, FieldDefList[I].Size) + 1);
         end;
     end;
-end;
-
-{--------------------------------------------------------------------------------------------------------------------------------}
-procedure TXPMemoryDataset.InitRecord(Buffer : TRecordBuffer);
-var
-    BInfo : PXPMemBookmarkInfo;
-begin
-		inherited InitRecord(Buffer);
-    BInfo := PXPMemBookmarkInfo(Buffer + FBookmarkOfs);
-    BInfo^.BookmarkData := Low(Integer);
-    BInfo^.BookmarkFlag := bfInserted;
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
@@ -1464,7 +1391,7 @@ var
     SavePos : Integer;
     Accept :  boolean;
 begin
-		Rec := FindRecordID(TBookmarkData(Bookmark^));
+    Rec := FindRecordID(TBookmarkData(Bookmark^));
     if Rec <> nil then begin
         Accept  := True;
         SavePos := FRecordPos;
@@ -1491,17 +1418,6 @@ end;
 procedure TXPMemoryDataset.InternalInitFieldDefs;
 begin
     // InitFieldDefsFromFields
-end;
-
-{--------------------------------------------------------------------------------------------------------------------------------}
-procedure TXPMemoryDataset.InternalInitRecord(Buffer : TRecordBuffer);
-var
-    I : Integer;
-begin
-		FillChar(Buffer^, FBlobOfs, 0);
-    for I := 0 to BlobFieldCount - 1 do begin
-        PMemBlobArray(Buffer + FBlobOfs)[I] := '';
-    end;
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
@@ -1592,12 +1508,6 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-procedure TXPMemoryDataset.InternalSetToRecord(Buffer : TRecordBuffer);
-begin
-		InternalGotoBookmark(@PXPMemBookmarkInfo(Buffer + FBookmarkOfs)^.BookmarkData);
-end;
-
-{--------------------------------------------------------------------------------------------------------------------------------}
 function TXPMemoryDataset.IsCursorOpen : boolean;
 begin
     Result := FActive;
@@ -1617,7 +1527,7 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-procedure TXPMemoryDataset.RecordToBuffer(Rec : TXPMemoryRecord; Buffer : PChar);
+procedure TXPMemoryDataset.RecordToBuffer(Rec : TXPMemoryRecord; Buffer : TMDSRecBuffer);
 var
     I :     Integer;
     BInfo : PXPMemBookmarkInfo;
@@ -1633,7 +1543,7 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-procedure TXPMemoryDataset.SetAutoIncFields(Buffer : PChar);
+procedure TXPMemoryDataset.SetAutoIncFields(Buffer : TMDSRecBuffer);
 var
     I, Count : Integer;
     Data :     PChar;
@@ -1657,7 +1567,7 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-procedure TXPMemoryDataset.SetBlobData(Field : TField; Buffer : PChar; Value : TMemBlobData);
+procedure TXPMemoryDataset.SetBlobData(Field : TField; Buffer : TMDSRecBuffer; Value : TMemBlobData);
 begin
     if Buffer = ActiveBuffer then begin
         if State = dsFilter then begin
@@ -1668,21 +1578,16 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-procedure TXPMemoryDataset.SetBookmarkData(Buffer : TRecordBuffer; Data : Pointer);
-begin
-		Move(Data^, PXPMemBookmarkInfo(Buffer + FBookmarkOfs)^.BookmarkData, SizeOf(TBookmarkData));
-end;
-
-{--------------------------------------------------------------------------------------------------------------------------------}
-procedure TXPMemoryDataset.SetBookmarkFlag(Buffer : TRecordBuffer; Value : TBookmarkFlag);
-begin
-		PXPMemBookmarkInfo(Buffer + FBookmarkOfs)^.BookmarkFlag := Value;
-end;
-
-{--------------------------------------------------------------------------------------------------------------------------------}
 procedure TXPMemoryDataset.SetFieldData(Field : TField; Buffer : Pointer);
+ {TODO -oroger -clib : Remover se confimar solucao por tipagem }
+ //const
+{$IF CompilerVersion> 15.00}//Delphi 2007+
+ //NULL_DATA : Byte = 0;
+{$ELSE} //Delphi 7 ou inferior
+//NULL_DATA : Char = (#0);
+{$IFEND}
 var
-    RecBuf, Data : PChar;
+    RecBuf, Data : TMDSRecBuffer;
     VarData :      variant;
 begin
     if not (State in dsWriteModes) then begin
@@ -1707,16 +1612,25 @@ begin
                         end else begin
                             VarData := EmptyParam;
                         end;
-                        Data[0] := char(Ord((Buffer <> nil) and not
-                            (VarIsNull(VarData) or VarIsEmpty(VarData))));
-                        if Data[0] <> #0 then begin
+                        ///Revision 12/06/2010 - Roger
+                        /// Alterado tipo para migrar Delphi 2010
+                         {$IF CompilerVersion> 15.00}//Delphi 2007+
+                        Data[0] := byte(Ord((Buffer <> nil) and
+                            not (VarIsNull(VarData) or VarIsEmpty(VarData))
+                            ));
+                         {$ELSE} //Delphi 7 ou inferior
+						 Data[0] := AnsiChar(Ord((Buffer <> nil) and
+							 not (VarIsNull(VarData) or VarIsEmpty(VarData))
+							 ));
+						 {$IFEND}
+                        if Data[0] <> TMDSBufferData(#0) then begin
                             Inc(Data);
                             PVariant(Data)^ := VarData;
                         end else begin
                             FillChar(Data^, CalcFieldLen(DataType, Size), 0);
                         end;
                     end else begin
-                        Data[0] := char(Ord(Buffer <> nil));
+                        Data[0] := TMDSBufferData(Ord(Buffer <> nil));
                         Inc(Data);
                         if Buffer <> nil then begin
                             Move(Buffer^, Data^, CalcFieldLen(DataType, Size));
@@ -1728,8 +1642,8 @@ begin
             end;
         end else {fkCalculated, fkLookup} begin
             Inc(RecBuf, FRecordSize + Offset);
-            RecBuf[0] := char(Ord(Buffer <> nil));
-            if RecBuf[0] <> #0 then begin
+            RecBuf[0] := TMDSBufferData(Ord(Buffer <> nil));
+            if RecBuf[0] <> TMDSBufferData(#0) then begin
                 Move(Buffer^, RecBuf[1], DataSize);
             end;
         end;
@@ -1754,7 +1668,7 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-procedure TXPMemoryDataset.SetMemoryRecordData(Buffer : PChar; Pos : Integer);
+procedure TXPMemoryDataset.SetMemoryRecordData(Buffer : TMDSRecBuffer; Pos : Integer);
 var
     Rec : TXPMemoryRecord;
 begin
@@ -1987,8 +1901,17 @@ end;
 {--------------------------------------------------------------------------------------------------------------------------------}
 function TXPMemoryDataset.BookmarkValid(Bookmark : TBookmark) : boolean;
 begin
-    Result := (Bookmark <> nil) and FActive and (TBookmarkData(Bookmark^) > Low(Integer)) and
-        (TBookmarkData(Bookmark^) <= FLastID);
+{$IF CompilerVersion> 15.00}//Delphi 2007+
+    Result := (Bookmark <> nil)
+        and FActive
+        and (TBookmarkData(Bookmark[0]) > Low(Integer))
+        and (TBookmarkData(Bookmark[0]) <= FLastID);
+{$ELSE} //Delphi 7 ou inferior
+    Result := (Bookmark <> nil)
+           and FActive
+           and (TBookmarkData(Bookmark^) > Low(Integer))
+           and (TBookmarkData(Bookmark^) <= FLastID);
+{$IFEND}
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
@@ -2032,19 +1955,36 @@ end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
 function TXPMemoryDataset.CompareBookmarks(Bookmark1, Bookmark2 : TBookmark) : Integer;
+var
+   BkData1, BkData2 : integer;
 begin
     if (Bookmark1 = nil) and (Bookmark2 = nil) then begin
         Result := 0;
-    end else if (Bookmark1 <> nil) and (Bookmark2 = nil) then begin
-        Result := 1;
-    end else if (Bookmark1 = nil) and (Bookmark2 <> nil) then begin
-        Result := -1;
-    end else if TBookmarkData(Bookmark1^) > TBookmarkData(Bookmark2^) then begin
-        Result := 1;
-    end else if TBookmarkData(Bookmark1^) < TBookmarkData(Bookmark2^) then begin
-        Result := -1;
     end else begin
-        Result := 0;
+        if (Bookmark1 <> nil) and (Bookmark2 = nil) then begin
+            Result := 1;
+        end else begin
+            if (Bookmark1 = nil) and (Bookmark2 <> nil) then begin
+                Result := -1;
+            end else begin
+                {$IF CompilerVersion> 15.00} //Delphi 2007+
+                BkData1:= Pinteger(@Bookmark1[0])^;
+                BkData2:=PInteger(@Bookmark2[0])^;
+                {$ELSE} //Delphi 7 ou inferior
+                BkData1:= TBookmarkData(Bookmark1^);
+                BkData2:=TBookmarkData(Bookmark2^);
+                {$IFEND}
+                if BkData1 > BkData2 then begin
+                    Result := 1;
+                end else begin
+                    if BkData1 < BkData2 then begin
+                        Result := -1;
+                    end else begin
+                        Result := 0;
+                    end;
+                end;
+            end;
+        end;
     end;
 end;
 
@@ -2166,7 +2106,7 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-function TXPMemoryDataset.GetCurrentRecord(Buffer : PChar) : boolean;
+function TXPMemoryDataset.GetCurrentRecord(Buffer : TMDSRecBuffer) : boolean;
 begin
     Result := False;
     if not IsEmpty and (GetBookmarkFlag(ActiveBuffer) = bfCurrent) then begin
@@ -2182,10 +2122,10 @@ end;
 function TXPMemoryDataset.GetFieldData(Field : TField; Buffer : Pointer) : boolean;
 var
     RecBuf, Data : PChar;
-    VarData :      variant;
+	 VarData :      variant;
 begin
     Result := False;
-    if not GetActiveRecBuf(RecBuf) then begin
+	 if not GetActiveRecBuf(PMDSPByte(RecBuf)) then begin
         Exit;
     end;
     if Field.FieldNo > 0 then begin
@@ -2209,7 +2149,8 @@ begin
                 end;
             end;
         end;
-    end else if State in [dsBrowse, dsEdit, dsInsert, dsCalcFields] then begin
+    end else
+    if State in [dsBrowse, dsEdit, dsInsert, dsCalcFields] then begin
         Inc(RecBuf, FRecordSize + Field.Offset);
         Result := RecBuf[0] <> #0;
         if Result and (Buffer <> nil) then begin
@@ -2482,6 +2423,161 @@ begin
     end;
 end;
 
+{--------------------------------------------------------------------------------------------------------------------------------}
+function TXPMemoryDataset.AllocRecordBuffer : PMDSPByte;
+begin
+     {$IF CompilerVersion> 15.00} //Delphi 2007+
+       GetMem(Result, FRecBufSize);
+     {$ELSE} //Delphi 7 ou inferior
+     Result := StrAlloc(FRecBufSize);
+     {$IFEND}
+    if BlobFieldCount > 0 then begin
+        Initialize(PMemBlobArray(Result + FBlobOfs)[0], BlobFieldCount);
+    end;
+end;
+
+
+{--------------------------------------------------------------------------------------------------------------------------------}
+procedure TXPMemoryDataset.ClearCalcFields(Buffer : TMDSRecBuffer);
+begin
+    FillChar(Buffer[FRecordSize], CalcFieldsSize, 0);
+end;
+
+
+{--------------------------------------------------------------------------------------------------------------------------------}
+procedure TXPMemoryDataset.FreeRecordBuffer(var Buffer : TMDSRecBuffer);
+begin
+    if BlobFieldCount > 0 then begin
+        Finalize(PMemBlobArray(Buffer + FBlobOfs)[0], BlobFieldCount);
+    end;
+    {$IF CompilerVersion> 15.00} //Delphi 2007+
+    FreeMem(Buffer);
+    {$ELSE} //Delphi 7 ou inferior
+    StrDispose(Buffer);
+    {$IFEND}
+    Buffer := nil;
+end;
+
+
+{--------------------------------------------------------------------------------------------------------------------------------}
+procedure TXPMemoryDataset.GetBookmarkData(Buffer : TMDSRecBuffer; Data : Pointer);
+begin
+    Move(PXPMemBookmarkInfo(Buffer + FBookmarkOfs)^.BookmarkData, Data^, SizeOf(TBookmarkData));
+end;
+
+
+{--------------------------------------------------------------------------------------------------------------------------------}
+function TXPMemoryDataset.GetBookmarkFlag(Buffer : TMDSRecBuffer) : TBookmarkFlag;
+begin
+    Result := PXPMemBookmarkInfo(Buffer + FBookmarkOfs)^.BookmarkFlag;
+end;
+
+
+{--------------------------------------------------------------------------------------------------------------------------------}
+function TXPMemoryDataset.GetRecord(Buffer : TMDSRecBuffer; GetMode : TGetMode; DoCheck : boolean) : TGetResult;
+var
+    Accept : boolean;
+begin
+    Result := grOk;
+    Accept := True;
+    case GetMode of
+        gmPrior : begin
+            if FRecordPos <= 0 then begin
+                Result     := grBOF;
+                FRecordPos := -1;
+            end else begin
+                repeat
+                    Dec(FRecordPos);
+                    if Filtered then begin
+                        Accept := RecordFilter;
+                    end;
+                until Accept or (FRecordPos < 0);
+                if not Accept then begin
+                    Result     := grBOF;
+                    FRecordPos := -1;
+                end;
+            end;
+        end;
+        gmCurrent : begin
+            if (FRecordPos < 0) or (FRecordPos >= RecordCount) then begin
+                Result := grError;
+            end else
+            if Filtered then begin
+                if not RecordFilter then begin
+                    Result := grError;
+                end;
+            end;
+        end;
+        gmNext : begin
+            if FRecordPos >= RecordCount - 1 then begin
+                Result := grEOF;
+            end else begin
+                repeat
+                    Inc(FRecordPos);
+                    if Filtered then begin
+                        Accept := RecordFilter;
+                    end;
+                until Accept or (FRecordPos > RecordCount - 1);
+                if not Accept then begin
+                    Result     := grEOF;
+                    FRecordPos := RecordCount - 1;
+                end;
+            end;
+        end;
+    end;
+    if Result = grOk then begin
+        RecordToBuffer(Records[FRecordPos], Buffer);
+    end else
+    if (Result = grError) and DoCheck then begin
+        Error(RsEMemNoRecords);
+    end;
+end;
+
+
+{--------------------------------------------------------------------------------------------------------------------------------}
+procedure TXPMemoryDataset.InitRecord(Buffer : TMDSRecBuffer);
+var
+    BInfo : PXPMemBookmarkInfo;
+begin
+    inherited InitRecord(Buffer);
+    BInfo := PXPMemBookmarkInfo(Buffer + FBookmarkOfs);
+    BInfo^.BookmarkData := Low(Integer);
+    BInfo^.BookmarkFlag := bfInserted;
+end;
+
+
+{--------------------------------------------------------------------------------------------------------------------------------}
+procedure TXPMemoryDataset.InternalInitRecord(Buffer : TMDSRecBuffer);
+var
+    I : Integer;
+begin
+    FillChar(Buffer^, FBlobOfs, 0);
+    for I := 0 to BlobFieldCount - 1 do begin
+        PMemBlobArray(Buffer + FBlobOfs)[I] := '';
+    end;
+end;
+
+
+{--------------------------------------------------------------------------------------------------------------------------------}
+procedure TXPMemoryDataset.InternalSetToRecord(Buffer : TMDSRecBuffer);
+begin
+    InternalGotoBookmark(@PXPMemBookmarkInfo(Buffer + FBookmarkOfs)^.BookmarkData);
+end;
+
+
+{--------------------------------------------------------------------------------------------------------------------------------}
+procedure TXPMemoryDataset.SetBookmarkData(Buffer : TMDSRecBuffer; Data : Pointer);
+begin
+    Move(Data^, PXPMemBookmarkInfo(Buffer + FBookmarkOfs)^.BookmarkData, SizeOf(TBookmarkData));
+end;
+
+
+{--------------------------------------------------------------------------------------------------------------------------------}
+procedure TXPMemoryDataset.SetBookmarkFlag(Buffer : TMDSRecBuffer; Value : TBookmarkFlag);
+begin
+    PXPMemBookmarkInfo(Buffer + FBookmarkOfs)^.BookmarkFlag := Value;
+end;
+
 {-**********************************************************************
 ************************************************************************
 ******************
@@ -2500,7 +2596,8 @@ begin
     Pos    := FDataSet.FRecordPos;
     if (Pos < 0) and (FDataSet.RecordCount > 0) then begin
         Pos := 0;
-    end else if Pos >= FDataSet.RecordCount then begin
+    end else
+    if Pos >= FDataSet.RecordCount then begin
         Pos := FDataSet.RecordCount - 1;
     end;
     if (Pos >= 0) and (Pos < FDataSet.RecordCount) then begin

@@ -1,7 +1,7 @@
 ﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 		<PropertyGroup>
 			<ProjectGuid>{0721A9B3-9E3D-4C6B-A340-7081D343E7CE}</ProjectGuid>
-			<MainSource>BDELib.dpk</MainSource>
+			<MainSource>BDELibD14.dpk</MainSource>
 			<Config Condition="'$(Config)'==''">Debug</Config>
 			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
 			<ProjectVersion>12.0</ProjectVersion>
@@ -20,9 +20,9 @@
 			<Base>true</Base>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Base)'!=''">
+			<DesignOnlyPackage>false</DesignOnlyPackage>
 			<DCC_ImageBase>00400000</DCC_ImageBase>
-			<DCC_DependencyCheckOutputName>..\..\..\Lib\D2010\BDELib_7_0.bpl</DCC_DependencyCheckOutputName>
-			<DllSuffix>_7_0</DllSuffix>
+			<DCC_DependencyCheckOutputName>..\..\..\Lib\D2010\BDELibD14.bpl</DCC_DependencyCheckOutputName>
 			<DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
 			<DCC_DebugInformation>false</DCC_DebugInformation>
 			<DCC_UnitSearchPath>$(DLib);$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
@@ -50,7 +50,7 @@
 			<DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
 		</PropertyGroup>
 		<ItemGroup>
-			<DelphiCompile Include="BDELib.dpk">
+			<DelphiCompile Include="BDELibD14.dpk">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
 			<DCCReference Include="BDELib.dcr"/>
@@ -59,7 +59,7 @@
 			<DCCReference Include="vclx.dcp"/>
 			<DCCReference Include="dbrtl.dcp"/>
 			<DCCReference Include="bdertl.dcp"/>
-			<DCCReference Include="XPLib.dcp"/>
+			<DCCReference Include="XPLibD14.dcp"/>
 			<DCCReference Include="BDEHnd.pas"/>
 			<DCCReference Include="MultiUpdateSQL.pas"/>
 			<BuildConfiguration Include="Base">
@@ -81,7 +81,7 @@
 			<BorlandProject>
 				<Delphi.Personality>
 					<Source>
-						<Source Name="MainSource">BDELib.dpk</Source>
+						<Source Name="MainSource">BDELibD14.dpk</Source>
 					</Source>
 					<Parameters>
 						<Parameters Name="UseLauncher">False</Parameters>

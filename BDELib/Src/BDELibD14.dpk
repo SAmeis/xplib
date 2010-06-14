@@ -1,6 +1,6 @@
 {$I BDELib.inc }
 
-package BDELib;
+package BDELibD14;
 
 {$R *.res}
 {$R 'BDELib.dcr'}
@@ -26,7 +26,6 @@ package BDELib;
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
 {$DESCRIPTION 'AAA - BDE-Lib - (Super Library)'}
-{$LIBSUFFIX '_7_0'}
 {$IMPLICITBUILD OFF}
 
 requires
@@ -35,7 +34,7 @@ requires
   vclx,
   dbrtl,
   bdertl,
-  XPLib;
+  XPLibD14;
 
 contains
   BDEHnd in 'BDEHnd.pas',
