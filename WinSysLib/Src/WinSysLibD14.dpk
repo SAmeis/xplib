@@ -1,6 +1,6 @@
 {$I WinSysLib.inc }
 
-package WinSysLib;
+package WinSysLibD14;
 
 {$R *.res}
 {$R 'WinSysLib.dcr'}
@@ -26,7 +26,6 @@ package WinSysLib;
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
 {$DESCRIPTION 'AAA - Windows Systems Tools - (Super Library)'}
-{$LIBSUFFIX '_7_0'}
 {$IMPLICITBUILD OFF}
 {$DEFINE WINNT}
 
@@ -34,9 +33,9 @@ requires
   rtl,
   vcl,
   vclx,
-  XPLib,
-  StFLib,
-  vcljpg,
+  XPLibD14,
+  StFLibD14,
+  vclimg,
   vclactnband,
   designide;
 
@@ -44,8 +43,8 @@ contains
   WinDisks in 'WinDisks.pas',
   WinFilesHnd in 'WinFilesHnd.pas',
   WinHnd in 'WinHnd.pas',
-  Win_dos in 'Win_DOS.pas',
-  Winsaver in 'WinSaver.pas',
+  Win_DOS in 'Win_DOS.pas',
+  WinSaver in 'WinSaver.pas',
   WinStealth in 'WinStealth.pas',
   WinTrayIcon in 'WinTrayIcon.pas',
   FileInfo in 'FileInfo.pas',

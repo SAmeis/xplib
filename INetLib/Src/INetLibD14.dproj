@@ -1,7 +1,7 @@
 ﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 		<PropertyGroup>
 			<ProjectGuid>{1DE85AE8-E858-476A-83C1-62E1020F4897}</ProjectGuid>
-			<MainSource>INetLib.dpk</MainSource>
+			<MainSource>INetLibD14.dpk</MainSource>
 			<Config Condition="'$(Config)'==''">Debug</Config>
 			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
 			<ProjectVersion>12.0</ProjectVersion>
@@ -20,17 +20,17 @@
 			<Base>true</Base>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Base)'!=''">
+			<DesignOnlyPackage>false</DesignOnlyPackage>
 			<DCC_ImageBase>00400000</DCC_ImageBase>
-			<DCC_DependencyCheckOutputName>..\..\..\Lib\D2010\INetLib_7_0.bpl</DCC_DependencyCheckOutputName>
+			<DCC_DependencyCheckOutputName>..\..\..\Lib\D2010\INetLibD14.bpl</DCC_DependencyCheckOutputName>
 			<DCC_UnitSearchPath>$(DLib);$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
-			<DllSuffix>_7_0</DllSuffix>
 			<DCC_WriteableConstants>true</DCC_WriteableConstants>
 			<DCC_UsePackage>VCL50;VCLX50;VCLSMP50;VCLDB50;VCLADO50;ibevnt50;VCLBDE50;VCLDBX50;QRPT50;TEEUI50;TEEDB50;TEE50;DSS50;TEEQR50;VCLIB50;VCLMID50;VCLIE50;INETDB50;INET50;NMFAST50;WEBMID50;dclocx50;dclaxserver50</DCC_UsePackage>
 			<DCC_Platform>x86</DCC_Platform>
 			<DCC_UnitAlias>WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;WinTypes=Windows;WinProcs=Windows;$(DCC_UnitAlias)</DCC_UnitAlias>
 			<DCC_BplOutput>$(DLib)</DCC_BplOutput>
-			<DCC_ExeOutput>S:\Src\Out</DCC_ExeOutput>
-			<DCC_Description>AAA - InetLib - (Super Library)</DCC_Description>
+			<DCC_ExeOutput>$(DLib)</DCC_ExeOutput>
+			<DCC_Description>AAA - InetLib - Delphi 2010</DCC_Description>
 			<DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
 			<DCC_DebugInformation>false</DCC_DebugInformation>
 			<DCC_S>false</DCC_S>
@@ -53,17 +53,17 @@
 			<DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
 		</PropertyGroup>
 		<ItemGroup>
-			<DelphiCompile Include="INetLib.dpk">
+			<DelphiCompile Include="INetLibD14.dpk">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="InetLibBtn.DCR"/>
+			<DCCReference Include="InetLib.DCR"/>
 			<DCCReference Include="vcl.dcp"/>
 			<DCCReference Include="vcldb.dcp"/>
 			<DCCReference Include="bdertl.dcp"/>
 			<DCCReference Include="inet.dcp"/>
-			<DCCReference Include="XPLib.dcp"/>
-			<DCCReference Include="OPLib.dcp"/>
-			<DCCReference Include="StFLib.dcp"/>
+			<DCCReference Include="XPLibD14.dcp"/>
+			<DCCReference Include="OPLibD14.dcp"/>
+			<DCCReference Include="StFLibD14.dcp"/>
 			<DCCReference Include="HTMLData.pas"/>
 			<DCCReference Include="HTMLWRTR.PAS"/>
 			<DCCReference Include="IHTML4.pas"/>
@@ -96,7 +96,7 @@
 			<BorlandProject>
 				<Delphi.Personality>
 					<Source>
-						<Source Name="MainSource">INetLib.dpk</Source>
+						<Source Name="MainSource">INetLibD14.dpk</Source>
 					</Source>
 					<Parameters>
 						<Parameters Name="UseLauncher">False</Parameters>

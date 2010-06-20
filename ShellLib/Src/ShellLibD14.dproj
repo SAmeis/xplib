@@ -1,7 +1,7 @@
 ﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 		<PropertyGroup>
-			<ProjectGuid>{E8CA04DB-8F28-4110-95E3-47FB5357240F}</ProjectGuid>
-			<MainSource>WinNetLib.dpk</MainSource>
+			<ProjectGuid>{05C4D72A-801C-4472-A620-D62C0943976A}</ProjectGuid>
+			<MainSource>ShellLibD14.dpk</MainSource>
 			<Config Condition="'$(Config)'==''">Debug</Config>
 			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
 			<ProjectVersion>12.0</ProjectVersion>
@@ -20,16 +20,16 @@
 			<Base>true</Base>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Base)'!=''">
+			<DesignOnlyPackage>false</DesignOnlyPackage>
 			<DCC_ImageBase>00400000</DCC_ImageBase>
-			<DCC_DependencyCheckOutputName>..\..\..\Lib\D2010\WinNetLib_7_0.bpl</DCC_DependencyCheckOutputName>
-			<DllSuffix>_7_0</DllSuffix>
+			<DCC_DependencyCheckOutputName>..\..\..\Lib\D2010\ShellLibD14.bpl</DCC_DependencyCheckOutputName>
 			<DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
 			<DCC_DebugInformation>false</DCC_DebugInformation>
 			<DCC_UnitSearchPath>$(DLib);$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
 			<DCC_UnitAlias>WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;WinTypes=Windows;WinProcs=Windows;$(DCC_UnitAlias)</DCC_UnitAlias>
 			<DCC_BplOutput>$(DLib)</DCC_BplOutput>
 			<DCC_Platform>x86</DCC_Platform>
-			<DCC_Description>AAA - Windows Network Library - (Super Library)</DCC_Description>
+			<DCC_Description>AAA - Shell Tools - Delphi 2010</DCC_Description>
 			<DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
 			<DCC_S>false</DCC_S>
 			<DCC_N>true</DCC_N>
@@ -50,46 +50,22 @@
 			<DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
 		</PropertyGroup>
 		<ItemGroup>
-			<DelphiCompile Include="WinNetLib.dpk">
+			<DelphiCompile Include="ShellLibD14.dpk">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="WinNetLib.dcr"/>
+			<DCCReference Include="ShellLib.dcr"/>
 			<DCCReference Include="rtl.dcp"/>
-			<DCCReference Include="WinSysLib.dcp"/>
 			<DCCReference Include="vcl.dcp"/>
-			<DCCReference Include="XPLib.dcp"/>
 			<DCCReference Include="vclx.dcp"/>
-			<DCCReference Include="WNetSever.pas"/>
-			<DCCReference Include="LmAccess.pas"/>
-			<DCCReference Include="LmAlert.pas"/>
-			<DCCReference Include="LmApibuf.pas"/>
-			<DCCReference Include="LmAt.pas"/>
-			<DCCReference Include="LmAudit.pas"/>
-			<DCCReference Include="LmBrowsr.pas"/>
-			<DCCReference Include="LmChdev.pas"/>
-			<DCCReference Include="LmConfig.pas"/>
-			<DCCReference Include="LmCons.pas"/>
-			<DCCReference Include="LmDfs.pas"/>
-			<DCCReference Include="LmErr.pas"/>
-			<DCCReference Include="LmErrlog.pas"/>
-			<DCCReference Include="LmJoin.pas"/>
-			<DCCReference Include="LmMsg.pas"/>
-			<DCCReference Include="LmRemutl.pas"/>
-			<DCCReference Include="LmRepl.pas"/>
-			<DCCReference Include="LmServer.pas"/>
-			<DCCReference Include="LmShare.pas"/>
-			<DCCReference Include="LmSname.pas"/>
-			<DCCReference Include="LmStats.pas"/>
-			<DCCReference Include="LmSvc.pas"/>
-			<DCCReference Include="LmUse.pas"/>
-			<DCCReference Include="LmUseflg.pas"/>
-			<DCCReference Include="LmUtils.pas"/>
-			<DCCReference Include="LmWksta.pas"/>
-			<DCCReference Include="SvrApi.pas"/>
-			<DCCReference Include="LmClasses.pas"/>
-			<DCCReference Include="WNetExHnd.pas"/>
-			<DCCReference Include="MS_ICMP.PAS"/>
-			<None Include="WinNetLib.inc">
+			<DCCReference Include="DesignIDE.dcp"/>
+			<DCCReference Include="XPLibD14.dcp"/>
+			<DCCReference Include="ShellFilesHnd.pas"/>
+			<DCCReference Include="ShellFileOper.pas"/>
+			<DCCReference Include="ShellPIDL.pas"/>
+			<DCCReference Include="ShellDlgReg.pas"/>
+			<DCCReference Include="ShellDialogs.pas"/>
+			<DCCReference Include="ShellShlDlg.pas"/>
+			<None Include="ShellLib.inc">
 				<ContainerId>File</ContainerId>
 			</None>
 			<BuildConfiguration Include="Base">
@@ -111,7 +87,7 @@
 			<BorlandProject>
 				<Delphi.Personality>
 					<Source>
-						<Source Name="MainSource">WinNetLib.dpk</Source>
+						<Source Name="MainSource">ShellLibD14.dpk</Source>
 					</Source>
 					<Parameters>
 						<Parameters Name="UseLauncher">False</Parameters>
@@ -124,7 +100,7 @@
 						<VersionInfo Name="MajorVer">7</VersionInfo>
 						<VersionInfo Name="MinorVer">0</VersionInfo>
 						<VersionInfo Name="Release">2005</VersionInfo>
-						<VersionInfo Name="Build">6</VersionInfo>
+						<VersionInfo Name="Build">8</VersionInfo>
 						<VersionInfo Name="Debug">False</VersionInfo>
 						<VersionInfo Name="PreRelease">False</VersionInfo>
 						<VersionInfo Name="Special">False</VersionInfo>
@@ -135,15 +111,15 @@
 					</VersionInfo>
 					<VersionInfoKeys>
 						<VersionInfoKeys Name="CompanyName">Speechway</VersionInfoKeys>
-						<VersionInfoKeys Name="FileDescription">Windows Network Library</VersionInfoKeys>
-						<VersionInfoKeys Name="FileVersion">7.0.2005.6</VersionInfoKeys>
+						<VersionInfoKeys Name="FileDescription">Shell Library for Windows</VersionInfoKeys>
+						<VersionInfoKeys Name="FileVersion">7.0.2005.8</VersionInfoKeys>
 						<VersionInfoKeys Name="InternalName"/>
 						<VersionInfoKeys Name="LegalCopyright">Speechway®</VersionInfoKeys>
 						<VersionInfoKeys Name="LegalTrademarks">Speechway®</VersionInfoKeys>
 						<VersionInfoKeys Name="OriginalFilename"/>
 						<VersionInfoKeys Name="ProductName">Super Library</VersionInfoKeys>
-						<VersionInfoKeys Name="ProductVersion">7.0.2005.6</VersionInfoKeys>
-						<VersionInfoKeys Name="Comments">Rogerlais Andrade</VersionInfoKeys>
+						<VersionInfoKeys Name="ProductVersion">7.0.2005.8</VersionInfoKeys>
+						<VersionInfoKeys Name="Comments"/>
 					</VersionInfoKeys>
 				</Delphi.Personality>
 			</BorlandProject>

@@ -1,6 +1,6 @@
 {$I WinNetLib.inc }
 
-package WinNetLib;
+package WinNetLibD14;
 
 {$R *.res}
 {$R 'WinNetLib.dcr'}
@@ -25,18 +25,16 @@ package WinNetLib;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'AAA - Windows Network Library - (Super Library)'}
-{$LIBSUFFIX '_7_0'}
+{$DESCRIPTION 'AAA - Windows Network Library - Delphi 2010'}
 {$IMPLICITBUILD OFF}
+{$DEFINE FORCE_NT}
 
 requires
   rtl,
-  WinSysLib,
+  WinSysLibD14,
   vcl,
-  XPLib,
+  XPLibD14,
   vclx;
-
-{%File 'WinNetLib.inc'}
 
 contains
   WNetSever in 'WNetSever.pas',
@@ -48,13 +46,13 @@ contains
   LmBrowsr in 'LmBrowsr.pas',
   LmChdev in 'LmChdev.pas',
   LmConfig in 'LmConfig.pas',
-  Lmcons in 'LmCons.pas',
+  LmCons in 'LmCons.pas',
   LmDfs in 'LmDfs.pas',
   LmErr in 'LmErr.pas',
   LmErrlog in 'LmErrlog.pas',
   LmJoin in 'LmJoin.pas',
   LmMsg in 'LmMsg.pas',
-  LmRemUtl in 'LmRemutl.pas',
+  LmRemutl in 'LmRemutl.pas',
   LmRepl in 'LmRepl.pas',
   LmServer in 'LmServer.pas',
   LmShare in 'LmShare.pas',
@@ -65,7 +63,7 @@ contains
   LmUseflg in 'LmUseflg.pas',
   LmUtils in 'LmUtils.pas',
   LmWksta in 'LmWksta.pas',
-  Svrapi in 'SvrApi.pas',
+  SvrApi in 'SvrApi.pas',
   LmClasses in 'LmClasses.pas',
   WNetExHnd in 'WNetExHnd.pas',
   MS_ICMP in 'MS_ICMP.PAS';

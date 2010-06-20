@@ -1,7 +1,7 @@
-package INetLib;
+package INetLibD14;
 
 {$R *.res}
-{$R 'InetLibBtn.DCR'}
+{$R 'InetLib.DCR'}
 {$ALIGN 8}
 {$ASSERTIONS OFF}
 {$BOOLEVAL OFF}
@@ -23,8 +23,7 @@ package INetLib;
 {$WRITEABLECONST ON}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'AAA - InetLib - (Super Library)'}
-{$LIBSUFFIX '_7_0'}
+{$DESCRIPTION 'AAA - InetLib - Delphi 2010'}
 {$IMPLICITBUILD OFF}
 
 requires
@@ -32,15 +31,13 @@ requires
   vcldb,
   bdertl,
   inet,
-  XPLib,
-  OPLib,
-  StFLib;
-
-{%File 'INetLib.inc'}
+  XPLibD14,
+  OPLibD14,
+  StFLibD14;
 
 contains
   HTMLData in 'HTMLData.pas',
-  HTMLWrtr in 'HTMLWRTR.PAS',
+  HTMLWRTR in 'HTMLWRTR.PAS',
   IHTML4 in 'IHTML4.pas',
   IHTMLPas in 'IHTMLPas.pas',
   IHTMLDir in 'IHTMLDir.pas',

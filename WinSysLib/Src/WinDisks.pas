@@ -167,7 +167,7 @@ begin
 	end;
 
 	{switch out drive letter}
-	pattern[1] := Char(65 + wDrive);
+	pattern[1] := AnsiChar(65 + wDrive);
 
 	{stop errors and try}
 	OldErrorMode := SetErrorMode(SEM_FAILCRITICALERRORS);

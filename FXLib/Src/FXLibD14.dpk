@@ -1,6 +1,7 @@
+//Diretivas adcionais
 {$I FXLib.inc }
 
-package FXLib;
+package FXLibD14;
 
 {$R *.res}
 {$R 'FXLib.dcr'}
@@ -9,7 +10,7 @@ package FXLib;
 {$BOOLEVAL OFF}
 {$DEBUGINFO OFF}
 {$EXTENDEDSYNTAX ON}
-{$IMPORTEDDATA ON}
+{$IMPORTEDDATA OFF}
 {$IOCHECKS ON}
 {$LOCALSYMBOLS OFF}
 {$LONGSTRINGS ON}
@@ -25,8 +26,7 @@ package FXLib;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'AAA - FXLib - (Super Library)'}
-{$LIBSUFFIX '_7_0'}
+{$DESCRIPTION 'AAA - FXLib - Delphi 2010'}
 {$IMPLICITBUILD OFF}
 
 requires
@@ -35,10 +35,10 @@ requires
   designide;
 
 contains
-  BlowPan in 'Blowpan.pas',
-  RinGauge in 'Ringauge.pas',
+  Blowpan in 'Blowpan.pas',
+  Ringauge in 'Ringauge.pas',
   StarFld_ in 'StarFld_.pas',
   PicShow in 'PicShow.pas',
-  credits in 'Credits.pas';
+  Credits in 'Credits.pas';
 
 end.

@@ -25,7 +25,7 @@ package GDBLibD14;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'AAA - Generic Database Library - Delphi 2010)'}
+{$DESCRIPTION 'AAA - Generic Database Library - Delphi 2010'}
 {$IMPLICITBUILD OFF}
 
 requires

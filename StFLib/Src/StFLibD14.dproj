@@ -56,7 +56,7 @@
 			<DCCReference Include="StFLib.dcr"/>
 			<DCCReference Include="rtl.dcp"/>
 			<DCCReference Include="vcl.dcp"/>
-			<DCCReference Include="XPLib.dcp"/>
+			<DCCReference Include="XPLibD14.dcp"/>
 			<DCCReference Include="xmlrtl.dcp"/>
 			<DCCReference Include="inet.dcp"/>
 			<DCCReference Include="vclx.dcp"/>

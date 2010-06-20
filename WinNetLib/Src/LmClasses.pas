@@ -138,7 +138,7 @@ type
     procedure SetRemark(const Value: string);
     procedure SetShareFlags(const Value: DWORD);
     procedure SetShareName(const Value: string);
-	 procedure SetShareType(const Value: DWORD);
+    procedure SetShareType(const Value: DWORD);
   protected
     function UpdateNT: Boolean;
     function UpdateW9x: Boolean;

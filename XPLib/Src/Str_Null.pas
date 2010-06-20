@@ -12,7 +12,7 @@ Unit de manipulação de string em armazenamento PChar
 interface
 
 uses
-    SysUtils, Windows;
+    SysUtils, Windows, StrHnd;
 
 function StrAllocString(Str : string) : PChar; deprecated;
 function StrAllocAnsiString(Str : AnsiString) : PAnsiChar;
@@ -31,7 +31,7 @@ end;
 
 function StrAllocAnsiString(Str : AnsiString) : PAnsiChar;
 begin
-    Result := AnsiStrAlloc(Length(Str) + 1);
+    Result := StrHnd.AnsiStrAlloc(Length(Str) + 1);
     StrPCopy(Result, Str);
 end;
 function StrConvertToOEM(Str : PChar) : PChar;

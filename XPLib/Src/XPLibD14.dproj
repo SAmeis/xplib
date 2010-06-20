@@ -29,7 +29,7 @@
 			<DCC_UnitAlias>WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;WinTypes=Windows;WinProcs=Windows;$(DCC_UnitAlias)</DCC_UnitAlias>
 			<DCC_BplOutput>$(DLib)</DCC_BplOutput>
 			<DCC_Platform>x86</DCC_Platform>
-			<DCC_Description>AAA - XP-Lib - Delphi 7</DCC_Description>
+			<DCC_Description>AAA - XP-Lib - Delphi 2010</DCC_Description>
 			<DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
 			<GenPackage>true</GenPackage>
 			<DCC_S>false</DCC_S>

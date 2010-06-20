@@ -100,7 +100,7 @@ begin
 		H := CreateFile(PChar(ImageFileName), GENERIC_READ, FILE_SHARE_READ or FILE_SHARE_WRITE, nil, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
 		if H <> INVALID_HANDLE_VALUE then begin
 			try
-			  ImageDebugInformation := MapDebugInformation(H, PChar(ImageFileName), nil, 0);
+			  ImageDebugInformation := MapDebugInformation(H, PAnsiChar(ImageFileName), nil, 0);
 			  if ( ImageDebugInformation <> nil ) then begin
 				  try
 					  arr := ImageDebugInformation^.ExportedNames;

@@ -31,7 +31,7 @@ package StFLibD14;
 requires
   rtl,
   vcl,
-  XPLib,
+  XPLibD14,
   xmlrtl,
   inet,
   vclx;
