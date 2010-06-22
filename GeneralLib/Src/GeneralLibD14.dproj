@@ -2,7 +2,7 @@
 		<PropertyGroup>
 			<ProjectGuid>{6F39F5D8-FCBF-4C00-BFE3-412837C25BA6}</ProjectGuid>
 			<MainSource>GeneralLibD14.dpk</MainSource>
-			<Config Condition="'$(Config)'==''">Debug</Config>
+			<Config Condition="'$(Config)'==''">Release</Config>
 			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
 			<ProjectVersion>12.0</ProjectVersion>
 		</PropertyGroup>

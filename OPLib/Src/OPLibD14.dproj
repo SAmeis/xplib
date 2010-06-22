@@ -2,7 +2,7 @@
 		<PropertyGroup>
 			<ProjectGuid>{3B08E849-6E43-49FF-952D-880985431C43}</ProjectGuid>
 			<MainSource>OPLibD14.dpk</MainSource>
-			<Config Condition="'$(Config)'==''">Debug</Config>
+			<Config Condition="'$(Config)'==''">Release</Config>
 			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
 			<ProjectVersion>12.0</ProjectVersion>
 		</PropertyGroup>

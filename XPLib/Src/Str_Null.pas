@@ -31,7 +31,11 @@ end;
 
 function StrAllocAnsiString(Str : AnsiString) : PAnsiChar;
 begin
-    Result := StrHnd.AnsiStrAlloc(Length(Str) + 1);
+   {$IF CompilerVersion >= 21.00}
+   Result := AnsiStrAlloc(Length(Str) + 1);
+   {$ELSE}
+   Result := StrHnd.AnsiStrAlloc(Length(Str) + 1);
+   {$IFEND}
     StrPCopy(Result, Str);
 end;
 function StrConvertToOEM(Str : PChar) : PChar;

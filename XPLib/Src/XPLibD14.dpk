@@ -29,7 +29,6 @@ package XPLibD14;
 {$DESCRIPTION 'AAA - XP-Lib - Delphi 2010'}
 {$IMPLICITBUILD OFF}
 
-
 requires
   rtl,
   vcl,

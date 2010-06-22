@@ -2,7 +2,7 @@
 		<PropertyGroup>
 			<ProjectGuid>{E8CA04DB-8F28-4110-95E3-47FB5357240F}</ProjectGuid>
 			<MainSource>WinNetLibD14.dpk</MainSource>
-			<Config Condition="'$(Config)'==''">Debug</Config>
+			<Config Condition="'$(Config)'==''">Release</Config>
 			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
 			<ProjectVersion>12.0</ProjectVersion>
 		</PropertyGroup>

@@ -2,7 +2,7 @@
 		<PropertyGroup>
 			<ProjectGuid>{0721A9B3-9E3D-4C6B-A340-7081D343E7CE}</ProjectGuid>
 			<MainSource>BDELibD14.dpk</MainSource>
-			<Config Condition="'$(Config)'==''">Debug</Config>
+			<Config Condition="'$(Config)'==''">Release</Config>
 			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
 			<ProjectVersion>12.0</ProjectVersion>
 		</PropertyGroup>

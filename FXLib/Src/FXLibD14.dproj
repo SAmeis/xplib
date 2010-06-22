@@ -2,7 +2,7 @@
 		<PropertyGroup>
 			<ProjectGuid>{75F1A09D-45AD-4D44-AA25-F76AC5DF68E9}</ProjectGuid>
 			<MainSource>FXLibD14.dpk</MainSource>
-			<Config Condition="'$(Config)'==''">Debug</Config>
+			<Config Condition="'$(Config)'==''">Release</Config>
 			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
 			<ProjectVersion>12.0</ProjectVersion>
 		</PropertyGroup>
