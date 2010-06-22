@@ -15,6 +15,7 @@ File_12=TSourceModule,'C:\Sw\WorkDir\Pcks\ShellLib\Src\ShellDlgReg.pas',0,1,1,1,
 File_13=TSourceModule,'C:\Sw\WorkDir\Pcks\INetLib\Src\HTMLWRTR.PAS',0,1,946,32,957,0,0,,
 File_14=TSourceModule,'C:\Sw\WorkDir\Pcks\INetLib\Src\IHTML4.pas',0,1,2943,33,2954,0,0,,
 
+
 [Modules]
 Module0=C:\Sw\WorkDir\Pcks\XPLib\Src\Str_Null.pas
 Module1=C:\Sw\WorkDir\Pcks\WinNetLib\Src\LmClasses.pas
