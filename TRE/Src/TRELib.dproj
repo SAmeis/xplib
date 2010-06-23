@@ -20,17 +20,17 @@
 			<Base>true</Base>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Base)'!=''">
+			<DesignOnlyPackage>false</DesignOnlyPackage>
 			<DCC_UNSAFE_TYPE>true</DCC_UNSAFE_TYPE>
 			<DCC_ImageBase>00400000</DCC_ImageBase>
-			<DCC_DependencyCheckOutputName>..\..\..\Lib\D2010\TRELib_7_0.bpl</DCC_DependencyCheckOutputName>
-			<DllSuffix>_7_0</DllSuffix>
+			<DCC_DependencyCheckOutputName>..\..\..\Lib\D2010\TRELib.bpl</DCC_DependencyCheckOutputName>
 			<DCC_UNSAFE_CAST>true</DCC_UNSAFE_CAST>
 			<DCC_UNSAFE_CODE>true</DCC_UNSAFE_CODE>
 			<DCC_UnitSearchPath>$(DLib);$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
 			<DCC_Platform>x86</DCC_Platform>
 			<DCC_UnitAlias>WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;WinTypes=Windows;WinProcs=Windows;$(DCC_UnitAlias)</DCC_UnitAlias>
 			<DCC_BplOutput>$(DLib)</DCC_BplOutput>
-			<DCC_Description>AAA - TRE-Lib - (Super Library)</DCC_Description>
+			<DCC_Description>AAA - TRE-Lib - Delphi 2010</DCC_Description>
 			<DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
 			<DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
 			<DCC_S>false</DCC_S>
@@ -57,7 +57,7 @@
 			</DelphiCompile>
 			<DCCReference Include="TRELib.dcr"/>
 			<DCCReference Include="rtl.dcp"/>
-			<DCCReference Include="XPLib.dcp"/>
+			<DCCReference Include="XPLibD14.dcp"/>
 			<DCCReference Include="vclactnband.dcp"/>
 			<DCCReference Include="vclx.dcp"/>
 			<DCCReference Include="vcl.dcp"/>

@@ -36,10 +36,10 @@
 			<Projects Include="WinNetLib\Src\WinNetLibD14.dproj">
 				<Dependencies/>
 			</Projects>
-			<Projects Include="ECLib\Src\ECLib.dproj">
+			<Projects Include="ECLib\Src\ECLibD14.dproj">
 				<Dependencies/>
 			</Projects>
-			<Projects Include="DlgLib\Src\DlgLib.dproj">
+			<Projects Include="DlgLib\Src\DlgLibD14.dproj">
 				<Dependencies/>
 			</Projects>
 			<Projects Include="TRE\Src\TRELib.dproj">
@@ -152,23 +152,23 @@
 		<Target Name="WinNetLibD14:Make">
 			<MSBuild Targets="Make" Projects="WinNetLib\Src\WinNetLibD14.dproj"/>
 		</Target>
-		<Target Name="ECLib">
-			<MSBuild Projects="ECLib\Src\ECLib.dproj"/>
+		<Target Name="ECLibD14">
+			<MSBuild Projects="ECLib\Src\ECLibD14.dproj"/>
 		</Target>
-		<Target Name="ECLib:Clean">
-			<MSBuild Targets="Clean" Projects="ECLib\Src\ECLib.dproj"/>
+		<Target Name="ECLibD14:Clean">
+			<MSBuild Targets="Clean" Projects="ECLib\Src\ECLibD14.dproj"/>
 		</Target>
-		<Target Name="ECLib:Make">
-			<MSBuild Targets="Make" Projects="ECLib\Src\ECLib.dproj"/>
+		<Target Name="ECLibD14:Make">
+			<MSBuild Targets="Make" Projects="ECLib\Src\ECLibD14.dproj"/>
 		</Target>
-		<Target Name="DlgLib">
-			<MSBuild Projects="DlgLib\Src\DlgLib.dproj"/>
+		<Target Name="DlgLibD14">
+			<MSBuild Projects="DlgLib\Src\DlgLibD14.dproj"/>
 		</Target>
-		<Target Name="DlgLib:Clean">
-			<MSBuild Targets="Clean" Projects="DlgLib\Src\DlgLib.dproj"/>
+		<Target Name="DlgLibD14:Clean">
+			<MSBuild Targets="Clean" Projects="DlgLib\Src\DlgLibD14.dproj"/>
 		</Target>
-		<Target Name="DlgLib:Make">
-			<MSBuild Targets="Make" Projects="DlgLib\Src\DlgLib.dproj"/>
+		<Target Name="DlgLibD14:Make">
+			<MSBuild Targets="Make" Projects="DlgLib\Src\DlgLibD14.dproj"/>
 		</Target>
 		<Target Name="TRELib">
 			<MSBuild Projects="TRE\Src\TRELib.dproj"/>
@@ -180,13 +180,13 @@
 			<MSBuild Targets="Make" Projects="TRE\Src\TRELib.dproj"/>
 		</Target>
 		<Target Name="Build">
-			<CallTarget Targets="XPLibD14;OPLibD14;GDBLibD14;BDELibD14;FXLibD14;GeneralLibD14;StFLibD14;INetLibD14;ShellLibD14;WinSysLibD14;WinNetLibD14;ECLib;DlgLib;TRELib"/>
+			<CallTarget Targets="XPLibD14;OPLibD14;GDBLibD14;BDELibD14;FXLibD14;GeneralLibD14;StFLibD14;INetLibD14;ShellLibD14;WinSysLibD14;WinNetLibD14;ECLibD14;DlgLibD14;TRELib"/>
 		</Target>
 		<Target Name="Clean">
-			<CallTarget Targets="XPLibD14:Clean;OPLibD14:Clean;GDBLibD14:Clean;BDELibD14:Clean;FXLibD14:Clean;GeneralLibD14:Clean;StFLibD14:Clean;INetLibD14:Clean;ShellLibD14:Clean;WinSysLibD14:Clean;WinNetLibD14:Clean;ECLib:Clean;DlgLib:Clean;TRELib:Clean"/>
+			<CallTarget Targets="XPLibD14:Clean;OPLibD14:Clean;GDBLibD14:Clean;BDELibD14:Clean;FXLibD14:Clean;GeneralLibD14:Clean;StFLibD14:Clean;INetLibD14:Clean;ShellLibD14:Clean;WinSysLibD14:Clean;WinNetLibD14:Clean;ECLibD14:Clean;DlgLibD14:Clean;TRELib:Clean"/>
 		</Target>
 		<Target Name="Make">
-			<CallTarget Targets="XPLibD14:Make;OPLibD14:Make;GDBLibD14:Make;BDELibD14:Make;FXLibD14:Make;GeneralLibD14:Make;StFLibD14:Make;INetLibD14:Make;ShellLibD14:Make;WinSysLibD14:Make;WinNetLibD14:Make;ECLib:Make;DlgLib:Make;TRELib:Make"/>
+			<CallTarget Targets="XPLibD14:Make;OPLibD14:Make;GDBLibD14:Make;BDELibD14:Make;FXLibD14:Make;GeneralLibD14:Make;StFLibD14:Make;INetLibD14:Make;ShellLibD14:Make;WinSysLibD14:Make;WinNetLibD14:Make;ECLibD14:Make;DlgLibD14:Make;TRELib:Make"/>
 		</Target>
 		<Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 	</Project>

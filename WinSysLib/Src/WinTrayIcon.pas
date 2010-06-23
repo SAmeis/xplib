@@ -51,7 +51,7 @@ const
 
 type
 
-	TTrayIcon = Class (TComponent)
+	TWin32TrayIcon = Class (TComponent)
 	private
 		IconData : TNOTIFYICONDATA;
 		FIcon : TIcon;
@@ -101,7 +101,7 @@ implementation
 uses
 	WinHnd;
 
-procedure TTrayIcon.SetActive(Value : boolean);
+procedure TWin32TrayIcon.SetActive(Value : boolean);
 //----------------------------------------------------------------------------------------------------------------------------------
 var
 	CurSystray : THandle;
@@ -150,7 +150,7 @@ begin
 end;
 
 {---------------------------------------------------------------------------------------------}
-procedure TTrayIcon.SetShowDesigning(Value : boolean);
+procedure TWin32TrayIcon.SetShowDesigning(Value : boolean);
 begin
 	if csdesigning in ComponentState then begin
 		if value <> fShowDesigning then begin
@@ -165,7 +165,7 @@ begin
 end;
 
 {---------------------------------------------------------------------------------------------}
-procedure TTrayIcon.SetIcon(Value : Ticon);
+procedure TWin32TrayIcon.SetIcon(Value : Ticon);
 begin
 	if Value <> fIcon then begin
 		FIcon.Assign(value);
@@ -174,7 +174,7 @@ begin
 end;
 
 {---------------------------------------------------------------------------------------------}
-procedure TTrayIcon.SetToolTip(Value : string);
+procedure TWin32TrayIcon.SetToolTip(Value : string);
 begin
 
 	// This routine ALWAYS re-sets the field value and re-loads the
@@ -190,7 +190,7 @@ begin
 
 end;
 
-constructor TTrayIcon.Create(aOwner : Tcomponent);
+constructor TWin32TrayIcon.Create(aOwner : Tcomponent);
 	//----------------------------------------------------------------------------------------------------------------------------------
 begin
 	inherited create(aOwner);
@@ -201,7 +201,7 @@ begin
 end;
 
 {---------------------------------------------------------------------------------------------}
-destructor TTrayIcon.Destroy;
+destructor TWin32TrayIcon.Destroy;
 begin
 	if (not (csDesigning in ComponentState) and fActive) or ((csDesigning in ComponentState) and fShowDesigning) then	begin
 		DeleteIcon;
@@ -212,7 +212,7 @@ begin
 end;
 
 {---------------------------------------------------------------------------------------------}
-procedure TTrayIcon.FillDataStructure;
+procedure TWin32TrayIcon.FillDataStructure;
 begin
 	with IconData do begin
 		cbSize := sizeof(TNOTIFYICONDATA);
@@ -226,7 +226,7 @@ begin
 end;
 
 {---------------------------------------------------------------------------------------------}
-function TTrayIcon.AddIcon : boolean;
+function TWin32TrayIcon.AddIcon : boolean;
 begin
 	FillDataStructure;
 	Result := Shell_NotifyIcon(NIM_ADD, @IconData);
@@ -238,7 +238,7 @@ begin
 
 end;
 
-function TTrayIcon.ModifyIcon : boolean;
+function TWin32TrayIcon.ModifyIcon : boolean;
 	{-------------------------------------------------------------------------------------------------------------}
 begin
 	FillDataStructure;
@@ -249,7 +249,7 @@ begin
 	end;
 end;
 
-procedure TTrayIcon.DoRightClick(Sender : TObject);
+procedure TWin32TrayIcon.DoRightClick(Sender : TObject);
 {-------------------------------------------------------------------------------------------------------------}
 var
 	MouseCo : Tpoint;
@@ -268,14 +268,14 @@ begin
 	end;
 end;
 
-function TTrayIcon.DeleteIcon : boolean;
+function TWin32TrayIcon.DeleteIcon : boolean;
 	//----------------------------------------------------------------------------------------------------------------------------------
 begin
 	Result := Shell_NotifyIcon(NIM_DELETE, @IconData);
 end;
 
 {---------------------------------------------------------------------------------------------}
-procedure TTrayIcon.WndProc(var msg : TMessage);
+procedure TWin32TrayIcon.WndProc(var msg : TMessage);
 begin
 	case Msg.Msg of
 		WM_USERCHANGED, WM_ENDSESSION	: begin
@@ -325,7 +325,7 @@ end;
 procedure Register;
 //----------------------------------------------------------------------------------------------------------------------
 begin
-	RegisterComponents('Super', [TTrayIcon]);
+	RegisterComponents('Super', [TWin32TrayIcon]);
 end;
 
 end.

@@ -11,8 +11,8 @@ object LookupGridForm: TLookupGridForm
   OldCreateOrder = True
   Position = poScreenCenter
   DesignSize = (
-    470
-    270)
+    462
+    266)
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -51,15 +51,15 @@ object LookupGridForm: TLookupGridForm
   end
   object Panel1: TPanel
     Left = 0
-    Top = 212
-    Width = 470
+    Top = 208
+    Width = 462
     Height = 58
     Align = alBottom
     Anchors = [akBottom]
     BevelOuter = bvNone
     TabOrder = 2
     DesignSize = (
-      470
+      462
       58)
     object OKBtn: TButton
       Left = 134

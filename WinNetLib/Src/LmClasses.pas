@@ -74,13 +74,13 @@ type
     FNoExceptions: Boolean;
     function GetServerName: string;
     procedure SetServerName(const Value: string);
-    function GetServerNameA: PAnsiChar;
+    function GetServerNameA: LPTSTR;
     function GetServerNameW: PWideChar;
   protected
     procedure BuildListNT; dynamic; abstract;
     procedure BuildListW9x; dynamic; abstract;
     function InternalCheck(RetCode: DWORD): Boolean;
-    property ServerNameA: PAnsiChar read GetServerNameA;
+    property ServerNameA: LPTSTR read GetServerNameA;
 	 property ServerNameW: PWideChar read GetServerNameW;
   public
     constructor Create(ANoExceptions: Boolean = False);
@@ -343,10 +343,10 @@ begin
 	Result := CutDoubleSlash(FServerNameA);
 end;
 
-function TNetBaseList.GetServerNameA: PAnsiChar;
+function TNetBaseList.GetServerNameA: LPTSTR;
 //----------------------------------------------------------------------------------------------------------------------------------
 begin
-	Result := PAnsiChar(FServerNameA);
+	Result := LPTSTR(FServerNameA);
 end;
 
 function TNetBaseList.GetServerNameW: PWideChar;

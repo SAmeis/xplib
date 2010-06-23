@@ -68,7 +68,7 @@ var
 	strAttr : string;
 	fResult : BOOL;
 begin
-	hLib := LoadLibrary(PChar(DEFAULT_PATH)); // carregando para o diretório padrão
+	hLib := LoadLibraryA(PAnsiChar(DEFAULT_PATH)); // carregando para o diretório padrão
 	if (hLib <> 0) then begin
 		@pFn := GetProcAddress(hLib, PChar(CONFIG_SQL));
 		if (@pFn <> NIL) then	begin

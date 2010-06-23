@@ -344,13 +344,13 @@ var
 	 Phe : PHostEnt;             // HostEntry buffer for name lookup
 begin
 	 // Convert host address to IP address
-	 FIPAddress := inet_addr(PChar(FAddress));
+	 FIPAddress := inet_addr(PAnsiChar(Self.FAddress));
 	 if FIPAddress <> LongInt(INADDR_NONE) then
 		 // Was a numeric dotted address let it in this format
 		 FHostName := FAddress
 	 else begin
 		 // Not a numeric dotted address, try to resolve by name
-		 Phe := GetHostByName(PChar(FAddress));
+		 Phe := GetHostByName(PAnsiChar(Self.FAddress));
 		 if Phe = nil then begin
 			 FHostIP := EmptyStr; //****NOTA: Se endereco nao foi resolvido seu valor agora serah nulo
             FLastError := GetLastError;
