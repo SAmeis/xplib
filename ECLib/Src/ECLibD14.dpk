@@ -1,6 +1,6 @@
 {$I ECLib.inc }
 
-package ECLib;
+package ECLibD14;
 
 {$R *.res}
 {$R 'ECLib.dcr'}
@@ -25,28 +25,27 @@ package ECLib;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'AAA - Enhanced Controls - (Super Library)'}
-{$LIBSUFFIX '_7_0'}
+{$DESCRIPTION 'AAA - Enhanced Controls - Delphi 2010'}
 {$IMPLICITBUILD OFF}
 
 requires
   rtl,
   vcl,
   vclx,
-  XPLib,
-  OPLib;
+  XPLibD14,
+  OPLibD14;
 
 contains
   CpltComboBox in 'CpltComboBox.pas',
-  CURREDT in 'CurrEdt.pas',
+  CurrEdt in 'CurrEdt.pas',
   StpPanel in 'StpPanel.pas',
   RsRuler in 'RsRuler.pas',
   EnhGrids in 'EnhGrids.pas',
   TrcCtrls in 'TrcCtrls.pas',
-  Wrapgrid in 'WrapGrid.PAS',
+  WrapGrid in 'WrapGrid.PAS',
   Operatrs in 'Operatrs.pas',
   CheckCombo in 'CheckCombo.pas',
-  DosMove in 'DOSMOVE.PAS',
+  DOSMOVE in 'DOSMOVE.PAS',
   XPSpinControls in 'XPSpinControls.pas',
   DsgECLibRegister in 'DsgECLibRegister.pas';
 
