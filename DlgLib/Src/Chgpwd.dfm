@@ -1,6 +1,6 @@
 object ChgPwdDlg: TChgPwdDlg
-  Left = 344
-  Top = 272
+  Left = 486
+  Top = 354
   ActiveControl = OKBtn
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog

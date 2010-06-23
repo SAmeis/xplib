@@ -1,6 +1,6 @@
 {$I DlgLib.inc }
 
-package DlgLib;
+package DlgLibD14;
 
 {$R *.res}
 {$R 'DlgLib.dcr'}
@@ -25,17 +25,16 @@ package DlgLib;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'AAA - Dialogs-Lib - (Super Library)'}
-{$LIBSUFFIX '_7_0'}
+{$DESCRIPTION 'AAA - Dialogs-Lib - Delphi 2010'}
 {$IMPLICITBUILD OFF}
 
 requires
   rtl,
   vcl,
-  XPLib,
-  ShellLib,
-  ECLib,
-  StFLib,
+  XPLibD14,
+  ShellLibD14,
+  ECLibD14,
+  StFLibD14,
   VclSmp,
   vclx,
   vclactnband,
