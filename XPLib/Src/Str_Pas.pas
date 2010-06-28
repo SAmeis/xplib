@@ -132,7 +132,7 @@ implementation
 
 
 uses
-    Math;
+    Math, StrHnd;
 
 function AllTrim(Str : string) : string;
 {
@@ -194,7 +194,7 @@ var
 begin
 	SetLength(Result, Length(S));
 	for i := 1 to Length(S) do begin
-		if S[i] in ['0'..'9'] then begin
+		if CharInSet( S[i], ['0'..'9'] ) then begin
 			Result := Result + S[i];
 		end;
 	end;
@@ -365,7 +365,7 @@ begin
 	Include(Delimiters, #0); //Deve-se garantir que #0 pertence ao conjunto passado
 	P := Str;
 	//Varre ate encontra a primeira palavra valida
-	while P^ in Delimiters do begin
+	while CharInSet( P^ ,Delimiters ) do begin
 		Inc(P);
 	end;
 	while Index > 0 do begin
@@ -375,7 +375,7 @@ begin
 			Exit;
 		end;
 		//Posiciona no fim da primeira palavra para este indice
-		while not (P^ in Delimiters) do begin
+		while not CharInSet(P^ ,Delimiters) do begin
 			Inc(P);
 		end;
 		//Ultima palvra atingida precocemente
@@ -383,13 +383,13 @@ begin
 			Break;
 		end;
 		//Varre ate encontra a primeira palavra valida
-		while P^ in Delimiters do begin
+		while CharInSet( P^ ,Delimiters )do begin
 			Inc(P);
 		end;
 		Dec(Index);
 	end;
 	PEnd := P;
-	while not (PEnd^ in Delimiters) do begin
+	while not CharInSet(PEnd^ ,Delimiters) do begin
 		Inc(PEnd);
 	end;
 	CharCount := (PEnd - P);
@@ -737,7 +737,7 @@ var
 begin
     P := PChar(Str);
     //Travar no inicio da 1a palavra
-    while (P^ in Delimiters) and (P^ <> #0) do begin
+    while CharInSet( P^ ,Delimiters) and (P^ <> #0) do begin
         Inc(P);
     end;
     Result := 0;
@@ -746,7 +746,7 @@ begin
         while P^ <> #0 do begin
 
             //Pula a palavra corrente
-            while not (P^ in Delimiters) and (P^ <> #0) do begin
+            while not CharInSet(P^, Delimiters) and (P^ <> #0) do begin
                 Inc(P);
             end;
             Inc(Result);
@@ -755,7 +755,7 @@ begin
             end;
 
             //Pula conjunto de delimitadores seguintes
-            while (P^ in Delimiters) and (P^ <> #0) do begin
+            while CharInSet(P^ ,Delimiters) and (P^ <> #0) do begin
                 Inc(P);
             end;
             if P^ = #0 then begin
@@ -778,7 +778,7 @@ var
     i : integer;
 begin
     for i := 1 to Length(Str) do begin
-        if Str[i] in Delims then begin
+        if CharInSet( Str[i], Delims ) then begin
             Result := Copy(Str, 1, i - 1);
             Exit;
         end;
@@ -799,7 +799,7 @@ var
 begin
     Result := EmptyStr;
     for i := 1 to Length(Str) do begin
-        if Str[i] in FilterSet then begin
+        if CharInSet( Str[i], FilterSet ) then begin
             Result := Result + Str[i];
         end;
     end;
@@ -839,7 +839,7 @@ var
     i : integer;
 begin
     for i := Length(Str) downto 1 do begin
-        if Str[i] in Delims then begin
+        if CharInSet( Str[i] , Delims ) then begin
             Result := Copy(Str, i + 1, Length(Str));
             Exit;
         end;
@@ -947,7 +947,7 @@ begin
         StartPos := 1;
     end;
     for i := StartPos to Length(S) do begin
-        if S[i] in CharSet then begin
+        if CharInSet( S[i] , CharSet ) then begin
             Result := i;
             Break;
         end;
@@ -988,7 +988,7 @@ var
 begin
     Result := EmptyStr;
     for i := 1 to Length(Str) do begin
-        if not (Str[i] in ASet) then begin
+        if not CharInSet(Str[i] , ASet) then begin
             Result := Result + Str[i];
         end;
     end;
@@ -1013,14 +1013,14 @@ function StrReplaceFirst(OldStr, NewStr, SrcStr : string; var StartAt : integer;
             Exit;
         end;
         if StartAt > 1 then begin
-            if not ((SrcStr[StartAt - 1] in Delims) or (Delims = [])) then begin
+            if not (CharInSet(SrcStr[StartAt - 1] , Delims) or (Delims = [])) then begin
                 Result := FALSE;
                 Exit;
             end;
         end;
         x := StartAt + Length(OldStr);
         if (x <= Length(SrcStr)) then begin
-            if not ((SrcStr[x] in Delims) or (Delims = [])) then begin
+            if not (CharInSet( SrcStr[x] , Delims) or (Delims = [])) then begin
                 Result := FALSE;
                 Exit;
             end;
@@ -1106,7 +1106,7 @@ var
     //................................................................................................................................
     function LSRGetS(b : byte) : string;
     begin
-        if Char(b) in VISUAL_CHARS_LIST then        begin
+        if CharInSet( Char(b) , VISUAL_CHARS_LIST ) then        begin
             Result := Char(b);
         end else begin
             Result := '#' + inttostr(b);
@@ -1138,7 +1138,7 @@ begin
     F := -1;
     for i := #0 to #255 do begin
         if DoRange then begin
-            if i in ASet then begin
+            if CharInSet( i , ASet ) then begin
                 if F = -1 then begin
                     F := Byte(i);
                 end;
@@ -1148,7 +1148,7 @@ begin
                 F := -1;
             end;
         end else begin
-            if i in aSet then begin
+            if CharInSet( i , aSet ) then begin
                 F := Byte(i);
                 L := f;
                 LSRAdd();
@@ -1292,10 +1292,10 @@ begin
         raise Exception.CreateFmt(_MSG_INVALID_VALUE_, [Str]);
     end;
     //Remove simbolo construtor
-    if Str[1] in [')', ']'] then begin
+    if CharInSet( Str[1] ,  [')', ']'] ) then begin
         Delete(Str, 1, 1);
     end;
-    if Str[Length(Str)] in [')', ']'] then begin
+    if CharInSet( Str[Length(Str)] , [')', ']'] )then begin
         Delete(Str, Length(Str) - 1, 1);
     end;
     //Separa as partes e numeriza
@@ -1416,11 +1416,11 @@ begin
         if (EndPos > SLen) or (Result = 0) then begin //Palavra nao encontrada ou no fim da string
             Exit;
         end;
-        if (Result = 1) and (Str[EndPos] in Delims) then begin //Palavra no inicio da string
+        if (Result = 1) and CharInSet( Str[EndPos] , Delims) then begin //Palavra no inicio da string
             Exit;
         end;
         //Posicao seguinte/anterior a palavra localizada pertence aos delimitadores
-    until (Str[EndPos] in Delims) and (Str[Result - 1] in Delims);
+    until CharInSet( Str[EndPos] , Delims) and CharInSet( Str[Result - 1] , Delims);
 end;
 
 

@@ -46,20 +46,24 @@ object LoginDlgs: TLoginDlgs
     Top = 109
     Width = 77
     Height = 27
-    TabOrder = 2
+    DoubleBuffered = True
     Kind = bkOK
     Margin = 2
+    ParentDoubleBuffered = False
     Spacing = -1
+    TabOrder = 2
   end
   object CancelBtn: TBitBtn
     Left = 218
     Top = 109
     Width = 77
     Height = 27
-    TabOrder = 3
+    DoubleBuffered = True
     Kind = bkCancel
     Margin = 2
+    ParentDoubleBuffered = False
     Spacing = -1
+    TabOrder = 3
   end
   object UserNameEdit: TEdit
     Left = 19

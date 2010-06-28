@@ -7,7 +7,6 @@ unit PrnText;
 
 interface
 
-{ TODO -oLIB -cLIB : Deslocar para SuperLib no formato de classe }
 uses
     Windows, Messages, Classes, WinSpool, SysUtils;
 
@@ -21,30 +20,30 @@ type
         FDevMode : TDeviceModeA;
         FPrJob :   dword;
         FPrnFile : TStringList;
-        FPrnFilePath : string;
+        FPrnFilePath : AnsiString;
         FPrnDestiny : TPrnDestiny;
         FPrnName : AnsiString;
-        FDataType : string;
+        FDataType : AnsiString;
 
         function GetOutFilePath : string;
         procedure SetOutFilePath(const Value : string);
         function GetPrintDestiny : TPrnDestiny;
         procedure SetPrintDestiny(const Value : TPrnDestiny);
     protected
-        class function WinString(const str : string) : string;
+        class function WinString(const str : AnsiString) : AnsiString;
     public
-        constructor Create(const pPrnName : string = ''; pDataType : string = 'RAW'); virtual;
+        constructor Create(const pPrnName : AnsiString= ''; pDataType : AnsiString= 'RAW'); virtual;
         class procedure EnumPrt(pSt : TStrings; var pDef : Integer);
-        procedure StartPrint(const pNameDoc : string; pCopies : Integer);
+        procedure StartPrint(const pNameDoc : AnsiString; pCopies : Integer);
         procedure CancelPrint;
         procedure EndPrint;
-        class function DOSString(const AnsiStr : string) : string;
+        class function DOSString(const AnsiStr : AnsiString) : AnsiString;
         function ToPrn(const pText : string) : boolean;
         function ToPrnEmphasis(const pText : string) : boolean;
         function ToPrnBold(const pText : string) : boolean;
         function ToPrnLn(const pText : string) : boolean;
         function ToPrnFrm(const pFrmStr : string; const pArgs : array of const) : boolean;
-        function ToPrnFrmC(const pFrmStr : string; const pArgs : array of const) : boolean;
+        function ToPrnFrmC(const pFrmStr : AnsiString; const pArgs : array of const) : boolean;
         property OutFilePath : string read GetOutFilePath write SetOutFilePath;
       {{
        Caminho do arquivo para impressão.
@@ -251,7 +250,7 @@ begin
     Result := Self.ToPrnLn(Format(pFrmStr, pArgs));
 end;
 
-function TPrnText.ToPrnFrmC(const pFrmStr : string; const pArgs : array of const) : boolean;
+function TPrnText.ToPrnFrmC(const pFrmStr : AnsiString; const pArgs : array of const) : boolean;
     //----------------------------------------------------------------------------------------------------------------------
 {{
 Imprime string para a impressora direcionada formatando antes seu conteudo.
@@ -279,7 +278,7 @@ begin
     end;
 end;
 
-constructor TPrnText.Create(const pPrnName : string = ''; pDataType : string = 'RAW');
+constructor TPrnText.Create(const pPrnName : AnsiString = ''; pDataType : AnsiString = 'RAW');
 var
     lPrinters : TStringList;
     lIndex, lIndex2 : Integer;
@@ -288,19 +287,19 @@ begin
     lIndex2   := -1;
     lPrinters := TStringList.Create;
     TPrnText.EnumPrt(lPrinters, lIndex);    // Retorna a lista de impressoras.
-    if ((lIndex > -1) or (lPrinters.Find(pPrnName, lIndex2))) then begin
+    if ((lIndex > -1) or (lPrinters.Find(string(pPrnName), lIndex2))) then begin
         // Verifica se existe alguma impressora ou a que foi solicitada
         if (lIndex2 > -1) then begin // Verifica se a impressora solicitada foi encontrada.
-            FPrnName := pPrnName;
+            FPrnName := AnsiString(pPrnName);
         end else begin
-            FPrnName := lPrinters.Strings[lIndex]; // Atribui o nome da impressora padrão.
+            FPrnName := AnsiString(lPrinters.Strings[lIndex]); // Atribui o nome da impressora padrão.
         end;
     end else begin
         raise Exception.CreateFmt('A impressora %s não existe! ', [pPrnName]);
     end;
     FPrnDestiny := pdSpool;
-    if (Trim(pDataType) <> EmptyStr) then begin
-        FDataType := Trim(pDataType);
+    if (Trim(string(pDataType)) <> EmptyStr) then begin
+        FDataType := Trim(string(pDataType));
     end else begin
         FDataType := 'RAW';
     end;
@@ -308,7 +307,7 @@ begin
     FPrnFilePath := EmptyStr;
 end;
 
-procedure TPrnText.StartPrint(const pNameDoc : string; pCopies : Integer);
+procedure TPrnText.StartPrint(const pNameDoc : AnsiString; pCopies : Integer);
 //----------------------------------------------------------------------------------------------------------------------
 {{
    Inicia o spool da impressora para receber os caracteres
@@ -464,7 +463,7 @@ begin
     end;
 end;
 
-class function TPrnText.DOSString(const AnsiStr : string) : string;
+class function TPrnText.DOSString(const AnsiStr : AnsiString) : AnsiString;
 {{
 Converte a cadeia para o mapeamento de caracteres local.
 
@@ -480,10 +479,12 @@ begin
     Result := ReplaceStr(Result, chr(253), chr(15));
 end;
 
-class function TPrnText.WinString(const str : string) : string;
+class function TPrnText.WinString(const str : AnsiString) : AnsiString;
 begin
     if (str <> EmptyStr) then begin
-        OemToAnsi(PAnsiChar(str), PAnsiChar(str));
+        CharToOemA(PAnsiChar(str), PAnsiChar(str));
+        ///OemToAnsi(PAnsiChar(str), PAnsiChar(str));
+        ///Foi removido para o uso de CharToOEM
         Result := str;
     end else begin
         Result := EmptyStr;

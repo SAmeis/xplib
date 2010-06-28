@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<TgConfig Version="3" SubLevelDisabled="False">
+  <Option Name="Gendoc.Images" Type="System.Boolean" Value="True" Category="General" IsBrowsable="False" />
+  <Option Name="Gendoc.NavigationTree" Type="System.Boolean" Value="True" Category="General" IsBrowsable="False" />
+  <Option Name="Gendoc.LaunchBrowser" Type="System.Boolean" Value="True" Category="General" IsBrowsable="False" />
+  <Option Name="Gendoc.OutputFolder" Type="System.String" Value="C:\Sw\WorkDir\Pcks\XPLib\Src\out\doc" Category="General" IsBrowsable="False" />
+  <Option Name="namespaceFolder.APIHnd" Type="System.String" Value="APIHnd" Category="General" IsBrowsable="False" />
+</TgConfig>

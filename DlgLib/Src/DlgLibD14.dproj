@@ -57,7 +57,6 @@
 			<DCCReference Include="rtl.dcp"/>
 			<DCCReference Include="vcl.dcp"/>
 			<DCCReference Include="XPLibD14.dcp"/>
-			<DCCReference Include="ShellLibD14.dcp"/>
 			<DCCReference Include="ECLibD14.dcp"/>
 			<DCCReference Include="StFLibD14.dcp"/>
 			<DCCReference Include="VclSmp.dcp"/>

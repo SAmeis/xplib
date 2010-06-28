@@ -3,7 +3,8 @@ program ShellDialogTest;
 uses
   Forms,
   ShellDialogTestForm in 'ShellDialogTestForm.pas' {fmShellDialogTest},
-  DBHnd in '..\..\DBLib\Src\DBHnd.pas';
+  ShellShlDlg in '..\Src\ShellShlDlg.pas',
+  ShellPIDL in '..\Src\ShellPIDL.pas';
 
 {$R *.RES}
 

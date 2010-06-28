@@ -56,11 +56,11 @@ type
     "( elemento1, elemento2, ..., elementon )"
     }
     private
-        FAppend :  string;
-        FFinalConnector : string;
+        FAppend :           string;
+        FFinalConnector :   string;
         FInitialConnector : string;
         FIntermediateConnector : string;
-        FPrepend : string;
+        FPrepend :          string;
     public
         constructor Create; overload; virtual;
         constructor Create(const AInitialConnector, AIntermediateConnector, AFinalConnector : string); overload; virtual;
@@ -94,12 +94,12 @@ type
 
     TBufferedStringStream = class(TObject)
     private
-        FBuffer : PAnsiChar;
-        FBufferSize : Integer;
-        FEol :    AnsiString;
+        FBuffer :        PAnsiChar;
+        FBufferSize :    Integer;
+        FEol :           ansistring;
         FMaxBufferSize : Integer;
-        FOffSet : Integer;
-        FStream : TStream;
+        FOffSet :        Integer;
+        FStream :        TStream;
         FWordDelimiters : PSysCharSet;
         function GetEoS : boolean;
         function GetPosition : int64;
@@ -110,15 +110,15 @@ type
         constructor Create(AStream : TStream; BufferSize : Integer = 1024); virtual;
         destructor Destroy; override;
         function ReadChar : AnsiChar;
-        function ReadLine : string;
-        function ReadString(Len : Word) : string;
-        function ReadStringWord : string;
+        function ReadLine : AnsiString;
+        function ReadString(Len : Word) : AnsiString;
+        function ReadStringWord : AnsiString;
         procedure Reset;
         procedure Seek(pos : int64);
         function Search(const Str : AnsiString) : boolean; overload;
-        function Search(const Str : string; SkipStr : boolean) : boolean; overload;
+        function Search(const Str : AnsiString; SkipStr : boolean) : boolean; overload;
         procedure SetWordDelimiters(WordDelimiters : PSysCharSet);
-        property Eol : AnsiString read FEol write FEol;
+        property Eol : ansistring read FEol write FEol;
         property EoS : boolean read GetEoS;
         property Position : int64 read GetPosition;
         property Size : int64 read GetSize;
@@ -127,6 +127,7 @@ type
 
 {$IFDEF VER150} //Delphi 7
 function AnsiStrAlloc(Size: Cardinal): PAnsiChar;
+function CharInSet(C: AnsiChar; const CharSet: TSysCharSet): Boolean;
 {$ENDIF}
 
 
@@ -140,10 +141,16 @@ uses
 function AnsiStrAlloc(Size: Cardinal): PAnsiChar;
 begin
   Inc(Size, SizeOf(Cardinal));
-  GetMem(Result, Size);              
+  GetMem(Result, Size);
   Cardinal(Pointer(Result)^) := Size;
   Inc(Result, SizeOf(Cardinal));
 end;
+
+function CharInSet(C: AnsiChar; const CharSet: TSysCharSet): Boolean;
+begin
+  Result := C in CharSet;
+end;
+
 {$ENDIF}
 
 
@@ -191,7 +198,8 @@ begin
                 'ª' : begin
                     Result[i] := 'A';
                 end;
-                else begin
+                else
+                begin
                     Result[i] := ' ';
                 end;
             end;
@@ -274,7 +282,7 @@ begin
     SetLength(Result, Length(Str));
     Result := EmptyStr;
     for i := 1 to Length(Str) do begin
-        if Str[i] in ['0'..'9'] then begin
+        if CharInSet(Str[i], ['0'..'9']) then begin
             Result := Result + Str[i];
         end;
     end;
@@ -370,7 +378,7 @@ begin
         StartPos := 1;
     end;
     for i := StartPos to Length(S) do begin
-        if S[i] in CharSet then begin
+        if CharInSet(S[i], CharSet) then begin
             Result := i;
             Break;
         end;
@@ -500,27 +508,18 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-function TBufferedStringStream.ReadStringWord : string;
+function TBufferedStringStream.ReadStringWord : AnsiString;
 {{
 Retorna a palavra imediatamente seguinte ao ponteiro interno.
 
 AINDA A SER IMPLEMENTADO!!!
 }
 var
-{$IFDEF VER210} //Delphi 201
     c : Ansichar;
-{$ELSE}
-    c : Char;
-{$ENDIF}
-
 begin
-    Result := EmptyStr;
+    Result := AnsiString(EmptyStr);
     repeat
-        {$IFDEF VER210} //Delphi 2010
-          c      := ReadChar;
-        {$ELSE}
         c      := ReadChar;
-        {$ENDIF}
         Result := Result + c;
     until c in self.FWordDelimiters^;
     Delete(Result, Length(Result), 1);
@@ -589,7 +588,8 @@ begin
         2 : begin
             Result := List.Strings[0] + Self.FFinalConnector + List.Strings[1];
         end;
-        else begin    //3 ou mais
+        else
+        begin    //3 ou mais
             Result := List.Strings[0] + Self.FInitialConnector;
             for c := 1 to List.Count - 2 do begin
                 Result := Result + List.Strings[c] + Self.FIntermediateConnector;
@@ -704,7 +704,7 @@ begin
     end;
 end;
 
-function TBufferedStringStream.ReadString(Len : Word) : string;
+function TBufferedStringStream.ReadString(Len : Word) : AnsiString;
 {{
 Faz a leitura de uma cadeia aleatoria de Len caracteres.
 
@@ -718,7 +718,7 @@ begin
     end;
 end;
 
-function TBufferedStringStream.Search(const Str : AnsiString) : boolean;
+function TBufferedStringStream.Search(const Str : ansistring) : boolean;
 {{
 Busca pela cadeia passada.
 Se encontrada posiciona o cursor no seu inicio e retorna true.
@@ -758,7 +758,7 @@ begin
     end;
 end;
 
-function TBufferedStringStream.Search(const Str : string; SkipStr : boolean) : boolean;
+function TBufferedStringStream.Search(const Str : AnsiString; SkipStr : boolean) : boolean;
 {{
 Realiza a busca de Str e caso encontre posiciona o cursor após a cadeia.
 Caso não encontre Str retorna falso e o cursor será posicionado no final do streamer/buffer.
@@ -775,7 +775,7 @@ begin
     end;
 end;
 
-function TBufferedStringStream.ReadLine : string;
+function TBufferedStringStream.ReadLine : AnsiString;
 {{
 Retorna a cadeia que finaliza com a quebra de linha a partir do ponto corrente, avançando o cursor.
 
@@ -792,7 +792,7 @@ begin
     if (TokenSize <= 0) then begin
         raise Exception.Create('Quebra de linha nula');
     end;
-    Result := EmptyStr;
+    Result := AnsiString(EmptyStr);
     FirstSearch : ;
     while (not Self.EoS) do begin
         TokenPos := SearchBuf(Self.FBuffer, Self.FBufferSize, Self.FOffSet, 0, Self.FEol[1], [soMatchCase, soDown]);
@@ -800,7 +800,7 @@ begin
             //Repassa a parte anterior a encontada
             PrevChar  := TokenPos^;
             TokenPos^ := #0;
-            Result    := Result + PChar(Self.FBuffer + Self.FOffSet);
+            Result    := Result + PAnsiChar(Self.FBuffer + Self.FOffSet);
             TokenPos^ := PrevChar;
             Self.FOffSet := (TokenPos - Self.FBuffer) + 1; //Offset salta ate a localizacao do 1o char
             for TokenIndex := 2 to TokenSize do begin
@@ -814,7 +814,7 @@ begin
             //Chegando aqui a cadeia foi completamente localizada
             Break;
         end else begin  //1o Char da sequencia not exists -> repassa todo o resto para o retorno e carrega a nova pagina
-            Result := Result + PChar(Self.FBuffer + Self.FOffSet);
+            Result := Result + PAnsiChar(Self.FBuffer + Self.FOffSet);
             Self.FOffSet := Self.FBufferSize;
             Self.FillBuffer;
         end;

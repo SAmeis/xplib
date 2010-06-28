@@ -53,8 +53,10 @@ object FCSimpleGaugeForm: TFCSimpleGaugeForm
     Width = 75
     Height = 25
     Caption = 'Cancelar'
+    DoubleBuffered = True
+    Kind = bkCancel
+    ParentDoubleBuffered = False
     TabOrder = 1
     OnClick = CancelBtnClick
-    Kind = bkCancel
   end
 end

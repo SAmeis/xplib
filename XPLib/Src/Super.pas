@@ -107,7 +107,7 @@ type
 type
     TBooleanState = (bsNo, bsYes, bsUndefined);
 
-function HeapMemoryFree : LongInt; platform;
+function HeapMemoryFree : LongInt; platform; deprecated;
 
 function IIf(Cond : boolean; TrueCond, FalseCond : string) : string; overload;
 

@@ -10,10 +10,13 @@ interface
 uses
     WinTypes, WinProcs, Classes, Graphics, Forms, Controls, StdCtrls, Buttons, SysUtils;
 
+{$IF CompilerVersion >= 21.00}
 type
-    TPropText = string
-
-        [40];
+    TPropText = TCaption;
+{$ELSE}
+type
+    TPropText = string[40];
+{$IFEND}
 
 type
 
@@ -129,8 +132,8 @@ Revision: 19/7/2005
 }
 begin
     inherited Create(AOwner);
-    FMaxRetries   := 3;
-    FInitUserName := EmptyStr;
+    Self.FMaxRetries   := 3;
+    Self.FInitUserName := EmptyStr;
 end;
 
 

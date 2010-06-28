@@ -12,17 +12,16 @@ unit DateOper;
 interface
 
 uses
-    Classes, Windows;
+    Classes, Windows, StrHnd;
 
 const
      {{
      Revision: 1/6/2009 - roger
-     Constantes de formatção data/hora para uso comum
+     Constantes de formatação data/hora para uso comum
      }
-     DATE_FORMAT_SHORT_ORDERED =  'yyyymmdd';
-     DATE_FORMAT_LONG_ORDERED =  'yyyymmddhhnnss';
-     DATE_FORMAT_FULL_ORDERED =  'yyyymmddhhnnsszzz';
-
+    DATE_FORMAT_SHORT_ORDERED = 'yyyymmdd';
+    DATE_FORMAT_LONG_ORDERED  = 'yyyymmddhhnnss';
+    DATE_FORMAT_FULL_ORDERED  = 'yyyymmddhhnnsszzz';
 
 const
     DaysOfWeekAbrev: array[0..6] of string[3] = ('DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB');
@@ -34,10 +33,10 @@ type
 
 
     TDiffDate = record
-        DifYears:  word;
-        DifMonths: word;
-        DifDays:   word;
-        Signal:    word;
+        DifYears:  Word;
+        DifMonths: Word;
+        DifDays:   Word;
+        Signal:    Word;
     end;
     TDifDate = TDiffDate; //Renomear corretamente no futuro
 
@@ -51,8 +50,8 @@ type
     TDayPeriods = set of TDayPeriod;
 
 const
-    FILETIME_BASE = -109205.0; {{ 1 Data de refereência para deslocamento relativo ao Windows }
-    FILETIME_STEP: extended = 24.0 * 60.0 * 60.0 * 1000.0 * 1000.0 * 10.0; {{ Quantidade de nanosegundos por dia}
+    FILETIME_BASE           = -109205.0; {{ 1 Data de refereência para deslocamento relativo ao Windows }
+    FILETIME_STEP: Extended = 24.0 * 60.0 * 60.0 * 1000.0 * 1000.0 * 10.0; {{ Quantidade de nanosegundos por dia}
 
     MonthOrdinalNames: array[meJan..meDec] of string[10] =
         ('Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto',
@@ -72,18 +71,19 @@ type
         { TODO -oroger -clib : re-alocar os metodos privados desta classe }
     private
         class function InternalStrToDate(const DateFormat, S : string; var Date : TDateTime) : boolean;
-        class function ScanDateStr(const Format, S : string; var D, M, Y : integer) : boolean;
-        class procedure ExtractMask(const Format, S : string; Ch : char; Cnt : integer; var I : integer; Blank, Default : integer);
-        class function ScanDate(const S, DateFormat : string; var Pos : integer; var Y, M, D : integer) : boolean;
-        class function ScanNumber(const S : string; MaxLength : integer; var Pos : integer; var Number : longint) : boolean;
-        class function ScanChar(const S : string; var Pos : integer; Ch : char) : boolean;
-        class procedure ScanBlanks(const S : string; var Pos : integer);
+        class function ScanDateStr(const Format, S : string; var D, M, Y : Integer) : boolean;
+        class procedure ExtractMask(const Format, S : string; Ch : char; Cnt : Integer; var I : Integer; Blank, Default : Integer);
+        class function ScanDate(const S, DateFormat : string; var Pos : Integer; var Y, M, D : Integer) : boolean;
+        class function ScanNumber(const S : string; MaxLength : Integer; var Pos : Integer; var Number : longint) : boolean;
+        class function ScanChar(const S : string; var Pos : Integer; Ch : char) : boolean;
+        class procedure ScanBlanks(const S : string; var Pos : Integer);
+        class procedure ScanToNumber(const S : string; var Pos : Integer);
     public
         class function DayPeriod(const Time : TDateTime) : TDayPeriod;
         class function StrToDateFmt(const DateFormat, S : string) : TDateTime;
         class function MonthFromName(const S : string; MaxLen : byte) : byte;
-        class function ExpandYear(Year : integer) : integer;
-        class procedure SetCenturyOffset(Value : integer);
+        class function ExpandYear(Year : Integer) : Integer;
+        class procedure SetCenturyOffset(Value : Integer);
         class function GetDateOrder(const DateFormat : string) : TXPDateOrder;
     end;
 
@@ -109,58 +109,58 @@ type
         class function DateTimeToFileTime(const DateTime : TDateTime) : TFileTime;
         class function LocalDateTimeToFileTime(const DateTime : TDateTime) : FileTime;
         class function LocalDateTimeToDateTime(const DateTime : TDateTime) : TDateTime;
-        class function DosDateTimeToFileTime(const DosTime : integer) : TFileTime;
-        class function DosDateTimeToSystemTime(const DosTime : integer) : TSystemTime;
+        class function DosDateTimeToFileTime(const DosTime : Integer) : TFileTime;
+        class function DosDateTimeToSystemTime(const DosTime : Integer) : TSystemTime;
         class function FileTimeToDateTime(const FileTime : TFileTime) : TDateTime;
         class function FileTimeToLocalDateTime(const FileTime : TFileTime) : TDateTime;
-        class function FileTimeToDosDateTime(const FileTime : TFileTime) : integer;
-        class function SystemTimeToDosDateTime(const SystemTime : TSystemTime) : integer;
+        class function FileTimeToDosDateTime(const FileTime : TFileTime) : Integer;
+        class function SystemTimeToDosDateTime(const SystemTime : TSystemTime) : Integer;
         class function FileTimeToSystemTime(const FileTime : TFileTime) : TSystemTime;
     end;
 
 
-function DaysInMonth(Month : integer; Year : integer; Epoch : integer = 1900) : integer;
+function DaysInMonth(Month : Integer; Year : Integer; Epoch : Integer = 1900) : Integer;
 //Retorna estrutura com a diferenca de anos, meses e dias entre duas datas
 function DeltaDate(ADate1, ADate2 : TDateTime) : TDiffDate;
 function DifDate(ADate : TDateTime) : TDifDate; deprecated;  //usar DeltaDate
 function GetLocalBiasUTC : longint;
-function GetMonth(Dt : TDateTime) : word;
-function GetDay(Dt : TDateTime) : word;
-function GetYear(Dt : TDateTime) : word;
-function IncTime(ATime : TDateTime; Hours, Minutes, Seconds, MSecs : integer) : TDateTime;
-function AddDays(Actual : TDateTime; Days : integer) : TDateTime;
+function GetMonth(Dt : TDateTime) : Word;
+function GetDay(Dt : TDateTime) : Word;
+function GetYear(Dt : TDateTime) : Word;
+function IncTime(ATime : TDateTime; Hours, Minutes, Seconds, MSecs : Integer) : TDateTime;
+function AddDays(Actual : TDateTime; Days : Integer) : TDateTime;
 function FirstMonth(Dt : TDateTime) : TDateTime; overload;
-function FirstMonth(Month, Year : word) : TDateTime; overload;
-function DaysGap(Dt1, Dt2 : TDateTime) : integer;
-function ActualSeconds : word;
-function ActualMinutes : word;
-function ActualHours : word;
-function ActualYear : word;
-function ActualMonth : word;
-function ActualDay : word;
-function ActualDayofWeek : word;
-function ActualDayofWeekStr : string;
-function DayofWeekStr(Dt : TDateTime) : string;
-function LastDayOfMonth(Month : word; Year : word = 0) : word;
+function FirstMonth(Month, Year : Word) : TDateTime; overload;
+function DaysGap(Dt1, Dt2 : TDateTime) : Integer;
+function ActualSeconds : Word;
+function ActualMinutes : Word;
+function ActualHours : Word;
+function ActualYear : Word;
+function ActualMonth : Word;
+function ActualDay : Word;
+function ActualDayofWeek : Word;
+function ActualDayofWeekStr : ShortString;
+function DayofWeekStr(Dt : TDateTime) : ShortString;
+function LastDayOfMonth(Month : Word; Year : Word = 0) : Word;
 function LastDateNotWeekendOfMonth(ADate : TDateTime) : TDateTime; overload;
-function LastDateNotWeekendOfMonth(Month : word; Year : word) : TDateTime; overload;
+function LastDateNotWeekendOfMonth(Month : Word; Year : Word) : TDateTime; overload;
 //incrementa a data passada em n meses
-function MonthIncrement(ADate : TDateTime; nM : word) : TDateTime;
+function MonthIncrement(ADate : TDateTime; nM : Word) : TDateTime;
 //Retorna o conjunto de meses da mascara dada
-function MonthsFromBitMask(Mask : integer; StartMonth : TMonthEnum = meJan) : TMonthSet;
+function MonthsFromBitMask(Mask : Integer; StartMonth : TMonthEnum = meJan) : TMonthSet;
 //Monta mascara de bits dado o conjunto de meses
-function MonthsToBitMask(Months : TMonthSet; StartMonth : TMonthEnum = meJan) : integer;
+function MonthsToBitMask(Months : TMonthSet; StartMonth : TMonthEnum = meJan) : Integer;
 //Monta lista com o meses incluidos em Months
 function MonthEnumListNames(Months : TMonthSet) : string;
 //Monta lista com os meses incluidos em Months na forma de numerais
 function MonthEnumListNumbers(Months : TMonthSet; TwoDigits : boolean = False) : string;
 //Recupera o valor do mes pela sua grafia longa
-function MonthLongNameToInt(const StrMonth : string) : integer;
+function MonthLongNameToInt(const StrMonth : string) : Integer;
 //Recupera o valor do mes pela sua grafia curta
-function MonthShortNameToInt(const StrMonth : string) : integer;
+function MonthShortNameToInt(const StrMonth : string) : Integer;
 function SecondsOfDay : double;
 //Ajusta a hora da maquina de acordo o padrao MS -> GMT
-function SetLocalDateTime(DateTime : TDateTime) : integer;
+function SetLocalDateTime(DateTime : TDateTime) : Integer;
 
 implementation
 
@@ -173,79 +173,79 @@ resourcestring
     RsDateConversion = 'Data ou hora em formato ilegal.';
 
 var
-    GlobalCenturyOffset : integer = 60;
+    GlobalCenturyOffset : Integer = 60;
 
-function ActualYear : word;
+function ActualYear : Word;
     //----------------------------------------------------------------------------------------------------------------------
     //Retorna o valor do ano atual
 var
-    No : word;
+    No : Word;
 begin
     DecodeDate(Now, Result, No, No);
 end;
 
-function ActualMonth : word;
+function ActualMonth : Word;
     //----------------------------------------------------------------------------------------------------------------------
     //Retorna o valor do mes atual
 var
-    No : word;
+    No : Word;
 begin
     DecodeDate(Now, No, Result, No);
 end;
 
-function ActualDay : word;
+function ActualDay : Word;
     //----------------------------------------------------------------------------------------------------------------------
     //Retorna o valor do dia atual
 var
-    No : word;
+    No : Word;
 begin
-    DecodeDate(Now, No, No, Result);
+    DecodeDate(Now(), No, No, Result);
 end;
 
-function ActualDayofWeek : word;
+function ActualDayofWeek : Word;
     //----------------------------------------------------------------------------------------------------------------------
     //Retorna o valor do dia atual expresso em byte ordenado de 0 a 6
 begin
-    ActualDayofWeek := word(DayOfWeek(Now));
+    ActualDayofWeek := Word(DayOfWeek(Now));
 end;
 
-function ActualDayOfWeekStr : string;
+function ActualDayOfWeekStr : ShortString;
     //----------------------------------------------------------------------------------------------------------------------
     //Retorna o valor do dia da semana atual no formato abreviado 'DOM...SAB'
 begin
     ActualDayOfWeekStr := DaysOfWeekAbrev[ActualDayOfWeek];
 end;
 
-function DayOfWeekStr(Dt : TDateTime) : string;
+function DayOfWeekStr(Dt : TDateTime) : ShortString;
     //----------------------------------------------------------------------------------------------------------------------
     //Retorna o valor do dia da semana no formato abreviado 'DOM...SAB'
 begin
     Result := DaysOfWeekAbrev[DayOfWeek(Dt)];
 end;
 
-function ActualSeconds : word;
+function ActualSeconds : Word;
     //----------------------------------------------------------------------------------------------------------------------
     //Retorna o valor dos segundos passados do minuto atual
 var
-    No : word;
+    No : Word;
 begin
     DecodeTime(Now, No, No, Result, No);
 end;
 
-function ActualMinutes : word;
+function ActualMinutes : Word;
     //----------------------------------------------------------------------------------------------------------------------
     //Retorna o valor dos minutos passados da hora atual
 var
-    No : word;
+    No : Word;
 begin
     DecodeTime(Now, No, Result, No, No);
 end;
 
-function ActualHours : word;
+function ActualHours : Word;
     //----------------------------------------------------------------------------------------------------------------------
     //Retorna o valor das horas passados do dia atual
 var
-    No : word;
+    No : Word;
 begin
     DecodeTime(Now, No, Result, No, No);
 end;
@@ -257,10 +257,10 @@ begin
     Result := TimeToStr(Now);
 end;
 
-function LastDayOfMonth(Month : word; Year : word = 0) : word;
+function LastDayOfMonth(Month : Word; Year : Word = 0) : Word;
     //----------------------------------------------------------------------------------------------------------------------
 var
-    Epoch : word;
+    Epoch : Word;
 begin
     if Year = 0 then begin
         Year  := ActualYear;
@@ -274,13 +274,13 @@ end;
 function LastDateNotWeekendOfMonth(ADate : TDateTime) : TDateTime; overload;
     //----------------------------------------------------------------------------------------------------------------------
 var
-    Y, D, M : word;
+    Y, D, M : Word;
 begin
     DecodeDate(ADate, Y, M, D);
     Result := LastDateNotWeekendOfMonth(M, Y);
 end;
 
-function LastDateNotWeekendOfMonth(Month : word; Year : word) : TDateTime;
+function LastDateNotWeekendOfMonth(Month : Word; Year : Word) : TDateTime;
     //----------------------------------------------------------------------------------------------------------------------
     //Retorna data do ultimo dia "teoricamente" util do mes especificado
 begin
@@ -290,12 +290,12 @@ begin
     end;
 end;
 
-function MonthIncrement(ADate : TDateTime; nM : word) : TDateTime;
+function MonthIncrement(ADate : TDateTime; nM : Word) : TDateTime;
     //----------------------------------------------------------------------------------------------------------------------------------
     //incrementa a data passada em n meses
 var
-    D, M, Y : word;
-    MxDay :   integer;
+    D, M, Y : Word;
+    MxDay :   Integer;
 begin
     DecodeDate(ADate, Y, M, D);
     Inc(M, nM mod 12);
@@ -308,7 +308,7 @@ begin
     Result := EncodeDate(Y, M, D);
 end;
 
-function MonthsFromBitMask(Mask : integer; StartMonth : TMonthEnum = meJan) : TMonthSet;
+function MonthsFromBitMask(Mask : Integer; StartMonth : TMonthEnum = meJan) : TMonthSet;
     //----------------------------------------------------------------------------------------------------------------------------------
     //Retorna o conjunto de meses da mascara dada
 var
@@ -322,7 +322,7 @@ begin
     end;
 end;
 
-function MonthsToBitMask(Months : TMonthSet; StartMonth : TMonthEnum = meJan) : integer;
+function MonthsToBitMask(Months : TMonthSet; StartMonth : TMonthEnum = meJan) : Integer;
     //----------------------------------------------------------------------------------------------------------------------------------
     //Monta mascara de bits dado o conjunto de meses
 var
@@ -342,7 +342,7 @@ function MonthEnumListNames(Months : TMonthSet) : string;
 var
     m :   TMonthEnum;
     Lst : TStringList;
-    i :   integer;
+    i :   Integer;
 begin
     Lst := TStringList.Create;
     try
@@ -370,7 +370,7 @@ function MonthEnumListNumbers(Months : TMonthSet; TwoDigits : boolean = False) :
 var
     m :   TMonthEnum;
     Lst : TStringList;
-    i :   integer;
+    i :   Integer;
 begin
     Lst := TStringList.Create;
     try
@@ -396,11 +396,11 @@ begin
     end;
 end;
 
-function MonthLongNameToInt(const StrMonth : string) : integer;
+function MonthLongNameToInt(const StrMonth : string) : Integer;
     //----------------------------------------------------------------------------------------------------------------------
     //Recupera o valor do mes pela sua grafia longa
 var
-    i : integer;
+    i : Integer;
 begin
     for i := 1 to high(SysUtils.LongMonthNames) do begin
         if LongMonthNames[i] = StrMonth then begin
@@ -411,11 +411,11 @@ begin
     Result := -1; //Valor invalido
 end;
 
-function MonthShortNameToInt(const StrMonth : string) : integer;
+function MonthShortNameToInt(const StrMonth : string) : Integer;
     //----------------------------------------------------------------------------------------------------------------------
     //Recupera o valor do mes pela sua grafia curta
 var
-    i : integer;
+    i : Integer;
 begin
     for i := 1 to high(SysUtils.ShortMonthNames) do begin
         if LongMonthNames[i] = StrMonth then begin
@@ -430,13 +430,13 @@ function SecondsOfDay : double;
     //----------------------------------------------------------------------------------------------------------------------
     //    Calcula o total de segundos decorridos a partir da 00:00hs
 var
-    h, m, s, ms : word;
+    h, m, s, ms : Word;
 begin
     DecodeTime(Now, h, m, s, ms);
     Result := 3600 * (h) + 60 * (m) + (s) + (ms) / 100;
 end;
 
-function DaysGap(Dt1, Dt2 : TDateTime) : integer;
+function DaysGap(Dt1, Dt2 : TDateTime) : Integer;
     //----------------------------------------------------------------------------------------------------------------------
     //Retorna a diferenca em dias de duas datas dadas
 begin
@@ -444,13 +444,13 @@ begin
 end;
 
 
-function DaysInMonth(Month : integer; Year : integer; Epoch : integer = 1900) : integer;
+function DaysInMonth(Month : Integer; Year : Integer; Epoch : Integer = 1900) : Integer;
     //----------------------------------------------------------------------------------------------------------------------
     //Retorna o No de dias no mes de um ano especifico
 var
-    EpochYear, EpochCent : integer;
+    EpochYear, EpochCent : Integer;
 begin
-    if word(Year) < 100 then begin
+    if Word(Year) < 100 then begin
         EpochYear := Epoch mod 100;
         EpochCent := (Epoch div 100) * 100;
         if (Year < EpochYear) then begin
@@ -470,7 +470,8 @@ begin
         2 : begin
             Result := 28 + Ord(IsLeapYear(Year));
         end;
-        else begin //Mes invalido
+        else
+        begin //Mes invalido
             Result := -1;
         end;
     end;
@@ -480,7 +481,7 @@ function DeltaDate(ADate1, ADate2 : TDateTime) : TDiffDate;
     //----------------------------------------------------------------------------------------------------------------------
     //Retorna a diferenca em dias, meses, e anos entre duas datas julianas
 var
-    Day1, Day2, Month1, Month2, Year1, Year2 : word;
+    Day1, Day2, Month1, Month2, Year1, Year2 : Word;
     TmpDate : TDateTime;
 begin
 
@@ -532,11 +533,11 @@ begin
     Dec(Result.DifDays, 1);
 end;
 
-function GetYear(Dt : TDateTime) : word;
+function GetYear(Dt : TDateTime) : Word;
     //----------------------------------------------------------------------------------------------------------------------
     //    Decodifica o ano da data
 var
-    M, D : word;
+    M, D : Word;
 begin
     DecodeDate(Dt, Result, M, D);
 end;
@@ -557,17 +558,18 @@ begin
         TIME_ZONE_ID_DAYLIGHT : begin
             Result := tzInfo.Bias + tzInfo.DaylightBias;
         end;
-        else begin
+        else
+        begin
             Result := tzInfo.Bias;
         end;
     end;
 end;
 
-function GetMonth(Dt : TDateTime) : word;
+function GetMonth(Dt : TDateTime) : Word;
     //----------------------------------------------------------------------------------------------------------------------
     //Decodifica o mes da data
 var
-    Y, D : word;
+    Y, D : Word;
 begin
     DecodeDate(Dt, Y, Result, D);
 end;
@@ -579,23 +581,23 @@ begin
     Result := Dt - GetDay(Dt) - 1;
 end;
 
-function FirstMonth(Month, Year : word) : TDateTime; overload;
+function FirstMonth(Month, Year : Word) : TDateTime; overload;
     //----------------------------------------------------------------------------------------------------------------------
     //Calcula a data do primeiro dia do mes segundo mes e ano passado
 begin
     Result := EncodeDate(Year, Month, 1);
 end;
 
-function GetDay(Dt : TDateTime) : word;
+function GetDay(Dt : TDateTime) : Word;
     //----------------------------------------------------------------------------------------------------------------------
     //Decodifica o dia da data
 var
-    Y, M : word;
+    Y, M : Word;
 begin
     DecodeDate(Dt, Y, M, Result);
 end;
 
-function IncTime(ATime : TDateTime; Hours, Minutes, Seconds, MSecs : integer) : TDateTime;
+function IncTime(ATime : TDateTime; Hours, Minutes, Seconds, MSecs : Integer) : TDateTime;
     //----------------------------------------------------------------------------------------------------------------------
 begin
     Result := ATime + (Hours div 24) + (((Hours mod 24) * 3600000 + Minutes * 60000 + Seconds * 1000 + MSecs) / MSecsPerDay);
@@ -604,14 +606,14 @@ begin
     end;
 end;
 
-function AddDays(Actual : TDateTime; Days : integer) : TDateTime;
+function AddDays(Actual : TDateTime; Days : Integer) : TDateTime;
     //----------------------------------------------------------------------------------------------------------------------
     //Soma a uma data uma quantidade fixa de dias
 begin
     Result := Actual + Days;
 end;
 
-function SetLocalDateTime(DateTime : TDateTime) : integer;
+function SetLocalDateTime(DateTime : TDateTime) : Integer;
     //----------------------------------------------------------------------------------------------------------------------
     //Ajusta a hora da maquina de acordo o padrao MS -> GMT
 var
@@ -677,7 +679,7 @@ class function TTimeHnd.DayPeriod(const Time : TDateTime) : TDayPeriod;
 retorna em qual periodo do dia aquela hora representa.
 }
 var
-    h, dummy : word;
+    h, dummy : Word;
 begin
     { TODO -oRoger -cLIB : pode ser optmizada se usada a parte fracionaria do valor }
     DecodeTime(Time, h, dummy, dummy, dummy);
@@ -696,7 +698,7 @@ begin
     end;
 end;
 
-class function TTimeHnd.ExpandYear(Year : integer) : integer;
+class function TTimeHnd.ExpandYear(Year : Integer) : Integer;
 var
     N : longint;
 begin
@@ -710,18 +712,19 @@ begin
     end;
 end;
 
-class procedure TTimeHnd.ExtractMask(const Format, S : string; Ch : char; Cnt : integer; var I : integer;
-    Blank, Default : integer);
+class procedure TTimeHnd.ExtractMask(const Format, S : string; Ch : char; Cnt : Integer; var I : Integer;
+    Blank, Default : Integer);
 var
-    Tmp :  string[20];
-    J, L : integer;
+    Tmp :  String;
+    J, L : Integer;
 begin
     I  := Default;
     Ch := UpCase(Ch);
     L  := Length(Format);
     if Length(S) < L then begin
         L := Length(S);
-    end else if Length(S) > L then begin
+    end else
+    if Length(S) > L then begin
         Exit;
     end;
     J := Pos(StringOfChar(Ch, Cnt), AnsiUpperCase(Format));
@@ -737,7 +740,8 @@ begin
     end;
     if Tmp = '' then begin
         I := Blank;
-    end else if Cnt > 1 then begin
+    end else
+    if Cnt > 1 then begin
         I := MonthFromName(Tmp, Length(Tmp));
         if I = 0 then begin
             I := -1;
@@ -749,16 +753,15 @@ end;
 
 class function TTimeHnd.GetDateOrder(const DateFormat : string) : TXPDateOrder;
 var
-    I : integer;
+    I : Integer;
 begin
     Result := doDMY; //Valor compativel com o brasil, mas poderia ser accessivel estaticamente pela classe
     I      := 1;
     while I <= Length(DateFormat) do begin
         case Chr(Ord(DateFormat[I]) and $DF) of
-      {$IFDEF COMPILER3_UP}
-      'E':
-        Result := doYMD;
-      {$ENDIF}
+            'E' : begin
+                Result := doYMD;
+            end;
             'Y' : begin
                 Result := doYMD;
             end;
@@ -768,7 +771,8 @@ begin
             'D' : begin
                 Result := doDMY;
             end;
-            else begin
+            else
+            begin
                 Inc(I);
             end;
                 Continue;
@@ -780,7 +784,7 @@ end;
 
 class function TTimeHnd.InternalStrToDate(const DateFormat, S : string; var Date : TDateTime) : boolean;
 var
-    D, M, Y : integer;
+    D, M, Y : Integer;
 begin
     if S = '' then begin
         Date   := 0; //Data invalida
@@ -811,9 +815,9 @@ begin
     Result := 0;
 end;
 
-class procedure TTimeHnd.ScanBlanks(const S : string; var Pos : integer);
+class procedure TTimeHnd.ScanBlanks(const S : string; var Pos : Integer);
 var
-    I : integer;
+    I : Integer;
 begin
     I := Pos;
     while (I <= Length(S)) and (S[I] = ' ') do begin
@@ -822,7 +826,7 @@ begin
     Pos := I;
 end;
 
-class function TTimeHnd.ScanChar(const S : string; var Pos : integer; Ch : char) : boolean;
+class function TTimeHnd.ScanChar(const S : string; var Pos : Integer; Ch : char) : boolean;
 begin
     Result := False;
     ScanBlanks(S, Pos);
@@ -832,7 +836,7 @@ begin
     end;
 end;
 
-class function TTimeHnd.ScanDate(const S, DateFormat : string; var Pos, Y, M, D : integer) : boolean;
+class function TTimeHnd.ScanDate(const S, DateFormat : string; var Pos, Y, M, D : Integer) : boolean;
 var
     DateOrder :  TXPDateOrder;
     N1, N2, N3 : longint;
@@ -842,10 +846,9 @@ begin
     M      := 0;
     D      := 0;
     DateOrder := GetDateOrder(DateFormat);
-  {$IFDEF COMPILER3_UP}
-  if ShortDateFormat[1] = 'g' then { skip over prefix text }
-    ScanToNumber(S, Pos);
-  {$ENDIF COMPILER3_UP}
+    if ShortDateFormat[1] = 'g' then { skip over prefix text }    begin
+        ScanToNumber(S, Pos);
+    end;
     if not (ScanNumber(S, MaxInt, Pos, N1) and ScanChar(S, Pos, DateSeparator) and
         ScanNumber(S, MaxInt, Pos, N2)) then begin
         Exit;
@@ -884,27 +887,26 @@ begin
     end;
     ScanChar(S, Pos, DateSeparator);
     ScanBlanks(S, Pos);
-  {$IFDEF COMPILER3_UP}
-  if SysLocale.FarEast and (System.Pos('ddd', ShortDateFormat) <> 0) then
-  begin { ignore trailing text }
-    if ShortTimeFormat[1] in ['0'..'9'] then { stop at time digit }
-      ScanToNumber(S, Pos)
-    else { stop at time prefix }
-      repeat
-        while (Pos <= Length(S)) and (S[Pos] <> ' ') do
-          Inc(Pos);
-        ScanBlanks(S, Pos);
-      until (Pos > Length(S)) or
-        (AnsiCompareText(TimeAMString, Copy(S, Pos, Length(TimeAMString))) = 0) or
-        (AnsiCompareText(TimePMString, Copy(S, Pos, Length(TimePMString))) = 0);
-  end;
-  {$ENDIF COMPILER3_UP}
+    if SysLocale.FarEast and (System.Pos('ddd', ShortDateFormat) <> 0) then  begin { ignore trailing text }
+        if ShortTimeFormat[1] in ['0'..'9'] then { stop at time digit }    begin
+            ScanToNumber(S, Pos);
+        end else { stop at time prefix }    begin
+            repeat
+                while (Pos <= Length(S)) and (S[Pos] <> ' ') do begin
+                    Inc(Pos);
+                end;
+                ScanBlanks(S, Pos);
+            until (Pos > Length(S)) or
+                (AnsiCompareText(TimeAMString, Copy(S, Pos, Length(TimeAMString))) = 0) or
+                (AnsiCompareText(TimePMString, Copy(S, Pos, Length(TimePMString))) = 0);
+        end;
+    end;
     Result := IsValidDate(Y, M, D) and (Pos > Length(S));
 end;
 
-class function TTimeHnd.ScanDateStr(const Format, S : string; var D, M, Y : integer) : boolean;
+class function TTimeHnd.ScanDateStr(const Format, S : string; var D, M, Y : Integer) : boolean;
 var
-    Pos : integer;
+    Pos : Integer;
 begin
     ExtractMask(Format, S, 'm', 3, M, -1, 0); { short month name? }
     if M = 0 then begin
@@ -920,10 +922,10 @@ begin
     end;
 end;
 
-class function TTimeHnd.ScanNumber(const S : string; MaxLength : integer; var Pos, Number : integer) : boolean;
+class function TTimeHnd.ScanNumber(const S : string; MaxLength : Integer; var Pos, Number : Integer) : boolean;
 var
-    I : integer;
-    N : word;
+    I : Integer;
+    N : Word;
 begin
     Result := False;
     ScanBlanks(S, Pos);
@@ -941,7 +943,19 @@ begin
     end;
 end;
 
-class procedure TTimeHnd.SetCenturyOffset(Value : integer);
+class procedure TTimeHnd.ScanToNumber(const S : string; var Pos : Integer);
+begin
+    while (Pos <= Length(S)) and not CharInSet(S[Pos], ['0'..'9']) do begin
+    {$IFNDEF UNICODE}// Utf16: '0'..'9' are in the BMP => no lead byte handling necessary
+        if S[Pos] in LeadBytes then begin
+            Inc(Pos);
+        end;
+    {$ENDIF ~UNICODE}
+        Inc(Pos);
+    end;
+end;
+
+class procedure TTimeHnd.SetCenturyOffset(Value : Integer);
 begin
     GlobalCenturyOffset := Value;
 end;
@@ -960,7 +974,7 @@ end;
 
 class function TTimeConvert.DateTimeToFileTime(const DateTime : TDateTime) : TFileTime;
 var
-    E :   extended;
+    E :   Extended;
     F64 : int64;
 begin
     E      := (DateTime - FILETIME_BASE) * FILETIME_STEP;
@@ -985,18 +999,19 @@ begin
         TIME_ZONE_ID_DAYLIGHT : begin
             Result := DateTime - ((TimeZoneInfo.Bias + TimeZoneInfo.DaylightBias) / SysUtils.MinsPerDay);
         end;
-        else begin
+        else
+        begin
             raise Exception.Create(RsMakeUTCTime);
         end;
     end;
 end;
 
-class function TTimeConvert.DosDateTimeToFileTime(const DosTime : integer) : TFileTime;
+class function TTimeConvert.DosDateTimeToFileTime(const DosTime : Integer) : TFileTime;
 begin
     ResultCheck(Windows.DosDateTimeToFileTime(HiWord(DosTime), LoWord(DosTime), Result));
 end;
 
-class function TTimeConvert.DosDateTimeToSystemTime(const DosTime : integer) : TSystemTime;
+class function TTimeConvert.DosDateTimeToSystemTime(const DosTime : Integer) : TSystemTime;
 var
     FileTime : TFileTime;
 begin
@@ -1010,9 +1025,9 @@ begin
     Result := Result + FILETIME_BASE;
 end;
 
-class function TTimeConvert.FileTimeToDosDateTime(const FileTime : TFileTime) : integer;
+class function TTimeConvert.FileTimeToDosDateTime(const FileTime : TFileTime) : Integer;
 var
-    Date, Time : word;
+    Date, Time : Word;
 begin
     ResultCheck(Windows.FileTimeToDosDateTime(FileTime, Date, Time));
     Result := (Date shl 16) or Time;
@@ -1043,7 +1058,8 @@ begin
         TIME_ZONE_ID_DAYLIGHT : begin
             Result := DateTime + ((TimeZoneInfo.Bias + TimeZoneInfo.DaylightBias) / SysUtils.MinsPerDay);
         end;
-        else begin
+        else
+        begin
             raise Exception.Create(RsMakeUTCTime);
         end;
     end;
@@ -1064,7 +1080,7 @@ begin
     end;
 end;
 
-class function TTimeConvert.SystemTimeToDosDateTime(const SystemTime : TSystemTime) : integer;
+class function TTimeConvert.SystemTimeToDosDateTime(const SystemTime : TSystemTime) : Integer;
 var
     FileTime : TFileTime;
 begin

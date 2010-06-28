@@ -280,7 +280,7 @@ var
 {$ENDIF}
 begin
 {$IFDEF MSWINDOWS}
-    Result := (FindFirst(Name, faAnyFile - faDirectory - faVolumeId, Entry) = 0);
+    Result := (FindFirst(Name, faAnyFile - faDirectory, Entry) = 0);
     if Result then begin
         FindClose(Entry);
     end;
@@ -1596,10 +1596,10 @@ begin
         Rep := Length(Name);
         case (Rep) of
             2 : begin
-                Result := (UpCase(Name[1]) in ['A'..'Z']) and (Name[2] = ':'); //Exemplo (L:\) or (C:)
+                Result := CharInSet(UpCase(Name[1]) , ['A'..'Z']) and (Name[2] = ':'); //Exemplo (L:\) or (C:)
             end;
             3 : begin
-                Result := (UpCase(Name[1]) in ['A'..'Z']) and (Name[2] = ':') and (Name[3] = PathDelim); //Exemplo (L:\) or (C:)
+                Result := CharInSet(UpCase(Name[1]) , ['A'..'Z']) and (Name[2] = ':') and (Name[3] = PathDelim); //Exemplo (L:\) or (C:)
             end;
             else begin
                 Result := False;
@@ -2372,7 +2372,7 @@ begin
     end;
     LPart := ExtractFilePath(Filename);
     if (LPart = Filename) then begin  //raiz ou nome final da sequencia
-        Result := (Length(LPart) = 3) and (GetIChar(LPart, 2) in ['a'..'Z']) and (GetIChar(LPart, 3) = PathSep); //algo do tipo c:\
+        Result := (Length(LPart) = 3) and CharInSet(GetIChar(LPart, 2) , ['a'..'Z']) and (GetIChar(LPart, 3) = PathSep); //algo do tipo c:\
         Result := Result or (TStrHnd.StrPosChar(ExtractFileName(Filename), CSet) = 0);
     end else begin
         if (LPart = EmptyStr) then begin

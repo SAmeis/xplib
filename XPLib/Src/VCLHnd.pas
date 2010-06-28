@@ -8,7 +8,7 @@ unit VCLHnd;
 interface
 
 uses
-	SysUtils, Classes, TypInfo, ComCtrls, consts; //NOTAS: DsgnIntf removido pelo pacote DesignIDE
+	SysUtils, Classes, TypInfo, ComCtrls, consts, StrHnd; //NOTAS: DsgnIntf removido pelo pacote DesignIDE
 
 function  IntArrayIndexOf( Arr : array of integer; Value : integer ) : integer;
 procedure SetPropValueAsString( Instance : TObject; const PropName, PropValue : string );
@@ -149,14 +149,14 @@ function NextWord: string;
 // grab the next enum name
 begin
    Result := EmptyStr;
-   while not (Left[1] in [',', ' ']) do begin
+   while not CharInSet(Left[1] , [',', ' ']) do begin
        Result := Result + Left[1];
        Delete(Left, 1, 1);
        if Left = EmptyStr then begin
            Exit;
        end;
    end;
-   while Left[1] in [',', ' '] do begin // skip any whitespace
+   while CharInSet(Left[1] , [',', ' ']) do begin // skip any whitespace
        Delete(Left, 1, 1);
    end;
 end;

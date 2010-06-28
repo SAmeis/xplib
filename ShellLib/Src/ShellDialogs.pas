@@ -427,7 +427,7 @@ uses Controls, ShellAPI,
 
 const
     Shell32 = 'shell32.dll';
-    SHFormatDrive_Name = 'SHFormatDrive';
+    SHFormatDrive_Name = 'SHFormatDriveA';
     PickIconDlg_Index = 62;
     RunFileDlg_Index = 61;
     SHFindFiles_Index = 90;
@@ -1819,7 +1819,7 @@ end;
 initialization
 
     {Get a reference to the SHELL32.DLL library}
-    ShellDLL := LoadLibrary(PChar(Shell32));
+    ShellDLL := LoadLibraryA(PAnsiChar(Shell32));
 
 finalization
 

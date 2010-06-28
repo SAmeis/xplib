@@ -7,6 +7,8 @@ unit BinHnd;
 
 interface
 
+uses SysUtils, StrHnd;
+
 const
     HEX_DIGITS: array [0..15] of char = '0123456789ABCDEF';
 
@@ -44,7 +46,7 @@ var
 begin
     Result := 0;
     for i := 1 to length(Str) do begin
-        if not (Str[i] in ['0'..'1']) then begin
+		 if not CharInSet( Str[i], [ '0'..'1' ]){(Str[i] in ['0'..'1']) } then begin
             Result := 0;
             Exit;
         end;

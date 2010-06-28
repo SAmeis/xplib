@@ -32,7 +32,6 @@ requires
   rtl,
   vcl,
   XPLibD14,
-  ShellLibD14,
   ECLibD14,
   StFLibD14,
   VclSmp,

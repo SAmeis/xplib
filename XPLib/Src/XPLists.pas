@@ -523,7 +523,7 @@ begin
          Line := Str_Pas.AllTrim(Line);
          p := Pos('=', Line);
          ch := Str_Pas.GetIChar(Line, 1);
-         if (ch in [#0, '#', '!']) then begin
+         if (CharInSet( ch,  [#0, '#', '!']) ) then begin
              //insercao sem valor atribuido
              Self.FValues.AddObject(Line, NIL);
              System.Continue;

@@ -259,7 +259,7 @@ begin
     if Result = pfCustom then begin
         Ret := GetObject(ABitmap.Handle, SizeOf(DIB), @DIB);
         if (Ret = 0) then begin
-            APIHnd.CheckAPI(GetLastError());
+            TAPIHnd.CheckAPI(GetLastError());
         end;
         with DIB, dsbmih do begin
             if biBitCount = 16 then begin

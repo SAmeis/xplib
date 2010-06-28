@@ -1822,8 +1822,7 @@ begin
         RESOURCETYPE_PRINT : begin
             Result := kbsdPrintResource;
         end;
-        else
-        begin
+        else begin
             Result := kbsdDiskResource;
         end;
     end; {case}
@@ -1834,7 +1833,7 @@ end;
 initialization
 
     {Get a reference to the SHELL32.DLL library}
-    ShellDLL := LoadLibrary(PChar(Shell32));
+    ShellDLL := LoadLibraryA(PAnsiChar(Shell32));
 
 finalization
 

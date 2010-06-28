@@ -93,6 +93,41 @@
 			<DCCReference Include="XPTypes.pas"/>
 			<DCCReference Include="XPClasses.pas"/>
 			<DCCReference Include="XPFiles.pas"/>
+			<None Include="ModelSupport_XPLibD14\default.txaPackage"/>
+			<None Include="ModelSupport_XPLibD14\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\VCLHnd\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\Super\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\ImgLHnd\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\Grf_Hnd\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\XPFiles\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\DOS2UNIX\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\MenuHnd\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\cripto\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\XPTypes\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\AppLog\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\AppsHnd\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\APIHnd\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\ColorHnd\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\BRRules\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\XPGraph\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\MathHnd\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\FileHnd\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\CtrlsHnd\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\StrHnd\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\Str_pas\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\DateOper\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\PrnText\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\XPClasses\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\XPImgDesign\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\XPLists\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\BinHnd\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\RegCLX\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\LBHorz\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\ListHnd\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\XPThreads\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\StatHnd\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\Str_Null\default.txvpck"/>
+			<None Include="ModelSupport_XPLibD14\WinReg32\default.txvpck"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>
@@ -147,6 +182,7 @@
 						<VersionInfoKeys Name="Comments">Rogerlais Andrade</VersionInfoKeys>
 					</VersionInfoKeys>
 				</Delphi.Personality>
+				<ModelSupport>True</ModelSupport>
 			</BorlandProject>
 			<ProjectFileVersion>12</ProjectFileVersion>
 		</ProjectExtensions>
