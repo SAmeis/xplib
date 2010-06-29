@@ -420,13 +420,13 @@ begin
                 with DataSet do begin
                     First;
                     while not EOF do begin
-                        Result := LSRCompareRecord;
+												Result := LSRCompareRecord;
                         if Result then begin
                             Break;
                         end;
                         Next;
                     end;
-                end;
+								end;
             finally
 				if not Result and DataSet.BookmarkValid(Bookmark) then begin
 					{$IF CompilerVersion > 15.00} //Delphi 2007+
