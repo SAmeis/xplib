@@ -2,7 +2,7 @@
 		<PropertyGroup>
 			<ProjectGuid>{05C4D72A-801C-4472-A620-D62C0943976A}</ProjectGuid>
 			<MainSource>ShellLibD14.dpk</MainSource>
-			<Config Condition="'$(Config)'==''">Debug</Config>
+			<Config Condition="'$(Config)'==''">Release</Config>
 			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
 			<ProjectVersion>12.0</ProjectVersion>
 		</PropertyGroup>
@@ -65,6 +65,7 @@
 			<DCCReference Include="ShellDlgReg.pas"/>
 			<DCCReference Include="ShellDialogs.pas"/>
 			<DCCReference Include="ShellShlDlg.pas"/>
+			<DCCReference Include="ShellAPIFuncs.pas"/>
 			<None Include="ShellLib.inc">
 				<ContainerId>File</ContainerId>
 			</None>

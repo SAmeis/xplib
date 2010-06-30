@@ -43,6 +43,7 @@ contains
   ShellPIDL in 'ShellPIDL.pas',
   ShellDlgReg in 'ShellDlgReg.pas',
   ShellDialogs in 'ShellDialogs.pas',
-  ShellShlDlg in 'ShellShlDlg.pas';
+  ShellShlDlg in 'ShellShlDlg.pas',
+  ShellAPIFuncs in 'ShellAPIFuncs.pas';
 
 end.

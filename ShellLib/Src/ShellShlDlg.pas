@@ -9,7 +9,7 @@ unit ShellShlDlg;
 
 interface
 
-uses Windows, Messages, ShlObj, SysUtils, Classes, Forms, Graphics, ShellPIDL;
+uses Windows, Messages, ShlObj, SysUtils, Classes, Forms, Graphics, ShellPIDL, ShellAPIFuncs;
 
 
 {***********************************************************
@@ -61,11 +61,6 @@ const {SHObjectProperties Flags}
     OPF_PRINTERNAME = $01;
     OPF_PATHNAME    = $02;
 
-
-function SHFormatDrive(Owner : HWND; Drive : UINT; FormatID : UINT; OptionFlags : UINT) : DWORD; stdcall;
-
-function PickIconDlg(Owner : HWND; FileName : Pointer; MaxFileNameChars : DWORD;
-    var IconIndex : DWORD) : longbool; stdcall;
 
 procedure RunFileDlg(Owner : HWND; IconHandle : HICON; WorkPath : Pointer;
     Caption : Pointer; Description : Pointer; Flags : UINT); stdcall;
@@ -288,12 +283,12 @@ type
         constructor Create(TheOwner : TComponent); override;
     private
         FFileName :  TFileName;
-        FIconIndex : DWORD;
+        FIconIndex : Integer;
     public    {Public methods}
-        function Execute : boolean;
+        function Execute : Integer;
     published
         property FileName : TFileName read FFileName write FFileName;
-        property IconIndex : DWORD read FIconIndex write FIconIndex default 0;
+        property IconIndex : integer read FIconIndex write FIconIndex default 0;
     end;
 
 
@@ -429,21 +424,11 @@ function NetResourceTypeConstToEnum(NetResourceType : DWORD) : TkbNetResourceTyp
 
 implementation
 
-uses Controls, ShellAPI,
-    {If we're compiling in Delphi 2}
-{$IFDEF VER90}
-     OLE2;
-{If we're compiling in Delphi 3 or later}
-{$ELSE}
-    ActiveX;
-
-{$ENDIF}
+uses Controls, ShellAPI, ActiveX;
 
 
 const
-    Shell32 = 'shell32.dll';
-    SHFormatDrive_Name = 'SHFormatDrive';
-    PickIconDlg_Index = 62;
+	 
     RunFileDlg_Index = 61;
     SHFindFiles_Index = 90;
     SHFindComputer_Index = 91;
@@ -461,13 +446,11 @@ const
 var
     ShellDLL : HMODULE;
 
-
 {***********************************************************
-    Undocumented Windows Shell Dialog API implementations
+	 Undocumented Windows Shell Dialog API implementations
  ***********************************************************}
-{$WARN SYMBOL_PLATFORM OFF }
-function SHFormatDrive; external Shell32 Name SHFormatDrive_Name;
-function PickIconDlg; external Shell32 index PickIconDlg_Index;
+
+ {$WARN SYMBOL_PLATFORM OFF }
 procedure RunFileDlg; external Shell32 index RunFileDlg_Index;
 function SHFindFiles; external Shell32 index SHFindFiles_Index;
 function SHFindComputer; external Shell32 index SHFindComputer_Index;
@@ -1085,7 +1068,7 @@ begin
     Self.FIconIndex := 0;
 end;
 
-function TkbPickIconDialog.Execute : boolean;
+function TkbPickIconDialog.Execute : integer;
 var
     FileNameBuffer : Pointer;
 begin
@@ -1098,10 +1081,10 @@ begin
             StringToWideChar(Self.FileName, FileNameBuffer, MAX_PATH + 1);
 
             {Call the dialog and use the return value as the function result.}
-            Result := PickIconDlg(Application.Handle, FileNameBuffer, MAX_PATH, Self.FIconIndex);
+			 Result := PickIconDlg(Application.Handle, PWideChar(FileNameBuffer), UINT(MAX_PATH), Self.FIconIndex);
 
             {If function was successful, transliterate the returned filename back to a string.}
-            if (Result) then begin
+            if (Result <> 0) then begin
                 Self.FileName := WideCharToString(FileNameBuffer);
             end; {if}
 
@@ -1122,7 +1105,7 @@ begin
             Result := PickIconDlg(Application.Handle, FileNameBuffer, MAX_PATH, Self.FIconIndex);
 
             {If function was successful, copy the filename back to a string.}
-			 if (Result) then begin
+			 if (Result <> 0) then begin
 				{$IF CompilerVersion> 15.00} //Delphi 2007+
 				 Self.FileName := StrPas(PWideChar(FileNameBuffer));
 				{$ELSE} //Delphi 7 ou inferior
