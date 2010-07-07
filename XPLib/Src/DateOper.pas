@@ -1,10 +1,13 @@
- //NOTAS: Para usar esta unit setar Z4
- { TODO -oRoger -cLIB : Validar a informacao acima, se verdadeira descomentar a linha abaixo }
 {$IFDEF DateOper}
     {$DEFINE DEBUG_UNIT}
 {$ENDIF}
 {$I XPLib.inc}
-//{$Z4}
+//NOTAS: Para usar esta unit setar Z4
+ { TODO -oRoger -cLIB : Validar a informacao acima, se verdadeira descomentar a linha abaixo
+ Esta unit possui enumerações longas que não são suportadas por byte(suspeita)
+ Z4 = DWORD
+ Z1 = byte(padrão compilador) }
+{$Z4}
 
 
 unit DateOper;
@@ -322,9 +325,14 @@ begin
     end;
 end;
 
+/// <summary>
+///  Monta mascara de bits dado o conjunto de meses
+/// <bold>Esta rotina precisa de melhor documentação</bold>
+/// </summary>
+/// <param name="Months">Meses que pertencem ao conjunto de interesse</param>
+/// <param name="StartMonth">Mês de offset da operação</param>
+/// <returns>Valor inteiro mascarado em bits dos meses do conjunto</returns>
 function MonthsToBitMask(Months : TMonthSet; StartMonth : TMonthEnum = meJan) : Integer;
-    //----------------------------------------------------------------------------------------------------------------------------------
-    //Monta mascara de bits dado o conjunto de meses
 var
     i : TMonthEnum;
 begin
@@ -470,8 +478,7 @@ begin
         2 : begin
             Result := 28 + Ord(IsLeapYear(Year));
         end;
-        else
-        begin //Mes invalido
+        else begin //Mes invalido
             Result := -1;
         end;
     end;
@@ -558,8 +565,7 @@ begin
         TIME_ZONE_ID_DAYLIGHT : begin
             Result := tzInfo.Bias + tzInfo.DaylightBias;
         end;
-        else
-        begin
+        else begin
             Result := tzInfo.Bias;
         end;
     end;
@@ -715,7 +721,7 @@ end;
 class procedure TTimeHnd.ExtractMask(const Format, S : string; Ch : char; Cnt : Integer; var I : Integer;
     Blank, Default : Integer);
 var
-    Tmp :  String;
+    Tmp :  string;
     J, L : Integer;
 begin
     I  := Default;
@@ -771,8 +777,7 @@ begin
             'D' : begin
                 Result := doDMY;
             end;
-            else
-            begin
+            else begin
                 Inc(I);
             end;
                 Continue;
@@ -846,7 +851,7 @@ begin
     M      := 0;
     D      := 0;
     DateOrder := GetDateOrder(DateFormat);
-    if ShortDateFormat[1] = 'g' then { skip over prefix text }    begin
+    if ShortDateFormat[1] = 'g' then { skip over prefix text } begin
         ScanToNumber(S, Pos);
     end;
     if not (ScanNumber(S, MaxInt, Pos, N1) and ScanChar(S, Pos, DateSeparator) and
@@ -887,10 +892,10 @@ begin
     end;
     ScanChar(S, Pos, DateSeparator);
     ScanBlanks(S, Pos);
-    if SysLocale.FarEast and (System.Pos('ddd', ShortDateFormat) <> 0) then  begin { ignore trailing text }
-        if ShortTimeFormat[1] in ['0'..'9'] then { stop at time digit }    begin
+    if SysLocale.FarEast and (System.Pos('ddd', ShortDateFormat) <> 0) then begin { ignore trailing text }
+        if ShortTimeFormat[1] in ['0'..'9'] then { stop at time digit } begin
             ScanToNumber(S, Pos);
-        end else { stop at time prefix }    begin
+        end else { stop at time prefix } begin
             repeat
                 while (Pos <= Length(S)) and (S[Pos] <> ' ') do begin
                     Inc(Pos);
@@ -999,8 +1004,7 @@ begin
         TIME_ZONE_ID_DAYLIGHT : begin
             Result := DateTime - ((TimeZoneInfo.Bias + TimeZoneInfo.DaylightBias) / SysUtils.MinsPerDay);
         end;
-        else
-        begin
+        else begin
             raise Exception.Create(RsMakeUTCTime);
         end;
     end;
@@ -1058,8 +1062,7 @@ begin
         TIME_ZONE_ID_DAYLIGHT : begin
             Result := DateTime + ((TimeZoneInfo.Bias + TimeZoneInfo.DaylightBias) / SysUtils.MinsPerDay);
         end;
-        else
-        begin
+        else begin
             raise Exception.Create(RsMakeUTCTime);
         end;
     end;
