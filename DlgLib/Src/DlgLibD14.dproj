@@ -65,6 +65,7 @@
 			<DCCReference Include="designide.dcp"/>
 			<DCCReference Include="dbrtl.dcp"/>
 			<DCCReference Include="bdertl.dcp"/>
+			<DCCReference Include="ShellLibD14.dcp"/>
 			<DCCReference Include="Aboutdlg.pas"/>
 			<DCCReference Include="About.pas">
 				<Form>AboutBox</Form>

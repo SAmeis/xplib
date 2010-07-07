@@ -39,7 +39,8 @@ requires
   vclactnband,
   designide,
   dbrtl,
-  bdertl;
+  bdertl,
+  ShellLibD14;
 
 contains
   Aboutdlg in 'Aboutdlg.pas',
