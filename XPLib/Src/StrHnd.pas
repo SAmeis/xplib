@@ -47,7 +47,8 @@ type
         class function startsWith(const str, prefix : string) : boolean;
         class function StrPosChar(const S : string; const CharSet : TSysCharSet; StartPos : cardinal = 0) : Integer;
         class function StrToPChar(Str : string) : PChar;
-        class function IsPertinent(const Value : string; const Values : array of string; CaseSensitive : boolean) : boolean;
+				class function IsPertinent(const Value : string; const Values : array of string; CaseSensitive : boolean) : boolean;
+				class function Contains(const SubStr, SuperStr : string ) : Boolean;
     end;
 
     TStringConnector = class(TObject)
@@ -230,7 +231,17 @@ begin
     end;
 end;
 
-{--------------------------------------------------------------------------------------------------------------------------------}
+/// <summary>
+/// Retorna valor lógico indicando se SubStr está contida em SuperStr
+/// </summary>
+/// <param name="SubStr">Cadeia a ser procurada</param>
+/// <param name="SuperStr">Cadeia onde se procura</param>
+/// <returns></returns>
+class function TStrHnd.Contains(const SubStr, SuperStr: string): Boolean;
+begin
+	Result:=( Pos(SubStr, SuperStr ) <> 0 );
+end;
+
 class function TStrHnd.endsWith(const fullStr, endStr : string) : boolean;
 {{
 Indica se a string termina com string passada;
