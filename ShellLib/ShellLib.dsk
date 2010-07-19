@@ -102,9 +102,9 @@ EditViewName=C:\Sw\WorkDir\Pcks\ShellLib\Src\ShellShlDlg.pas
 [View2]
 CustomEditViewType=TEditView
 Module=C:\Sw\WorkDir\Pcks\ShellLib\Src\ShellAPIFuncs.pas
-CursorX=46
-CursorY=31
-TopLine=15
+CursorX=90
+CursorY=26
+TopLine=7
 LeftCol=1
 Elisions=
 Bookmarks=
