@@ -4,5 +4,25 @@
     <property name="$defaultDiagram" value="true" />
     <property name="$metaclass" value="Package Diagram" />
     <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:XPLibD14:LBHorz.TListBoxHrz">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:LBHorz.TListBoxHrz.GetScrollWidth()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:LBHorz.TListBoxHrz.SetScrollWidth(System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:LBHorz.TListBoxHrz.LBAddString(ref@Messages.TMessage)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:LBHorz.TListBoxHrz.LBInsertString(ref@Messages.TMessage)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:LBHorz.TListBoxHrz.LBDeleteString(ref@Messages.TMessage)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:LBHorz.TListBoxHrz.LBResetContent(ref@Messages.TMessage)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:LBHorz.TListBoxHrz.CMFontChanged(ref@Messages.TMessage)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:LBHorz.TListBoxHrz.AllWidths()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:LBHorz.TListBoxHrz.NewWidth(System.Char*)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:LBHorz.TListBoxHrz.WidthOfString(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:LBHorz.TListBoxHrz.WidthOfPChar(System.Char*)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:LBHorz.TListBoxHrz.CreateParams(ref@Controls.TCreateParams)" />
+      <reference referencedUin="delphi:e_property:src:XPLibD14:LBHorz.TListBoxHrz.ScrollWidth" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:LBHorz.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:LBHorz.@unitclass.Register()" />
+    </reference>
   </view>
 </nodeSet>

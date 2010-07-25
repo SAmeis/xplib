@@ -4,5 +4,82 @@
     <property name="$defaultDiagram" value="true" />
     <property name="$metaclass" value="Package Diagram" />
     <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:XPLibD14:StrHnd.TStrHnd">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TStrHnd.ASCIISearchString(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TStrHnd.endsWith(System.string,System.Char)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TStrHnd.endsWith(System.string,System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TStrHnd.EnsurePrefix(System.string,System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TStrHnd.FilterDigits(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TStrHnd.IsRangeValue(System.string,System.Extended,System.Extended)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TStrHnd.startsWith(System.string,System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TStrHnd.StrPosChar(System.string,TSysCharSet,System.Cardinal)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TStrHnd.StrToPChar(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TStrHnd.IsPertinent(System.string,System.string[],System.Boolean)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TStrHnd.Contains(System.string,System.string)" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:StrHnd.TStringConnector">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:StrHnd.TStringConnector.FAppend" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:StrHnd.TStringConnector.FFinalConnector" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:StrHnd.TStringConnector.FInitialConnector" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:StrHnd.TStringConnector.FIntermediateConnector" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:StrHnd.TStringConnector.FPrepend" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TStringConnector.Create()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TStringConnector.Create(System.string,System.string,System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TStringConnector.Create(System.string,System.string,System.string,System.string,System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TStringConnector.Connect(Classes.TStrings)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TStringConnector.MakeSetString(Classes.TStrings)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TStringConnector.MakeSetStringOfNames(Classes.TStrings)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TStringConnector.MakeSetStringOfValues(Classes.TStrings)" />
+      <reference referencedUin="delphi:e_property:src:XPLibD14:StrHnd.TStringConnector.Append" />
+      <reference referencedUin="delphi:e_property:src:XPLibD14:StrHnd.TStringConnector.FinalConnector" />
+      <reference referencedUin="delphi:e_property:src:XPLibD14:StrHnd.TStringConnector.InitialConnector" />
+      <reference referencedUin="delphi:e_property:src:XPLibD14:StrHnd.TStringConnector.IntermediateConnector" />
+      <reference referencedUin="delphi:e_property:src:XPLibD14:StrHnd.TStringConnector.Prepend" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:StrHnd.TBufferedStringStream">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:l_ast:src:XPLibD14:StrHnd.TBufferedStringStream.FWordDelimiters" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:StrHnd.TBufferedStringStream.FBuffer" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:StrHnd.TBufferedStringStream.FBufferSize" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:StrHnd.TBufferedStringStream.FEol" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:StrHnd.TBufferedStringStream.FMaxBufferSize" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:StrHnd.TBufferedStringStream.FOffSet" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:StrHnd.TBufferedStringStream.FStream" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:StrHnd.TBufferedStringStream.FWordDelimiters" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TBufferedStringStream.GetEoS()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TBufferedStringStream.GetPosition()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TBufferedStringStream.GetSize()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TBufferedStringStream.FillBuffer()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TBufferedStringStream.Create(Classes.TStream,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TBufferedStringStream.Destroy()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TBufferedStringStream.ReadChar()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TBufferedStringStream.ReadLine()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TBufferedStringStream.ReadString(System.Word)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TBufferedStringStream.ReadStringWord()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TBufferedStringStream.Reset()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TBufferedStringStream.Seek(System.Int64)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TBufferedStringStream.Search(System.AnsiString)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TBufferedStringStream.Search(System.AnsiString,System.Boolean)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:StrHnd.TBufferedStringStream.SetWordDelimiters(TSysCharSet*)" />
+      <reference referencedUin="delphi:e_property:src:XPLibD14:StrHnd.TBufferedStringStream.Eol" />
+      <reference referencedUin="delphi:e_property:src:XPLibD14:StrHnd.TBufferedStringStream.EoS" />
+      <reference referencedUin="delphi:e_property:src:XPLibD14:StrHnd.TBufferedStringStream.Position" />
+      <reference referencedUin="delphi:e_property:src:XPLibD14:StrHnd.TBufferedStringStream.Size" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:StrHnd.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:StrHnd.@unitclass.DOS_EOL" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:StrHnd.@unitclass.UNIX_EOL" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:StrHnd.@unitclass.DEFAULT_WORD_DELIMITERS_LIST" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:StrHnd.@unitclass.VISUAL_CHARS_LIST" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:StrHnd.@unitclass.INTEGER_CHARS_LIST" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:StrHnd.@unitclass.FLOAT_CHARS_LIST" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:StrHnd.@unitclass.NOT_ALPHA_LOWER_CASE_CHARS_LIST" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:StrHnd.PSysCharSet">
+      <property name="$shortcutReference" value="true" />
+    </reference>
   </view>
 </nodeSet>

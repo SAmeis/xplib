@@ -4,5 +4,55 @@
     <property name="$defaultDiagram" value="true" />
     <property name="$metaclass" value="Package Diagram" />
     <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:XPLibD14:PrnText.TPrnDestiny">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:PrnText.TPrnDestiny.pdSpool" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:PrnText.TPrnDestiny.pdFile" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:PrnText.TPrnDestiny.pdBoth" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:PrnText.TPrnText">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:l_ast:src:XPLibD14:PrnText.TPrnText.PrintDestiny" />
+      <reference referencedUin="delphi:l_ast:src:XPLibD14:PrnText.TPrnText.FPrnDestiny" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:PrnText.TPrnText.Fph" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:PrnText.TPrnText.FDevMode" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:PrnText.TPrnText.FPrJob" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:PrnText.TPrnText.FPrnFile" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:PrnText.TPrnText.FPrnFilePath" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:PrnText.TPrnText.FPrnDestiny" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:PrnText.TPrnText.FPrnName" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:PrnText.TPrnText.FDataType" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:PrnText.TPrnText.GetOutFilePath()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:PrnText.TPrnText.SetOutFilePath(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:PrnText.TPrnText.GetPrintDestiny()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:PrnText.TPrnText.SetPrintDestiny(PrnText.TPrnDestiny)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:PrnText.TPrnText.WinString(System.AnsiString)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:PrnText.TPrnText.Create(System.AnsiString,System.AnsiString)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:PrnText.TPrnText.EnumPrt(Classes.TStrings,ref@System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:PrnText.TPrnText.StartPrint(System.AnsiString,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:PrnText.TPrnText.CancelPrint()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:PrnText.TPrnText.EndPrint()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:PrnText.TPrnText.DOSString(System.AnsiString)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:PrnText.TPrnText.ToPrn(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:PrnText.TPrnText.ToPrnEmphasis(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:PrnText.TPrnText.ToPrnBold(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:PrnText.TPrnText.ToPrnLn(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:PrnText.TPrnText.ToPrnFrm(System.string,System.TVarRec[])" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:PrnText.TPrnText.ToPrnFrmC(System.AnsiString,System.TVarRec[])" />
+      <reference referencedUin="delphi:e_property:src:XPLibD14:PrnText.TPrnText.OutFilePath" />
+      <reference referencedUin="delphi:e_property:src:XPLibD14:PrnText.TPrnText.PrinterName" />
+      <reference referencedUin="delphi:e_property:src:XPLibD14:PrnText.TPrnText.PrintDestiny" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:PrnText.TPrnEpson">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:l_gnt:src:XPLibD14:PrnText.TPrnEpson:PrnText.TPrnText" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:PrnText.TPrnEpson.SetPrnCharSetBR()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:PrnText.TPrnEpson.SetPrnLineHeigth(System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:PrnText.TPrnEpson.SetPrnToCondensed()" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:PrnText.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:PrnText.@unitclass.ReplaceStr(System.string,System.string,System.string)" />
+    </reference>
   </view>
 </nodeSet>

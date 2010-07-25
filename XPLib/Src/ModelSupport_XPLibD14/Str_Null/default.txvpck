@@ -4,5 +4,11 @@
     <property name="$defaultDiagram" value="true" />
     <property name="$metaclass" value="Package Diagram" />
     <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:XPLibD14:Str_Null.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Str_Null.@unitclass.StrAllocString(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Str_Null.@unitclass.StrAllocAnsiString(System.AnsiString)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Str_Null.@unitclass.StrConvertToOEM(System.Char*)" />
+    </reference>
   </view>
 </nodeSet>

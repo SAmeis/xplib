@@ -4,5 +4,86 @@
     <property name="$defaultDiagram" value="true" />
     <property name="$metaclass" value="Package Diagram" />
     <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:XPLibD14:Super.QUADWORD">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.QUADWORD.Tag" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.QUADWORD.DWORD1" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.QUADWORD.DWORD2" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.QUADWORD.WORD1" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.QUADWORD.WORD2" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.QUADWORD.WORD3" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.QUADWORD.WORD4" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:Super.THrzPosition">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.THrzPosition.hpLeft" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.THrzPosition.hpCenter" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.THrzPosition.hpRigth" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:Super.TVrtPosition">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.TVrtPosition.vpUpper" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.TVrtPosition.vpCenter" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.TVrtPosition.vpLower" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:Super.TControlPositon">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.TControlPositon.cpLeft" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.TControlPositon.cpCenter" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.TControlPositon.cpRigth" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:Super.TBooleanState">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.TBooleanState.bsNo" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.TBooleanState.bsYes" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.TBooleanState.bsUndefined" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:Super.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.@unitclass.UM_BASE" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.@unitclass.UM_ERROR_BASE" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.@unitclass.UM_COPY_ERROR" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.@unitclass.UM_TOOLTRAYICON" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.@unitclass.UM_TRAYRESETTOOLTIP" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.@unitclass.UM_SETTING_CHANGE" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.@unitclass.UM_PROGRESS_START" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.@unitclass.UM_INSTANCE_ANNOUNCE" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.@unitclass.UM_REFRESH" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.@unitclass.UM_APP_LOGIN" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.@unitclass.UM_TIMER_BASE" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.@unitclass.UM_PULSE" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.@unitclass.UM_TCP_MSG" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.@unitclass.UM_DESTROY" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.@unitclass._REAL_MIN_ABS" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.@unitclass._REAL_MAX_ABS" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.@unitclass._REAL_VAL_POS" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.@unitclass._REAL_VAL_NEG" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.@unitclass._STRING_SIZE" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.@unitclass.MaxInt64" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.@unitclass.MinInt64" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.@unitclass.MB_SPEAKER" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:Super.@unitclass.MAX_USERNAME_LENGTH" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Super.@unitclass.HeapMemoryFree()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Super.@unitclass.IIf(System.Boolean,System.string,System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Super.@unitclass.IIf(System.Boolean,System.Integer,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Super.@unitclass.IIfInt(System.Boolean,System.Integer,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Super.@unitclass.InRange(System.Extended,System.Extended,System.Extended)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Super.@unitclass.MaxVal(System.Double,System.Double)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Super.@unitclass.MinVal(System.Double,System.Double)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Super.@unitclass.ReturnAddress()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Super.@unitclass.SwapInstances(System.Pointer,System.Pointer,System.Word)" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:Super.Int16">
+      <property name="$shortcutReference" value="true" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:Super.PLong">
+      <property name="$shortcutReference" value="true" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:Super._REAL">
+      <property name="$shortcutReference" value="true" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:Super._GENERIC">
+      <property name="$shortcutReference" value="true" />
+    </reference>
   </view>
 </nodeSet>

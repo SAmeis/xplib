@@ -4,5 +4,15 @@
     <property name="$defaultDiagram" value="true" />
     <property name="$metaclass" value="Package Diagram" />
     <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:XPLibD14:XPClasses.TInterfaceImplementorObject">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:XPClasses.TInterfaceImplementorObject.FOwner" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPClasses.TInterfaceImplementorObject._Release()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPClasses.TInterfaceImplementorObject.Create()" />
+      <reference referencedUin="delphi:e_property:src:XPLibD14:XPClasses.TInterfaceImplementorObject.Owner" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:XPClasses.@unitclass">
+      <property name="$shortcutReference" value="true" />
+    </reference>
   </view>
 </nodeSet>

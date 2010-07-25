@@ -4,5 +4,79 @@
     <property name="$defaultDiagram" value="true" />
     <property name="$metaclass" value="Package Diagram" />
     <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:XPLibD14:BRRules.TBRRules">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:BRRules.TBRRules.CheckVerifierDigit(System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:BRRules.TBRRules.ProvinceCodeByName(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:BRRules.TBRRules.ProvinceNameByCode(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:BRRules.TBRRules.SetBRDefaultFormats()" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:BRRules.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_NAME_ACRE" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_CODE_ACRE" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_NAME_ALAGOAS" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_CODE_ALAGOAS" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_NAME_AMAPA" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_CODE_AMAPA" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_NAME_AMAZONAS" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_CODE_AMAZONAS" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_NAME_BAHIA" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_CODE_BAHIA" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_NAME_CEARA" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_CODE_CEARA" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_NAME_DISTRITO_FEDERAL" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_CODE_DISTRITO_FEDERAL" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_NAME_ESPIRITO_SANTO" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_CODE_ESPIRITO_SANTO" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_NAME_GOIAS" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_CODE_GOIAS" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_NAME_MARANHAO" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_CODE_MARANHAO" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_NAME_MATO_GROSSO" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_CODE_MATO_GROSSO" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_NAME_MATO_GROSSO_DO_SUL" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_CODE_MATO_GROSSO_DO_SUL" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_NAME_MINAS_GERAIS" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_CODE_MINAS_GERAIS" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_NAME_PARA" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_CODE_PARA" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_NAME_PARAIBA" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_CODE_PARAIBA" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_NAME_PARANA" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_CODE_PARANA" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_NAME_PERNAMBUCO" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_CODE_PERNAMBUCO" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_NAME_PIAUI" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_CODE_PIAUI" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_NAME_RIO_DE_JANEIRO" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_CODE_RIO_DE_JANEIRO" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_NAME_RIO_GRANDE_DO_NORTE" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_CODE_RIO_GRANDE_DO_NORTE" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_NAME_RIO_GRANDE_DO_SUL" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_CODE_RIO_GRANDE_DO_SUL" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_NAME_RONDONIA" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_CODE_RONDONIA" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_NAME_RORAIMA" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_CODE_RORAIMA" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_NAME_SANTA_CATARINA" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_CODE_SANTA_CATARINA" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_NAME_SAO_PAULO" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_CODE_SAO_PAULO" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_NAME_SERGIPE" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_CODE_SERGIPE" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_NAME_TOCANTINS" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROV_CODE_TOCANTINS" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROVINCES_NAME_CODE" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.BR_PROVINCES_CODE_NAME" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:BRRules.@unitclass.CPFVerifierDigit(System.Double)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:BRRules.@unitclass.CPFVerifierDigit(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:BRRules.@unitclass.CGCIsValid(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:BRRules.@unitclass.CPFIsValid(System.string)" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.EDIT_MASK_DATE" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.EDIT_MASK_CNPJ" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.EDIT_MASK_CPF" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BRRules.@unitclass.EDIT_MASK_PHONE_NUMBER" />
+    </reference>
   </view>
 </nodeSet>

@@ -90,21 +90,34 @@ type
         class function GetDateOrder(const DateFormat : string) : TXPDateOrder;
     end;
 
+    ///  <summary> Class for times conversions. Para o uso de algo do tipo DosDateTimeToFileTime usar a API do Windows.</summary>
+    ///  <remarks> Class for times conversions
+    ///    Para o uso de algo do tipo DosDateTimeToFileTime usar a API do Windows.
+    ///    Ver também as contidas na API Windows:
+    ///    CompareFileTime
+    ///    DosDateTimeToFileTime
+    ///    FileTimeToDosDateTime
+    ///    FileTimeToLocalFileTime
+    ///    FileTimeToSystemTime
+    ///    GetFileTime
+    ///    GetLocalTime
+    ///    GetSystemTime
+    ///    GetSystemTimeAdjustment
+    ///    GetSystemTimeAsFileTime
+    ///    GetTickCount
+    ///    GetTimeZoneInformation
+    ///    LocalFileTimeToFileTime
+    ///    SetFileTime
+    ///    SetLocalTime
+    ///    SetSystemTime
+    ///    SetSystemTimeAdjustment
+    ///    SetTimeZoneInformation
+    ///    SystemTimeToFileTime
+    ///    SystemTimeToTzSpecificLocalTime
+    ///    Classe baseada na Unit JclDateTime
+    ///    Revision: 30/11/2005 - Roger
+    ///   </remarks>
     TTimeConvert = class
-    {{
-    Class for times conversions
-
-    Para o uso de algo do tipo DosDateTimeToFileTime usar a API do Windows.
-
-    Ver também as contidas na API Windows:
-
-    CompareFileTime
-    DosDateTimeToFileTime    FileTimeToDosDateTime    FileTimeToLocalFileTime    FileTimeToSystemTime    GetFileTime    GetLocalTime    GetSystemTime    GetSystemTimeAdjustment    GetSystemTimeAsFileTime    GetTickCount    GetTimeZoneInformation    LocalFileTimeToFileTime    SetFileTime    SetLocalTime    SetSystemTime    SetSystemTimeAdjustment    SetTimeZoneInformation    SystemTimeToFileTime    SystemTimeToTzSpecificLocalTime
-
-    Classe baseada na Unit JclDateTime
-
-    Revision: 30/11/2005 - Roger
-    }
     private
         class procedure ResultCheck(Val : longbool);
     public
@@ -356,7 +369,7 @@ begin
     try
         for m := meJan to meDec do begin
             if m in Months then begin
-                Lst.Add(MonthOrdinalNames[m]);
+                Lst.Add(string(MonthOrdinalNames[m]));
             end;
         end;
         for i := 0 to Lst.Count - 1 do begin

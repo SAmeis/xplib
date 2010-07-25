@@ -4,5 +4,13 @@
     <property name="$defaultDiagram" value="true" />
     <property name="$metaclass" value="Package Diagram" />
     <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:XPLibD14:cripto.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:cripto.@unitclass.ASCIIDec(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:cripto.@unitclass.ASCIIEnc(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:cripto.@unitclass.CriptoFileByOffSet(System.string,System.string,System.Boolean)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:cripto.@unitclass.CriptoSpaceDecode(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:cripto.@unitclass.CriptoSpaceEncode(System.string)" />
+    </reference>
   </view>
 </nodeSet>

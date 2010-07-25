@@ -4,5 +4,15 @@
     <property name="$defaultDiagram" value="true" />
     <property name="$metaclass" value="Package Diagram" />
     <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:XPLibD14:ColorHnd.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:ColorHnd.@unitclass.DESCRIPTIVE_COLORS_BR" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:ColorHnd.@unitclass.DESCRIPTIVE_COLORS_RESTRICT_BR" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:ColorHnd.@unitclass.GetConstrastColor(Graphics.TColor)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:ColorHnd.@unitclass.NormalizeBlue(System.Integer,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:ColorHnd.@unitclass.NormalizeGreen(System.Integer,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:ColorHnd.@unitclass.NormalizeRed(System.Integer,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:ColorHnd.@unitclass.NormalizeSpectrum(System.Integer,System.Integer)" />
+    </reference>
   </view>
 </nodeSet>

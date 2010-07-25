@@ -4,5 +4,130 @@
     <property name="$defaultDiagram" value="true" />
     <property name="$metaclass" value="Package Diagram" />
     <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:XPLibD14:DateOper.TXPDateOrder">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.TXPDateOrder.doMDY" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.TXPDateOrder.doDMY" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.TXPDateOrder.doYMD" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:DateOper.TDiffDate">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.TDiffDate.DifYears" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.TDiffDate.DifMonths" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.TDiffDate.DifDays" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.TDiffDate.Signal" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:DateOper.TMonthEnum">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.TMonthEnum.meNone" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.TMonthEnum.meJan" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.TMonthEnum.meFev" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.TMonthEnum.meMar" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.TMonthEnum.meAbr" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.TMonthEnum.meMay" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.TMonthEnum.meJun" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.TMonthEnum.meJul" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.TMonthEnum.meAgo" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.TMonthEnum.meSet" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.TMonthEnum.meOct" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.TMonthEnum.meNov" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.TMonthEnum.meDec" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:DateOper.TDayPeriod">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.TDayPeriod.dpMorning" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.TDayPeriod.dpAfternoon" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.TDayPeriod.dpNight" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.TDayPeriod.dpDawn" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:DateOper.TTimeHnd">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.TTimeHnd.InternalStrToDate(System.string,System.string,ref@System.TDateTime)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.TTimeHnd.ScanDateStr(System.string,System.string,ref@System.Integer,ref@System.Integer,ref@System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.TTimeHnd.ExtractMask(System.string,System.string,System.Char,System.Integer,ref@System.Integer,System.Integer,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.TTimeHnd.ScanDate(System.string,System.string,ref@System.Integer,ref@System.Integer,ref@System.Integer,ref@System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.TTimeHnd.ScanNumber(System.string,System.Integer,ref@System.Integer,ref@System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.TTimeHnd.ScanChar(System.string,ref@System.Integer,System.Char)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.TTimeHnd.ScanBlanks(System.string,ref@System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.TTimeHnd.ScanToNumber(System.string,ref@System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.TTimeHnd.DayPeriod(System.TDateTime)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.TTimeHnd.StrToDateFmt(System.string,System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.TTimeHnd.MonthFromName(System.string,System.Byte)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.TTimeHnd.ExpandYear(System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.TTimeHnd.SetCenturyOffset(System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.TTimeHnd.GetDateOrder(System.string)" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:DateOper.TTimeConvert">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.TTimeConvert.ResultCheck(System.Boolean)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.TTimeConvert.DateTimeToLocalDateTime(System.TDateTime)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.TTimeConvert.DateTimeToFileTime(System.TDateTime)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.TTimeConvert.LocalDateTimeToFileTime(System.TDateTime)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.TTimeConvert.LocalDateTimeToDateTime(System.TDateTime)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.TTimeConvert.DosDateTimeToFileTime(System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.TTimeConvert.DosDateTimeToSystemTime(System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.TTimeConvert.FileTimeToDateTime(Windows._FILETIME)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.TTimeConvert.FileTimeToLocalDateTime(Windows._FILETIME)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.TTimeConvert.FileTimeToDosDateTime(Windows._FILETIME)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.TTimeConvert.SystemTimeToDosDateTime(Windows._SYSTEMTIME)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.TTimeConvert.FileTimeToSystemTime(Windows._FILETIME)" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:DateOper.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.@unitclass.DATE_FORMAT_SHORT_ORDERED" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.@unitclass.DATE_FORMAT_LONG_ORDERED" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.@unitclass.DATE_FORMAT_FULL_ORDERED" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.@unitclass.DaysOfWeekAbrev" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.@unitclass.MonthOfYearNames" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.@unitclass.FILETIME_BASE" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.@unitclass.FILETIME_STEP" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.@unitclass.MonthOrdinalNames" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.DaysInMonth(System.Integer,System.Integer,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.DeltaDate(System.TDateTime,System.TDateTime)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.DifDate(System.TDateTime)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.GetLocalBiasUTC()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.GetMonth(System.TDateTime)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.GetDay(System.TDateTime)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.GetYear(System.TDateTime)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.IncTime(System.TDateTime,System.Integer,System.Integer,System.Integer,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.AddDays(System.TDateTime,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.FirstMonth(System.TDateTime)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.FirstMonth(System.Word,System.Word)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.DaysGap(System.TDateTime,System.TDateTime)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.ActualSeconds()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.ActualMinutes()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.ActualHours()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.ActualYear()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.ActualMonth()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.ActualDay()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.ActualDayofWeek()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.ActualDayofWeekStr()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.DayofWeekStr(System.TDateTime)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.LastDayOfMonth(System.Word,System.Word)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.LastDateNotWeekendOfMonth(System.TDateTime)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.LastDateNotWeekendOfMonth(System.Word,System.Word)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.MonthIncrement(System.TDateTime,System.Word)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.MonthsFromBitMask(System.Integer,DateOper.TMonthEnum)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.MonthsToBitMask(set@DateOper.TMonthEnum,DateOper.TMonthEnum)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.MonthEnumListNames(set@DateOper.TMonthEnum)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.MonthEnumListNumbers(set@DateOper.TMonthEnum,System.Boolean)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.MonthLongNameToInt(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.MonthShortNameToInt(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.SecondsOfDay()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.SetLocalDateTime(System.TDateTime)" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.@unitclass.RsMakeUTCTime" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.@unitclass.RsDateConversion" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:DateOper.@unitclass.GlobalCenturyOffset" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:DateOper.@unitclass.ActualTimeStr()" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:DateOper.TDifDate">
+      <property name="$shortcutReference" value="true" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:DateOper.TMonthSet">
+      <property name="$shortcutReference" value="true" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:DateOper.TDayPeriods">
+      <property name="$shortcutReference" value="true" />
+    </reference>
   </view>
 </nodeSet>

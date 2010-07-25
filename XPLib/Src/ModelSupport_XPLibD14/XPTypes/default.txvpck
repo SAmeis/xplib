@@ -4,5 +4,38 @@
     <property name="$defaultDiagram" value="true" />
     <property name="$metaclass" value="Package Diagram" />
     <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:XPLibD14:XPTypes.TPoint2D">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:XPTypes.TPoint2D.X" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:XPTypes.TPoint2D.Y" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:XPTypes.TPoint3D">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:XPTypes.TPoint3D.X" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:XPTypes.TPoint3D.Y" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:XPTypes.TPoint3D.Z" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:XPTypes.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:XPTypes.@unitclass.XPPixelMaxCount" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:XPTypes.PLongWordArray">
+      <property name="$shortcutReference" value="true" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:XPTypes.TLongWordArray">
+      <property name="$shortcutReference" value="true" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:XPTypes.PXPRGBTripleArray">
+      <property name="$shortcutReference" value="true" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:XPTypes.TXPRGBTripleArray">
+      <property name="$shortcutReference" value="true" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:XPTypes.TPoint2DDynArray">
+      <property name="$shortcutReference" value="true" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:XPTypes.TPoint3DDynArray">
+      <property name="$shortcutReference" value="true" />
+    </reference>
   </view>
 </nodeSet>

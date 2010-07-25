@@ -4,5 +4,31 @@
     <property name="$defaultDiagram" value="true" />
     <property name="$metaclass" value="Package Diagram" />
     <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:XPLibD14:Grf_Hnd.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Grf_Hnd.@unitclass.ExtentCharSizeAverage(Graphics.TCanvas)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Grf_Hnd.@unitclass.CaptureBmpScreen(Graphics.TBitmap)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Grf_Hnd.@unitclass.MM2PixelHorizontal(Windows.HDC,System.Double)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Grf_Hnd.@unitclass.MM2PixelVertical(Windows.HDC,System.Double)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Grf_Hnd.@unitclass.PointInsideRect(Types.TPoint,Types.TRect)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Grf_Hnd.@unitclass.RectCenterOverRect(Types.TRect,Types.TRect)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Grf_Hnd.@unitclass.RectCenterInsideRect(Types.TRect,Types.TRect)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Grf_Hnd.@unitclass.RectCenterPoint(Types.TRect)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Grf_Hnd.@unitclass.RectFromPoints(Types.TPoint,Types.TPoint)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Grf_Hnd.@unitclass.RectGrow(Types.TRect,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Grf_Hnd.@unitclass.RectIntersectRect(Types.TRect,Types.TRect)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Grf_Hnd.@unitclass.RectIsInsideRect(Types.TRect,Types.TRect)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Grf_Hnd.@unitclass.RectIsIntersection(Types.TRect,Types.TRect)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Grf_Hnd.@unitclass.RectIsNull(Types.TRect)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Grf_Hnd.@unitclass.RectIsValid(Types.TRect)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Grf_Hnd.@unitclass.RectMake(System.Integer,System.Integer,System.Integer,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Grf_Hnd.@unitclass.RectMoveRelative(Types.TRect,System.Integer,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Grf_Hnd.@unitclass.RectMoveTo(Types.TRect,System.Integer,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Grf_Hnd.@unitclass.RectMoveCenterTo(Types.TRect,System.Integer,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Grf_Hnd.@unitclass.RectRescale(Types.TRect,System.Double,System.Double,System.Boolean)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Grf_Hnd.@unitclass.RectSetHeight(Types.TRect,System.Word,System.Boolean)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Grf_Hnd.@unitclass.RectSetWidth(Types.TRect,System.Word,System.Boolean)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:Grf_Hnd.@unitclass.Wallpaper(Graphics.TCanvas)" />
+    </reference>
   </view>
 </nodeSet>

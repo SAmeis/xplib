@@ -4,5 +4,48 @@
     <property name="$defaultDiagram" value="true" />
     <property name="$metaclass" value="Package Diagram" />
     <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:XPLibD14:WinReg32.TRegistryNT">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.AssignValuesToKey(Windows.HKEY)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.AssignValueToKey(Windows.HKEY,System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.IsRelative(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.TranslateKey(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.GetAccessMode()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.SetAccessMode(System.Cardinal)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.GetKey(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.Create()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.ClearValues()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.CloneKey(WinReg32.TRegistryNT)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.CopyValues(WinReg32.TRegistryNT)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.CreateKey(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.DeleteFullKey(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.DeleteFullSubKeys(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.DeleteFullValue(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.FullKeyExists(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.FullValueExists(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.GetKeyNames(Classes.TStrings)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.MoveKey(System.string,System.string,System.Boolean)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.OpenFullKey(System.string,System.Boolean)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.OpenKey(System.string,System.Boolean)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.ReadFullBinaryData(System.string,ref@,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.ReadFullBool(System.string,ref@System.Boolean)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.ReadFullDateTime(System.string,ref@System.TDateTime)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.ReadFullFloat(System.string,ref@System.Double)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.ReadFullInteger(System.string,ref@System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.ReadFullMultiSZ(System.string,ref@Classes.TStringList)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.ReadFullString(System.string,ref@System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.ReadMultiSZ(System.string,ref@Classes.TStringList)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.WriteFullBinaryData(System.string,ref@,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.WriteFullBool(System.string,System.Boolean,System.Boolean)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.WriteFullDateTime(System.string,System.TDateTime,System.Boolean)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.WriteFullFloat(System.string,System.Double,System.Boolean)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.WriteFullInteger(System.string,System.Integer,System.Boolean)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.TRegistryNT.WriteFullString(System.string,System.string,System.Boolean)" />
+      <reference referencedUin="delphi:e_property:src:XPLibD14:WinReg32.TRegistryNT.AccessMode" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:WinReg32.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:WinReg32.@unitclass.ReadError(System.string)" />
+    </reference>
   </view>
 </nodeSet>

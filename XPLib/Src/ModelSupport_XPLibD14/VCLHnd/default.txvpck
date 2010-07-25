@@ -4,5 +4,13 @@
     <property name="$defaultDiagram" value="true" />
     <property name="$metaclass" value="Package Diagram" />
     <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:XPLibD14:VCLHnd.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:VCLHnd.@unitclass.IntArrayIndexOf(System.Integer[],System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:VCLHnd.@unitclass.SetPropValueAsString(System.TObject,System.string,System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:VCLHnd.@unitclass.StrToOrdinalValue(TypInfo.TTypeInfo*,System.ShortString)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:VCLHnd.@unitclass.StrToSetValue(TypInfo.TTypeInfo*,System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:VCLHnd.@unitclass.TreeNodeFindChildText(ComCtrls.TTreeNode,System.string,System.Boolean)" />
+    </reference>
   </view>
 </nodeSet>

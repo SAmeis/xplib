@@ -4,5 +4,58 @@
     <property name="$defaultDiagram" value="true" />
     <property name="$metaclass" value="Package Diagram" />
     <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:XPLibD14:XPLists.TXPThreadStringList">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:XPLists.TXPThreadStringList.FList" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:XPLists.TXPThreadStringList.FLock" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TXPThreadStringList.GetCaseSensitive()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TXPThreadStringList.SetCaseSensitive(System.Boolean)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TXPThreadStringList.GetCount()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TXPThreadStringList.GetDuplicates()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TXPThreadStringList.SetDuplicates(Classes.TDuplicates)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TXPThreadStringList.GetSorted()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TXPThreadStringList.SetSorted(System.Boolean)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TXPThreadStringList.Create()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TXPThreadStringList.Destroy()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TXPThreadStringList.Add(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TXPThreadStringList.AddObject(System.string,System.TObject)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TXPThreadStringList.Clear()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TXPThreadStringList.CustomSort(Classes.TStringListSortCompare)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TXPThreadStringList.Delete(System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TXPThreadStringList.Exchange(System.Integer,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TXPThreadStringList.Find(System.string,ref@System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TXPThreadStringList.IndexOf(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TXPThreadStringList.Insert(System.Integer,System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TXPThreadStringList.InsertObject(System.Integer,System.string,System.TObject)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TXPThreadStringList.LockList()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TXPThreadStringList.Sort()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TXPThreadStringList.UnlockList()" />
+      <reference referencedUin="delphi:e_property:src:XPLibD14:XPLists.TXPThreadStringList.CaseSensitive" />
+      <reference referencedUin="delphi:e_property:src:XPLibD14:XPLists.TXPThreadStringList.Count" />
+      <reference referencedUin="delphi:e_property:src:XPLibD14:XPLists.TXPThreadStringList.Duplicates" />
+      <reference referencedUin="delphi:e_property:src:XPLibD14:XPLists.TXPThreadStringList.Sorted" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:XPLists.TMemoryPropertiesList">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:l_ast:src:XPLibD14:XPLists.TMemoryPropertiesList.Defaults" />
+      <reference referencedUin="delphi:l_ast:src:XPLibD14:XPLists.TMemoryPropertiesList.FDefaults" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:XPLists.TMemoryPropertiesList.FDefaults" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:XPLists.TMemoryPropertiesList.FEOL" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:XPLists.TMemoryPropertiesList.FValues" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TMemoryPropertiesList.Create()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TMemoryPropertiesList.Destroy()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TMemoryPropertiesList.Clear()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TMemoryPropertiesList.GetValue(System.string,System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TMemoryPropertiesList.Load(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TMemoryPropertiesList.Load(Classes.TStream)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TMemoryPropertiesList.Save(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TMemoryPropertiesList.Save(Classes.TStream)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:XPLists.TMemoryPropertiesList.SetValue(System.string,System.string)" />
+      <reference referencedUin="delphi:e_property:src:XPLibD14:XPLists.TMemoryPropertiesList.Defaults" />
+      <reference referencedUin="delphi:e_property:src:XPLibD14:XPLists.TMemoryPropertiesList.EOL" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:XPLists.@unitclass">
+      <property name="$shortcutReference" value="true" />
+    </reference>
   </view>
 </nodeSet>

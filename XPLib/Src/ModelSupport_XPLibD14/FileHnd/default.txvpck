@@ -4,5 +4,115 @@
     <property name="$defaultDiagram" value="true" />
     <property name="$metaclass" value="Package Diagram" />
     <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:XPLibD14:FileHnd.TEnumFileParam">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:FileHnd.TEnumFileParam.FErrorMsg" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:FileHnd.TEnumFileParam.FFileName" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.TEnumFileParam.SetErrorMsg(System.Char*)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.TEnumFileParam.SetFileName(System.Char*)" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:FileHnd.TEnumFileParam.Data" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:FileHnd.TEnumFileParam.ErrorCode" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:FileHnd.TEnumFileParam.SR" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.TEnumFileParam.Create()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.TEnumFileParam.Destroy()" />
+      <reference referencedUin="delphi:e_property:src:XPLibD14:FileHnd.TEnumFileParam.ErrorMsg" />
+      <reference referencedUin="delphi:e_property:src:XPLibD14:FileHnd.TEnumFileParam.FileName" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:FileHnd.TFileHnd">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.TFileHnd.BuildVersionInfo(System.string,ref@System.Word,ref@System.Word,ref@System.Word,ref@System.Word)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.TFileHnd.ConcatPath(System.string[])" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.TFileHnd.CopyDir(SysUtils.TFileName,SysUtils.TFileName)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.TFileHnd.CreateTempFileName(System.Char*,System.Byte,System.Boolean)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.TFileHnd.ExpandFilename(System.string,System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.TFileHnd.FileSize(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.TFileHnd.ForceFileExtension(System.string,System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.TFileHnd.ForceFilename(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.TFileHnd.GetFileSizeEx(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.TFileHnd.MakeDefaultFileExtension(System.string,System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.TFileHnd.ParentDir(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.TFileHnd.ParentDir(System.string,System.Boolean)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.TFileHnd.SlashRem(System.string,System.Boolean)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.TFileHnd.SlashAdd(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.TFileHnd.VersionInfo(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.TFileHnd.IsValidFilename(System.string,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.TFileHnd.RmDir(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.TFileHnd.NextFamilyFilename(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.TFileHnd.FileTimeToDateTime(Windows._FILETIME)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.TFileHnd.FileTimeProperties(System.Cardinal,ref@System.TDateTime,ref@System.TDateTime,ref@System.TDateTime)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.TFileHnd.FileTimeProperties(System.string,ref@System.TDateTime,ref@System.TDateTime,ref@System.TDateTime)" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:FileHnd.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:FileHnd.@unitclass.faAllFiles" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:FileHnd.@unitclass.INVALID_FILE_NAME_CHARS1_STR" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:FileHnd.@unitclass.INVALID_FILE_NAME_CHARS2_STR" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:FileHnd.@unitclass.INVALID_FILE_NAME_CHARS3_STR" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:FileHnd.@unitclass.INVALID_FILENAME_CANONIC_CHARS" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:FileHnd.@unitclass.INVALID_FILENAME_LINUX_EXT" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:FileHnd.@unitclass.INVALID_FILENAME_CHARS_HIGH_CRITIC" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:FileHnd.@unitclass.INVALID_FILENAME_CHARS_MEDIUM_CRITIC" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:FileHnd.@unitclass.INVALID_FILENAME_CHARS_LOW_CRITIC" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:FileHnd.@unitclass.IDEAL_FILE_BLOCK_SIZE" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:FileHnd.@unitclass.EOL_DOS" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.__DeleteFile(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.__FileExists(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.AddKeyGenFile(System.string,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.ConcatPath(System.string[])" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.CountMaskFilesMatch(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.CreateTempFileName(System.Char*,System.Byte)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.DeleteMaskedFiles(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.Deltree(System.string,System.Boolean,System.Boolean,System.Boolean,System.Boolean)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.DirFileList(Classes.TStrings,System.string,System.string[])" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.DirectoryList(System.string,Classes.TStringList)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.EnumFiles(System.string,System.string,FileHnd.TEnumFileParam,FileHnd.TEnumFileProc)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.EnumFiles(System.string,Classes.TList,FileHnd.TEnumFileParam,FileHnd.TEnumFileProc)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.EnumFiles(System.string,Classes.TList,System.Integer,System.Integer,FileHnd.TEnumFileParam,FileHnd.TEnumFileProc)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.EnumFiles(System.string,System.string,System.Integer,System.Integer,FileHnd.TEnumFileParam,FileHnd.TEnumFileProc)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.EnumFilesDir(System.string,System.string,FileHnd.TEnumFileParam,FileHnd.TEnumFileProc)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.EvalPathName(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.ExtractFileDrive(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.ExtractFileExtension(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.ExtractUNCResource(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.ExtractRootResource(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.FileCopy(System.string,System.string,System.Boolean)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.FileCopyEx(System.string,System.string,System.Boolean)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.FileCopyMaskDir(System.string,System.string,System.Boolean,System.Boolean)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.FileMoveMaskDir(System.string,System.string,System.Boolean,System.Boolean,System.Boolean)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.FileNameInvalidChars(System.Integer,System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.FileMaskSetAttribs(System.string,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.FileSize_(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.FileShortName(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.FileTextCountLines(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.FileTextCountSubStr(System.string,System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.FileXCopy(System.string,System.string,System.Boolean,System.Boolean)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.FindFirstChildDir(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.FindFirstChildFile(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.GetFloppiesList()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.GetFileSize(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.GetKeyGenFileValue(System.string,ref@System.Integer,ref@System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.GetTempDir()" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.IsUNCName(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.IsRootDir(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.ListDirFilesNames(System.string,System.string,System.Integer,System.Boolean,Classes.TStrings)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.LongToShortFileName(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.NetFileCopy(System.string,System.string,System.Boolean)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.MkDirEx(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.ParentDir(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.PathNameLong(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.RemoveFileExtension(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.RmDirEx(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.SetFileTimeProperties(System.string,ref@System.TDateTime,ref@System.TDateTime,ref@System.TDateTime)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.SetFileTimeProperties(System.Cardinal,ref@System.TDateTime,ref@System.TDateTime,ref@System.TDateTime)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.SetKeyGenFileValue(System.string,System.Integer,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.ShortToLongFileName(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.SlashRem(System.string,System.Boolean)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.SlashSep(System.string,System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.SpaceFree(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:FileHnd.@unitclass.ConvSearchMaskArg(System.string)" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:XPLibD14:FileHnd.TEnumFileProc">
+      <property name="$shortcutReference" value="true" />
+    </reference>
   </view>
 </nodeSet>

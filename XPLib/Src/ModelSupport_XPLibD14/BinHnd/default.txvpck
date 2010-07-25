@@ -4,5 +4,19 @@
     <property name="$defaultDiagram" value="true" />
     <property name="$metaclass" value="Package Diagram" />
     <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:XPLibD14:BinHnd.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:XPLibD14:BinHnd.@unitclass.HEX_DIGITS" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:BinHnd.@unitclass.__CharHexa(System.Char)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:BinHnd.@unitclass.__StrByte(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:BinHnd.@unitclass.__StrHexa(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:BinHnd.@unitclass.Byte2Hexa(System.Byte)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:BinHnd.@unitclass.Long2Hexa(System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:BinHnd.@unitclass.StrBin2Word(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:BinHnd.@unitclass.StrHex2Byte(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:BinHnd.@unitclass.StrHex2Long(System.string)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:BinHnd.@unitclass.Word2Hexa(System.Word)" />
+      <reference referencedUin="delphi:e_method:src:XPLibD14:BinHnd.@unitclass.Word2StrBin(System.Word)" />
+    </reference>
   </view>
 </nodeSet>
