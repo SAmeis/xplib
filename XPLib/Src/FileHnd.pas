@@ -104,13 +104,13 @@ function DirectoryList(const DirMask : string; FList : TStringList) : TStringLis
 
 //Chama um callback para todos os arquivos abaixo do diretorio dado enquanto o retorno for 0
 function EnumFiles(const Directory, Mask : string; FileParam : TEnumFileParam; FileProc : TEnumFileProc) : Integer;
-    platform; overload;
+    overload;
 //Chama um callback para todos os arquivos abaixo do diretorio dado enquanto o retorno for 0
 function EnumFiles(const Directory : string; MaskList : TList; FileParam : TEnumFileParam; FileProc : TEnumFileProc) : Integer;
-    platform; overload;
+    overload;
 //Chama um callback para todos os arquivos abaixo do diretorio dado enquanto o retorno for 0
 function EnumFiles(const Directory : string; MaskList : TList; IncludeAttrs, ExcludeAttrs : Integer;
-    FileParam : TEnumFileParam; FileProc : TEnumFileProc) : Integer; platform; overload;
+    FileParam : TEnumFileParam; FileProc : TEnumFileProc) : Integer; overload;
 //Chama um callback para todos os arquivos abaixo do diretorio dado enquanto o retorno for 0
 function EnumFiles(const Directory, Mask : string; IncludeAttrs, ExcludeAttrs : Integer;
     FileParam : TEnumFileParam; FileProc : TEnumFileProc) : Integer; platform; overload;
@@ -152,7 +152,7 @@ function FileTextCountSubStr(const FileName, SubStr : string) : longint;
 //Copia todos os arquivos da arvore fonte para a arvore destino
 function FileXCopy(const Source, Dest : string; Over, IncHiddens : boolean) : boolean; platform;
 //Retorna o primeiro diretorio filho do diretorio dado
-function FindFirstChildDir(const DirName : string) : string; platform;
+function FindFirstChildDir(const DirName : string) : string;
 //Retorna o primeiro arquivo filho de um subdiretorio
 function FindFirstChildFile(const DirName : string) : string;
 //Retorna lista de drives removiveis
@@ -348,6 +348,10 @@ end;
 function CountMaskFilesMatch(const PathMask : string) : Integer;
 {{
 Conta a quantidade de arquivos que obedecem uma dada mascara
+
+Revision - 20100728 - Roger
+
+Removido faVolumeID da mascara de atributos
 }
 var
     SRec :   TSearchRec;
@@ -357,7 +361,7 @@ begin
     Status := FindFirst(PathMask, faDirectory, SRec);
     if Status = 0 then begin
         while Status = 0 do begin
-            if (SRec.Attr and (faAnyFile - faDirectory - faVolumeID) <> 0) then begin
+            if (SRec.Attr and (faAnyFile - faDirectory ) <> 0) then begin
                 Inc(Result);
             end;
             Status := FindNext(SRec);
@@ -619,6 +623,9 @@ end;
 function DirectoryList(const DirMask : string; FList : TStringList) : TStringList;
 {{
 Retorna uma lista com os nomes dos arquivos ( Omite sub-pastas ) apenas em strings relativas ao diretorio passado
+
+Revision - 20100728 - Roger
+faVolumeID removido da mascara de atributos
 }
 var
     SRec :    TSearchRec;
@@ -632,7 +639,7 @@ begin
             Result.Clear;
             DirName := ExtractFilePath(DirMask);
             while Status = 0 do begin
-                if (SRec.Attr and (faAnyFile - faDirectory - faVolumeID)) <> 0 then begin
+                if (SRec.Attr and (faAnyFile - faDirectory)) <> 0 then begin
                     Result.Add(DirName + SRec.Name);
                 end;
                 Status := FindNext(SRec);
@@ -649,6 +656,9 @@ function EnumFiles(const Directory : string; MaskList : TList; IncludeAttrs, Exc
     FileParam : TEnumFileParam; FileProc : TEnumFileProc) : Integer; platform; overload;
 {{
 For each file existing at Directory that obeys the rules given by MaskList, IncludeAttrs, ExcludeAttrs the FileProc will be called. FileParam will be filled with the file information and repassed to FileProc.
+
+Revision - 20100728 - Roger
+faVolumeID removido da mascara de atributos
 }
 var
     SR : TSearchRec;
@@ -657,7 +667,7 @@ begin
     Result := ERROR_SUCCESS;
     SetLastError(Result);
     try
-        if FindFirst(Directory + PathDelim + '*.*', faAnyFile - faVolumeID, SR) = 0 then begin //Busca qualquer arquivo
+        if FindFirst(Directory + PathDelim + '*.*', faAnyFile, SR) = 0 then begin //Busca qualquer arquivo
             try
                 repeat
                     if ((SR.Attr and faDirectory) <> 0) then begin // Tratamento diferente para diretorios
@@ -753,7 +763,9 @@ function EnumFiles(const Directory : string; MaskList : TList; FileParam : TEnum
 Chama um callback para todos os arquivos abaixo do diretorio dado enquanto o retorno for 0
 }
 begin
+     {$WARN SYMBOL_PLATFORM OFF}
     Result := EnumFiles(Directory, MaskList, faAllFiles { inclui todos }, 0 { Exclui nenhum }, FileParam, FileProc);
+    {$WARN SYMBOL_PLATFORM ON}
 end;
 
 function EnumFiles(const Directory, Mask : string; FileParam : TEnumFileParam; FileProc : TEnumFileProc) : Integer;
@@ -1087,6 +1099,10 @@ end;
 function FileCopyMaskDir(const MaskSourceDir, DestDir : string; Over, IncHiddens : boolean) : boolean;
 {{
 Copia arquivos de uma dada mascara para um dado diretorio
+
+Revision - 20100728 - Roger
+faVolumeID removido da mascara de atributos
+
 }
 var
     Rec :     TSearchRec;
@@ -1096,9 +1112,9 @@ var
 begin
     Path := ExtractFilePath(MaskSourceDir);
     if IncHiddens then begin
-        Attrib := faAnyFile - faDirectory - faVolumeId;
+        Attrib := faAnyFile - faDirectory;
     end else begin
-        Attrib := faAnyFile - faHidden - faDirectory - faVolumeId;
+        Attrib := faAnyFile - faHidden - faDirectory;
     end;
     Result := False;
     if FindFirst(MaskSourceDir, Attrib, Rec) <> 0 then begin {Nenhum arquivo}
@@ -1133,6 +1149,9 @@ end;
 function FileMaskSetAttribs(const FileMask : string; Attr : Integer) : Integer;
 {{
 Seta os atributos para os arquivos que obedecem a mascara passada
+
+Revision - 20100728 - Roger
+faVolumeID removido da mascara de atributos
 }
 var
     Rec :     TSearchRec;
@@ -1140,7 +1159,7 @@ var
     EndList : boolean;
 begin
     Path := ExtractFilePath(FileMask);
-    if FindFirst(FileMask, faAnyFile - faDirectory - faVolumeId, Rec) <> 0 then begin {Nenhum arquivo}
+    if FindFirst(FileMask, faAnyFile - faDirectory, Rec) <> 0 then begin {Nenhum arquivo}
         Result := ERROR_FILE_NOT_FOUND; { A inexistencia da origem implica em falha}
         Exit;
     end;
@@ -1291,6 +1310,7 @@ Retorna o primeiro diretorio filho do diretorio dado
 var
     SR : TSearchRec;
 begin
+     {$WARN SYMBOL_PLATFORM OFF}
     Result := EmptyStr;
     //Localiza qq coisa inicialmente
     if FindFirst(DirName + PathDelim + '*.*', faDirectory + faHidden + faReadOnly + faSysFile, SR) = 0 then
@@ -1309,6 +1329,7 @@ begin
             FindClose(SR);
         end;
     end;
+    {$WARN SYMBOL_PLATFORM ON}
 end;
 
 function FindFirstChildFile(const DirName : string) : string;

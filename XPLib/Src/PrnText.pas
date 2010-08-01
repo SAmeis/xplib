@@ -257,8 +257,11 @@ Imprime string para a impressora direcionada formatando antes seu conteudo.
 
 Revision: 1/8/2005
 }
+var
+   s : string;
 begin
-    Result := Self.ToPrnLn(DosString(SysUtils.Format(pFrmStr, pArgs)));
+     s:=string(pFrmStr);
+    Result := Self.ToPrnLn(DosString(SysUtils.Format(s, pArgs)));
 end;
 
 { TPrnText }

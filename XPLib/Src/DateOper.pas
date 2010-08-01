@@ -906,7 +906,7 @@ begin
     ScanChar(S, Pos, DateSeparator);
     ScanBlanks(S, Pos);
     if SysLocale.FarEast and (System.Pos('ddd', ShortDateFormat) <> 0) then begin { ignore trailing text }
-        if ShortTimeFormat[1] in ['0'..'9'] then { stop at time digit } begin
+        if CharInSet(ShortTimeFormat[1] , ['0'..'9'] ) then { stop at time digit } begin
             ScanToNumber(S, Pos);
         end else { stop at time prefix } begin
             repeat
@@ -950,7 +950,7 @@ begin
     I := Pos;
     N := 0;
     while (I <= Length(S)) and (longint(I - Pos) < MaxLength) and
-        (S[I] in ['0'..'9']) and (N < 1000) do begin
+        CharInSet(S[I] , ['0'..'9']) and (N < 1000) do begin
         N := N * 10 + (Ord(S[I]) - Ord('0'));
         Inc(I);
     end;

@@ -12,7 +12,7 @@ uses
 
 function  IntArrayIndexOf( Arr : array of integer; Value : integer ) : integer;
 procedure SetPropValueAsString( Instance : TObject; const PropName, PropValue : string );
-function  StrToOrdinalValue( ATypeInfo : PTypeInfo; const EnumValue : ShortString): longint;
+function  StrToOrdinalValue( ATypeInfo : PTypeInfo; const EnumValue : String): longint;
 function  StrToSetValue(SetInfo: PTypeInfo; const Value: string) : TIntegerSet;
 
 function TreeNodeFindChildText( Parent : TTreeNode; const Text : string; IgnoreCase : boolean = True ) : TTreeNode;
@@ -92,7 +92,7 @@ begin
    end;
 end;
 
-function StrToOrdinalValue( ATypeInfo : PTypeInfo; const EnumValue : ShortString): longint;
+function StrToOrdinalValue( ATypeInfo : PTypeInfo; const EnumValue : String): longint;
 //----------------------------------------------------------------------------------------------------------------------
 //Retorna o indice do elemento da numeracao dada a string que o compoe
 //*** USO
@@ -116,7 +116,7 @@ begin
    end;
    if Result = -1 then begin
        try
-           E:=Exception.Create( 'Erro lendo valor da enumeração ' + ATypeInfo^.Name);
+           E:=Exception.Create( 'Erro lendo valor da enumeração ' + string(ATypeInfo^.Name));
        except
            raise Exception.Create( INV_TYPE_PARAM );
        end;
