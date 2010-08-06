@@ -59,15 +59,16 @@ type
     end;
 
 type
-    TXPBaseThread = class(TThread)
-    private
-        FMaxTerminateTime : cardinal;
-        FIsAlive : boolean;
-    protected
-        procedure DoTerminate(); override;
-    public
-        procedure Terminate;
-        procedure Resume; virtual;
+	 TXPBaseThread = class(TThread)
+	 private
+		 FMaxTerminateTime : cardinal;
+		 FIsAlive : boolean;
+	 protected
+		 procedure DoTerminate(); override;
+	 public
+		 procedure Terminate;
+		 procedure Start; virtual;
+		 procedure Resume; virtual; deprecated;
         function WaitFor(MaxTime : cardinal) : longword; overload;
         property MaxTerminateTime : cardinal read FMaxTerminateTime write FMaxTerminateTime;
         {{
@@ -302,16 +303,28 @@ begin
     inherited;
 end;
 
-procedure TXPBaseThread.Resume;
+procedure TXPBaseThread.Start;
+begin
+	 Self.FIsAlive := True;
+	{$IF CompilerVersion >= 21.00}
+	inherited Start;
+	{$ELSE}
+	inherited Resume;
+	{$IFEND}
+end;
+
+procedure TXPBaseThread.Resume; deprecated;
 {{
  Indica que o thread esta "vivo" a partir de agora
- 
+
+ Revision - 20100806 - roger
+ Método deprecated - Usar Start apenas, idem para Suspend
+
  Revision - 20/5/2009 - roger
  Método transformado para virtual de modo que se possa preparar ambiente para a execução de classe especializada.
 }
 begin
-    Self.FIsAlive := True;
-    inherited;
+	Self.Start;
 end;
 
 procedure TXPBaseThread.Terminate;
@@ -325,8 +338,12 @@ begin
     inherited; //Atualmente pela VCL apenas seta Self.Terminated para True, indicando ao thread que ele deve ser finalizado
     if ((Self.FMaxTerminateTime > 0) and (GetCurrentThreadID() <> Self.ThreadID)) then begin
 
-        while (Self.Suspended) do begin
-            Self.Resume;
+		 while (Self.Suspended) do begin
+		 	{$IF CompilerVersion >= 21.00}
+			Self.Start;
+			{$ELSE}
+			 Self.Resume;
+			{$IFEND}
         end;
 
         if (Self.FMaxTerminateTime = Windows.INFINITE) then begin

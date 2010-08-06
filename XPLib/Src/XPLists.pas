@@ -518,9 +518,9 @@ var
 begin
  BufferStream := TBufferedStringStream.Create(Stream);
  try
-     while ( not BufferStream.EoS) do begin
-         Line := BufferStream.ReadLine();
-         Line := Str_Pas.AllTrim(Line);
+	  while ( not BufferStream.EoS) do begin
+		  Line := string(BufferStream.ReadLine());
+		  Line := Str_Pas.AllTrim(Line);
          p := Pos('=', Line);
          ch := Str_Pas.GetIChar(Line, 1);
          if (CharInSet( ch,  [#0, '#', '!']) ) then begin

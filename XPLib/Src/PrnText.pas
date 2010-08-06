@@ -25,7 +25,7 @@ type
         FPrnName : AnsiString;
         FDataType : AnsiString;
 
-        function GetOutFilePath : string;
+		 function GetOutFilePath : string;
         procedure SetOutFilePath(const Value : string);
         function GetPrintDestiny : TPrnDestiny;
         procedure SetPrintDestiny(const Value : TPrnDestiny);
@@ -44,11 +44,11 @@ type
         function ToPrnLn(const pText : string) : boolean;
         function ToPrnFrm(const pFrmStr : string; const pArgs : array of const) : boolean;
         function ToPrnFrmC(const pFrmStr : AnsiString; const pArgs : array of const) : boolean;
-        property OutFilePath : string read GetOutFilePath write SetOutFilePath;
+		 property OutFilePath : string read GetOutFilePath write SetOutFilePath;
       {{
        Caminho do arquivo para impressгo.
       }
-        property PrinterName : AnsiString read FPrnName;
+		 property PrinterName : AnsiString read FPrnName;
       {{
        Nome da impressora.
       }
@@ -258,10 +258,10 @@ Imprime string para a impressora direcionada formatando antes seu conteudo.
 Revision: 1/8/2005
 }
 var
-   s : string;
+	s : string;
 begin
-     s:=string(pFrmStr);
-    Result := Self.ToPrnLn(DosString(SysUtils.Format(s, pArgs)));
+	s:=string(pFrmStr);
+	Result := Self.ToPrnLn(string(DosString(SysUtils.Format(s, pArgs))));
 end;
 
 { TPrnText }
@@ -302,12 +302,12 @@ begin
     end;
     FPrnDestiny := pdSpool;
     if (Trim(string(pDataType)) <> EmptyStr) then begin
-        FDataType := Trim(string(pDataType));
+		 FDataType := Trim(string(pDataType));
     end else begin
         FDataType := 'RAW';
     end;
     FPrnFile     := nil;
-    FPrnFilePath := EmptyStr;
+	 FPrnFilePath := AnsiString(EmptyStr);
 end;
 
 procedure TPrnText.StartPrint(const pNameDoc : AnsiString; pCopies : Integer);
@@ -338,9 +338,9 @@ begin
         new(pdi);  { TODO -oRoger -cLIB : Tentar usar var local da pilha para alimentar este parametro da API do Spool do Windows }
         with pdi^ do begin
             pDocName := PAnsiChar(pNameDoc);
-            if (FPrnFilePath = EmptyStr) then begin
+			 if (FPrnFilePath = AnsiString(EmptyStr)) then begin
                 pOutputFile := nil;
-            end else begin
+			 end else begin
                 pOutputFile := PAnsiChar(FPrnFilePath);
             end;
             pDatatype := PAnsiChar(FDataType);
@@ -432,7 +432,7 @@ end;
 
 function TPrnText.GetOutFilePath : string;
 begin
-    Result := FPrnFilePath;
+    Result := string(Self.FPrnFilePath);
 end;
 
 function TPrnText.GetPrintDestiny : TPrnDestiny;
@@ -442,17 +442,17 @@ end;
 
 procedure TPrnText.SetOutFilePath(const Value : string);
 begin
-    if (Trim(Value) <> EmptyStr) then begin
+	 if (Trim(Value) <> EmptyStr) then begin
         FPrnFilePath := Trim(Value);
     end else begin
-        raise Exception.CreateFmt('Caminho do Arquivo Invбlido: "%s".', [Value]);
+		 raise Exception.CreateFmt('Caminho do Arquivo Invбlido: "%s".', [Value]);
     end;
 end;
 
 procedure TPrnText.SetPrintDestiny(const Value : TPrnDestiny);
 begin
     if (Value = pdFile) or (Value = pdBoth) then begin
-        if (FPrnFilePath <> EmptyStr) then begin
+		 if (FPrnFilePath <> AnsiString(EmptyStr)) then begin
             if (not Assigned(FPrnFile)) then begin
                 FPrnFile := TStringList.Create;
             end;
@@ -473,24 +473,24 @@ Converte a cadeia para o mapeamento de caracteres local.
 Revision: 17/8/2006 - Roger  
 }
 begin
-    SetLength(Result, Length(AnsiStr));
-    if Length(Result) > 0 then begin
-        AnsiToOem(PAnsiChar(AnsiStr), PAnsiChar(Result));
-    end;
-    //comantario original do autor russo
-    //OemToAnsi преобразует 15->253, а AnsiToOem 253->15 не делает, поэтому теряется код сжатия (замечено на русской Windows 95)
-    Result := ReplaceStr(Result, chr(253), chr(15));
+		SetLength(Result, Length(AnsiStr));
+		if Length(Result) > 0 then begin
+				AnsiToOem(PAnsiChar(AnsiStr), PAnsiChar(Result));
+		end;
+		//comantario original do autor russo
+		//OemToAnsi преобразует 15->253, а AnsiToOem 253->15 не делает, поэтому теряется код сжатия (замечено на русской Windows 95)
+		Result := ReplaceStr(string(Result), chr(253), chr(15));
 end;
 
 class function TPrnText.WinString(const str : AnsiString) : AnsiString;
 begin
-    if (str <> EmptyStr) then begin
+    if (str <> AnsiString(EmptyStr)) then begin
         CharToOemA(PAnsiChar(str), PAnsiChar(str));
         ///OemToAnsi(PAnsiChar(str), PAnsiChar(str));
         ///Foi removido para o uso de CharToOEM
         Result := str;
     end else begin
-        Result := EmptyStr;
+        Result := AnsiString(EmptyStr);
     end;
 end;
 
