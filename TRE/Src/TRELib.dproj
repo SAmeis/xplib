@@ -64,6 +64,7 @@
 			<DCCReference Include="designide.dcp"/>
 			<DCCReference Include="TREConsts.pas"/>
 			<DCCReference Include="TREUtils.pas"/>
+			<DCCReference Include="TREZones.pas"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>

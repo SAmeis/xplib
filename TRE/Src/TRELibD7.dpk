@@ -38,6 +38,7 @@ requires
 
 contains
   TREConsts in 'TREConsts.pas',
-  TREUtils in 'TREUtils.pas';
+  TREUtils in 'TREUtils.pas',
+  TREZones in 'TREZones.pas';
 
 end.
