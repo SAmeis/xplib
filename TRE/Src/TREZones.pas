@@ -6,12 +6,26 @@ uses
     contnrs, TREConsts, TREUtils;
 
 type
-    TTREZone = class
+    TTRECentral = class;
+
+    TTREZone = class(TObject)
     private
-        FId : Integer;
+        FId :      Integer;
+        FCentral : TTRECentral;
+        function GetCentral : TTRECentral;
+        function GetCentralIndex : Integer;
+        procedure SetCentral(const Value : TTRECentral);
+    protected
+        procedure BeforeDestruction; override;
     public
         constructor Create(AZoneId : Integer); virtual;
         property Id : Integer read FId;
+        ///  <summary> Retorna ordem da zona dentro da central, caso haja uma definida para a mesma </summary>
+        ///  <remarks>
+        ///  Caso não haja central pai para esta zona -1 será retornado
+        ///  </remarks>
+        property CentralIndex : Integer read GetCentralIndex;
+        property Central : TTRECentral read GetCentral write SetCentral;
     end;
 
     TTRECentral = class
@@ -19,18 +33,48 @@ type
         FId :       Integer;
         FZoneList : TObjectList;
         function GetZones(index : Integer) : TTREZone;
-	 function GetPrimaryZone: TTREZone;
-    procedure SetPrimaryZone(const Value: TTREZone);
-	 public
-		 constructor Create(ACentralId : Integer); virtual;
+        function GetPrimaryZone : TTREZone;
+        ///  <summary> Ajusta a zona dada como sendo a zona primária </summary>
+        procedure SetPrimaryZone(const Value : TTREZone);
+    function GetCount: integer;
+    public
+        constructor Create(ACentralId : Integer); virtual;
 		 property Id : Integer read FId;
-		 property Zones[index : Integer] : TTREZone read GetZones;
-		 property PrimaryZone : TTREZone read GetPrimaryZone write SetPrimaryZone;
-		 function Add(Zone : TTREZone) : Integer;
-		 function isPertinent(ZoneId : integer) : boolean;
+		 property Count : integer read GetCount;
+        property Zones[index : Integer] : TTREZone read GetZones;
+        property PrimaryZone : TTREZone read GetPrimaryZone write SetPrimaryZone;
+        ///  <summary> Adiciona uma zona a lista/central </summary>
+        ///  <remarks> Impede a repetição das zonas por instância </remarks>
+        function Add(Zone : TTREZone) : Integer;
+        ///  <summary>Indica se a zona passada pertence ao conjunto(central)</summary>
+        ///  <remarks>
+        ///      Indica se a zona passada pertence ao conjunto(central)
+        ///     Informa-se o identificar da zona
+        ///  </remarks>
+        function isPertinent(ZoneId : Integer) : boolean;
+        function GetZoneById(ZoneId : Integer) : TTREZone;
+    end;
+
+    TTRECentralMapping = class
+    private
+        FCentralList : TObjectList;
+    public
+        constructor Create; virtual;
+        destructor Destroy; override;
+        procedure LoadHardCoded;
+        function GetZoneById(ZoneId : Integer) : TTREZone;
     end;
 
 implementation
+
+procedure TTREZone.BeforeDestruction;
+begin
+    if Assigned(Self.FCentral) then begin
+        Self.FCentral.FZoneList.Remove(Self);
+        Self.FCentral := nil;
+    end;
+    inherited;
+end;
 
 constructor TTREZone.Create(AZoneId : Integer);
 begin
@@ -40,18 +84,46 @@ end;
 
 function TTRECentral.Add(Zone : TTREZone) : Integer;
 begin
-	 Result := Self.FZoneList.Add(Zone);
+    Result := Self.FZoneList.IndexOf(Zone);
+    if Result < 0 then begin
+        Result := Self.FZoneList.Add(Zone);
+        Zone.FCentral := Self;
+    end;
 end;
 
 constructor TTRECentral.Create(ACentralId : Integer);
 begin
-	 inherited Create;
-	 Self.FId := ACentralId;
+    inherited Create;
+    Self.FId := ACentralId;
+    Self.FZoneList := TObjectList.Create;
+    Self.FZoneList.OwnsObjects := False;
 end;
 
-function TTRECentral.GetPrimaryZone: TTREZone;
+function TTRECentral.GetCount: integer;
 begin
+	result := Self.FZoneList.Count;
+end;
 
+function TTRECentral.GetPrimaryZone : TTREZone;
+begin
+    if (Self.FZoneList.Count > 0) then begin
+        Result := TTREZone(Self.FZoneList.Items[0]);
+    end else begin
+        Result := nil;
+    end;
+end;
+
+function TTRECentral.GetZoneById(ZoneId : Integer) : TTREZone;
+var
+    x : Integer;
+begin
+    Result := nil;
+    for x := 0 to Self.FZoneList.Count - 1 do begin
+        if TTREZone(Self.FZoneList.Items[x]).Id = ZoneId then begin
+            Result := TTREZone(Self.FZoneList.Items[x]);
+            Exit;
+        end;
+    end;
 end;
 
 function TTRECentral.GetZones(index : Integer) : TTREZone;
@@ -59,17 +131,145 @@ begin
     Result := TTREZone(Self.FZoneList.Items[index]);
 end;
 
-function TTRECentral.isPertinent(ZoneId: integer): boolean;
+function TTRECentral.isPertinent(ZoneId : Integer) : boolean;
+var
+    x : Integer;
 begin
-
+    Result := False;
+    for x := 0 to Self.FZoneList.Count - 1 do begin
+        if (TTREZone(Self.FZoneList.Items[x]).FId = ZoneId) then begin
+            Result := True;
+            Exit;
+        end;
+    end;
 end;
 
-procedure TTRECentral.SetPrimaryZone(const Value: TTREZone);
+procedure TTRECentral.SetPrimaryZone(const Value : TTREZone);
 var
-	pivot : TTREZone;
-	pivotIndex : integer;
+    current, pivot : TTREZone;
+    pivotIndex :     Integer;
 begin
+    Self.Add(Value);
+    current := Self.GetPrimaryZone;
+    if (current <> Value) then begin //Fazer permuta, deve-se fazer lock neste momento no futuro
+        Self.FZoneList.Exchange(current.CentralIndex, Value.CentralIndex);
+    end;
+end;
 
+function TTREZone.GetCentral : TTRECentral;
+begin
+    Result := Self.FCentral;
+end;
+
+function TTREZone.GetCentralIndex : Integer;
+begin
+    if Assigned(Self.FCentral) then begin
+        Result := Self.FCentral.FZoneList.IndexOf(Self);
+    end else begin
+        Result := -1;
+    end;
+end;
+
+procedure TTREZone.SetCentral(const Value : TTRECentral);
+begin
+    if Assigned(Self.FCentral) then begin     //Remove da anterior se for o caso
+        Self.FCentral.FZoneList.Remove(Self);
+    end;
+    if Assigned(Value) then begin
+        Value.Add(Self);
+    end else begin
+        Self.FCentral := nil;
+    end;
+end;
+
+constructor TTRECentralMapping.Create;
+begin
+    Self.FCentralList := TObjectList.Create;
+end;
+
+destructor TTRECentralMapping.Destroy;
+begin
+    Self.FCentralList.Free;
+    inherited;
+end;
+
+function TTRECentralMapping.GetZoneById(ZoneId : Integer) : TTREZone;
+var
+    c : Integer;
+    central : TTRECentral;
+begin
+    Result := nil;
+    for c := 0 to Self.FCentralList.Count - 1 do begin
+        central := TTRECentral(Self.FCentralList.Items[c]);
+        Result  := central.GetZoneById(ZoneId);
+        if Assigned(Result) then begin
+            Exit;
+        end;
+    end;
+end;
+
+procedure TTRECentralMapping.LoadHardCoded;
+var
+    c : TTRECentral;
+    z : TTREZone;
+begin
+    //CENTRAL ( 1 ) - capital joão pessoa
+    c := TTRECentral.Create(1);
+    Self.FCentralList.Add(c);
+    z := TTREZone.Create(1);
+    z.Central := c;
+    z := TTREZone.Create(64);
+    z.Central := c;
+    z := TTREZone.Create(70);
+    z.Central := c;
+    z := TTREZone.Create(76);
+    z.Central := c;
+    z := TTREZone.Create(77);
+    z.Central := c;
+
+    //CENTRAL ( 2 ) - Campina Grande
+    c := TTRECentral.Create(2);
+    Self.FCentralList.Add(c);
+    z := TTREZone.Create(16);
+    z.Central := c;
+    z := TTREZone.Create(17);
+    z.Central := c;
+    z := TTREZone.Create(71);
+    z.Central := c;
+    z := TTREZone.Create(72);
+    z.Central := c;
+
+    //CENTRAL ( 3 ) - Patos
+    c := TTRECentral.Create(3);
+    Self.FCentralList.Add(c);
+    z := TTREZone.Create(28);
+    z.Central := c;
+    z := TTREZone.Create(65);
+    z.Central := c;
+
+    //CENTRAL ( 4 ) - Sousa
+    c := TTRECentral.Create(4);
+    Self.FCentralList.Add(c);
+    z := TTREZone.Create(35);
+    z.Central := c;
+    z := TTREZone.Create(63);
+    z.Central := c;
+
+    //CENTRAL ( 5 ) - Cajazeiras
+    c := TTRECentral.Create(5);
+    Self.FCentralList.Add(c);
+    z := TTREZone.Create(42);
+    z.Central := c;
+    z := TTREZone.Create(68);
+    z.Central := c;
+
+    //CENTRAL ( 6 ) - Piancó
+    c := TTRECentral.Create(6);
+    Self.FCentralList.Add(c);
+    z := TTREZone.Create(32);
+    z.Central := c;
+    z := TTREZone.Create(66);
+    z.Central := c;
 end;
 
 end.
