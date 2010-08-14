@@ -16,9 +16,9 @@ type
         function GetCentralIndex : Integer;
         procedure SetCentral(const Value : TTRECentral);
     protected
-        procedure BeforeDestruction; override;
     public
         constructor Create(AZoneId : Integer); virtual;
+        procedure BeforeDestruction; override;
         property Id : Integer read FId;
         ///  <summary> Retorna ordem da zona dentro da central, caso haja uma definida para a mesma </summary>
         ///  <remarks>
