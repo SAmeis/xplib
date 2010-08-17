@@ -3,7 +3,7 @@ unit TREZones;
 interface
 
 uses
-    contnrs, TREConsts, TREUtils;
+    contnrs, Classes, TREConsts, TREUtils;
 
 type
     TTRECentral = class;
@@ -32,6 +32,11 @@ type
     private
         FId :       Integer;
         FZoneList : TObjectList;
+        /// <summary>
+        /// Retorna a zona indexada pelo valor de index(lista interna)
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns>Zona eleitoral da central</returns>
         function GetZones(index : Integer) : TTREZone;
         function GetPrimaryZone : TTREZone;
         ///  <summary> Ajusta a zona dada como sendo a zona primária </summary>
@@ -146,8 +151,7 @@ end;
 
 procedure TTRECentral.SetPrimaryZone(const Value : TTREZone);
 var
-    current, pivot : TTREZone;
-    pivotIndex :     Integer;
+    current : TTREZone;
 begin
     Self.Add(Value);
     current := Self.GetPrimaryZone;
