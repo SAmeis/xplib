@@ -1,5 +1,5 @@
-{$IFDEF TREConsts.pas}
-    {$DEFINE DEBUG_UNIT}
+{$IFDEF TREConsts}
+	 {$DEFINE DEBUG_UNIT}
 {$ENDIF}
 {$I TRELib.inc}
 

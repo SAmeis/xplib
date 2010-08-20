@@ -62,9 +62,11 @@
 			<DCCReference Include="vclx.dcp"/>
 			<DCCReference Include="vcl.dcp"/>
 			<DCCReference Include="designide.dcp"/>
+			<DCCReference Include="StFLibD14.dcp"/>
 			<DCCReference Include="TREConsts.pas"/>
 			<DCCReference Include="TREUtils.pas"/>
 			<DCCReference Include="TREZones.pas"/>
+			<DCCReference Include="TREConfig.pas"/>
 			<None Include="ModelSupport_TRELib\default.txaPackage"/>
 			<None Include="ModelSupport_TRELib\default.txvpck"/>
 			<None Include="ModelSupport_TRELib\TREUtils\default.txvpck"/>

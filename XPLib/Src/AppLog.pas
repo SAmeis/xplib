@@ -1092,7 +1092,8 @@ Rotina chave onde o texto capturado sera salvo no streamer de saida
 }
 {1 Rotina chave onde o texto capturado sera salvo no streamer de saida }
 begin
-    EnterCriticalSection(LogCriticalSection);
+	{TODO -oroger -curgente : Corrigir incompatibilidade para Unicode/ansi }
+	 EnterCriticalSection(LogCriticalSection);
     try
         Self.StreamNeeded();
         try

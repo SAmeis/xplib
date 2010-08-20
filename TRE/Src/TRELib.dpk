@@ -35,11 +35,13 @@ requires
   vclactnband,
   vclx,
   vcl,
-  designide;
+  designide,
+  StFLibD14;
 
 contains
   TREConsts in 'TREConsts.pas',
   TREUtils in 'TREUtils.pas',
-  TREZones in 'TREZones.pas';
+  TREZones in 'TREZones.pas',
+  TREConfig in 'TREConfig.pas';
 
 end.

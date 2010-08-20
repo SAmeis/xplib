@@ -1,3 +1,8 @@
+{$IFDEF TREZones}
+	 {$DEFINE DEBUG_UNIT}
+{$ENDIF}
+{$I TRELib.inc}
+
 unit TREZones;
 
 interface
