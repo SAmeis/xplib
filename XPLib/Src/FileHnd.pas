@@ -2431,6 +2431,10 @@ Calcula o nome do arquivo seguinte para a sequência na pasta destino dada por Ba
 Caso seja passsado BaseFilename já contendo um identificador de sequencia (n) este será desconsiderado, assim o nome
 gerado não será sequência(n+1).
 
+Revision - 11/3/2010 - roger
+
+Passou a funcionar para diretorios da mesma forma que para arquivos
+
 Revision: 5/12/2005 - Roger
 }
 var
@@ -2443,8 +2447,9 @@ begin
     repeat
         Inc(TargetCount);
         Result := Prefix + '(' + IntToStr(TargetCount) + ')' + TargetExt;
-    until (not FileExists(Result));
+    until ( (not FileExists(Result)) and ( not DirectoryExists(Result)) );
 end;
+
 
 class function TFileHnd.ParentDir(const filename : string) : string;
 {{
