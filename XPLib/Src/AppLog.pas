@@ -53,25 +53,25 @@ type
     end;
 
 type
-    TLogFile = class(TObject)
-    {{
-    Classe usada como base para registro de logs de aplicativos.
-    }
-    private
-        FFileName :  string;
-        FFormatter : IFormatter;
-        FLocked :    boolean;
-        FOpenMode :  word;
-        function GetBuffered : boolean;
-        procedure SetBuffered(const Value : boolean);
-        function GetBufferText : string;
-        procedure SetFileName(const Value : string);
-        function GetSize : int64;
-    protected
-        FLogBuffer : TStringList;
-        FStream :    TStream;
-        procedure StreamDispose;
-        procedure StreamNeeded;
+	 TLogFile = class(TObject)
+	 {{
+	 Classe usada como base para registro de logs de aplicativos.
+	 }
+	 private
+		 FFileName :  string;
+		 FFormatter : IFormatter;
+		 FLocked :    boolean;
+		 FOpenMode :  word;
+		 function GetBuffered : boolean;
+		 procedure SetBuffered(const Value : boolean);
+		 function GetBufferText : string;
+		 procedure SetFileName(const Value : string);
+		 function GetSize : int64;
+	 protected
+		 FLogBuffer : TStringList;
+		 FStream :    TStream;
+		 procedure StreamDispose;
+		 procedure StreamNeeded;
         procedure WriteTo(const Txt : string);
     public
         constructor Create(const AFileName : string; Lock : boolean); virtual;
@@ -180,7 +180,7 @@ var
     GlobalLogFileName : string = ''; //Na inicializacao assume variacao do nome do aplicativo,
     LogBuffer : TStringList = nil;
     LogCriticalSection : TRtlCriticalSection;
-    GlobalDefaultLogFile : TLogFile = nil;
+	 GlobalDefaultLogFile : TLogFile = nil;
 
 
 procedure SetLogFileName(const LogFileName : string);
@@ -760,7 +760,7 @@ E também não será liberado entre as chamadas de StreamNeeded/StreamDispose.
 Rev. 19/5/2005
 }
 begin
-    inherited Create;
+	 inherited Create;
     Self.FFileName := AFileName;
     TFileHnd.ForceFilename(Self.FFileName);
     Self.FLocked   := Lock;
@@ -894,7 +894,7 @@ Retorna instância do Logger padrao do aplicativo.
 Rev. 19/5/2005
 }
 begin
-    Result := GlobalDefaultLogFile;
+	 Result := GlobalDefaultLogFile;
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
@@ -926,13 +926,13 @@ Método de classe que garante a existencia de uma instancia valida em GlobalDefau
 Rev. 19/5/2005
 }
 begin
-    GlobalLogFileName := ChangeFileExt(ParamStr(0), DEFAULT_APP_LOG_EXTENSION);
+	 GlobalLogFileName := ChangeFileExt(ParamStr(0), DEFAULT_APP_LOG_EXTENSION);
     LogUserName := GetWindowsUserName();
     if LogUserName = EmptyStr then begin
         LogUserName := '"Usuário desconhecido"';
     end;
     if (GlobalDefaultLogFile = nil) then begin
-        GlobalDefaultLogFile := TLogFile.Create(GlobalLogFileName, False);//Streamer de saida locked
+		 GlobalDefaultLogFile := TLogFile.Create(GlobalLogFileName, False);//Streamer de saida não locked para outros
     end;
 end;
 
@@ -1045,7 +1045,7 @@ Assim para o caso de sobreescrever o modo como o streamer de saída é gerado, amb
 }
 {1 Recupera/cria um streamer de saida. }
 begin
-    if not Assigned(Self.FStream) then begin
+	 if not Assigned(Self.FStream) then begin
         if not FileExists(Self.FFileName) then begin
             TFileHnd.ForceFilename(Self.FFileName);
         end;
@@ -1088,16 +1088,22 @@ end;
 {--------------------------------------------------------------------------------------------------------------------------------}
 procedure TLogFile.WriteTo(const Txt : string);
 {{
-Rotina chave onde o texto capturado sera salvo no streamer de saida
+Rotina chave onde o texto capturado sera salvo no streamer de saida.
+Sempre salvará arquivo no modo AnsiString.
+
+Revision - 20100820 - roger
+Sempre salvará arquivo no modo AnsiString
 }
 {1 Rotina chave onde o texto capturado sera salvo no streamer de saida }
+var
+	ConvertStr : AnsiString;
 begin
-	{TODO -oroger -curgente : Corrigir incompatibilidade para Unicode/ansi }
 	 EnterCriticalSection(LogCriticalSection);
-    try
-        Self.StreamNeeded();
-        try
-            Self.FStream.WriteBuffer(PChar(Txt)^, Length(Txt));
+	 try
+		 Self.StreamNeeded();
+		 try
+			ConvertStr:=Txt;
+			 Self.FStream.WriteBuffer(PChar(ConvertStr)^, Length(Txt));
         finally
             Self.StreamDispose;
         end;
@@ -1196,7 +1202,7 @@ initialization
         InitializeCriticalSection(LogCriticalSection);
         EnterCriticalSection(LogCriticalSection);
         try
-            TLogFile.Initialize();
+			 TLogFile.Initialize();
         finally
             LeaveCriticalSection(LogCriticalSection);
         end;
@@ -1204,14 +1210,14 @@ initialization
 
 finalization
     begin
-        EnterCriticalSection(LogCriticalSection);
-        try
-            if (Assigned(GlobalDefaultLogFile)) then begin
-                GlobalDefaultLogFile.Free;
-            end;
-        finally
-            LeaveCriticalSection(LogCriticalSection);
-        end;
-        DeleteCriticalSection(LogCriticalSection);
-    end;
+		 EnterCriticalSection(LogCriticalSection);
+		 try
+			 if (Assigned(GlobalDefaultLogFile)) then begin
+				 GlobalDefaultLogFile.Free;
+			 end;
+		 finally
+			 LeaveCriticalSection(LogCriticalSection);
+		 end;
+		 DeleteCriticalSection(LogCriticalSection);
+	 end;
 end.
