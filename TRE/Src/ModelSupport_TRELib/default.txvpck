@@ -4,5 +4,33 @@
     <property name="$defaultDiagram" value="true" />
     <property name="$metaclass" value="Package Diagram" />
     <property name="$name" value="default" />
+    <reference referencedUin="design:view:::kwc83s0n9v99jeswg_v">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="10,10,143,181" />
+      <reference referencedUin="delphi:e_class:src:TRELib:TREZones.TTREZone" />
+      <reference referencedUin="delphi:e_class:src:TRELib:TREZones.TTRECentral" />
+      <reference referencedUin="delphi:e_class:src:TRELib:TREZones.TTRECentralMapping" />
+      <reference referencedUin="delphi:e_class:src:TRELib:TREZones.@unitclass" />
+    </reference>
+    <reference referencedUin="design:view:::t06wawei6yr9v5cqq_v">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="172,1,119,151" />
+      <reference referencedUin="delphi:e_class:src:TRELib:TREConfig.TTREBaseConfig" />
+      <reference referencedUin="delphi:e_class:src:TRELib:TREConfig.@unitclass" />
+    </reference>
+    <reference referencedUin="design:view:::306m401k6o9jz1tko_v">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="172,171,104,151" />
+      <reference referencedUin="delphi:e_class:src:TRELib:TREUtils.TTREUtils" />
+      <reference referencedUin="delphi:e_class:src:TRELib:TREUtils.@unitclass" />
+    </reference>
+    <reference referencedUin="design:view:::kgu1lwrbjyrc04cuf_v">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="23,210,139,196" />
+      <reference referencedUin="delphi:e_class:src:TRELib:TREConsts.TTREComputerType" />
+      <reference referencedUin="delphi:e_class:src:TRELib:TREConsts.TTRENetType" />
+      <reference referencedUin="delphi:e_class:src:TRELib:TREConsts.TTREAccessMedium" />
+      <reference referencedUin="delphi:e_class:src:TRELib:TREConsts.@unitclass" />
+    </reference>
   </view>
 </nodeSet>

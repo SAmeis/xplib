@@ -2,7 +2,7 @@
 		<PropertyGroup>
 			<ProjectGuid>{22280305-3162-4DE1-8301-23AE5C56426E}</ProjectGuid>
 			<MainSource>TRELib.dpk</MainSource>
-			<Config Condition="'$(Config)'==''">Debug</Config>
+			<Config Condition="'$(Config)'==''">Release</Config>
 			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
 			<ProjectVersion>12.0</ProjectVersion>
 		</PropertyGroup>
@@ -72,6 +72,8 @@
 			<None Include="ModelSupport_TRELib\TREUtils\default.txvpck"/>
 			<None Include="ModelSupport_TRELib\TREZones\default.txvpck"/>
 			<None Include="ModelSupport_TRELib\TREZones\default.txaPackage"/>
+			<None Include="ModelSupport_TRELib\TREConfig\default.txvpck"/>
+			<None Include="ModelSupport_TRELib\TREConsts\default.txvpck"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>
@@ -126,7 +128,7 @@
 						<VersionInfoKeys Name="Comments">Rogerlais Andrade</VersionInfoKeys>
 					</VersionInfoKeys>
 				</Delphi.Personality>
-				<ModelSupport>True</ModelSupport>
+				<ModelSupport>False</ModelSupport>
 			</BorlandProject>
 			<ProjectFileVersion>12</ProjectFileVersion>
 		</ProjectExtensions>

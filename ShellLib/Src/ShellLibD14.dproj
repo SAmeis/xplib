@@ -2,7 +2,7 @@
 		<PropertyGroup>
 			<ProjectGuid>{05C4D72A-801C-4472-A620-D62C0943976A}</ProjectGuid>
 			<MainSource>ShellLibD14.dpk</MainSource>
-			<Config Condition="'$(Config)'==''">Release</Config>
+			<Config Condition="'$(Config)'==''">Debug</Config>
 			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
 			<ProjectVersion>12.0</ProjectVersion>
 		</PropertyGroup>
@@ -47,6 +47,12 @@
 			<DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_2)'!=''">
+			<DCC_DependencyCheckOutputName>..\..\..\Lib\D2010\Debug\ShellLibD14.bpl</DCC_DependencyCheckOutputName>
+			<DCC_RemoteDebug>true</DCC_RemoteDebug>
+			<DCC_BplOutput>$(DLib)\Debug</DCC_BplOutput>
+			<DCC_DcuOutput>$(DLib)\Debug</DCC_DcuOutput>
+			<DCC_DcpOutput>$(DLib)\Debug</DCC_DcpOutput>
+			<DCC_MapFile>2</DCC_MapFile>
 			<DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
 		</PropertyGroup>
 		<ItemGroup>

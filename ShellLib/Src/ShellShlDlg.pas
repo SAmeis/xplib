@@ -62,8 +62,7 @@ const {SHObjectProperties Flags}
     OPF_PATHNAME    = $02;
 
 
-procedure RunFileDlg(Owner : HWND; IconHandle : HICON; WorkPath : Pointer;
-    Caption : Pointer; Description : Pointer; Flags : UINT); stdcall;
+procedure RunFileDlg(Owner : HWND; IconHandle : HICON; WorkPath : Pointer; Caption : Pointer; Description : Pointer; Flags : UINT); stdcall;
 
 function SHFindFiles(Root : PItemIDList; SavedSearchFile : PItemIDList) : longbool; stdcall;
 
@@ -77,20 +76,15 @@ function GetFileNameFromBrowse(Owner : HWND; FileName : Pointer; MaxFileNameChar
     InitialDirectory : Pointer; DefaultExtension : Pointer;
     Filter : Pointer; Caption : Pointer) : longbool; stdcall;
 
-function SHObjectProperties(Owner : HWND; Flags : UINT; ObjectName : Pointer;
-    InitialTabName : Pointer) : longbool; stdcall;
+function SHObjectProperties(Owner : HWND; Flags : UINT; ObjectName : Pointer; InitialTabName : Pointer) : longbool; stdcall;
 
-function SHNetConnectionDialog(Owner : HWND; ResourceName : Pointer; ResourceType : DWORD) :
-    DWORD; stdcall;
+function SHNetConnectionDialog(Owner : HWND; ResourceName : Pointer; ResourceType : DWORD) : DWORD; stdcall;
 
-function SHStartNetConnectionDialog(Owner : HWND; ResourceName : PWideChar; ResourceType : DWORD) :
-    DWORD; stdcall;
+function SHStartNetConnectionDialog(Owner : HWND; ResourceName : PWideChar; ResourceType : DWORD) : DWORD; stdcall;
 
-function SHOutOfMemoryMessageBox(Owner : HWND; Caption : Pointer; Style : UINT) :
-    Integer; stdcall;
+function SHOutOfMemoryMessageBox(Owner : HWND; Caption : Pointer; Style : UINT) : Integer; stdcall;
 
-procedure SHHandleDiskFull(Owner : HWND; uDrive : UINT);
-    stdcall;
+procedure SHHandleDiskFull(Owner : HWND; uDrive : UINT); stdcall;
 
 function ShellMessageBox(Instance : THandle; Owner : HWND; Text : PChar; Caption : PChar;
     Style : UINT; Parameters : array of Pointer) :
@@ -288,7 +282,7 @@ type
         function Execute : Integer;
     published
         property FileName : TFileName read FFileName write FFileName;
-        property IconIndex : integer read FIconIndex write FIconIndex default 0;
+        property IconIndex : Integer read FIconIndex write FIconIndex default 0;
     end;
 
 
@@ -428,12 +422,12 @@ uses Controls, ShellAPI, ActiveX;
 
 
 const
-	 
-    RunFileDlg_Index = 61;
-    SHFindFiles_Index = 90;
-    SHFindComputer_Index = 91;
+
+    //RunFileDlg_Index     = 61; //removida para carga dinamica por nome
+    SHFindFiles_Index    = 90;
+    //SHFindComputer_Index = 91; //removida para carga dinamica por nome
     ExitWindowsDialog_Index = 60;
-    RestartDialog_Index = 59;
+    RestartDialog_Index  = 59;
     GetFileNameFromBrowse_Index = 63;
     SHObjectProperties_Index = 178;
     SHNetConnectionDialog_Index = 160;
@@ -447,22 +441,26 @@ var
     ShellDLL : HMODULE;
 
 {***********************************************************
-	 Undocumented Windows Shell Dialog API implementations
+     Undocumented Windows Shell Dialog API implementations
  ***********************************************************}
 
  {$WARN SYMBOL_PLATFORM OFF }
-procedure RunFileDlg; external Shell32 index RunFileDlg_Index;
-function SHFindFiles; external Shell32 index SHFindFiles_Index;
-function SHFindComputer; external Shell32 index SHFindComputer_Index;
-procedure ExitWindowsDialog; external Shell32 index ExitWindowsDialog_Index;
-function RestartDialog; external Shell32 index RestartDialog_Index;
-function GetFileNameFromBrowse; external Shell32 index GetFileNameFromBrowse_Index;
-function SHObjectProperties; external Shell32 index SHObjectProperties_Index;
-function SHNetConnectionDialog; external Shell32 index SHNetConnectionDialog_Index;
+//procedure RunFileDlg; external Shell32 index RunFileDlg_Index;  //suspeito e removido para carga dinamica abaixo
+//function SHFindFiles; external Shell32 index SHFindFiles_Index;  //suspeito
+//function SHFindComputer; external Shell32 index SHFindComputer_Index; //suspeito
+//procedure ExitWindowsDialog; external Shell32 index ExitWindowsDialog_Index; //+/-
+//function RestartDialog; external Shell32 index RestartDialog_Index; //suspeito
+//function GetFileNameFromBrowse; external Shell32 index GetFileNameFromBrowse_Index; //suspeito
+//function SHObjectProperties; external Shell32 index SHObjectProperties_Index; //suspeito
+//function SHNetConnectionDialog; external Shell32 index SHNetConnectionDialog_Index; //suspeito
+
+//rotinas suspeitas sem reposicao procisoria
+//function SHOutOfMemoryMessageBox; external Shell32 index SHOutOfMemoryMessageBox_Index;
+//procedure SHHandleDiskFull; external Shell32 index SHHandleDiskFull_Index;
+
 
 {This function is only supported on NT, and so must be dynamically loaded.}
-function SHStartNetConnectionDialog(Owner : HWND; ResourceName : PWideChar; ResourceType : DWORD) :
-DWORD; stdcall;
+function SHStartNetConnectionDialog(Owner : HWND; ResourceName : PWideChar; ResourceType : DWORD) : DWORD; stdcall;
 type
     TheFunctionType = function(Owner : HWND; ResourceName : PWideChar; ResourceType : DWORD) : DWORD; stdcall;
 var
@@ -472,17 +470,14 @@ begin
         TheFunction := GetProcAddress(ShellDLL, PChar(SHStartNetConnectionDialog_Index));
         if (Assigned(TheFunction)) then begin
             Result := TheFunction(Owner, ResourceName, ResourceType);
-        end  {if}    else begin
+        end else begin
             Result := GetLastError;
-        end; {if}
-    end  {if}  else begin
+        end;
+    end else begin
         SetLastError(ERROR_CALL_NOT_IMPLEMENTED);
         Result := ERROR_CALL_NOT_IMPLEMENTED;
-    end; {else}
+    end;
 end;
-
-function SHOutOfMemoryMessageBox; external Shell32 index SHOutOfMemoryMessageBox_Index;
-procedure SHHandleDiskFull; external Shell32 index SHHandleDiskFull_Index;
 
 {This is an auxiliary method for the ShellMessageBox functions to enable the cdecl style
  extra parameters within the syntax limits of Delphi. Assembler is needed to do this.}
@@ -511,7 +506,7 @@ begin
                    mov     ECX, ParamCount  // Initialize loop counter with ParamCount in DWORDs
                    cmp     ECX, 0           // Check to see if loop counter in ECX is equal to 0
                    je      @MethodCall      // If ECX counter is indeed 0, jump to the method call label
-                   mov EDX, ParamBuffer // Load ParamBuffer pointer into EBX register
+                   mov EDX, ParamBuffer     // Load ParamBuffer pointer into EBX register
 
                    @StartLoop:          // Label where the push loop starts
 
@@ -588,8 +583,7 @@ begin
         end  {if}    else begin
             Result := ID_CANCEL;
         end; {else}
-    end {if}
-    {If not NT, return a NOT IMPLEMENTED error.}
+    end {if} {If not NT, return a NOT IMPLEMENTED error.}
     else begin
         SetLastError(ERROR_CALL_NOT_IMPLEMENTED);
         Result := ID_CANCEL;
@@ -733,8 +727,7 @@ begin
                 Result := Self.FImageSmall;
                 Flags  := SHGFI_SYSICONINDEX or SHGFI_SMALLICON;
             end; {case 2}
-            else
-            begin
+            else begin
                 Result := nil;
                 Exit;
             end; {else}
@@ -883,12 +876,10 @@ begin
    the pidlRoot member of BrowseInfo.}
     if (Self.RootFolder = kbsdPath) then begin
         BrowseInfo.pidlRoot := GetPIDLFromPath(Self.RootPath);
-    end  {if}
-    else
+    end  {if} else
     if (Self.RootFolder = rfDesktop) then begin
         BrowseInfo.pidlRoot := nil;
-    end  {else if}
-  {If RootFolder is not specifying a path for the root, try to
+    end  {else if} {If RootFolder is not specifying a path for the root, try to
    fetch the PIDL for some special folder. If the folder is not
    recognized, just leave the root PIDL nil to get a default tree.}
     else begin
@@ -1068,7 +1059,7 @@ begin
     Self.FIconIndex := 0;
 end;
 
-function TkbPickIconDialog.Execute : integer;
+function TkbPickIconDialog.Execute : Integer;
 var
     FileNameBuffer : Pointer;
 begin
@@ -1081,7 +1072,7 @@ begin
             StringToWideChar(Self.FileName, FileNameBuffer, MAX_PATH + 1);
 
             {Call the dialog and use the return value as the function result.}
-			 Result := PickIconDlg(Application.Handle, PWideChar(FileNameBuffer), UINT(MAX_PATH), Self.FIconIndex);
+            Result := PickIconDlg(Application.Handle, PWideChar(FileNameBuffer), UINT(MAX_PATH), Self.FIconIndex);
 
             {If function was successful, transliterate the returned filename back to a string.}
             if (Result <> 0) then begin
@@ -1092,8 +1083,7 @@ begin
         finally
             FreeMem(FileNameBuffer);
         end; {try..finally}
-    end  {if}
-    {The Win 95 ANSI version.}
+    end  {if} {The Win 95 ANSI version.}
     else begin
     {Allocate a suitably sized PChar buffer and copy the
      initial filename into the buffer.}
@@ -1105,13 +1095,13 @@ begin
             Result := PickIconDlg(Application.Handle, FileNameBuffer, MAX_PATH, Self.FIconIndex);
 
             {If function was successful, copy the filename back to a string.}
-			 if (Result <> 0) then begin
-				{$IF CompilerVersion> 15.00} //Delphi 2007+
-				 Self.FileName := StrPas(PWideChar(FileNameBuffer));
-				{$ELSE} //Delphi 7 ou inferior
+            if (Result <> 0) then begin
+                {$IF CompilerVersion> 15.00}//Delphi 2007+
+                Self.FileName := StrPas(PWideChar(FileNameBuffer));
+                {$ELSE} //Delphi 7 ou inferior
 				Self.FileName := StrPas(FileNameBuffer);
 				{$IFEND}
-			 end; {if}
+            end; {if}
 
             {Ensure the buffer is freed.}
         finally
@@ -1215,7 +1205,8 @@ begin
     TheMessage.Result := DefWindowProc(Self.FMessageWindow, TheMessage.Msg, TheMessage.wParam, TheMessage.lParam);
 end;
 
-procedure TkbRunFileDialog.Validate(TheFile : TFileName; TheWorkPath : TFileName; Visible : boolean; var Action : TkbRunFileAction);
+procedure TkbRunFileDialog.Validate(TheFile : TFileName; TheWorkPath : TFileName; Visible : boolean;
+    var Action : TkbRunFileAction);
 begin
     {If event handler is assigned, call it.}
     if Assigned(Self.OnValidate) then begin
@@ -1395,7 +1386,8 @@ begin
         end;
 
         {Execute the dialog and convert the result to the return value.}
-        Result := (RestartDialog(Application.Handle, PWideChar(ReasonBuffer), RestartOptionEnumToConst(Self.RestartOption)) = idYes);
+        Result := (RestartDialog(Application.Handle, PWideChar(ReasonBuffer),
+            RestartOptionEnumToConst(Self.RestartOption)) = idYes);
 
         {Ensure reason buffer is freed.}
     finally
@@ -1427,39 +1419,38 @@ var
 begin
     {Allocate a buffer to hold the object name, long enough for UNICODE if need be.}
     GetMem(ObjectNameBuffer, (Length(Self.ObjectName) + 1) * SizeOf(widechar));
-    try {..finally}
+    try
 
         {If WinNT, convert object name string to UNICODE.  Otherwise, just copy to buffer.}
         if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
             StringToWideChar(Self.ObjectName, PWideChar(ObjectNameBuffer), (Length(Self.ObjectName) + 1));
-        end  {if}    else begin
+        end  else begin
             StrPCopy(PChar(ObjectNameBuffer), Self.ObjectName);
-        end; {else}
+        end;
 
         {Allocate a buffer to hold the initial tab name, long enough for UNICODE if need be.}
         GetMem(TabNameBuffer, (Length(Self.InitialTab) + 1) * SizeOf(widechar));
-        try {..finally}
+        try
 
             {If WinNT, convert initial tab name string to UNICODE.  Otherwise, just copy to buffer.}
             if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
                 StringToWideChar(Self.InitialTab, PWideChar(TabNameBuffer), (Length(Self.InitialTab) + 1));
-            end  {if}    else begin
+            end else begin
                 StrPCopy(PChar(TabNameBuffer), Self.InitialTab);
-            end; {else}
+            end;
 
             {Execute the dialog and translate the result to the return value.}
-            Result := SHObjectProperties(Application.Handle, ShellObjectTypeEnumToConst(Self.ObjectType),
-                ObjectNameBuffer, TabNameBuffer);
+            Result := SHObjectProperties(Application.Handle, ShellObjectTypeEnumToConst(Self.ObjectType), ObjectNameBuffer, TabNameBuffer);
 
             {Ensure tab name buffer is freed.}
         finally
             FreeMem(TabNameBuffer);
-        end; {try..finally}
+        end;
 
         {Ensure object name buffer is freed.}
     finally
         FreeMem(ObjectNameBuffer);
-    end; {try..finally}
+    end;
 end;
 
 
@@ -1578,8 +1569,7 @@ begin
         kbsdFormatError : begin
             Result := SHFMT_ERROR;
         end;
-        else
-        begin
+        else begin
             Result := SHFMT_ERROR;
         end;
     end; {case}
@@ -1597,8 +1587,7 @@ begin
         SHFMT_ERROR : begin
             Result := kbsdFormatError;
         end;
-        else
-        begin
+        else begin
             Result := kbsdFormatSucceeded;
         end;
     end; {case}
@@ -1625,8 +1614,7 @@ begin
         kbsdExitAndExecApp : begin
             Result := EW_EXITANDEXECAPP;
         end;
-        else
-        begin
+        else begin
             Result := 0;
         end;
     end; {case}
@@ -1653,8 +1641,7 @@ begin
         EW_EXITANDEXECAPP : begin
             Result := kbsdExitAndExecApp;
         end;
-        else
-        begin
+        else begin
             Result := kbsdRestartWindows;
         end;
     end; {case}
@@ -1669,8 +1656,7 @@ begin
         kbsdPrinterObject : begin
             Result := OPF_PRINTERNAME;
         end;
-        else
-        begin
+        else begin
             Result := 0;
         end;
     end; {case}
@@ -1685,8 +1671,7 @@ begin
         OPF_PRINTERNAME : begin
             Result := kbsdPrinterObject;
         end;
-        else
-        begin
+        else begin
             Result := kbsdPathObject;
         end;
     end; {case}
@@ -1710,8 +1695,7 @@ begin
         kbsdNoSeparateMemory : begin
             Result := RFF_NOSEPARATEMEM;
         end;
-        else
-        begin
+        else begin
             Result := 0;
         end;
     end; {case}
@@ -1735,8 +1719,7 @@ begin
         RFF_NOSEPARATEMEM : begin
             Result := kbsdNoSeparateMemory;
         end;
-        else
-        begin
+        else begin
             Result := kbsdNoSeparateMemory;
         end;
     end; {case}
@@ -1754,8 +1737,7 @@ begin
         kbsdRetry : begin
             Result := RF_RETRY;
         end;
-        else
-        begin
+        else begin
             Result := RF_OK;
         end;
     end; {case}
@@ -1773,8 +1755,7 @@ begin
         RF_RETRY : begin
             Result := kbsdRetry;
         end;
-        else
-        begin
+        else begin
             Result := kbsdRun;
         end;
     end; {case}
@@ -1789,8 +1770,7 @@ begin
         kbsdPrintResource : begin
             Result := RESOURCETYPE_PRINT;
         end;
-        else
-        begin
+        else begin
             Result := RESOURCETYPE_DISK;
         end;
     end; {case}
@@ -1811,7 +1791,155 @@ begin
     end; {case}
 end;
 
+{TODO -oroger -croger : inicio da area a ser testada pela carga dinamica }
 
+procedure RunFileDlg(Owner : HWND; IconHandle : HICON; WorkPath : Pointer; Caption : Pointer;
+    Description : Pointer; Flags : UINT); stdcall;
+type
+    TheFunctionType = procedure(Owner : HWND; IconHandle : HICON; WorkPath : Pointer; Caption : Pointer;
+            Description : Pointer; Flags : UINT); stdcall;
+var
+    TheFunction : TheFunctionType;
+begin
+    TheFunction := GetProcAddress(ShellDLL, PChar('RunFileDlg'));
+    if (Assigned(TheFunction)) then begin
+        TheFunction(Owner, IconHandle, WorkPath, Caption, Description, Flags);
+    end else begin
+        SetLastError(ERROR_CALL_NOT_IMPLEMENTED);
+    end;
+end;
+
+function SHFindComputer(Reserved1 : PItemIDList; Reserved2 : PItemIDList) : longbool; stdcall;
+type
+    TheFunctionType = function(Reserved1 : PItemIDList; Reserved2 : PItemIDList) : longbool; stdcall;
+var
+    TheFunction : TheFunctionType;
+begin
+    TheFunction := GetProcAddress(ShellDLL, PChar('SHFindComputer'));
+    if (Assigned(TheFunction)) then begin
+        Result := TheFunction(Reserved1, Reserved2);
+    end else begin
+        SetLastError(ERROR_CALL_NOT_IMPLEMENTED);
+    end;
+end;
+
+function SHNetConnectionDialog(Owner : HWND; ResourceName : Pointer; ResourceType : DWORD) : DWORD; stdcall;
+type
+    TheFunctionType = function(Owner : HWND; ResourceName : Pointer; ResourceType : DWORD) : DWORD; stdcall;
+var
+    TheFunction : TheFunctionType;
+begin
+    TheFunction := GetProcAddress(ShellDLL, PChar('SHNetConnectionDialog'));
+    if (Assigned(TheFunction)) then begin
+        Result := TheFunction(Owner, ResourceName ,ResourceType );
+    end else begin
+        SetLastError(ERROR_CALL_NOT_IMPLEMENTED);
+    end;
+end;
+
+function SHObjectProperties(Owner : HWND; Flags : UINT; ObjectName : Pointer; InitialTabName : Pointer) : longbool; stdcall;
+type
+    TheFunctionType = function(Owner : HWND; Flags : UINT; ObjectName : Pointer; InitialTabName : Pointer) : longbool; stdcall;
+var
+    TheFunction : TheFunctionType;
+begin
+    TheFunction := GetProcAddress(ShellDLL, PChar('SHObjectProperties'));
+    if (Assigned(TheFunction)) then begin
+        Result := TheFunction(Owner ,Flags ,ObjectName ,InitialTabName );
+    end else begin
+        SetLastError(ERROR_CALL_NOT_IMPLEMENTED);
+    end;
+end;
+
+function GetFileNameFromBrowse(Owner : HWND; FileName : Pointer; MaxFileNameChars : DWORD;
+    InitialDirectory : Pointer; DefaultExtension : Pointer;
+    Filter : Pointer; Caption : Pointer) : longbool; stdcall;
+type
+    TheFunctionType = function(Owner : HWND; FileName : Pointer; MaxFileNameChars : DWORD;
+    InitialDirectory : Pointer; DefaultExtension : Pointer;
+    Filter : Pointer; Caption : Pointer) : longbool; stdcall;
+var
+    TheFunction : TheFunctionType;
+begin
+    TheFunction := GetProcAddress(ShellDLL, PChar('GetFileNameFromBrowse'));
+    if (Assigned(TheFunction)) then begin
+        Result := TheFunction(Owner ,FileName ,MaxFileNameChars, InitialDirectory ,DefaultExtension , Filter , Caption );
+    end else begin
+        SetLastError(ERROR_CALL_NOT_IMPLEMENTED);
+    end;
+end;
+
+function RestartDialog(Owner : HWND; Reason : Pointer; Flags : UINT) : DWORD; stdcall;
+type
+    TheFunctionType = function(Owner : HWND; Reason : Pointer; Flags : UINT) : DWORD; stdcall;
+var
+    TheFunction : TheFunctionType;
+begin
+    TheFunction := GetProcAddress(ShellDLL, PChar('RestartDialog'));
+    if (Assigned(TheFunction)) then begin
+        Result := TheFunction(Owner ,Reason , Flags );
+    end else begin
+        SetLastError(ERROR_CALL_NOT_IMPLEMENTED);
+    end;
+end;
+
+procedure ExitWindowsDialog(Owner : HWND); stdcall;
+type
+    TheFunctionType = procedure(Owner : HWND); stdcall;
+var
+    TheFunction : TheFunctionType;
+begin
+    TheFunction := GetProcAddress(ShellDLL, PChar('ExitWindowsDialog'));
+    if (Assigned(TheFunction)) then begin
+        TheFunction(Owner);
+    end else begin
+        SetLastError(ERROR_CALL_NOT_IMPLEMENTED);
+    end;
+end;
+
+function SHFindFiles(Root : PItemIDList; SavedSearchFile : PItemIDList) : longbool; stdcall;
+type
+    TheFunctionType = function(Root : PItemIDList; SavedSearchFile : PItemIDList) : longbool; stdcall;
+var
+    TheFunction : TheFunctionType;
+begin
+    TheFunction := GetProcAddress(ShellDLL, PChar('SHFindFiles'));
+    if (Assigned(TheFunction)) then begin
+        result:=TheFunction(Root ,SavedSearchFile );
+    end else begin
+        SetLastError(ERROR_CALL_NOT_IMPLEMENTED);
+    end;
+end;
+
+function SHOutOfMemoryMessageBox(Owner : HWND; Caption : Pointer; Style : UINT) : Integer; stdcall;
+type
+    TheFunctionType = function(Owner : HWND; Caption : Pointer; Style : UINT) : Integer; stdcall;
+var
+    TheFunction : TheFunctionType;
+begin
+    TheFunction := GetProcAddress(ShellDLL, PChar('SHOutOfMemoryMessageBox'));
+    if (Assigned(TheFunction)) then begin
+        result:=TheFunction(Owner,Caption,Style);
+    end else begin
+        SetLastError(ERROR_CALL_NOT_IMPLEMENTED);
+    end;
+end;
+
+procedure SHHandleDiskFull(Owner : HWND; uDrive : UINT); stdcall;
+type
+    TheFunctionType = procedure (Owner : HWND; uDrive : UINT); stdcall;
+var
+    TheFunction : TheFunctionType;
+begin
+    TheFunction := GetProcAddress(ShellDLL, PChar('SHHandleDiskFull'));
+    if (Assigned(TheFunction)) then begin
+        TheFunction(Owner, uDrive );
+    end else begin
+        SetLastError(ERROR_CALL_NOT_IMPLEMENTED);
+    end;
+end;
+
+{TODO -oroger -croger : final da area a ser testada }
 
 initialization
 

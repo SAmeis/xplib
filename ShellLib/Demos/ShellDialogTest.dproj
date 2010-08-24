@@ -20,9 +20,12 @@
 			<Base>true</Base>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Base)'!=''">
+			<DCC_DcuOutput>$(TestOut)</DCC_DcuOutput>
+			<DCC_ExeOutput>$(TestOut)</DCC_ExeOutput>
+			<DCC_DcpOutput>$(TestOut)</DCC_DcpOutput>
 			<DCC_ImageBase>00400000</DCC_ImageBase>
 			<DCC_UsePackage>vcl;rtl;dbrtl;adortl;vcldb;vclx;bdertl;vcldbx;ibxpress;dsnap;cds;bdecds;qrpt;teeui;teedb;tee;dss;teeqr;visualclx;visualdbclx;dsnapcrba;dsnapcon;VclSmp;vclshlctrls;vclie;xmlrtl;inet;inetdbbde;inetdbxpress;inetdb;nmfast;webdsnap;websnap;dbexpress;dbxcds;indy;dclOffice2k</DCC_UsePackage>
-			<DCC_DependencyCheckOutputName>ShellDialogTest.exe</DCC_DependencyCheckOutputName>
+			<DCC_DependencyCheckOutputName>..\..\..\Tests\Debug\ShellDialogTest.exe</DCC_DependencyCheckOutputName>
 			<DCC_UnitAlias>WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;$(DCC_UnitAlias)</DCC_UnitAlias>
 			<DCC_Platform>x86</DCC_Platform>
 			<DCC_SymbolReferenceInfo>1</DCC_SymbolReferenceInfo>
