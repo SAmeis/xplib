@@ -8,7 +8,7 @@ unit TREZones;
 interface
 
 uses
-    contnrs, Classes, TREConsts, TREUtils;
+    contnrs, Classes, TREConsts, TREUtils, XMLIntf;
 
 type
     TTRECentral = class;
@@ -46,11 +46,11 @@ type
         function GetPrimaryZone : TTREZone;
         ///  <summary> Ajusta a zona dada como sendo a zona primária </summary>
         procedure SetPrimaryZone(const Value : TTREZone);
-    function GetCount: integer;
+        function GetCount : Integer;
     public
         constructor Create(ACentralId : Integer); virtual;
-		 property Id : Integer read FId;
-		 property Count : integer read GetCount;
+        property Id : Integer read FId;
+        property Count : Integer read GetCount;
         property Zones[index : Integer] : TTREZone read GetZones;
         property PrimaryZone : TTREZone read GetPrimaryZone write SetPrimaryZone;
         ///  <summary> Adiciona uma zona a lista/central </summary>
@@ -68,10 +68,15 @@ type
     TTRECentralMapping = class
     private
         FCentralList : TObjectList;
+        function GetCentrals(index : Integer) : TTRECentral;
+        procedure SetCentrals(index : Integer; const Value : TTRECentral);
     public
         constructor Create; virtual;
         destructor Destroy; override;
+        property Centrals[index : Integer] : TTRECentral read GetCentrals;
         procedure LoadHardCoded;
+        procedure LoadXMLConfig( CentralMapping : IXMLNode );
+        procedure SaveXMLConfig( CentralMapping : IXMLNode );
         function GetZoneById(ZoneId : Integer) : TTREZone;
     end;
 
@@ -109,9 +114,9 @@ begin
     Self.FZoneList.OwnsObjects := False;
 end;
 
-function TTRECentral.GetCount: integer;
+function TTRECentral.GetCount : Integer;
 begin
-	result := Self.FZoneList.Count;
+    Result := Self.FZoneList.Count;
 end;
 
 function TTRECentral.GetPrimaryZone : TTREZone;
@@ -202,6 +207,11 @@ begin
     inherited;
 end;
 
+function TTRECentralMapping.GetCentrals(index : Integer) : TTRECentral;
+begin
+    Result := TTRECentral(Self.FCentralList.Items[index]);
+end;
+
 function TTRECentralMapping.GetZoneById(ZoneId : Integer) : TTREZone;
 var
     c : Integer;
@@ -279,6 +289,21 @@ begin
     z.Central := c;
     z := TTREZone.Create(66);
     z.Central := c;
+end;
+
+procedure TTRECentralMapping.LoadXMLConfig(CentralMapping: IXMLNode);
+begin
+
+end;
+
+procedure TTRECentralMapping.SaveXMLConfig(CentralMapping: IXMLNode);
+begin
+
+end;
+
+procedure TTRECentralMapping.SetCentrals(index : Integer; const Value : TTRECentral);
+begin
+
 end;
 
 end.
