@@ -29,11 +29,13 @@ package OPLibD14;
 {$IMPLICITBUILD OFF}
 
 requires
-  vcl;
+  vcl,
+  xmlrtl;
 
 contains
   IOObj in 'IOObj.pas',
   TreeHnd in 'TreeHnd.pas',
-  ClassHnd in 'ClassHnd.pas';
+  ClassHnd in 'ClassHnd.pas',
+  OPXMLSerializable in 'OPXMLSerializable.pas';
 
 end.

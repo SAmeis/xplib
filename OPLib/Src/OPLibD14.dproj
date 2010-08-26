@@ -56,9 +56,11 @@
 			</DelphiCompile>
 			<DCCReference Include="OPLib.dcr"/>
 			<DCCReference Include="vcl.dcp"/>
+			<DCCReference Include="xmlrtl.dcp"/>
 			<DCCReference Include="IOObj.pas"/>
 			<DCCReference Include="TreeHnd.pas"/>
 			<DCCReference Include="ClassHnd.pas"/>
+			<DCCReference Include="OPXMLSerializable.pas"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>
@@ -116,6 +118,7 @@
 						<VersionInfoKeys Name="Comments">Rogerlais Andrade</VersionInfoKeys>
 					</VersionInfoKeys>
 				</Delphi.Personality>
+				<ModelSupport>False</ModelSupport>
 			</BorlandProject>
 			<ProjectFileVersion>12</ProjectFileVersion>
 		</ProjectExtensions>
