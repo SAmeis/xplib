@@ -6,9 +6,17 @@ uses
 	Classes, SysUtils, TypInfo, XMLIntf;
 
 type
-	TXLMSerializable = class
+	TXMLSerializable = class(TPersistent)
 	private
 		procedure SaveProp(PInfo : PPropInfo; Node : IXMLNode);
+		procedure SaveSubInstance(PInfo : PPropInfo; ParentNode : IXMLNode );
+		function GetPropType(PInfo : PPropInfo) : PTypeInfo;
+		function ValPropInteger(PInfo : PPropInfo) : string;
+		function ValPropString(PInfo : PPropInfo) : string;
+		function ValPropEnum(PInfo : PPropInfo) : string;
+		function ValPropFloat(PInfo : PPropInfo) : string;
+		function ValPropSet(PInfo : PPropInfo) : string;
+		function ValPropInt64(PInfo : PPropInfo) : string;
 	public
 		procedure SaveTo( Node : IXMLNode );
 		procedure LoadFrom( Node : IXMLNode; CreateDefault : Boolean );
@@ -19,19 +27,26 @@ implementation
 
 { TXLMSerializable }
 
-procedure TXLMSerializable.LoadFrom(Node: IXMLNode; CreateDefault: Boolean);
+function TXMLSerializable.GetPropType(PInfo: PPropInfo): PTypeInfo;
+begin
+	 Result := PInfo.PropType^;
+end;
+
+procedure TXMLSerializable.LoadFrom(Node: IXMLNode; CreateDefault: Boolean);
 begin
 
 end;
 
-procedure TXLMSerializable.SaveTo(Node: IXMLNode);
+procedure TXMLSerializable.SaveTo(Node: IXMLNode);
 var
 	propList : PPropList;
 	x, propCount : Integer;
 	Filter : TTypeKinds;
-	propName : string;
 	propInfo : PPropInfo;
 begin
+   //Ajusta nome da classe registrada para a recuperação
+	Node.Attributes['class']:=Self.ClassName;
+
 	//Fitra atributos pertinentes a serialização
 	Filter := [ {tkUnknown,} tkInteger, tkChar, tkEnumeration, tkFloat,
 	tkString, tkSet, tkClass, {tkMethod,} tkWChar, tkLString, tkWString,
@@ -48,10 +63,72 @@ begin
 	end;
 end;
 
-
-procedure TXLMSerializable.SaveProp(PInfo : PPropInfo; Node : IXMLNode);
+function TXMLSerializable.ValPropEnum(PInfo: PPropInfo): string;
 var
-	StrValue : string;
+	 OrdVal : integer;
+begin
+	 OrdVal := GetOrdProp(Self, PInfo);
+	 if OrdVal <> PInfo^.Default then begin
+		 Result := GetEnumName(GetPropType(PInfo), OrdVal);
+	 end;
+end;
+
+function TXMLSerializable.ValPropFloat(PInfo: PPropInfo): string;
+const
+	 Precisions: array[TFloatType] of Integer = (7, 15, 18, 18, 19); //digitos
+var
+	 Val : Extended;
+	 Prec : TFloatType;
+begin
+	 Val := GetFloatProp(Self, PInfo);
+	 Prec := GetTypeData(GetPropType(PInfo)).FloatType;
+	 Result := FloatToStrF(Val, ffGeneral, Precisions[Prec], 0);
+end;
+
+function TXMLSerializable.ValPropInt64(PInfo: PPropInfo): string;
+var
+	 Val : int64; //maior tipo
+begin
+	 try
+		 Val := GetInt64Prop(Self, PInfo);
+		 if Val <> PInfo.Default then begin
+			 Result := IntToStr(Val);
+		 end;
+	 except
+		 Result := EmptyStr;
+	 end;
+end;
+
+function TXMLSerializable.ValPropInteger(PInfo: PPropInfo): string;
+var
+	 Val : longint; //maior tipo
+begin
+	 try
+		 Val := GetOrdProp(Self, PInfo);
+		 if Val <> 0 then begin
+			 Result := IntToStr(Val);
+		 end;
+	 except
+		 Result := EmptyStr;
+	 end;
+end;
+
+function TXMLSerializable.ValPropSet(PInfo: PPropInfo): string;
+begin
+	 Result := GetSetProp(Self, PInfo);
+	 if Result <> EmptyStr then begin
+		 Result := '[' + Result + ']';
+	 end;
+end;
+
+function TXMLSerializable.ValPropString(PInfo: PPropInfo): string;
+begin
+	 Result := GetStrProp(Self, PInfo);
+end;
+
+procedure TXMLSerializable.SaveProp(PInfo : PPropInfo; Node : IXMLNode);
+var
+	SName, StrValue : string;
 begin
 	{TODO -oroger -cdsg : Pegar demais metodos de IOObj}
 	 case PInfo.PropType^.Kind of
@@ -77,26 +154,8 @@ begin
 			 StrValue := Self.ValPropSet(PInfo);
 		 end;
 		 tkClass    : begin
-			 StrValue := Self.ValPropClass(PInfo);
-		  {
-			 SubPropInstance:=TIOObj.Create( GetObjectProp( Self.FObject, PInfo ), Self.RootObject, tkAny );
-			 try
-				 SL:=TStringList.Create;
-				 try
-					 SL.Text:=SubPropInstance.AsText;
-					 for i:=1 to SL.Count-1 do begin //Nao endenta 1a linha, que recebe endentacao no chamador
-						 SL.Strings[i]:=_ENDENT_ + SL.Strings[i];
-					 end;
-					 Result:=SL.Text;
-					 //System.Delete( Result, Length( Result ) - 2, 2 ); //Remove a linha em branco do final;
-				 finally
-					 SL.Free;
-				 end;
-			 finally
-				 SubPropInstance.Free;
-			 end;
-			 Exit; //Nao agregar o PropName=Value do final
-		  }
+			//StrValue := Self.ValPropClass(PInfo);
+			 Self.SaveSubInstance( PInfo, Node );
 		 end;
 		 tkMethod    : begin
 
@@ -132,6 +191,26 @@ begin
 	 if (StrValue <> EmptyStr) and (PInfo.PropType^.Kind <> tkClass) then begin
 		 StrValue := PInfo.Name + ' = ' + StrValue;
 	 end;
+end;
+
+procedure TXMLSerializable.SaveSubInstance(PInfo : PPropInfo; ParentNode : IXMLNode );
+var
+	 Instance : TObject;
+	 subNode : IXMLNode;
+begin
+	 Instance := TypInfo.GetObjectProp(Self, PInfo);
+	 if ( Instance <> nil )then begin
+		 if (Instance is TXMLSerializable) then begin
+			subNode:=ParentNode.ChildNodes.FindNode(PInfo.Name);
+			if ( subNode = nil ) then begin
+				subNode:=ParentNode.AddChild( PInfo.Name );
+				subNode.Attributes['class' ]:=PInfo.PropType^.Name;
+			end;
+			TXMLSerializable( Instance ).SaveTo( subNode );
+		 end else begin
+
+		 end;
+    end;
 end;
 
 end.

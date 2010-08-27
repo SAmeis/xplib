@@ -8,20 +8,23 @@ unit TREConfig;
 interface
 
 uses
-    Classes, SysUtils, XMLDoc, XMLIntf, AppSettings, TREZones;
+    Classes, SysUtils, XMLDoc, XMLIntf, AppSettings, TREZones, OPXMLSerializable;
 
 const
 	TRE_DV_CONFIG_FILENAME = 'BaseConfig.xml';
 
 type
-    TTREBaseConfig = class(TComponent)
+	 TTREBaseConfig = class(TXMLSerializable)
     private
-        _FCentralMapping : TTRECentralMapping;
+		 _FCentralMapping : TTRECentralMapping;
+		 FAnchor : TComponent;
+		 XMLDoc : TXMLDocument;
         FCfg : TBaseSettings;
         function GetCentralMapping : TTRECentralMapping;
     public
         constructor Create(const XMLFilename : string); reintroduce;
-        destructor Destroy; override;
+		 destructor Destroy; override;
+	 published
         property CentralMapping : TTRECentralMapping read GetCentralMapping;
     end;
 
@@ -31,13 +34,13 @@ implementation
 
 constructor TTREBaseConfig.Create(const XMLFilename : string);
 var
-    xmlDoc : TXMLDocument;
-    node :   IXMLNode;
+	 node :   IXMLNode;
 begin
 	 if not(FileExists( XMLFilename )) then begin
-	  raise Exception.CreateFmt('Arquivo "%s" para leitura de confgurações não encontrado', [ XMLFilename ]);
+		raise Exception.CreateFmt('Arquivo "%s" para leitura de confgurações não encontrado', [ XMLFilename ]);
 	 end;
-	 xmlDoc := TXMLDocument.Create(Self);
+	 Self.FAnchor:=TComponent.Create(nil);
+	 xmlDoc := TXMLDocument.Create(Self.FAnchor);
 	 try
 		xmlDoc.LoadFromFile(XMLFilename);
 	 except
@@ -52,7 +55,9 @@ end;
 destructor TTREBaseConfig.Destroy;
 begin
 	 Self.FCfg.Free;
-    Self._FCentralMapping.Free;
+	 Self._FCentralMapping.Free;
+	 Self.XMLDoc.Free;
+	 Self.FAnchor.Free;
     inherited;
 end;
 
@@ -65,4 +70,8 @@ begin
     Result := Self._FCentralMapping;
 end;
 
+initialization
+begin
+	RegisterClass(TTREBaseConfig);
+end;
 end.
