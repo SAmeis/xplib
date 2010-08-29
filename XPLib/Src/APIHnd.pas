@@ -9,6 +9,14 @@ interface
 uses
     Windows, SysUtils, SysConst;
 
+const
+   /// <summary>
+   /// Erro base para todos os usados no modelo de chamada da API clássica windows derivados
+   /// </summary>
+   ERROR_XP_BASE = 80000;
+   ERROR_XP_ALREADY_DONE = ERROR_XP_BASE + 1;
+
+
 function CheckAPI(LastError: integer): boolean;
 deprecated;
 { {

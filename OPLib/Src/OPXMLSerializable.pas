@@ -3,12 +3,33 @@ unit OPXMLSerializable;
 interface
 
 uses
-	Classes, SysUtils, TypInfo, XMLIntf;
+	Classes, SysUtils, TypInfo, XMLIntf, Contnrs;
+
 
 type
-	TXMLSerializable = class(TPersistent)
+ IXMLSerializable = interface(IUnknown)
+ ['{ADBDEA7E-AE56-437A-ADBB-0759C738501A}']
+   procedure SaveTo( Node : IXMLNode );
+   procedure LoadFrom( Node : IXMLNode; CreateDefault : Boolean );
+  end;
+
+  {TODO -oroger -clib : implementar classe para a lista  }
+   TXMLSerializableList = class( TObjectList, IXMLSerializable )
+   private
+       FRefCount : integer;
+   protected
+       function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
+       function _AddRef: Integer; stdcall;
+       function _Release: Integer; stdcall;
+   public
+       procedure SaveTo( Node : IXMLNode );
+       procedure LoadFrom( Node : IXMLNode; CreateDefault : Boolean );
+   end;
+
+	TXMLSerializable = class(TPersistent, IXMLSerializable)
 	private
-		procedure SaveProp(PInfo : PPropInfo; Node : IXMLNode);
+       FRefCount : integer;
+		procedure SaveAttribute(PInfo : PPropInfo; Node : IXMLNode);
 		procedure SaveSubInstance(PInfo : PPropInfo; ParentNode : IXMLNode );
 		function GetPropType(PInfo : PPropInfo) : PTypeInfo;
 		function ValPropInteger(PInfo : PPropInfo) : string;
@@ -17,6 +38,10 @@ type
 		function ValPropFloat(PInfo : PPropInfo) : string;
 		function ValPropSet(PInfo : PPropInfo) : string;
 		function ValPropInt64(PInfo : PPropInfo) : string;
+   protected
+       function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
+       function _AddRef: Integer; stdcall;
+       function _Release: Integer; stdcall;
 	public
 		procedure SaveTo( Node : IXMLNode );
 		procedure LoadFrom( Node : IXMLNode; CreateDefault : Boolean );
@@ -24,6 +49,9 @@ type
 
 
 implementation
+
+uses
+   Windows;
 
 { TXLMSerializable }
 
@@ -35,6 +63,14 @@ end;
 procedure TXMLSerializable.LoadFrom(Node: IXMLNode; CreateDefault: Boolean);
 begin
 
+end;
+
+function TXMLSerializable.QueryInterface(const IID: TGUID; out Obj): HResult;
+begin
+  if GetInterface(iid, Obj) then
+    Result := S_OK
+  else
+    Result := E_NOINTERFACE;
 end;
 
 procedure TXMLSerializable.SaveTo(Node: IXMLNode);
@@ -59,7 +95,7 @@ begin
 	GetPropList(Self.ClassInfo, Filter, propList);
 
 	for x := 0 to propCount - 1 do begin
-		Self.SaveProp( propList^[x], Node );
+		Self.SaveAttribute( propList^[x], Node );
 	end;
 end;
 
@@ -126,7 +162,19 @@ begin
 	 Result := GetStrProp(Self, PInfo);
 end;
 
-procedure TXMLSerializable.SaveProp(PInfo : PPropInfo; Node : IXMLNode);
+function TXMLSerializable._AddRef: Integer;
+begin
+    Result := InterlockedIncrement(Self.FRefCount);
+end;
+
+function TXMLSerializable._Release: Integer;
+begin
+    Result := InterlockedDecrement(FRefCount);
+    if Result = 0 then
+      Destroy;
+end;
+
+procedure TXMLSerializable.SaveAttribute(PInfo : PPropInfo; Node : IXMLNode);
 var
 	SName, StrValue : string;
 begin
@@ -211,6 +259,38 @@ begin
 
 		 end;
     end;
+end;
+
+{ TXMLSerializableList }
+
+procedure TXMLSerializableList.LoadFrom(Node: IXMLNode; CreateDefault: Boolean);
+begin
+
+end;
+
+function TXMLSerializableList.QueryInterface(const IID: TGUID; out Obj): HResult;
+begin
+  if GetInterface(iid, Obj) then
+    Result := S_OK
+  else
+    Result := E_NOINTERFACE;
+end;
+
+procedure TXMLSerializableList.SaveTo(Node: IXMLNode);
+begin
+
+end;
+
+function TXMLSerializableList._AddRef: Integer;
+begin
+    Result := InterlockedIncrement(Self.FRefCount);
+end;
+
+function TXMLSerializableList._Release: Integer;
+begin
+    Result := InterlockedDecrement(Self.FRefCount);
+    if Result = 0 then
+      Destroy;
 end;
 
 end.

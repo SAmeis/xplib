@@ -15,52 +15,52 @@ uses Windows, Messages;
 
 //Mensagens definidas pelo usuario para implemtacao de atividades assincronas dentro desta biblioteca
 const
-    UM_BASE = WM_USER + $0500; {{ Definida como inicio das mensagens }
-    UM_ERROR_BASE = UM_BASE + 1;
-    UM_COPY_ERROR = UM_ERROR_BASE + 1;
-    UM_TOOLTRAYICON = UM_COPY_ERROR + 1;
+    UM_BASE           = WM_USER + $0500; {{ Definida como inicio das mensagens }
+    UM_ERROR_BASE     = UM_BASE + 1;
+    UM_COPY_ERROR     = UM_ERROR_BASE + 1;
+    UM_TOOLTRAYICON   = UM_COPY_ERROR + 1;
     UM_TRAYRESETTOOLTIP = UM_TOOLTRAYICON + 1;
     UM_SETTING_CHANGE = UM_TRAYRESETTOOLTIP + 1;
     UM_PROGRESS_START = UM_SETTING_CHANGE + 1;
     UM_INSTANCE_ANNOUNCE = UM_PROGRESS_START + 1;
-	UM_REFRESH = UM_INSTANCE_ANNOUNCE + 1;
-	UM_APP_LOGIN = UM_REFRESH + 1;
+    UM_REFRESH        = UM_INSTANCE_ANNOUNCE + 1;
+    UM_APP_LOGIN      = UM_REFRESH + 1;
 
     UM_TIMER_BASE = $0550;
-	UM_PULSE = UM_TIMER_BASE + 1;
-	UM_TCP_MSG = UM_BASE + $0100;
-	UM_DESTROY = UM_BASE + $0150;
+    UM_PULSE      = UM_TIMER_BASE + 1;
+    UM_TCP_MSG    = UM_BASE + $0100;
+    UM_DESTROY    = UM_BASE + $0150;
 
 
 //Tipos dados como limites de algum outro ou de estrutura
 const
-	_REAL_MIN_ABS = +1E-20;
-	_REAL_MAX_ABS = +1E+20;
-	_REAL_VAL_POS = +1E+20;
-	_REAL_VAL_NEG = -1E+20;
-	_STRING_SIZE = 255;
-	MaxInt64 = Int64(4611686018427387904); //2^62
-	MinInt64 = Int64( -4611686018427387904); //2^62
+    _REAL_MIN_ABS = +1E-20;
+    _REAL_MAX_ABS = +1E+20;
+    _REAL_VAL_POS = +1E+20;
+    _REAL_VAL_NEG = -1E+20;
+    _STRING_SIZE  = 255;
+    MaxInt64      = int64(4611686018427387904);  //2^62
+    MinInt64      = int64(-4611686018427387904); //2^62
 
 
 //constantes de som produzidas pelo sistema
 const
-	MB_SPEAKER = $FFFFFFFF;
+    MB_SPEAKER = $FFFFFFFF;
 
 //constantes nao localizadas na API do windows e fornecidas aqui
 const
-	MAX_USERNAME_LENGTH = 2 * MAX_COMPUTERNAME_LENGTH;
+    MAX_USERNAME_LENGTH = 2 * MAX_COMPUTERNAME_LENGTH;
 
 
 {$IFNDEF WIN32}
 type
-	DWORD = record
-		{1 Tipo usado apenas para o Delphi 1 ( 16 bits ) }
+    DWORD = record
+        {1 Tipo usado apenas para o Delphi 1 ( 16 bits ) }
  {{
  Tipo usado apenas para o Delphi 1 ( 16 bits )
  }
-		HI: Word;
-		{1 Parte alta da palavra dupla }
+        HI: Word;
+        {1 Parte alta da palavra dupla }
   {{
   Parte alta da palavra dupla
   }
@@ -71,7 +71,7 @@ type
   }
     end;
 
-    Int16 = integer;
+    Int16 = Integer;
 {$ELSE}
 type
     Int16 = smallint;
@@ -80,63 +80,63 @@ type
 type
     QUADWORD = record
         case Tag: boolean of
-            TRUE: (
+            True: (
                 DWORD1: DWORD;
                 DWORD2: DWORD;
             );
-            FALSE: (
-                WORD1: WORD;
-                WORD2: WORD;
-                WORD3: WORD;
-                WORD4: WORD;
+            False: (
+                WORD1: Word;
+                WORD2: Word;
+                WORD3: Word;
+                WORD4: Word;
             );
     end;
 
 type
-    PLong = ^Longint;
+    PLong = ^longint;
 
 type
-    _REAL = double;
+    _REAL    = double;
     _GENERIC = _REAL;
 
-	//Alinhamentos
-    THrzPosition = (hpLeft, hpCenter, hpRigth);
-    TVrtPosition = (vpUpper, vpCenter, vpLower);
+    //Alinhamentos
+    THrzPosition    = (hpLeft, hpCenter, hpRigth);
+    TVrtPosition    = (vpUpper, vpCenter, vpLower);
     TControlPositon = (cpLeft, cpCenter, cpRigth);
 
 type
     TBooleanState = (bsNo, bsYes, bsUndefined);
 
-function HeapMemoryFree : LongInt; platform; deprecated;
+function HeapMemoryFree : longint; platform; deprecated;
 
 function IIf(Cond : boolean; TrueCond, FalseCond : string) : string; overload;
 
-function IIf(Cond : boolean; TrueCond, FalseCond : integer) : integer; overload;
+function IIf(Cond : boolean; TrueCond, FalseCond : Integer) : Integer; overload;
 
-function IIfInt(const Cond : Boolean; const T, F : integer) : integer;
+function IIfInt(const Cond : boolean; const T, F : Integer) : Integer;
 
 function InRange(const Value, MinValue, MaxValue : Extended) : boolean;
 
 
 {$IFNDEF WIN32}
 
-procedure IncPointer16(var P : Pointer; const Gap : word);
+procedure IncPointer16(var P : Pointer; const Gap : Word);
 
-procedure DecPointer16(var P : Pointer; const Gap : word);
+procedure DecPointer16(var P : Pointer; const Gap : Word);
 
 {$ENDIF}
 
-function MaxVal(const Val1, Val2 : double) : Double;
+function MaxVal(const Val1, Val2 : double) : double;
 
-function MinVal(const Val1, Val2 : double) : Double;
+function MinVal(const Val1, Val2 : double) : double;
 
 function ReturnAddress : Pointer;
 
-function SwapInstances(pInstance1, pInstance2 : Pointer; InstSize : Word) : Boolean;
+function SwapInstances(pInstance1, pInstance2 : Pointer; InstSize : Word) : boolean;
 
 implementation
 
-function HeapMemoryFree : LongInt;
+function HeapMemoryFree : longint;
     {1 Retorna a memoria do heap atualmente livre }
 begin
   {$IFDEF MSWINDOWS}
@@ -156,7 +156,7 @@ begin
     end;
 end;
 
-function IIf(Cond : boolean; TrueCond, FalseCond : integer) : integer; overload;
+function IIf(Cond : boolean; TrueCond, FalseCond : Integer) : Integer; overload;
     {{ 1 Se a condição passada for verdadeira retorna TrueCond, senao FalseCond }
 begin
     if Cond then begin
@@ -166,7 +166,7 @@ begin
     end;
 end;
 
-function IIfInt(const Cond : Boolean; const T, F : integer) : integer;
+function IIfInt(const Cond : boolean; const T, F : Integer) : Integer;
     {{1 Retorna valor T se a condicao for for vedadeira e F se contrario }
 begin
     if Cond then begin
@@ -183,58 +183,60 @@ begin
 end;
 
 {$IFNDEF WIN32}
-procedure DecPointer16(var P : Pointer; const Gap : word);
+procedure DecPointer16(var P : Pointer; const Gap : Word);
 {{1 Decrementa um ponteiro de 16 bits com um "Gap" de bytes de enderecos }
 var
-	Flag : byte;
-	Sgmt, Ofst : word;
+    Flag : byte;
+    Sgmt, Ofst : Word;
 begin
-	Flag:=0;
-	Sgmt:=DWord(P).Lo;
-	Ofst:=DWord(P).Hi;
-	asm
-		MOV AX, Ofst
-		MOV BX, &Gap
-		SUB AX,BX;
-		JNC @@1  {Estouro de segmento}
-		MOV &Flag, 01h
-		@@1:
-		MOV &Ofst, AX
-	end;
-	if Flag <>  0 then begin
-		Dec(Sgmt);
-	end;
-	p:=Ptr(Sgmt,Ofst);
+    Flag := 0;
+    Sgmt := DWord(P).Lo;
+    Ofst := DWord(P).Hi;
+    asm
+               MOV     AX, Ofst
+               MOV     BX, &Gap
+               SUB     AX,BX;
+               JNC     @@1  {Estouro de segmento}
+               MOV &Flag, 01h
+               @@1:
+
+               MOV     &Ofst, AX
+    end;
+    if Flag <> 0 then begin
+        Dec(Sgmt);
+    end;
+    p := Ptr(Sgmt, Ofst);
 end;
 
-procedure IncPointer16(var P : Pointer; const Gap : word);
+procedure IncPointer16(var P : Pointer; const Gap : Word);
 {{1 Incrementa um ponteiro de 16 bits com um "Gap" de bytes de enderecos }
 var
     Flag : byte;
-    Sgmt, Ofst : word;
+    Sgmt, Ofst : Word;
 begin
-	Flag:=0;
-	Sgmt:=DWord(P).Lo;
-	Ofst:=DWord(P).Hi;
-	asm
-		MOV AX, Ofst
-		MOV BX, &Gap
-		ADD AX,BX
-		JNC @@1        {Estouro de segmento}
-		MOV &Flag, 01h
-		@@1:
-		MOV &Ofst, AX
-	end;
-	if Flag <>  0 then begin
-		Inc(Sgmt);
-	end;
-	p:=Ptr(Sgmt,Ofst);
+    Flag := 0;
+    Sgmt := DWord(P).Lo;
+    Ofst := DWord(P).Hi;
+    asm
+               MOV     AX, Ofst
+               MOV     BX, &Gap
+               ADD     AX,BX
+               JNC     @@1        {Estouro de segmento}
+               MOV &Flag, 01h
+               @@1:
+
+               MOV     &Ofst, AX
+    end;
+    if Flag <> 0 then begin
+        Inc(Sgmt);
+    end;
+    p := Ptr(Sgmt, Ofst);
 end;
 
 {$ENDIF}
 
 
-function MaxVal(const Val1, Val2 : double) : Double;
+function MaxVal(const Val1, Val2 : double) : double;
     {{1 Retorna o maior valor dois passados }
 begin
     if Val1 > Val2 then begin
@@ -244,7 +246,7 @@ begin
     end;
 end;
 
-function MinVal(const Val1, Val2 : double) : Double;
+function MinVal(const Val1, Val2 : double) : double;
     {{1 Retorna o menor valor dois passados }
 begin
     if Val1 > Val2 then begin
@@ -255,27 +257,27 @@ begin
 end;
 
 function ReturnAddress : Pointer;
-    {{1 Retorna o endereco do metodo anterior da pilha }
+           {{1 Retorna o endereco do metodo anterior da pilha }
 asm
-    //MOV     EAX,[ESP + 4] !!! codegen dependant
-    MOV     EAX,[EBP - 4]
+           //MOV     EAX,[ESP + 4] !!! codegen dependant
+           MOV     EAX,[EBP - 4]
 end;
 
-function SwapInstances(pInstance1, pInstance2 : Pointer; InstSize : Word) : Boolean;
+function SwapInstances(pInstance1, pInstance2 : Pointer; InstSize : Word) : boolean;
     {{1 Troca o conteúdo das instancias de classes iguais }
 var
     TempBuffer : Pointer;
 begin
     GetMem(TempBuffer, InstSize);
-    if TempBuffer = NIL then begin
-        SwapInstances := FALSE;
+    if TempBuffer = nil then begin
+        SwapInstances := False;
         Exit;
     end;
     Move(Pointer(pInstance1^), Pointer(TempBuffer^), InstSize);
     Move(Pointer(pInstance2^), Pointer(pInstance1^), InstSize);
     Move(Pointer(TempBuffer^), Pointer(pInstance2^), InstSize);
     FreeMem(TempBuffer, InstSize);
-    SwapInstances := TRUE;
+    SwapInstances := True;
 end;
 
 
@@ -302,5 +304,3 @@ end.
 
 *)
 end.
-
-

@@ -67,7 +67,7 @@ type
 
 	 TTRECentralMapping = class(TXMLSerializable)
 	 private
-		 FCentralList : TObjectList;
+		 FCentralList : TXMLSerializableList;
 		 function GetCentrals(index : Integer) : TTRECentral;
 		 procedure SetCentrals(index : Integer; const Value : TTRECentral);
 	 public
