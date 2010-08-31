@@ -34,7 +34,8 @@ requires
   vclactnband,
   vclx,
   vcl,
-  designide;
+  designide,
+  xmlrtl;
 
 contains
   TREConsts in 'TREConsts.pas',
