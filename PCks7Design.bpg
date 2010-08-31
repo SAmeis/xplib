@@ -10,7 +10,7 @@ DCC = $(ROOT)\bin\dcc32.exe $**
 BRCC = $(ROOT)\bin\brcc32.exe $**
 #------------------------------------------------------------------------------
 PROJECTS = XPLibD7.bpl OPLibD7_7_0.bpl GDBLibD7.bpl BDELibD7_7_0.bpl FXLibD7_7_0.bpl GeneralLibD7_7_0.bpl StFLibD7_7_0.bpl \
-  INetLibD7_7_0.bpl ShellLibD7_7_0.bpl WinSysLibD7_7_0.bpl WinNetLibD7_7_0.bpl ECLibD7_7_0.bpl DlgLibD7_7_0.bpl TRELibD7_7_0.bpl
+  INetLibD7_7_0.bpl WinSysLibD7_7_0.bpl WinNetLibD7_7_0.bpl TRELibD7_7_0.bpl ShellLibD7_7_0.bpl ECLibD7_7_0.bpl DlgLibD7_7_0.bpl
 #------------------------------------------------------------------------------
 default: $(PROJECTS)
 #------------------------------------------------------------------------------
