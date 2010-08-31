@@ -16,6 +16,10 @@ const
     ERROR_XP_BASE         = 80000;
     ERROR_XP_ALREADY_DONE = ERROR_XP_BASE + 1;
 
+    {TODO -oroger -clib : Validar as constantes e explicitar em local apropriado futuramente}
+    NERR_BASE = 2100;
+    NERR_MAX  = NERR_BASE + 899;
+
 
 function CheckAPI(LastError : Integer) : boolean;
     deprecated;
@@ -49,6 +53,7 @@ type
         /// <input>API error code</input>
         class function CheckAPI(LastError : Integer) : boolean;
         class function GetEnvironmentVar(const EnvVar : string) : string;
+        class function SysErrorMessageEx(LastError : Integer) : string;
     end;
 
 implementation
@@ -117,20 +122,16 @@ class function TAPIHnd.CheckAPI(LastError : Integer) : boolean;
 
   Revision: 18/7/2005
 }
-const
-	{TODO -oroger -clib : Validar as constantes e explicitar em local apropriado futuramente}
-	 NERR_BASE = 2100;
-    NERR_MAX  = NERR_BASE + 899;
 var
     Error : EOSError;
     Msg :   string;
 begin
     if LastError <> 0 then begin
         if (LastError >= NERR_BASE) and (LastError <= NERR_MAX) then begin
-			//Captura os erros da API de rede
-			Msg := NetErrorMessage(LastError);
-		 end else begin
-			Msg := SysUtils.SysErrorMessage(LastError);
+            //Captura os erros da API de rede
+            Msg := NetErrorMessage(LastError);
+        end else begin
+            Msg := SysUtils.SysErrorMessage(LastError);
         end;
         Error := SysUtils.EOSError.CreateResFmt(PResStringRec(@SysConst.SOSError), [LastError, Msg]);
         Error.ErrorCode := LastError;
@@ -191,6 +192,17 @@ begin
         FreeLibrary(LibHandle);
     end else begin
         Result := '';
+    end;
+end;
+
+class function TAPIHnd.SysErrorMessageEx(LastError : Integer) : string;
+begin
+    {TODO -oroger -clib : Traduz todas as mensagens de erro extendidos ou não da Win API}
+    if (LastError >= NERR_BASE) and (LastError <= NERR_MAX) then begin
+        //Captura os erros da API de rede
+        Result := NetErrorMessage(LastError);
+    end else begin
+        Result := SysUtils.SysErrorMessage(LastError);
     end;
 end;
 
