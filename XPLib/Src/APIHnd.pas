@@ -47,7 +47,7 @@ type
     /// <version>1.0</version>
     TAPIHnd = class(TObject)
     private
-        class function NetErrorMessage(ErrorCode : Integer) : string;
+        class function NetErrorMessage(ErrorCode : Cardinal ) : string;
     public
         /// <author>roger</author>
         /// <input>API error code</input>
@@ -179,7 +179,7 @@ begin
     end;
 end;
 
-class function TAPIHnd.NetErrorMessage(ErrorCode : Integer) : string;
+class function TAPIHnd.NetErrorMessage(ErrorCode : Cardinal ) : string;
 const
     ResourceLibName: array[boolean] of PChar = ('netmsg95.dll', 'netmsg.dll');
 var
@@ -191,7 +191,7 @@ begin
         SetString(Result, Buffer, LoadString(LibHandle, ErrorCode, Buffer, Sizeof(Buffer)));
         FreeLibrary(LibHandle);
     end else begin
-        Result := '';
+        Result := Format( 'Erro extendido de rede desconhecido(%d)', [ ErrorCode ] );;
     end;
 end;
 
