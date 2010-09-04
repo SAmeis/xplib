@@ -86,8 +86,11 @@ begin
 	//Fitra atributos pertinentes a serialização
 	Filter := [ {tkUnknown,} tkInteger, tkChar, tkEnumeration, tkFloat,
 	tkString, tkSet, tkClass, {tkMethod,} tkWChar, tkLString, tkWString,
-	tkVariant, tkArray, tkRecord, tkInterface, tkInt64, tkDynArray,
-	tkUString, tkClassRef {, tkPointer, tkProcedure} ];
+	tkVariant, tkArray, tkRecord, tkInterface, tkInt64, tkDynArray
+	 {, tkPointer, tkProcedure} ];
+	{$IFDEF UNICODE}
+	Filter := Filter + [ tkClassRef, tkUString ];
+	{$ENDIF}
 
 	//Carrega os atributos para a lista
 	propCount:= GetPropList(Self.ClassInfo, Filter, nil);
