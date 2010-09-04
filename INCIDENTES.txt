@@ -1,7 +1,3 @@
-*****************  Informação de migração para SVN ****************
-Passada para SVN
-
-
 ************* Template de Registro ************
 Compilador: Delphi 7.0 Build 8.1
 Data: 
@@ -13,9 +9,44 @@ Descricão :
 ---------
 Solução:
 ---------
+*********** Fim Template de Registro **********
+
+*****************  Captura de versão de compilador de acordo com a IDE ****************
+Compilador: Delphi 5.0 e superior
+Data: 20100904
+
+---------
+Descricão : Identificando qual o compilador presente
+---------
+
+---------
+Solução: Comparar a definição presente segundo a tabela abaixo
+---------
+
+Product Name                     Version   Conditional Define
+
+Embarcadero RAD Studio XE        14.0      VER220
+Embarcadero RAD Studio 2010      13.0      VER210
+CodeGear C++ Builder 2009        12.0      VER200
+CodeGear Delphi 2007 for .NET    11.0      VER190
+CodeGear Delphi 2007 for Win32   11.0      VER180 and VER185
+Borland Developer Studio 2006    10.0      VER180
+Borland Delphi 2005              9.0       VER170
+Borland Delphi 8 for .NET        8.0       VER160 *
+C++BuilderX                      ?         ?
+Borland C#Builder                1.0       VER160 *
+Borland Delphi 7                 7.0       VER150
+Borland Kylix 3                  3.0       VER140 **
+Borland C++Builder 6             ?         VER140 **
+Borland Kylix 2                  2.0       VER140 **
+Borland Delphi 6                 6.0       VER140 **
+Borland Kylix                    1.0       VER140 **
+Borland C++Builder 5             ?         VER130 ***
+Borland Delphi 5                 5.0       VER130 ***
+*****************  Fim Captura de versão de compilador de acordo com a IDE ****************
+
 
 ***************************************************************************************************
-*********** Fim Template de Registro **********
 Compilador: Delphi 7.0 Build 8.1
 Data: quinta-feira, 2 de dezembro de 2004
 
