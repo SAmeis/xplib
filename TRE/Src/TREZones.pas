@@ -13,83 +13,83 @@ uses
 type
     TTRECentral = class;
 
-	 TTREZone = class(TXMLSerializable)
-	 private
-		 FId :      Integer;
-		 FCentral : TTRECentral;
-		 function GetCentral : TTRECentral;
-		 function GetCentralIndex : Integer;
-		 procedure SetCentral(const Value : TTRECentral);
-	 protected
-	 public
-		 constructor Create(AZoneId : Integer); virtual;
-		 procedure BeforeDestruction; override;
-		 property Id : Integer read FId;
-		 ///  <summary> Retorna ordem da zona dentro da central, caso haja uma definida para a mesma </summary>
-		 ///  <remarks>
-		 ///  Caso não haja central pai para esta zona -1 será retornado
-		 ///  </remarks>
-		 property CentralIndex : Integer read GetCentralIndex;
-		 property Central : TTRECentral read GetCentral write SetCentral;
-	 end;
+    TTREZone = class(TXMLSerializable)
+    private
+        FId :      Integer;
+        FCentral : TTRECentral;
+        function GetCentral : TTRECentral;
+        function GetCentralIndex : Integer;
+        procedure SetCentral(const Value : TTRECentral);
+    protected
+    public
+        constructor Create(AZoneId : Integer); virtual;
+        procedure BeforeDestruction; override;
+        property Id : Integer read FId;
+        /// <summary> Retorna ordem da zona dentro da central, caso haja uma definida para a mesma </summary>
+        /// <remarks>
+        /// Caso não haja central pai para esta zona -1 será retornado
+        /// </remarks>
+        property CentralIndex : Integer read GetCentralIndex;
+        property Central : TTRECentral read GetCentral write SetCentral;
+    end;
 
-	 TTRECentral = class(TXMLSerializable)
-	 private
-		 FId :       Integer;
-		 FZoneList : TObjectList;
-		 /// <summary>
-		 /// Retorna a zona indexada pelo valor de index(lista interna)
-		 /// </summary>
-		 /// <param name="index"></param>
-		 /// <returns>Zona eleitoral da central</returns>
-		 function GetZones(index : Integer) : TTREZone;
-		 function GetPrimaryZone : TTREZone;
-		 ///  <summary> Ajusta a zona dada como sendo a zona primária </summary>
-		 procedure SetPrimaryZone(const Value : TTREZone);
-		 function GetCount : Integer;
-	 public
-		 constructor Create(ACentralId : Integer); virtual;
-		 property Id : Integer read FId;
-		 property Count : Integer read GetCount;
-		 property Zones[index : Integer] : TTREZone read GetZones;
-		 property PrimaryZone : TTREZone read GetPrimaryZone write SetPrimaryZone;
-		 ///  <summary> Adiciona uma zona a lista/central </summary>
-		 ///  <remarks> Impede a repetição das zonas por instância </remarks>
-		 function Add(Zone : TTREZone) : Integer;
-		 ///  <summary>Indica se a zona passada pertence ao conjunto(central)</summary>
-		 ///  <remarks>
-		 ///      Indica se a zona passada pertence ao conjunto(central)
-		 ///     Informa-se o identificar da zona
-		 ///  </remarks>
-		 function isPertinent(ZoneId : Integer) : boolean;
-		 function GetZoneById(ZoneId : Integer) : TTREZone;
-	 end;
+    TTRECentral = class(TXMLSerializable)
+    private
+        FId :       Integer;
+        FZoneList : TObjectList;
+        /// <summary>
+        /// Retorna a zona indexada pelo valor de index(lista interna)
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns>Zona eleitoral da central</returns>
+        function GetZones(index : Integer) : TTREZone;
+        function GetPrimaryZone : TTREZone;
+        ///  <summary> Ajusta a zona dada como sendo a zona primária </summary>
+        procedure SetPrimaryZone(const Value : TTREZone);
+        function GetCount : Integer;
+    public
+        constructor Create(ACentralId : Integer); virtual;
+        property Id : Integer read FId;
+        property Count : Integer read GetCount;
+        property Zones[index : Integer] : TTREZone read GetZones;
+        property PrimaryZone : TTREZone read GetPrimaryZone write SetPrimaryZone;
+        ///  <summary> Adiciona uma zona a lista/central </summary>
+        ///  <remarks> Impede a repetição das zonas por instância </remarks>
+        function Add(Zone : TTREZone) : Integer;
+        ///  <summary>Indica se a zona passada pertence ao conjunto(central)</summary>
+        ///  <remarks>
+        ///      Indica se a zona passada pertence ao conjunto(central)
+        ///     Informa-se o identificar da zona
+        ///  </remarks>
+        function isPertinent(ZoneId : Integer) : boolean;
+        function GetZoneById(ZoneId : Integer) : TTREZone;
+    end;
 
-	 TTRECentralMapping = class(TXMLSerializable)
-	 private
-		 FCentralList : TXMLSerializableList;
-		 function GetCentrals(index : Integer) : TTRECentral;
-		 procedure SetCentrals(index : Integer; const Value : TTRECentral);
-	 public
-		 constructor Create; virtual;
-		 destructor Destroy; override;
-		 procedure LoadHardCoded;
-		 procedure LoadXMLConfig( CentralMapping : IXMLNode );
-		 procedure SaveXMLConfig( CentralMapping : IXMLNode );
-		 function GetZoneById(ZoneId : Integer) : TTREZone;
-	 published
-	 	property Centrals[index : Integer] : TTRECentral read GetCentrals;
-	 end;
+    TTRECentralMapping = class(TXMLSerializable)
+    private
+        FCentralList : TXMLSerializableList;
+        function GetCentrals(index : Integer) : TTRECentral;
+        procedure SetCentrals(index : Integer; const Value : TTRECentral);
+    public
+        constructor Create; virtual;
+        destructor Destroy; override;
+        procedure LoadHardCoded;
+        procedure LoadXMLConfig(CentralMapping : IXMLNode);
+        procedure SaveXMLConfig(CentralMapping : IXMLNode);
+        function GetZoneById(ZoneId : Integer) : TTREZone;
+    published
+        property Centrals[index : Integer] : TTRECentral read GetCentrals;
+    end;
 
 implementation
 
 procedure TTREZone.BeforeDestruction;
 begin
-	 if Assigned(Self.FCentral) then begin
-		 Self.FCentral.FZoneList.Remove(Self);
-		 Self.FCentral := nil;
-	 end;
-	 inherited;
+    if Assigned(Self.FCentral) then begin
+        Self.FCentral.FZoneList.Remove(Self);
+        Self.FCentral := nil;
+    end;
+    inherited;
 end;
 
 constructor TTREZone.Create(AZoneId : Integer);
@@ -292,12 +292,12 @@ begin
     z.Central := c;
 end;
 
-procedure TTRECentralMapping.LoadXMLConfig(CentralMapping: IXMLNode);
+procedure TTRECentralMapping.LoadXMLConfig(CentralMapping : IXMLNode);
 begin
 
 end;
 
-procedure TTRECentralMapping.SaveXMLConfig(CentralMapping: IXMLNode);
+procedure TTRECentralMapping.SaveXMLConfig(CentralMapping : IXMLNode);
 begin
 
 end;
