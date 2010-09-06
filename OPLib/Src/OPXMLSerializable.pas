@@ -83,13 +83,13 @@ begin
    //Ajusta nome da classe registrada para a recuperação
 	Node.Attributes['class']:=Self.ClassName;
 
-	//Fitra atributos pertinentes a serialização
+	//Fitra atributos pertinentes a serialização. Remove atributos não suportados
 	Filter := [ {tkUnknown,} tkInteger, tkChar, tkEnumeration, tkFloat,
 	tkString, tkSet, tkClass, {tkMethod,} tkWChar, tkLString, tkWString,
 	tkVariant, tkArray, tkRecord, tkInterface, tkInt64, tkDynArray
 	 {, tkPointer, tkProcedure} ];
 	{$IFDEF UNICODE}
-	Filter := Filter + [ tkClassRef, tkUString ];
+	Filter := Filter + [ tkClassRef, tkUString ];  //adiciona tipo especifico para Delphgi 2010+
 	{$ENDIF}
 
 	//Carrega os atributos para a lista
