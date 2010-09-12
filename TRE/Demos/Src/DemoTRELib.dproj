@@ -1,10 +1,10 @@
 ﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 		<PropertyGroup>
-			<ProjectGuid>{22280305-3162-4DE1-8301-23AE5C56426E}</ProjectGuid>
-			<MainSource>TRELib.dpk</MainSource>
-			<Config Condition="'$(Config)'==''">Release</Config>
-			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
+			<ProjectGuid>{23E78F90-51D9-4391-92F6-A0AFD66FA2A6}</ProjectGuid>
 			<ProjectVersion>12.0</ProjectVersion>
+			<MainSource>DemoTRELib.dpr</MainSource>
+			<Config Condition="'$(Config)'==''">Debug</Config>
+			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
 			<Base>true</Base>
@@ -20,61 +20,39 @@
 			<Base>true</Base>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Base)'!=''">
-			<DesignOnlyPackage>false</DesignOnlyPackage>
-			<DCC_UNSAFE_TYPE>true</DCC_UNSAFE_TYPE>
+			<DCC_ExeOutput>..\Debug</DCC_ExeOutput>
+			<DCC_UnitAlias>WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;$(DCC_UnitAlias)</DCC_UnitAlias>
+			<DCC_BplOutput>..\Debug</DCC_BplOutput>
+			<DCC_DependencyCheckOutputName>..\Debug\DemoTRELib.exe</DCC_DependencyCheckOutputName>
+			<DCC_DcuOutput>..\Debug</DCC_DcuOutput>
+			<DCC_DcpOutput>..\Debug</DCC_DcpOutput>
 			<DCC_ImageBase>00400000</DCC_ImageBase>
-			<DCC_DependencyCheckOutputName>..\..\..\Lib\D2010\TRELib.bpl</DCC_DependencyCheckOutputName>
-			<DCC_UNSAFE_CAST>true</DCC_UNSAFE_CAST>
-			<DCC_UNSAFE_CODE>true</DCC_UNSAFE_CODE>
-			<DCC_UnitSearchPath>$(DLib);$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
 			<DCC_Platform>x86</DCC_Platform>
-			<DCC_UnitAlias>WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;WinTypes=Windows;WinProcs=Windows;$(DCC_UnitAlias)</DCC_UnitAlias>
-			<DCC_BplOutput>$(DLib)</DCC_BplOutput>
-			<DCC_Description>AAA - TRE-Lib - Delphi 2010</DCC_Description>
-			<DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_1)'!=''">
 			<DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
-			<DCC_S>false</DCC_S>
-			<DCC_N>true</DCC_N>
-			<DCC_K>false</DCC_K>
-			<GenDll>true</GenDll>
-			<DCC_OutputNeverBuildDcps>true</DCC_OutputNeverBuildDcps>
-			<DCC_DcpOutput>$(DLib)</DCC_DcpOutput>
-			<DCC_F>false</DCC_F>
-			<GenPackage>true</GenPackage>
+			<DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
 			<DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
 			<DCC_DebugInformation>false</DCC_DebugInformation>
-			<DCC_E>false</DCC_E>
-			<DCC_AssertionsAtRuntime>false</DCC_AssertionsAtRuntime>
-			<DCC_DcuOutput>$(DLib)</DCC_DcuOutput>
 		</PropertyGroup>
-		<PropertyGroup Condition="'$(Cfg_1)'!=''"/>
 		<PropertyGroup Condition="'$(Cfg_2)'!=''">
-			<DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+			<DCC_Define>DEBUG;DEBU_ALL;$(DCC_Define)</DCC_Define>
 		</PropertyGroup>
 		<ItemGroup>
-			<DelphiCompile Include="TRELib.dpk">
+			<DelphiCompile Include="DemoTRELib.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="TRELib.dcr"/>
-			<DCCReference Include="rtl.dcp"/>
-			<DCCReference Include="XPLibD14.dcp"/>
-			<DCCReference Include="vclactnband.dcp"/>
-			<DCCReference Include="vclx.dcp"/>
-			<DCCReference Include="vcl.dcp"/>
-			<DCCReference Include="designide.dcp"/>
-			<DCCReference Include="StFLibD14.dcp"/>
-			<DCCReference Include="OPLibD14.dcp"/>
-			<DCCReference Include="TREConsts.pas"/>
-			<DCCReference Include="TREUtils.pas"/>
-			<DCCReference Include="TREZones.pas"/>
-			<DCCReference Include="TREConfig.pas"/>
-			<None Include="ModelSupport_TRELib\default.txaPackage"/>
-			<None Include="ModelSupport_TRELib\default.txvpck"/>
-			<None Include="ModelSupport_TRELib\TREUtils\default.txvpck"/>
-			<None Include="ModelSupport_TRELib\TREZones\default.txvpck"/>
-			<None Include="ModelSupport_TRELib\TREZones\default.txaPackage"/>
-			<None Include="ModelSupport_TRELib\TREConfig\default.txvpck"/>
-			<None Include="ModelSupport_TRELib\TREConsts\default.txvpck"/>
+			<DCCReference Include="MainDemoForm.pas">
+				<Form>Form1</Form>
+			</DCCReference>
+			<DCCReference Include="..\..\..\Jedi\jvcl\run\JvAppStorage.pas"/>
+			<DCCReference Include="..\..\..\Jedi\jvcl\run\JvAppXMLStorage.pas"/>
+			<DCCReference Include="..\..\Src\TREZones.pas"/>
+			<DCCReference Include="..\..\..\OPLib\Src\OPXMLSerializable.pas"/>
+			<None Include="ModelSupport_DemoTRELib\default.txaPackage"/>
+			<None Include="ModelSupport_DemoTRELib\default.txvpck"/>
+			<None Include="ModelSupport_DemoTRELib\MainDemoForm\default.txvpck"/>
+			<None Include="ModelSupport_DemoTRELib\DemoTRELib\default.txvpck"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>
@@ -90,11 +68,11 @@
 		<Import Project="$(BDS)\Bin\CodeGear.Delphi.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')"/>
 		<ProjectExtensions>
 			<Borland.Personality>Delphi.Personality.12</Borland.Personality>
-			<Borland.ProjectType>Package</Borland.ProjectType>
+			<Borland.ProjectType/>
 			<BorlandProject>
 				<Delphi.Personality>
 					<Source>
-						<Source Name="MainSource">TRELib.dpk</Source>
+						<Source Name="MainSource">DemoTRELib.dpr</Source>
 					</Source>
 					<Parameters>
 						<Parameters Name="UseLauncher">False</Parameters>
@@ -102,9 +80,9 @@
 						<Parameters Name="LoadUnspecifiedSymbols">False</Parameters>
 					</Parameters>
 					<VersionInfo>
-						<VersionInfo Name="IncludeVerInfo">True</VersionInfo>
+						<VersionInfo Name="IncludeVerInfo">False</VersionInfo>
 						<VersionInfo Name="AutoIncBuild">False</VersionInfo>
-						<VersionInfo Name="MajorVer">7</VersionInfo>
+						<VersionInfo Name="MajorVer">1</VersionInfo>
 						<VersionInfo Name="MinorVer">0</VersionInfo>
 						<VersionInfo Name="Release">0</VersionInfo>
 						<VersionInfo Name="Build">0</VersionInfo>
@@ -117,17 +95,23 @@
 						<VersionInfo Name="CodePage">1252</VersionInfo>
 					</VersionInfo>
 					<VersionInfoKeys>
-						<VersionInfoKeys Name="CompanyName">TRE-PB®</VersionInfoKeys>
+						<VersionInfoKeys Name="CompanyName"/>
 						<VersionInfoKeys Name="FileDescription"/>
-						<VersionInfoKeys Name="FileVersion">7.0.0.0</VersionInfoKeys>
+						<VersionInfoKeys Name="FileVersion">1.0.0.0</VersionInfoKeys>
 						<VersionInfoKeys Name="InternalName"/>
 						<VersionInfoKeys Name="LegalCopyright"/>
-						<VersionInfoKeys Name="LegalTrademarks">TRE-PB®</VersionInfoKeys>
+						<VersionInfoKeys Name="LegalTrademarks"/>
 						<VersionInfoKeys Name="OriginalFilename"/>
 						<VersionInfoKeys Name="ProductName"/>
-						<VersionInfoKeys Name="ProductVersion">7.0.0.0</VersionInfoKeys>
-						<VersionInfoKeys Name="Comments">Rogerlais Andrade</VersionInfoKeys>
+						<VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
+						<VersionInfoKeys Name="Comments"/>
 					</VersionInfoKeys>
+					<Excluded_Packages>
+						<Excluded_Packages Name="$(BDS)\bin\bcboffice2k140.bpl">Embarcadero C++Builder Office 2000 Servers Package</Excluded_Packages>
+						<Excluded_Packages Name="$(BDS)\bin\bcbofficexp140.bpl">Embarcadero C++Builder Office XP Servers Package</Excluded_Packages>
+						<Excluded_Packages Name="$(BDS)\bin\dcloffice2k140.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+						<Excluded_Packages Name="$(BDS)\bin\dclofficexp140.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+					</Excluded_Packages>
 				</Delphi.Personality>
 				<ModelSupport>True</ModelSupport>
 			</BorlandProject>

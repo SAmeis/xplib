@@ -36,7 +36,8 @@ requires
   vclx,
   vcl,
   designide,
-  StFLibD14;
+  StFLibD14,
+  OPLibD14;
 
 contains
   TREConsts in 'TREConsts.pas',

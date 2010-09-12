@@ -11,9 +11,36 @@ uses
     contnrs, Classes, TREConsts, TREUtils, XMLIntf, OPXMLSerializable;
 
 type
+    TTRELocalNet = class(TXMLSerializable);
+    TTREXMLPersist = class(TXMLSerializable);
+    TTREUnit = class(TTREXMLPersist); //Ancestral de zonas e de central
+
+    TTRERegional = class(TTREUnit)
+    private
+        FLocalNetwork : TXMLSerializableList;
+        FDescription: string;
+    public
+       constructor Create; virtual;
+    published
+        property LocalNetwork : TXMLSerializableList read FLocalNetwork write FLocalNetwork;
+        property Description : string read FDescription write FDescription;
+    end;
+
+
+    //Estação de trabalho
+    TTREStation = class(TTREXMLPersist)
+    private
+        function GetIsPrimary : boolean;
+        procedure SetIsPrimary(const Value : boolean);
+    public
+        constructor Create(AUnit : TTREUnit); virtual;
+        property isPrimary : boolean read GetIsPrimary write SetIsPrimary;
+    published
+    end;
+
     TTRECentral = class;
 
-    TTREZone = class(TXMLSerializable)
+    TTREZone = class(TTREUnit)
     private
         FId :      Integer;
         FCentral : TTRECentral;
@@ -33,7 +60,7 @@ type
         property Central : TTRECentral read GetCentral write SetCentral;
     end;
 
-    TTRECentral = class(TXMLSerializable)
+    TTRECentral = class(TTREUnit)
     private
         FId :       Integer;
         FZoneList : TObjectList;
@@ -58,14 +85,14 @@ type
         function Add(Zone : TTREZone) : Integer;
         ///  <summary>Indica se a zona passada pertence ao conjunto(central)</summary>
         ///  <remarks>
-        ///      Indica se a zona passada pertence ao conjunto(central)
-        ///     Informa-se o identificar da zona
+        ///  Indica se a zona passada pertence ao conjunto(central)
+        ///  Informa-se o identificar da zona
         ///  </remarks>
         function isPertinent(ZoneId : Integer) : boolean;
         function GetZoneById(ZoneId : Integer) : TTREZone;
     end;
 
-    TTRECentralMapping = class(TXMLSerializable)
+    TTRECentralMapping = class(TTREXMLPersist)
     private
         FCentralList : TXMLSerializableList;
         function GetCentrals(index : Integer) : TTRECentral;
@@ -77,8 +104,9 @@ type
         procedure LoadXMLConfig(CentralMapping : IXMLNode);
         procedure SaveXMLConfig(CentralMapping : IXMLNode);
         function GetZoneById(ZoneId : Integer) : TTREZone;
-    published
         property Centrals[index : Integer] : TTRECentral read GetCentrals;
+    published
+
     end;
 
 implementation
@@ -199,7 +227,7 @@ end;
 
 constructor TTRECentralMapping.Create;
 begin
-    Self.FCentralList := TObjectList.Create;
+    Self.FCentralList := TXMLSerializableList.Create;
 end;
 
 destructor TTRECentralMapping.Destroy;
@@ -305,6 +333,31 @@ end;
 procedure TTRECentralMapping.SetCentrals(index : Integer; const Value : TTRECentral);
 begin
 
+end;
+
+{ TTREStation }
+
+constructor TTREStation.Create(AUnit : TTREUnit);
+begin
+
+end;
+
+function TTREStation.GetIsPrimary : boolean;
+begin
+
+end;
+
+procedure TTREStation.SetIsPrimary(const Value : boolean);
+begin
+
+end;
+
+{ TTRERegional }
+
+constructor TTRERegional.Create;
+begin
+   inherited;
+   Self.FLocalNetwork:=TXMLSerializableList.Create;
 end;
 
 end.

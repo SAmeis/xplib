@@ -1,4 +1,6 @@
 <?xml version="1.0"?>
 <TgConfig Version="3" SubLevelDisabled="False">
   <Option Name="namespaceFolder.TREZones" Type="System.String" Value="TREZones" Category="General" IsBrowsable="False" />
+  <Option Name="namespaceFolder.TREUtils" Type="System.String" Value="TREUtils" Category="General" IsBrowsable="False" />
+  <Option Name="namespaceFolder.TREConsts" Type="System.String" Value="TREConsts" Category="General" IsBrowsable="False" />
 </TgConfig>
