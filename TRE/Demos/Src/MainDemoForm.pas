@@ -38,10 +38,14 @@ uses
 procedure TForm1.btnSaveConfigClick(Sender: TObject);
 var
    xmlStream : TFileStream;
-   ret : AnsiString;
+	ret : AnsiString;
+	net : TTRELocalNet;
 begin
-   Self.xmldocSamples.Options:=Self.xmldocSamples.Options + [doAutoSave];
-   Self.FRegional.Description:='TRE-PB';
+	Self.xmldocSamples.Options:=Self.xmldocSamples.Options + [doAutoSave];
+	Self.FRegional.Description:='TRE-PB';
+	net:=TTRELocalNet.Create;
+	net.PrimaryZone:=80;
+	Self.FRegional.AddNetwork( net );
    Self.FRegional.SaveTo( Self.xmldocSamples.DocumentElement );
 
 

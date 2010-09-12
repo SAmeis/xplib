@@ -247,7 +247,8 @@ begin
         end;
     end;
     if (StrValue <> EmptyStr) and (PInfo.PropType^.Kind <> tkClass) then begin
-        StrValue := PInfo.Name + ' = ' + StrValue;
+		 //StrValue := PInfo.Name + ' = ' + StrValue;
+		 Node.Attributes[ PInfo.Name ] := StrValue;
     end;
 end;
 

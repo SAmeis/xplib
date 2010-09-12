@@ -8,10 +8,18 @@ unit TREZones;
 interface
 
 uses
-    contnrs, Classes, TREConsts, TREUtils, XMLIntf, OPXMLSerializable;
+	 SysUtils, contnrs, Classes, TREConsts, TREUtils, XMLIntf, OPXMLSerializable;
 
 type
-    TTRELocalNet = class(TXMLSerializable);
+	 TTRELocalNet = class(TXMLSerializable)
+	 private
+		FPrimaryZone: integer;
+	 function GetSubNet: string;
+	 public
+		property SubNet : string read GetSubNet;
+	 published
+		property PrimaryZone : integer read FPrimaryZone write FPrimaryZone;
+    end;
     TTREXMLPersist = class(TXMLSerializable);
     TTREUnit = class(TTREXMLPersist); //Ancestral de zonas e de central
 
@@ -19,8 +27,11 @@ type
     private
         FLocalNetwork : TXMLSerializableList;
         FDescription: string;
+    function GetNetworks(index: Integer): TTRELocalNet;
     public
-       constructor Create; virtual;
+		constructor Create; virtual;
+		function AddNetwork( ANet : TTRELocalNet ) : Integer;
+		property Networks[index : Integer] : TTRELocalNet read GetNetworks;
     published
         property LocalNetwork : TXMLSerializableList read FLocalNetwork write FLocalNetwork;
         property Description : string read FDescription write FDescription;
@@ -354,10 +365,27 @@ end;
 
 { TTRERegional }
 
+function TTRERegional.AddNetwork(ANet: TTRELocalNet): Integer;
+begin
+	result:=Self.FLocalNetwork.Add( ANet );
+end;
+
 constructor TTRERegional.Create;
 begin
    inherited;
    Self.FLocalNetwork:=TXMLSerializableList.Create;
+end;
+
+function TTRERegional.GetNetworks(index: Integer): TTRELocalNet;
+begin
+	result:=TTRELocalNet( Self.FLocalNetwork.Items[ index ] );
+end;
+
+{ TTRELocalNet }
+
+function TTRELocalNet.GetSubNet: string;
+begin
+	result:='10.183.' + Format('%3.3d', [ Self.FPrimaryZone ] ) + '.*';
 end;
 
 end.

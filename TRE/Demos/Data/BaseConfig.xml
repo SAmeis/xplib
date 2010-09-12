@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<BaseConfig version="1.0.0" class="TTRERegional">
+<BaseConfig version="1.0.0" class="TTRERegional" Description="TRE-PB">
 	<CentralMapping class="TTRECentralMapping">
 		<Centrals>
 			<Central Name="João Pessoa" id="1">
@@ -46,6 +46,9 @@
 		</Centrals>
 	</CentralMapping>
 	<LocalNetwork class="TXMLSerializableList">
+		<Items/>
+		<Items/>
+		<Items/>
 		<Items/>
 		<Items/>
 		<Items/>  <Items/>
