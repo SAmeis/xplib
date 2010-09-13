@@ -291,26 +291,29 @@ end;
 
 procedure TXMLSerializableList.SaveTo(Node : IXMLNode);
 var
-    sn, itemNode : IXMLNode;
-    x : Integer;
-    subInstance : TObject;
-    serItem : IXMLSerializable;
-    nodeList : IXMLNodeList;
+	 ListNode, itemNode : IXMLNode;
+	 x : Integer;
+	 subInstance : TObject;
+	 serItem : IXMLSerializable;
 begin
-    Node.Attributes['class'] := Self.ClassName;
-    nodeList:=Node.GetAttributeNodes();
-    nodeList.Clear;
-    for x := 0 to Self.Count - 1 do begin
-        subInstance := Self.Items[x];
-        if SysUtils.Supports( subInstance, IXMLSerializable, serItem )  then begin
-            //itemNode := sn.AttributeNodes.Nodes
-            nodeList.Add(nil) ;
-            serItem.SaveTo( nodeList.Last );
-        end else begin
-           {TODO -oroger -cdsg : passar apenas os published}
-        end;
-    end;
+	 Node.Attributes['class'] := Self.ClassName;
+	 ListNode:=Node.FindNamespaceDecl('Items');
+	 if Assigned( ListNode ) then begin
+		ListNode.ChildNodes.Clear;
+	 end else begin
+		ListNode:=Node.AddChild('Items');
+	 end;
 
+	 for x := 0 to Self.Count - 1 do begin
+		 subInstance := Self.Items[x];
+		 if SysUtils.Supports( subInstance, IXMLSerializable, serItem )  then begin
+			 itemNode:=ListNode.OwnerDocument.CreateElement( subInstance.ClassName, 'Item' );
+			 ListNode.ChildNodes.Add( itemNode );
+			 serItem.SaveTo( itemNode );
+		 end else begin
+			{TODO -oroger -cdsg : passar apenas os published}
+		 end;
+	 end;
 end;
 
 function TXMLSerializableList._AddRef : Integer;
