@@ -1,56 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <BaseConfig version="1.0.0" class="TTRERegional" Description="TRE-PB">
-	<CentralMapping class="TTRECentralMapping">
-		<Centrals>
-			<Central Name="João Pessoa" id="1">
-				<Zones>
-					<Zone Id="1"/>
-					<Zone Id="64"/>
-					<Zone Id="70"/>
-					<Zone Id="76"/>
-					<Zone Id="77"/>
-				</Zones>
-			</Central>
-			<Central Name="Campina Grande" id="2">
-				<Zones>
-					<Zone Id="16"/>
-					<Zone Id="17"/>
-					<Zone Id="71"/>
-					<Zone Id="72"/>
-				</Zones>
-			</Central>
-			<Central Name="Patos" id="3">
-				<Zones>
-					<Zone Id="28"/>
-					<Zone Id="65"/>
-				</Zones>
-			</Central>
-			<Central Name="Sousa" id="4">
-				<Zones>
-					<Zone Id="35"/>
-					<Zone Id="63"/>
-				</Zones>
-			</Central>
-			<Central Name="Cajazeiras" id="5">
-				<Zones>
-					<Zone Id="42"/>
-					<Zone Id="68"/>
-				</Zones>
-			</Central>
-			<Central Name="Piancó" id="6">
-				<Zones>
-					<Zone Id="32"/>
-					<Zone Id="66"/>
-				</Zones>
-			</Central>
-		</Centrals>
-	</CentralMapping>
-	<LocalNetwork class="TXMLSerializableList">
+	<LocalNetwork>
 		<Items/>
 		<Items/>
-		<Items/>
-		<Items/>
-		<Items/>
-		<Items/>  <Items/>
-  </LocalNetwork>
+	</LocalNetwork>
 </BaseConfig>

@@ -248,7 +248,7 @@ begin
     end;
     if (StrValue <> EmptyStr) and (PInfo.PropType^.Kind <> tkClass) then begin
 		 //StrValue := PInfo.Name + ' = ' + StrValue;
-		 Node.Attributes[ PInfo.Name ] := StrValue;
+		 Node.SetAttribute( PInfo.Name, StrValue);
     end;
 end;
 
@@ -294,21 +294,23 @@ var
     sn, itemNode : IXMLNode;
     x : Integer;
     subInstance : TObject;
+    serItem : IXMLSerializable;
+    nodeList : IXMLNodeList;
 begin
     Node.Attributes['class'] := Self.ClassName;
-    sn := Node.FindNamespaceDecl('Items');
-    if not Assigned(sn) then begin
-        sn := Node.AddChild('Items');
-    end;
-    sn.AttributeNodes.Clear;
+    nodeList:=Node.GetAttributeNodes();
+    nodeList.Clear;
     for x := 0 to Self.Count - 1 do begin
         subInstance := Self.Items[x];
-        if (subInstance is TXMLSerializable) then begin
+        if SysUtils.Supports( subInstance, IXMLSerializable, serItem )  then begin
             //itemNode := sn.AttributeNodes.Nodes
+            nodeList.Add(nil) ;
+            serItem.SaveTo( nodeList.Last );
         end else begin
-
+           {TODO -oroger -cdsg : passar apenas os published}
         end;
     end;
+
 end;
 
 function TXMLSerializableList._AddRef : Integer;
