@@ -1,3 +1,8 @@
+{$IFDEF OPXMLSerializable}
+	 {$DEFINE DEBUG_UNIT}
+{$ENDIF}
+{$I OPLib.inc}
+
 unit OPXMLSerializable;
 
 interface
@@ -174,7 +179,7 @@ end;
 function TXMLSerializable._Release : Integer;
 begin
     Result := InterlockedDecrement(FRefCount);
-    if Result = 0 then begin
+    if Result < 0 then begin
         Destroy;
     end;
 end;

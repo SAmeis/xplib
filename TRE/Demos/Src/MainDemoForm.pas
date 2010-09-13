@@ -1,3 +1,8 @@
+{$IFDEF MainDemoForm}
+	 {$DEFINE DEBUG_UNIT}
+{$ENDIF}
+{$I DemoTRELib.inc}
+
 unit MainDemoForm;
 
 interface
