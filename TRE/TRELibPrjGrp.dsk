@@ -1,47 +1,59 @@
 ﻿[Closed Files]
-File_0=TSourceModule,'C:\Sw\WorkDir\Pcks\TRE\Demos\Src\MainDemoForm.pas',0,1,1,1,1,0,0,,
-File_1=TSourceModule,'C:\Sw\WorkDir\Pcks\TRE\Demos\Src\DemoTRELib.inc',0,1,88,1,115,0,0,,
-File_2=TSourceModule,'c:\arquivos de programas\embarcadero\rad studio\7.0\source\Win32\rtl\common\Classes.pas',0,1,233,14,231,0,0,,{1,1383,3}{2,5194,1}
-File_3=TSourceModule,'c:\program files\embarcadero\rad studio\7.0\SOURCE\WIN32\XML\XMLIntf.pas',0,1,57,1,71,0,0,,
-File_4=TSourceModule,'c:\arquivos de programas\embarcadero\rad studio\7.0\source\Win32\rtl\common\Contnrs.pas',0,1,1,1,1,0,0,,
-File_5=TSourceModule,'C:\Sw\WorkDir\Dprs\Delphi\MigraTools\Src\mtUtils.pas',0,1,4,80,11,0,0,,
-File_6=TSourceModule,'c:\arquivos de programas\embarcadero\rad studio\7.0\source\Win32\rtl\common\Generics.Collections.pas',0,1,43,3,59,0,0,,
-File_7=TSourceModule,'C:\Sw\WorkDir\Dprs\Delphi\MigraTools\Src\mtConfig.pas',0,1,1,108,7,0,0,,
-File_8=TSourceModule,'c:\program files\embarcadero\rad studio\7.0\SOURCE\WIN32\XML\XMLDoc.pas',0,1,2311,53,2321,0,0,,
-File_9=TSourceModule,'c:\program files\embarcadero\rad studio\7.0\SOURCE\WIN32\VCL\Controls.pas',0,1,83,13,100,0,0,,
-File_10=TSourceModule,'c:\program files\embarcadero\rad studio\7.0\source\Win32\rtl\common\TypInfo.pas',0,1,1,1,1,0,0,,
-File_11=TSourceModule,'c:\program files\embarcadero\rad studio\7.0\source\Win32\rtl\common\Contnrs.pas',0,1,1,1,1,0,0,,
-File_12=TSourceModule,'c:\program files\embarcadero\rad studio\7.0\source\Win32\rtl\common\Classes.pas',0,1,13114,40,13131,0,0,,
-File_13=TSourceModule,'c:\program files\embarcadero\rad studio\7.0\SOURCE\WIN32\RTL\SYS\SysUtils.pas',0,1,6554,69,6571,0,0,,
-File_14=TSourceModule,'c:\program files\embarcadero\rad studio\7.0\SOURCE\WIN32\RTL\SYS\System.pas',0,1,9621,1,9641,0,0,,
+File_0=TSourceModule,'C:\Sw\WorkDir\Pcks\TRE\Demos\Src\XMLSerializer.pas',0,1,1,97,13,0,0,,
+File_1=TSourceModule,'C:\Sw\WorkDir\Pcks\TRE\Demos\Src\MainDemoForm.dfm',0,1,1,1,1,0,0,,
+File_2=TSourceModule,'c:\arquivos de programas\embarcadero\rad studio\7.0\Source\Win32\rtl\win\PropSys.pas',0,1,809,11,816,0,0,,
+File_3=TSourceModule,'c:\arquivos de programas\embarcadero\rad studio\7.0\Source\Win32\vcl\XPMan.pas',0,1,10,47,20,0,0,,
+File_4=TSourceModule,'C:\Sw\WorkDir\Pcks\TRE\Demos\Src\MainDemoForm.pas',0,1,1,1,1,0,0,,
+File_5=TSourceModule,'c:\arquivos de programas\embarcadero\rad studio\7.0\source\Win32\rtl\common\Classes.pas',0,1,233,14,231,0,0,,{1
+File_6=TSourceModule,'c:\program files\embarcadero\rad studio\7.0\SOURCE\WIN32\XML\XMLIntf.pas',0,1,57,1,71,0,0,,
+File_7=TSourceModule,'c:\arquivos de programas\embarcadero\rad studio\7.0\source\Win32\rtl\common\Contnrs.pas',0,1,1,1,1,0,0,,
+File_8=TSourceModule,'C:\Sw\WorkDir\Dprs\Delphi\MigraTools\Src\mtUtils.pas',0,1,4,80,11,0,0,,
+File_9=TSourceModule,'c:\arquivos de programas\embarcadero\rad studio\7.0\source\Win32\rtl\common\Generics.Collections.pas',0,1,43,3,59,0,0,,
+File_10=TSourceModule,'C:\Sw\WorkDir\Dprs\Delphi\MigraTools\Src\mtConfig.pas',0,1,1,108,7,0,0,,
+File_11=TSourceModule,'c:\program files\embarcadero\rad studio\7.0\SOURCE\WIN32\XML\XMLDoc.pas',0,1,2311,53,2321,0,0,,
+File_12=TSourceModule,'c:\program files\embarcadero\rad studio\7.0\SOURCE\WIN32\VCL\Controls.pas',0,1,83,13,100,0,0,,
 
 [Modules]
-Module0=c:\arquivos de programas\embarcadero\rad studio\7.0\source\Win32\rtl\common\Rtti.pas
-Module1=C:\Sw\WorkDir\Pcks\OPLib\Src\OPXMLSerializable.pas
-Module2=C:\Sw\WorkDir\Pcks\TRE\Src\TREZones.pas
-Module3=C:\Sw\WorkDir\Pcks\TRE\Demos\Src\MainDemoForm.dfm
-Module4=C:\Sw\WorkDir\Pcks\TRE\Demos\Data\BaseConfig.xml
-Module5=C:\Sw\WorkDir\Pcks\TRE\Demos\Src\XMLSerializer.pas
-Module6=default.htm
-Count=7
+Module0=C:\Sw\WorkDir\Pcks\TRE\Demos\Src\RttiUtils.pas
+Module1=C:\Sw\WorkDir\Pcks\TRE\Demos\Src\XmlSerial.pas
+Module2=C:\Sw\WorkDir\Pcks\TRE\Demos\Src\MainDemoForm.pas
+Module3=c:\arquivos de programas\embarcadero\rad studio\7.0\source\Win32\rtl\common\Rtti.pas
+Module4=C:\Sw\WorkDir\Pcks\OPLib\Src\OPLib.inc
+Module5=C:\Sw\WorkDir\Pcks\TRE\Demos\Src\DemoTRELib.inc
+Module6=C:\Sw\WorkDir\Pcks\OPLib\Src\OPXMLSerializable.pas
+Module7=C:\Sw\WorkDir\Pcks\TRE\Demos\Data\BaseConfig.xml
+Module8=default.htm
+Module9=C:\Sw\WorkDir\Pcks\TRE\Src\TREZones.pas
+Count=10
 EditWindowCount=1
+
+[C:\Sw\WorkDir\Pcks\TRE\Demos\Src\RttiUtils.pas]
+ModuleType=TSourceModule
+FormState=0
+FormOnTop=0
+
+[C:\Sw\WorkDir\Pcks\TRE\Demos\Src\XmlSerial.pas]
+ModuleType=TSourceModule
+FormState=0
+FormOnTop=0
+
+[C:\Sw\WorkDir\Pcks\TRE\Demos\Src\MainDemoForm.pas]
+ModuleType=TSourceModule
+FormState=0
+FormOnTop=0
 
 [c:\arquivos de programas\embarcadero\rad studio\7.0\source\Win32\rtl\common\Rtti.pas]
 ModuleType=TSourceModule
 FormState=0
 FormOnTop=0
 
+[C:\Sw\WorkDir\Pcks\OPLib\Src\OPLib.inc]
+ModuleType=TSourceModule
+
+[C:\Sw\WorkDir\Pcks\TRE\Demos\Src\DemoTRELib.inc]
+ModuleType=TSourceModule
+
 [C:\Sw\WorkDir\Pcks\OPLib\Src\OPXMLSerializable.pas]
-ModuleType=TSourceModule
-FormState=0
-FormOnTop=0
-
-[C:\Sw\WorkDir\Pcks\TRE\Src\TREZones.pas]
-ModuleType=TSourceModule
-FormState=0
-FormOnTop=0
-
-[C:\Sw\WorkDir\Pcks\TRE\Demos\Src\MainDemoForm.dfm]
 ModuleType=TSourceModule
 FormState=0
 FormOnTop=0
@@ -49,17 +61,17 @@ FormOnTop=0
 [C:\Sw\WorkDir\Pcks\TRE\Demos\Data\BaseConfig.xml]
 ModuleType=TSourceModule
 
-[C:\Sw\WorkDir\Pcks\TRE\Demos\Src\XMLSerializer.pas]
+[default.htm]
+ModuleType=TURLModule
+
+[C:\Sw\WorkDir\Pcks\TRE\Src\TREZones.pas]
 ModuleType=TSourceModule
 FormState=0
 FormOnTop=0
 
-[default.htm]
-ModuleType=TURLModule
-
 [EditWindow0]
-ViewCount=7
-CurrentEditView=c:\arquivos de programas\embarcadero\rad studio\7.0\source\Win32\rtl\common\Rtti.pas
+ViewCount=10
+CurrentEditView=C:\Sw\WorkDir\Pcks\TRE\Demos\Src\RttiUtils.pas
 View0=0
 View1=1
 View2=2
@@ -67,6 +79,9 @@ View3=3
 View4=4
 View5=5
 View6=6
+View7=7
+View8=8
+View9=9
 PercentageSizes=1
 Create=1
 Visible=1
@@ -85,13 +100,13 @@ BorlandEditorCodeExplorer=BorlandEditorCodeExplorer@EditWindow0
 TopPanelSize=0
 LeftPanelSize=1894
 LeftPanelClients=PropertyInspector,DockSite3
-LeftPanelData=00000800010100000000A00E00000000000001660700000000000001000000001A10000009000000446F636B53697465330100000000001A00001100000050726F7065727479496E73706563746F72FFFFFFFF
+LeftPanelData=00000800010100000000600B0000000000000166070000000000000100000000540B000009000000446F636B536974653301000000003A1400001100000050726F7065727479496E73706563746F72FFFFFFFF
 RightPanelSize=1569
 RightPanelClients=DockSite2,DockSite4
-RightPanelData=00000800010100000000A00E00000000000001210600000000000001000000004612000009000000446F636B53697465320100000000001A000009000000446F636B5369746534FFFFFFFF
-BottomPanelSize=1856
+RightPanelData=00000800010100000000600B00000000000001210600000000000001000000004612000009000000446F636B536974653201000000003A14000009000000446F636B5369746534FFFFFFFF
+BottomPanelSize=3333
 BottomPanelClients=DockSite1,MessageView,DockSite0
-BottomPanelData=00000800010200000000724500000000000002400700000000000001000000007E11000009000000446F636B53697465310100000000CD2700000F0000004D65737361676556696577466F726D01000000007245000009000000446F636B5369746530FFFFFFFF
+BottomPanelData=00000800010200000000724500000000000002050D00000000000001000000007E11000009000000446F636B53697465310100000000462B00000F0000004D65737361676556696577466F726D01000000007245000009000000446F636B5369746530FFFFFFFF
 BottomMiddlePanelSize=0
 
 [View0]
@@ -99,28 +114,6 @@ CustomEditViewType=TWelcomePageView
 WelcomePageURL=bds:/default.htm
 
 [View1]
-CustomEditViewType=TEditView
-Module=C:\Sw\WorkDir\Pcks\TRE\Demos\Src\XMLSerializer.pas
-CursorX=89
-CursorY=14
-TopLine=1
-LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=C:\Sw\WorkDir\Pcks\TRE\Demos\Src\XMLSerializer.pas
-
-[View2]
-CustomEditViewType=TEditView
-Module=C:\Sw\WorkDir\Pcks\TRE\Demos\Src\MainDemoForm.dfm
-CursorX=1
-CursorY=1
-TopLine=1
-LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=C:\Sw\WorkDir\Pcks\TRE\Demos\Src\MainDemoForm.dfm
-
-[View3]
 CustomEditViewType=TEditView
 Module=C:\Sw\WorkDir\Pcks\TRE\Src\TREZones.pas
 CursorX=21
@@ -131,23 +124,45 @@ Elisions=
 Bookmarks=
 EditViewName=C:\Sw\WorkDir\Pcks\TRE\Src\TREZones.pas
 
-[View4]
+[View2]
 CustomEditViewType=TEditView
 Module=C:\Sw\WorkDir\Pcks\OPLib\Src\OPXMLSerializable.pas
-CursorX=54
-CursorY=11
+CursorX=9
+CursorY=4
 TopLine=1
 LeftCol=1
 Elisions=
 Bookmarks={1,273,67}
 EditViewName=C:\Sw\WorkDir\Pcks\OPLib\Src\OPXMLSerializable.pas
 
+[View3]
+CustomEditViewType=TEditView
+Module=C:\Sw\WorkDir\Pcks\TRE\Demos\Src\XmlSerial.pas
+CursorX=1
+CursorY=417
+TopLine=403
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=C:\Sw\WorkDir\Pcks\TRE\Demos\Src\XmlSerial.pas
+
+[View4]
+CustomEditViewType=TEditView
+Module=C:\Sw\WorkDir\Pcks\TRE\Demos\Src\RttiUtils.pas
+CursorX=1
+CursorY=604
+TopLine=589
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=C:\Sw\WorkDir\Pcks\TRE\Demos\Src\RttiUtils.pas
+
 [View5]
 CustomEditViewType=TEditView
 Module=c:\arquivos de programas\embarcadero\rad studio\7.0\source\Win32\rtl\common\Rtti.pas
-CursorX=7
-CursorY=9
-TopLine=1
+CursorX=15
+CursorY=530
+TopLine=520
 LeftCol=1
 Elisions=
 Bookmarks=
@@ -164,6 +179,39 @@ Elisions=
 Bookmarks=
 EditViewName=C:\Sw\WorkDir\Pcks\TRE\Demos\Data\BaseConfig.xml
 
+[View7]
+CustomEditViewType=TEditView
+Module=C:\Sw\WorkDir\Pcks\TRE\Demos\Src\MainDemoForm.pas
+CursorX=1
+CursorY=88
+TopLine=74
+LeftCol=1
+Elisions=
+Bookmarks={1,90,58}
+EditViewName=C:\Sw\WorkDir\Pcks\TRE\Demos\Src\MainDemoForm.pas
+
+[View8]
+CustomEditViewType=TEditView
+Module=C:\Sw\WorkDir\Pcks\TRE\Demos\Src\DemoTRELib.inc
+CursorX=1
+CursorY=14
+TopLine=1
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=C:\Sw\WorkDir\Pcks\TRE\Demos\Src\DemoTRELib.inc
+
+[View9]
+CustomEditViewType=TEditView
+Module=C:\Sw\WorkDir\Pcks\OPLib\Src\OPLib.inc
+CursorX=68
+CursorY=14
+TopLine=1
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=C:\Sw\WorkDir\Pcks\OPLib\Src\OPLib.inc
+
 [Watches]
 Count=1
 Watch0='StrValue',256,0,18,1,0,'Watches',1
@@ -179,24 +227,30 @@ State=0
 Left=0
 Top=0
 Width=10000
-Height=1322
+Height=2800
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=10000
-ClientHeight=1322
+ClientHeight=2800
 TBDockHeight=211
 LRDockWidth=13600
 Dockable=1
 StayOnTop=0
 
 [Breakpoints]
-Count=6
+Count=12
 Breakpoint0='C:\Sw\WorkDir\Pcks\Jedi\jvcl\run\JvAppStorage.pas',2856,'',0,0,'',1,0,0,'',1,'','','',0,''
 Breakpoint1='C:\Sw\WorkDir\Pcks\Jedi\jvcl\run\JvAppStorage.pas',2866,'',0,0,'',1,0,0,'',1,'','','',0,''
 Breakpoint2='C:\Sw\WorkDir\Pcks\TRE\Demos\Src\XMLSerializer.pas',219,'',0,1,'',1,0,0,'',1,'','','',0,''
 Breakpoint3='C:\Sw\WorkDir\Pcks\OPLib\Src\OPXMLSerializable.pas',308,'',0,1,'',1,0,0,'',1,'','','',0,''
 Breakpoint4='C:\Sw\WorkDir\Pcks\OPLib\Src\OPXMLSerializable.pas',270,'',0,1,'',1,0,0,'',1,'','','',0,''
 Breakpoint5='C:\Sw\WorkDir\Pcks\TRE\Demos\Src\MainDemoForm.pas',50,'',0,1,'',1,0,0,'',1,'','','',0,''
+Breakpoint6='C:\Sw\WorkDir\Pcks\TRE\Demos\Src\MainDemoForm.pas',88,'',0,1,'',1,0,0,'',1,'','','',0,''
+Breakpoint7='C:\Sw\WorkDir\Pcks\TRE\Demos\Src\XmlSerial.pas',781,'',0,1,'',1,0,0,'',1,'','','',0,''
+Breakpoint8='C:\Sw\WorkDir\Pcks\TRE\Demos\Src\XmlSerial.pas',448,'',0,1,'',1,0,0,'',1,'','','',0,''
+Breakpoint9='C:\Sw\WorkDir\Pcks\TRE\Demos\Src\XmlSerial.pas',384,'',0,1,'',1,0,0,'',1,'','','',0,''
+Breakpoint10='C:\Sw\WorkDir\Pcks\TRE\Demos\Src\XmlSerial.pas',417,'',0,1,'',1,0,0,'',1,'','','',0,''
+Breakpoint11='C:\Sw\WorkDir\Pcks\TRE\Demos\Src\RttiUtils.pas',604,'',0,1,'',1,0,0,'',1,'','','',0,''
 
 [EmbarcaderoWin32Debugger_AddressBreakpoints]
 Count=0
@@ -248,13 +302,13 @@ Docked=1
 State=0
 Left=403
 Top=23
-Width=3188
-Height=1600
+Width=3688
+Height=3078
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=3188
-ClientHeight=1600
-TBDockHeight=1600
+ClientWidth=3688
+ClientHeight=3078
+TBDockHeight=3078
 LRDockWidth=2769
 Dockable=1
 StayOnTop=0
@@ -268,11 +322,11 @@ State=0
 Left=0
 Top=0
 Width=1569
-Height=1722
+Height=244
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1569
-ClientHeight=1722
+ClientHeight=244
 TBDockHeight=7156
 LRDockWidth=2000
 Dockable=1
@@ -328,11 +382,11 @@ State=0
 Left=0
 Top=0
 Width=10000
-Height=1322
+Height=2800
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=10000
-ClientHeight=1322
+ClientHeight=2800
 TBDockHeight=211
 LRDockWidth=7406
 Dockable=1
@@ -351,11 +405,11 @@ State=0
 Left=0
 Top=0
 Width=10000
-Height=1322
+Height=2800
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=10000
-ClientHeight=1322
+ClientHeight=2800
 TBDockHeight=1533
 LRDockWidth=3481
 Dockable=1
@@ -370,11 +424,11 @@ State=0
 Left=0
 Top=0
 Width=10000
-Height=1322
+Height=2800
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=10000
-ClientHeight=1322
+ClientHeight=2800
 TBDockHeight=2056
 LRDockWidth=3481
 Dockable=1
@@ -408,11 +462,11 @@ State=0
 Left=0
 Top=0
 Width=2338
-Height=1322
+Height=2800
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=2338
-ClientHeight=1322
+ClientHeight=2800
 TBDockHeight=2311
 LRDockWidth=2825
 Dockable=1
@@ -426,12 +480,12 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=4269
-Height=1322
+Width=3769
+Height=2800
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=4269
-ClientHeight=1322
+ClientWidth=3769
+ClientHeight=2800
 TBDockHeight=3200
 LRDockWidth=2825
 Dockable=1
@@ -446,11 +500,11 @@ State=0
 Left=0
 Top=0
 Width=3338
-Height=1322
+Height=2800
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=3338
-ClientHeight=1322
+ClientHeight=2800
 TBDockHeight=1156
 LRDockWidth=3675
 Dockable=1
@@ -490,13 +544,13 @@ Visible=1
 Docked=1
 State=0
 Left=0
-Top=394
+Top=284
 Width=1894
-Height=2278
+Height=2022
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1894
-ClientHeight=2278
+ClientHeight=2022
 TBDockHeight=6333
 LRDockWidth=1894
 Dockable=1
@@ -550,11 +604,11 @@ State=0
 Left=0
 Top=0
 Width=2494
-Height=1322
+Height=2800
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=2494
-ClientHeight=1322
+ClientHeight=2800
 TBDockHeight=1544
 LRDockWidth=8744
 Dockable=1
@@ -576,11 +630,11 @@ State=0
 Left=0
 Top=0
 Width=1894
-Height=3822
+Height=2600
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1894
-ClientHeight=3822
+ClientHeight=2600
 TBDockHeight=3667
 LRDockWidth=1894
 Dockable=1
@@ -616,15 +670,15 @@ Create=1
 Visible=1
 Docked=1
 State=0
-Left=917
+Left=997
 Top=23
-Width=4269
-Height=1600
+Width=3769
+Height=3078
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=4269
-ClientHeight=1600
-TBDockHeight=1600
+ClientWidth=3769
+ClientHeight=3078
+TBDockHeight=3078
 LRDockWidth=2338
 Dockable=1
 StayOnTop=0
@@ -643,12 +697,12 @@ State=0
 Left=0
 Top=23
 Width=2494
-Height=1600
+Height=3078
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=2494
-ClientHeight=1600
-TBDockHeight=1600
+ClientHeight=3078
+TBDockHeight=3078
 LRDockWidth=3825
 Dockable=1
 StayOnTop=0
@@ -691,11 +745,11 @@ State=0
 Left=0
 Top=23
 Width=1894
-Height=3822
+Height=2600
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1894
-ClientHeight=3822
+ClientHeight=2600
 TBDockHeight=6333
 LRDockWidth=1894
 Dockable=1
@@ -715,11 +769,11 @@ State=0
 Left=0
 Top=444
 Width=1569
-Height=1722
+Height=244
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1569
-ClientHeight=1722
+ClientHeight=244
 TBDockHeight=6333
 LRDockWidth=1569
 Dockable=1

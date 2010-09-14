@@ -20,6 +20,7 @@
 			<Base>true</Base>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Base)'!=''">
+			<DCC_Define>FULL_RTTI;$(DCC_Define)</DCC_Define>
 			<DesignOnlyPackage>false</DesignOnlyPackage>
 			<DCC_ImageBase>00400000</DCC_ImageBase>
 			<DCC_DependencyCheckOutputName>..\..\..\Lib\D2010\OPLibD14.bpl</DCC_DependencyCheckOutputName>

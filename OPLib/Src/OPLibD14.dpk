@@ -27,6 +27,7 @@ package OPLibD14;
 {$IMAGEBASE $400000}
 {$DESCRIPTION 'AAA - Object Persistence Library - Delphi 2010'}
 {$IMPLICITBUILD OFF}
+{$DEFINE FULL_RTTI}
 
 requires
   vcl,

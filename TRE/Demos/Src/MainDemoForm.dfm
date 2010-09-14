@@ -70,6 +70,17 @@ object Form1: TForm1
       FFFFFFFFFFFFFF00000000000000000000000001024300350022000000000000
       0000000000FFFFFFFFFFFFFFFF000000000000000000000000010243003600}
   end
+  object btnTestSerial: TBitBtn
+    Left = 504
+    Top = 168
+    Width = 97
+    Height = 41
+    Caption = 'Test Serializer'
+    DoubleBuffered = True
+    ParentDoubleBuffered = False
+    TabOrder = 3
+    OnClick = btnTestSerialClick
+  end
   object xmlflstrgApp: TJvAppXMLFileStorage
     StorageOptions.BooleanStringTrueValues = 'TRUE, YES, Y'
     StorageOptions.BooleanStringFalseValues = 'FALSE, NO, N'
@@ -78,18 +89,19 @@ object Form1: TForm1
     FileName = 'C:\Sw\WorkDir\Pcks\TRE\Demos\Data\BaseConfig.xml'
     RootNodeName = 'Configuration'
     SubStorages = <>
-    Left = 464
-    Top = 280
+    Left = 432
+    Top = 176
   end
   object xmlsrlzrApp: TJvgXMLSerializer
     ExcludeEmptyValues = False
     ExcludeDefaultValues = False
     ReplaceReservedSymbols = False
     IgnoreUnknownTags = False
-    Left = 488
-    Top = 184
+    Left = 432
+    Top = 112
   end
   object xmldocSamples: TXMLDocument
+    Active = True
     FileName = 'C:\Sw\WorkDir\Pcks\TRE\Demos\Data\BaseConfig.xml'
     Options = [doNodeAutoCreate, doNodeAutoIndent, doAttrNull, doAutoPrefix, doNamespaceDecl, doAutoSave]
     Left = 432

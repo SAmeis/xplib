@@ -9,8 +9,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, TREZones,
-  Dialogs, StdCtrls, Buttons, TREConsts, TREUtils, TREConfig, ComCtrls, JvComponentBase, JvAppStorage, JvAppXMLStorage,
-  JvgXMLSerializer, xmldom, XMLIntf, msxmldom, XMLDoc;
+  Dialogs, StdCtrls, Buttons, TREConsts, TREUtils, TREConfig, ComCtrls,
+  xmldom, XMLIntf, msxmldom, XMLDoc, JvgXMLSerializer, JvComponentBase, JvAppStorage, JvAppXMLStorage;
 
 type
   TForm1 = class(TForm)
@@ -20,10 +20,12 @@ type
     xmlflstrgApp: TJvAppXMLFileStorage;
     xmlsrlzrApp: TJvgXMLSerializer;
     xmldocSamples: TXMLDocument;
+    btnTestSerial: TBitBtn;
     procedure btnSaveConfigClick(Sender: TObject);
+	 procedure btnTestSerialClick(Sender: TObject);
   private
     { Private declarations }
-    FRegional : TTRERegional;
+	 FRegional : TTRERegional;
   public
     { Public declarations }
     constructor Create( AOwner : TComponent ); override;
@@ -35,7 +37,7 @@ var
 implementation
 
 uses
-  XMLSerializer;
+  XmlSerial;
 
 
 {$R *.dfm}
@@ -77,6 +79,18 @@ begin
    //ret:=SerilializeObjectToXML( Self, [scTStrings, scTCollection, scTBitmap], [soIncludeObjectLinks, soSortProperties, soStoreParentInfo, soResetDefaultValues ] );
    //xmlStream.WriteBuffer(ret[1], Length(ret));
    }
+end;
+
+procedure TForm1.btnTestSerialClick(Sender: TObject);
+var
+	s : XMLSerial.TXmlSerializer<TTRERegional>;
+begin
+	s:=TXmlSerializer<TTRERegional>.Create();
+	try
+		s.Serialize( Self.xmldocSamples, Self.FRegional );
+	finally
+	 	s.Free;
+	end;
 end;
 
 constructor TForm1.Create(AOwner: TComponent);

@@ -4,7 +4,10 @@ uses
   Forms,
   MainDemoForm in 'MainDemoForm.pas' {Form1},
   TREZones in '..\..\Src\TREZones.pas',
-  OPXMLSerializable in '..\..\..\OPLib\Src\OPXMLSerializable.pas';
+  OPXMLSerializable in '..\..\..\OPLib\Src\OPXMLSerializable.pas',
+  XmlSerial in 'XmlSerial.pas',
+  RttiUtils in 'RttiUtils.pas',
+  Rtti in 'c:\arquivos de programas\embarcadero\rad studio\7.0\source\Win32\rtl\common\Rtti.pas';
 
 {$R *.res}
 

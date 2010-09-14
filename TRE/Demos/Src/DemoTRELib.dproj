@@ -20,6 +20,8 @@
 			<Base>true</Base>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Base)'!=''">
+			<DCC_RunTimeTypeInfo>true</DCC_RunTimeTypeInfo>
+			<DCC_Define>FULL_RTTI;$(DCC_Define)</DCC_Define>
 			<DCC_ExeOutput>..\Debug</DCC_ExeOutput>
 			<DCC_UnitAlias>WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;$(DCC_UnitAlias)</DCC_UnitAlias>
 			<DCC_BplOutput>..\Debug</DCC_BplOutput>
@@ -47,6 +49,9 @@
 			</DCCReference>
 			<DCCReference Include="..\..\Src\TREZones.pas"/>
 			<DCCReference Include="..\..\..\OPLib\Src\OPXMLSerializable.pas"/>
+			<DCCReference Include="XmlSerial.pas"/>
+			<DCCReference Include="RttiUtils.pas"/>
+			<DCCReference Include="c:\arquivos de programas\embarcadero\rad studio\7.0\source\Win32\rtl\common\Rtti.pas"/>
 			<None Include="ModelSupport_DemoTRELib\default.txaPackage"/>
 			<None Include="ModelSupport_DemoTRELib\default.txvpck"/>
 			<None Include="ModelSupport_DemoTRELib\MainDemoForm\default.txvpck"/>
