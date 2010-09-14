@@ -8,15 +8,15 @@ unit OPXMLSerializable;
 interface
 
 uses
-    Classes, SysUtils, TypInfo, XMLIntf, Contnrs;
+	 Classes, SysUtils, TypInfo, XMLIntf, Contnrs, Rtti;
 
 
 type
-    IXMLSerializable = interface(IUnknown)
-        ['{ADBDEA7E-AE56-437A-ADBB-0759C738501A}']
-        procedure SaveTo(Node : IXMLNode);
-        procedure LoadFrom(Node : IXMLNode; CreateDefault : boolean);
-    end;
+	 IXMLSerializable = interface(IUnknown)
+		 ['{ADBDEA7E-AE56-437A-ADBB-0759C738501A}']
+		 procedure SaveTo(Node : IXMLNode);
+		 procedure LoadFrom(Node : IXMLNode; CreateDefault : boolean);
+	 end;
 
     {TODO -oroger -clib : implementar classe para a lista  }
     TXMLSerializableList = class(TObjectList, IXMLSerializable)
@@ -32,7 +32,7 @@ type
     end;
 
     TXMLSerializable = class(TPersistent, IXMLSerializable)
-    private
+	 private
         FRefCount : Integer;
         procedure SaveAttribute(PInfo : PPropInfo; Node : IXMLNode);
         procedure SaveSubInstance(PInfo : PPropInfo; ParentNode : IXMLNode);
@@ -49,8 +49,12 @@ type
         function _Release : Integer; stdcall;
     public
         procedure SaveTo(Node : IXMLNode);
-        procedure LoadFrom(Node : IXMLNode; CreateDefault : boolean);
-    end;
+		 procedure LoadFrom(Node : IXMLNode; CreateDefault : boolean);
+	 published
+		{TODO -oroger -cdsg :
+		Implementar a figura do ObjectFactory como sendo uma propriedade da class, lembrar que singletrons o metodo deve
+		informar a impossibilidade de se criar nova instancia }
+	 end;
 
 
 implementation
@@ -302,7 +306,8 @@ var
 	 serItem : IXMLSerializable;
 begin
 	 Node.Attributes['class'] := Self.ClassName;
-	 ListNode:=Node.FindNamespaceDecl('Items');
+
+	 ListNode:=Node.ChildNodes.FindNode('Items');
 	 if Assigned( ListNode ) then begin
 		ListNode.ChildNodes.Clear;
 	 end else begin

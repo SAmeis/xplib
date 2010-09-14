@@ -45,12 +45,22 @@ var
    xmlStream : TFileStream;
 	ret : AnsiString;
 	net : TTRELocalNet;
+	zone : TTREZone;
 begin
-	Self.xmldocSamples.Options:=Self.xmldocSamples.Options + [doAutoSave];
+	Self.xmldocSamples.Options:=Self.xmldocSamples.Options + [doAutoSave, doNodeAutoIndent ];
+	//Regional
 	Self.FRegional.Description:='TRE-PB';
-	net:=TTRELocalNet.Create;
-	net.PrimaryZone:=80;
+	//Rede de uma zona
+	net:=TTRELocalNet.Create( 80 );
 	Self.FRegional.AddNetwork( net );
+
+	net:=TTRELocalNet.Create(33);
+	Self.FRegional.AddNetwork( net );
+
+	//Zona da rede 33
+	zone:=TTREZone.Create( 33 );
+	net.Units.Add( zone );
+
    Self.FRegional.SaveTo( Self.xmldocSamples.DocumentElement );
 
 

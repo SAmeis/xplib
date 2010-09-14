@@ -36,7 +36,7 @@
 			<DCC_DebugInformation>false</DCC_DebugInformation>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_2)'!=''">
-			<DCC_Define>DEBUG;DEBU_ALL;$(DCC_Define)</DCC_Define>
+			<DCC_Define>DEBUG;DEBU_ALL;OPLib;TRELib;DemoTRELib;$(DCC_Define)</DCC_Define>
 		</PropertyGroup>
 		<ItemGroup>
 			<DelphiCompile Include="DemoTRELib.dpr">
@@ -45,8 +45,6 @@
 			<DCCReference Include="MainDemoForm.pas">
 				<Form>Form1</Form>
 			</DCCReference>
-			<DCCReference Include="..\..\..\Jedi\jvcl\run\JvAppStorage.pas"/>
-			<DCCReference Include="..\..\..\Jedi\jvcl\run\JvAppXMLStorage.pas"/>
 			<DCCReference Include="..\..\Src\TREZones.pas"/>
 			<DCCReference Include="..\..\..\OPLib\Src\OPXMLSerializable.pas"/>
 			<None Include="ModelSupport_DemoTRELib\default.txaPackage"/>

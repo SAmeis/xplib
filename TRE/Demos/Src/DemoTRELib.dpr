@@ -3,8 +3,6 @@ program DemoTRELib;
 uses
   Forms,
   MainDemoForm in 'MainDemoForm.pas' {Form1},
-  JvAppStorage in '..\..\..\Jedi\jvcl\run\JvAppStorage.pas',
-  JvAppXMLStorage in '..\..\..\Jedi\jvcl\run\JvAppXMLStorage.pas',
   TREZones in '..\..\Src\TREZones.pas',
   OPXMLSerializable in '..\..\..\OPLib\Src\OPXMLSerializable.pas';
 
