@@ -75,7 +75,7 @@ object Form1: TForm1
     Top = 168
     Width = 97
     Height = 41
-    Caption = 'Test Serializer'
+    Caption = '&Test Serializer'
     DoubleBuffered = True
     ParentDoubleBuffered = False
     TabOrder = 3

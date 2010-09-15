@@ -83,9 +83,11 @@ end;
 
 procedure TForm1.btnTestSerialClick(Sender: TObject);
 var
-	s : XMLSerial.TXmlSerializer<TTRERegional>;
+	//s : XMLSerial.TXmlSerializer<TTRERegional>;
+	s : TXmlTypeSerializer;
 begin
-	s:=TXmlSerializer<TTRERegional>.Create();
+	//s:=TXmlSerializer<TTRERegional>.Create();
+	s:=TXmlTypeSerializer.Create( TypeInfo( TTRERegional ));
 	try
 		s.Serialize( Self.xmldocSamples, Self.FRegional );
 	finally

@@ -6,6 +6,11 @@
 	{$DEFINE DEBUG_UNIT }
 {$ENDIF}
 
+{$IFDEF FULL_RTTI}
+//Habilita total geração de RTTI para este código(habilitado apenas para casos necessários)
+{$TYPEINFO ON}
+{$METHODINFO ON}
+{$ENDIF}
 
 //************** START COMMON PART **************
 
