@@ -1,15 +1,10 @@
-{$IFDEF TREZones}
-	 {$DEFINE DEBUG_UNIT}
-{$ENDIF}
-{$I TRELib.inc}
-
-unit TREZones;
+unit MainDemoUtils;
 
 interface
 
 uses
 	 SysUtils, contnrs, Classes, TREConsts, TREUtils, XMLIntf, OPXMLSerializable;
-(*
+
 type
 	 TTRELocalNet = class(TXMLSerializable)
 	 private
@@ -28,19 +23,22 @@ type
 
     TTREUnit = class(TTREXMLPersist); //Ancestral de zonas e de central
 
+	 [XmlAttributeAttribute]
     TTRERegional = class(TTREUnit)
     private
         FLocalNetwork : TXMLSerializableList;
         FDescription :  string;
-		 function GetNetworks(index : Integer) : TTRELocalNet;
+        function GetNetworks(index : Integer) : TTRELocalNet;
     public
         constructor Create; virtual;
         function AddNetwork(ANet : TTRELocalNet) : Integer;
         property Networks[index : Integer] : TTRELocalNet read GetNetworks;
-    published
-        property LocalNetwork : TXMLSerializableList read FLocalNetwork write FLocalNetwork;
-        property Description : string read FDescription write FDescription;
-    end;
+	 published
+		 [XmlAttributeAttribute]
+		 property LocalNetwork : TXMLSerializableList read FLocalNetwork write FLocalNetwork;
+		 [XmlAttributeAttribute]
+		 property Description : string read FDescription write FDescription;
+	 end;
 
 
     //Estação de trabalho
@@ -78,7 +76,7 @@ type
 
     TTRECentral = class(TTREUnit)
     private
-		 FId :       Integer;
+        FId :       Integer;
         FZoneList : TObjectList;
         /// <summary>
         /// Retorna a zona indexada pelo valor de index(lista interna)
@@ -101,7 +99,7 @@ type
         function Add(Zone : TTREZone) : Integer;
         ///  <summary>Indica se a zona passada pertence ao conjunto(central)</summary>
         ///  <remarks>
-		 ///  Indica se a zona passada pertence ao conjunto(central)
+        ///  Indica se a zona passada pertence ao conjunto(central)
         ///  Informa-se o identificar da zona
         ///  </remarks>
         function isPertinent(ZoneId : Integer) : boolean;
@@ -124,11 +122,9 @@ type
     published
 
     end;
-*)
 
 implementation
 
-(*
 procedure TTREZone.BeforeDestruction;
 begin
     if Assigned(Self.FCentral) then begin
@@ -401,6 +397,5 @@ function TTRELocalNet.GetSubNet : string;
 begin
     Result := '10.183.' + Format('%3.3d', [Self.FPrimaryZone]) + '.*';
 end;
-*)
 
 end.

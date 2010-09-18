@@ -8,7 +8,7 @@ unit OPXMLSerializable;
 interface
 
 uses
-	 Classes, SysUtils, TypInfo, XMLIntf, Contnrs, Rtti;
+	 Classes, SysUtils, TypInfo, XMLIntf, Generics.Collections, Rtti;
 
 
 type
@@ -18,8 +18,8 @@ type
 		 procedure LoadFrom(Node : IXMLNode; CreateDefault : boolean);
 	 end;
 
-    {TODO -oroger -clib : implementar classe para a lista  }
-    TXMLSerializableList = class(TObjectList, IXMLSerializable)
+	 {TODO -oroger -clib : implementar classe para a lista  }
+	 TXMLSerializableList = class(TObjectList<TObject>, IXMLSerializable)
     private
         FRefCount : Integer;
     protected

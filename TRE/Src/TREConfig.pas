@@ -12,24 +12,26 @@ uses
 
 const
 	TRE_DV_CONFIG_FILENAME = 'BaseConfig.xml';
-
+(*
 type
 	 TTREBaseConfig = class(TXMLSerializable)
-    private
+	 private
 		 _FCentralMapping : TTRECentralMapping;
 		 FAnchor : TComponent;
 		 XMLDoc : TXMLDocument;
-        FCfg : TBaseSettings;
-        function GetCentralMapping : TTRECentralMapping;
-    public
-        constructor Create(const XMLFilename : string); reintroduce;
+		 FCfg : TBaseSettings;
+		 function GetCentralMapping : TTRECentralMapping;
+	 public
+		 constructor Create(const XMLFilename : string); reintroduce;
 		 destructor Destroy; override;
 	 published
-        property CentralMapping : TTRECentralMapping read GetCentralMapping;
-    end;
-
+		 property CentralMapping : TTRECentralMapping read GetCentralMapping;
+	 end;
+*)
 implementation
 
+
+(*
 { TTREBaseConfig }
 
 constructor TTREBaseConfig.Create(const XMLFilename : string);
@@ -74,4 +76,6 @@ initialization
 begin
 	RegisterClass(TTREBaseConfig);
 end;
+*)
+
 end.

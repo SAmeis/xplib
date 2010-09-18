@@ -9,10 +9,14 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, TREZones,
-  Dialogs, StdCtrls, Buttons, TREConsts, TREUtils, TREConfig, ComCtrls,
+  Dialogs, StdCtrls, Buttons, TREConsts, TREUtils, TREConfig, ComCtrls, MainDemoUtils,
   xmldom, XMLIntf, msxmldom, XMLDoc, JvgXMLSerializer, JvComponentBase, JvAppStorage, JvAppXMLStorage;
 
 type
+	TTRERegionalTest = class
+
+
+   end;
   TForm1 = class(TForm)
     btnLoadConfig: TBitBtn;
     btnSaveConfig: TBitBtn;
@@ -85,14 +89,32 @@ procedure TForm1.btnTestSerialClick(Sender: TObject);
 var
 	//s : XMLSerial.TXmlSerializer<TTRERegional>;
 	s : TXmlTypeSerializer;
+	net : TTRELocalNet;
+	zone : TTREZone;
 begin
+	//Regional
+	Self.FRegional.Description:='TRE-PB';
+	//Rede de uma zona
+	net:=TTRELocalNet.Create( 80 );
+	Self.FRegional.AddNetwork( net );
+
+	net:=TTRELocalNet.Create(33);
+	Self.FRegional.AddNetwork( net );
+
+	//Zona da rede 33
+	zone:=TTREZone.Create( 33 );
+	net.Units.Add( zone );
+
+
 	//s:=TXmlSerializer<TTRERegional>.Create();
+   Self.xmldocSamples.XML.Clear;
 	s:=TXmlTypeSerializer.Create( TypeInfo( TTRERegional ));
 	try
 		s.Serialize( Self.xmldocSamples, Self.FRegional );
 	finally
 	 	s.Free;
 	end;
+	Self.xmldocSamples.Xml.SaveToFile( '..\Data\BasicConfig.xml' );
 end;
 
 constructor TForm1.Create(AOwner: TComponent);
