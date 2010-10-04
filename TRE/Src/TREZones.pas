@@ -313,7 +313,7 @@ begin
     z := TTREZone.Create(65);
     z.Central := c;
 
-    //CENTRAL ( 4 ) - Sousa
+	 //CENTRAL ( 5 ) - Sousa
     c := TTRECentral.Create(4);
     Self.FCentralList.Add(c);
     z := TTREZone.Create(35);
@@ -321,7 +321,7 @@ begin
     z := TTREZone.Create(63);
     z.Central := c;
 
-    //CENTRAL ( 5 ) - Cajazeiras
+	 //CENTRAL ( 4 ) - Cajazeiras
     c := TTRECentral.Create(5);
     Self.FCentralList.Add(c);
     z := TTREZone.Create(42);

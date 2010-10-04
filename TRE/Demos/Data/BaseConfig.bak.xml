@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <BaseConfig version="1.0.0" class="TTRERegional" Description="TRE-PB">
 	<CentralMapping class="TTRECentralMapping">
 		<Centrals>
@@ -25,13 +25,13 @@
 					<Zone Id="65"/>
 				</Zones>
 			</Central>
-			<Central Name="Sousa" id="4">
+			<Central Name="Sousa" id="5">
 				<Zones>
 					<Zone Id="35"/>
 					<Zone Id="63"/>
 				</Zones>
 			</Central>
-			<Central Name="Cajazeiras" id="5">
+			<Central Name="Cajazeiras" id="4">
 				<Zones>
 					<Zone Id="42"/>
 					<Zone Id="68"/>
