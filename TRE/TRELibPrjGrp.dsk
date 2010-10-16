@@ -219,8 +219,8 @@ EditViewName=C:\Sw\WorkDir\Pcks\TRE\Src\TREConfig.pas
 [View9]
 CustomEditViewType=TEditView
 Module=C:\Sw\WorkDir\Pcks\TRE\Demos\Src\MainDemoUtils.pas
-CursorX=50
-CursorY=104
+CursorX=45
+CursorY=155
 TopLine=126
 LeftCol=1
 Elisions=
