@@ -58,7 +58,7 @@ function ReplaceSubString(const Str : string; OldStr, NewStr : string) : string;
 function StrConnectSubStrings(const Connector : string; SubStrings : array of string) : string; overload;
 function StrConnectSubStrings(const Connector : string; SubStrings : TStrings) : string; overload;
 function StrCopyAfter(const SubStr, Str : string; Position : Cardinal = 0) : string;
-function StrCopyAfterLast(const SubStr, Str : string) : string;
+function StrCopyAfterLast(const SubStr, Str : string) : string; deprecated;
 function StrCopyAfterNth(const SubStr, Str : string; Index : word = 0) : string;
 function StrCopyBefore(const SubStr, Str : string; Position : Cardinal = 0) : string;
 function StrCopyBeforeLast(const SubStr, Str : string) : string;
@@ -615,10 +615,13 @@ begin
     end;
 end;
 
-function StrCopyAfterLast(const SubStr, Str : string) : string;
-    //----------------------------------------------------------------------------------------------------------------------
-    // This functions scans s for SubStr from the right and returns the portion after SubStr.
-    // Example: AfterRev('.','c:\my.file.txt') > '.txt'
+function StrCopyAfterLast(const SubStr, Str : string) : string; deprecated;
+{{
+URGENTE: Devido a bug básico rotina depreciada usar TStrHnd.CopyAfterLast
+
+This functions scans s for SubStr from the right and returns the portion after SubStr.
+Example: AfterRev('.','c:\my.file.txt') > '.txt'
+}
 begin
     Result := StrRScanStr(PChar(SubStr), PChar(Str));
     if (Result <> EmptyStr) then begin

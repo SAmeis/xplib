@@ -207,7 +207,8 @@ type
  Class for file related manipulation.
  }
     public
-        class procedure BuildVersionInfo(const Filename : string; var V1, V2, V3, V4 : Word);
+		 class procedure BuildVersionInfo(const Filename : string; var V1, V2, V3, V4 : Word);
+		 class function ChangeFileName( const OriginalFullPath, Filename : string ) : string;
         class function ConcatPath(Paths : array of string) : string;
         class function CopyDir(const SourceDir, DestDir : TFilename) : Integer;
         class function CreateTempFileName(const Prefix : PChar; const Number : byte; CreateFile : boolean) : string;
@@ -222,8 +223,9 @@ type
         class function SlashRem(const Path : string; PreserveRoot : boolean = False) : string;
         class function SlashAdd(const Path : string) : string;
         class function VersionInfo(const Filename : string) : string;
-        class function IsValidFilename(const Filename : string; ConstrainLevel : Integer) : boolean;
-        class function RmDir(const Path : string) : Integer;
+		 class function IsValidFilename(const Filename : string; ConstrainLevel : Integer) : boolean;
+		 class function IsWritable( const Filename : string ) : Boolean;
+		 class function RmDir(const Path : string) : Integer;
         class function NextFamilyFilename(const BaseFilename : string) : string;
         class function FileTimeToDateTime(FTime : TFileTime) : TDateTime;
         class function FileTimeProperties(FileHandle : THandle;
@@ -2014,7 +2016,16 @@ begin
     end;
 end;
 
-{--------------------------------------------------------------------------------------------------------------------------------}
+class function TFileHnd.ChangeFileName(const OriginalFullPath, Filename: string): string;
+{{
+Retorna c caminho completo para o nome de arquivo baseado no nome original.
+Ex.: ChangeFileName( 'c:\teste.pqp', '\windows\temp\novo.txt' ) -> c:\windows\temp\novo.txt
+}
+begin
+	Result:=ExtractFilePath( OriginalFullPath );
+	Result:=TFileHnd.ConcatPath([ Result, Filename ]);
+end;
+
 class function TFileHnd.ConcatPath(Paths : array of string) : string;
 {{
 Junta as parte da esquerda para a direita de um caminho. Esta rotina é útil para evitar as duplas \\ na composicao do nome do
@@ -2403,6 +2414,35 @@ begin
             Result := Result and (TStrHnd.StrPosChar(ExtractFileName(Filename), CSet) = 0);
         end;
     end;
+end;
+
+class function TFileHnd.IsWritable(const Filename: string): Boolean;
+{{
+Identifica se o arquivo passado pode ser escrito pelo thread em contexto
+
+}
+var
+	fs : TFileStream;
+begin
+	Result:=False;
+	if FileExists( Filename ) then begin
+		try
+			fs:=TFileStream.Create( Filename , fmOpenWrite );
+			fs.Free;
+			Result:=True;
+		except
+			Exit; //Apenas retorna false
+		end;
+	end else begin
+		try
+			fs:=TFileStream.Create( Filename , fmCreate );
+			fs.Free;
+			Result:=True;
+			DeleteFile( Filename ); //ignora erros de deleção(objetivo apenas escrever)
+		except
+			Exit; //Apenas retorna false
+		end;
+   end;
 end;
 
 class function TFileHnd.MakeDefaultFileExtension(const OriginalFileName, DefaultExtension : string) : string;

@@ -1,5 +1,5 @@
 {$IFDEF TREUtils}
-    {$DEFINE DEBUG_UNIT}
+	 {$DEFINE DEBUG_UNIT}
 {$ENDIF}
 {$I TRELib.inc}
 
@@ -8,7 +8,7 @@ unit TREUtils;
 interface
 
 uses
-    SysUtils, Windows, Classes, TREConsts;
+	 SysUtils, Windows, Classes, TREConsts;
 
 
 type
@@ -17,12 +17,13 @@ type
 type
     TTREUtils = class
     public
-        class procedure CheckComputername(const Name : string); overload;
+		 class procedure CheckComputername(const Name : string); overload;
         class procedure CheckComputername(const Name : string; Local : Integer); overload;
         class procedure CheckComputername(const Name : string; ComputerType : TTREComputerType); overload;
         class procedure CheckComputername(const Name : string; Local : Integer; ComputerType : TTREComputerType); overload;
         class procedure CheckComputername(const Name : string; Local, CompId : Integer; ComputerType : TTREComputerType); overload;
-        class function GetComputerZone(const Computername : string) : Integer;
+		 class function GetComputerZone(const Computername : string) : Integer;
+		 class function GetComputerId( const Computername : string )  : Integer;
         class function GetNetworkType(const ComputerName : string) : TTRENetType;
     end;
 
@@ -153,6 +154,33 @@ end;
 class procedure TTREUtils.CheckComputername(const Name : string; Local : Integer; ComputerType : TTREComputerType);
 begin
     CheckComputername(Name, Local, CMPNAME_ID_ANY, ComputerType);
+end;
+
+class function TTREUtils.GetComputerId(const Computername: string): Integer;
+{{
+Leitura do identificador do computador na rede local.
+Para zonas representa 'R|Z|C'<UF>[SO(1)]<zzz><NetType(3)><nnn>
+}
+var
+	part : string;
+	x : Integer;
+begin
+	{$MESSAGE 'ALERTA: Implementação meia-boca'}
+	{TODO -oroger -clib : A análise dos componentes do nome do computador deve passar por um paser devido a sua complexidade.
+	Para esta implementação(fator tempo sempre) vamos pegar os digitos finais}
+	x:=Pos(CMPNAME_TYPE_WORKGROUP, Computername );
+	if x <= 0 then begin //tipo std
+		x:=Pos( CMPNAME_TYPE_DOMAIN, Computername );
+		if x <= 0 then begin
+       	x:=Pos( CMPNAME_TYPE_DOMAIN_CONTROLLER, Computername );
+		end;
+	end;
+	if x > 0 then begin
+		part:=Copy( Computername, x + 3 ); //Posição mais comprimento da cadeia
+		Result:=StrToInt( part );
+	end else begin
+		raise ETREException.CreateFmt('"%s" não é um nome de computador válido', [ Computername ] );
+	end;
 end;
 
 class function TTREUtils.GetComputerZone(const Computername : string) : Integer;

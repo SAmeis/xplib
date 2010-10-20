@@ -41,8 +41,8 @@ requires
 
 contains
   TREConsts in 'TREConsts.pas',
-  TREUtils in 'TREUtils.pas',
   TREZones in 'TREZones.pas',
-  TREConfig in 'TREConfig.pas';
+  TREConfig in 'TREConfig.pas',
+  TREUtils in 'TREUtils.pas';
 
 end.

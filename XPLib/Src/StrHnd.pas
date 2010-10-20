@@ -35,8 +35,9 @@ type
 type
     TStrHnd = class(TObject)
     public
-        class function ASCIISearchString(const NormalSrcString : string) : string;
-        class function endsWith(const fullStr : string; endChar : char) : boolean; overload;
+		 class function ASCIISearchString(const NormalSrcString : string) : string;
+		 class function CopyAfterLast(const SubStr, Str : string) : string;
+		 class function endsWith(const fullStr : string; endChar : char) : boolean; overload;
         {{
         Indica se a string termina com o dado caracter
         }
@@ -240,6 +241,18 @@ end;
 class function TStrHnd.Contains(const SubStr, SuperStr: string): Boolean;
 begin
 	Result:=( Pos(SubStr, SuperStr ) <> 0 );
+end;
+
+/// <summary>
+/// This functions scans s for SubStr from the right and returns the portion after SubStr.
+/// Example: AfterRev('.','c:\my.file.txt') > 'txt'
+/// </summary>
+class function TStrHnd.CopyAfterLast(const SubStr, Str: string): string;
+begin
+	 Result := StrRScanStr(PChar(SubStr), PChar(Str));
+	 if (Result <> EmptyStr) then begin
+		 Result := System.Copy(Result, Length(SubStr)+1, Length(Result));
+	 end;
 end;
 
 class function TStrHnd.endsWith(const fullStr, endStr : string) : boolean;

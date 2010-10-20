@@ -28,24 +28,25 @@ type
             1: (
                 AsFloat: QUADWORD;
             );
-            2: (
-                MajorVersion: DWORD;
-                MinorVersion: DWORD;
-            );
-    end;
+			 2: (
+				 MajorVersionEx: DWORD;
+				 MinorVersionEx: DWORD;
+			 );
+	 end;
 
-    TVersionInfo = class
-    {{
-    Classe de manipulação de informação de versões abstratas que podem ter sua fonte das mais variadas origens.
+	 TVersionInfo = class
+	 {{
+	 Classe de manipulação de informação de versões abstratas que podem ter sua fonte das mais variadas origens.
 
-    Revision: 21/5/2007 - roger
-    }
-    private
-        FVersion : TNumberVersion;
-    public
-        constructor Create(const VersionString : string); virtual;
-        function Compares(ver : TVersionInfo) : Integer;
-        class function Convert(const StrVersion : string) : TNumberVersion;
+	 Revision: 21/5/2007 - roger
+	 }
+	 private
+		 FVersion : TNumberVersion;
+	 public
+		 constructor Create(const VersionString : string); virtual;
+		 function Compares(Another : TVersionInfo) : Integer;
+		 class function CompareTo(ver1, ver2 : string) : Integer;
+		 class function Convert(const StrVersion : string) : TNumberVersion;
         property Version : TNumberVersion read FVersion;
     end;
 
@@ -749,8 +750,8 @@ var
     i, ECode, Num : Integer;
     S : string;
 begin
-    Result.MajorVersion := 0;
-    Result.MinorVersion := 0;
+	 Result.MajorVersionEx := 0;
+    Result.MinorVersionEx := 0;
     for i := 0 to 3 do begin
         S := Str_Pas.GetDelimitedSubStr('.', StrVer, i);
         Val(S, Num, ECode);
@@ -769,7 +770,7 @@ begin
                     Result.Build := 0;
                 end;
             end;
-            Exit;
+            System.Continue; //pega próximo item
         end;
         //Atribuicao correta do valor
         case i of
@@ -796,32 +797,64 @@ begin
 end;
 
 
-function TVersionInfo.Compares(ver : TVersionInfo) : Integer;
+function TVersionInfo.Compares(Another : TVersionInfo) : Integer;
 {{
 Compara a versão passada com a instância e retorna -1 se a instância for menor, 0 se iguais e 1 se acima.
+Ex.: (Self = 1.2.8; Another = 1.20.0) = 1
+(Self = 1.2.8; Another = 1.2.0) = -1
 
 Revision: 21/5/2007 - roger
 }
-var
-    another : TNumberVersion;
 begin
-    another := ver.Version;
-    if (another.MajorVersion = Self.FVersion.MajorVersion) then begin
-        if (another.MinorVersion = Self.FVersion.MinorVersion) then begin
-            Result := 0;
+	 if (another.FVersion.Major = Self.FVersion.Major) then begin
+		 if (another.FVersion.Minor = Self.FVersion.Minor) then begin
+			 if (another.FVersion.Release = Self.FVersion.Release) then begin
+				 if (Another.FVersion.Build = Self.FVersion.Build) then begin
+					Result := 0;
+				 end else begin
+					if (Another.FVersion.Build > Self.FVersion.Build) then begin
+						Result:=1;
+					end else begin
+						Result:=-1;
+					end;
+				 end;
+			 end else begin
+				 if another.FVersion.Release > Self.FVersion.Release then begin
+                    Result := 1;
+                end else begin
+                    Result := -1;
+                end;
+            end;
         end else begin
-            if (another.MinorVersion > Self.FVersion.MinorVersion) then begin
+            if (another.FVersion.Minor > Self.FVersion.Minor) then begin
                 Result := 1;
             end else begin
                 Result := -1;
             end;
         end;
     end else begin
-        if (another.MajorVersion > Self.FVersion.MajorVersion) then begin
+        if (another.FVersion.Major > Self.FVersion.Major ) then begin
             Result := 1;
         end else begin
             Result := -1;
         end;
+    end;
+end;
+
+class function TVersionInfo.CompareTo(ver1, ver2 : string) : Integer;
+var
+    vi1, vi2 : TVersionInfo;
+begin
+    vi1 := TVersionInfo.Create(ver1);
+    try
+        vi2 := TVersionInfo.Create(ver2);
+        try
+            Result := vi1.Compares(vi2);
+        finally
+            vi2.Free;
+        end;
+    finally
+        vi1.Free;
     end;
 end;
 
@@ -830,10 +863,10 @@ var
     i, ECode, Num : Integer;
     S : string;
 begin
-    Result.MajorVersion := 0;
-    Result.MinorVersion := 0;
-    for i := 0 to 3 do begin
-        S := Str_Pas.GetDelimitedSubStr('.', StrVersion, i);
+	 Result.MajorVersionEx := 0;
+	 Result.MinorVersionEx := 0;
+	 for i := 0 to 3 do begin
+		 S := Str_Pas.GetDelimitedSubStr('.', StrVersion, i);
         Val(S, Num, ECode);
         if ECode <> 0 then begin
             case i of
@@ -850,21 +883,22 @@ begin
                     Result.Build := 0;
                 end;
             end;
-            Exit;
-        end;
-        //Atribuicao correta do valor
-        case i of
-            0 : begin
-                Result.Major := Num;
-            end;
-            1 : begin
-                Result.Minor := Num;
-            end;
-            2 : begin
-                Result.Release := Num;
-            end;
-            3 : begin
-                Result.Build := Num;
+            //Exit;
+        end else begin
+            //Atribuicao correta do valor
+            case i of
+                0 : begin
+                    Result.Major := Num;
+                end;
+                1 : begin
+                    Result.Minor := Num;
+                end;
+                2 : begin
+                    Result.Release := Num;
+                end;
+                3 : begin
+                    Result.Build := Num;
+                end;
             end;
         end;
     end;
