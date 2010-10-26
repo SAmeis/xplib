@@ -8,7 +8,8 @@ uses
   XmlSerial in 'XmlSerial.pas',
   RttiUtils in 'RttiUtils.pas',
   Rtti in 'c:\arquivos de programas\embarcadero\rad studio\7.0\source\Win32\rtl\common\Rtti.pas',
-  MainDemoUtils in 'MainDemoUtils.pas';
+  MainDemoUtils in 'MainDemoUtils.pas',
+  JvgXMLSerializer in '..\..\..\Jedi\jvcl\run\JvgXMLSerializer.pas';
 
 {$R *.res}
 

@@ -9,6 +9,7 @@ interface
 
 uses
 	 SysUtils, contnrs, Classes, TREConsts, TREUtils, XMLIntf, OPXMLSerializable;
+
 (*
 type
 	 TTRELocalNet = class(TXMLSerializable)

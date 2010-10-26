@@ -15,7 +15,7 @@ object Form1: TForm1
   TextHeight = 13
   object btnLoadConfig: TBitBtn
     Left = 504
-    Top = 40
+    Top = 32
     Width = 97
     Height = 41
     Caption = 'btnLoadConfig'
@@ -81,6 +81,17 @@ object Form1: TForm1
     TabOrder = 3
     OnClick = btnTestSerialClick
   end
+  object btnJVXMLSerializer: TBitBtn
+    Left = 504
+    Top = 232
+    Width = 97
+    Height = 41
+    Caption = '&Test JVSerializer'
+    DoubleBuffered = True
+    ParentDoubleBuffered = False
+    TabOrder = 4
+    OnClick = btnJVXMLSerializerClick
+  end
   object xmlflstrgApp: TJvAppXMLFileStorage
     StorageOptions.BooleanStringTrueValues = 'TRUE, YES, Y'
     StorageOptions.BooleanStringFalseValues = 'FALSE, NO, N'
@@ -93,10 +104,11 @@ object Form1: TForm1
     Top = 176
   end
   object xmlsrlzrApp: TJvgXMLSerializer
-    ExcludeEmptyValues = False
-    ExcludeDefaultValues = False
+    ExcludeEmptyValues = True
+    ExcludeDefaultValues = True
     ReplaceReservedSymbols = False
     IgnoreUnknownTags = False
+    WrapCollections = False
     Left = 432
     Top = 112
   end

@@ -22,11 +22,13 @@ type
     btnSaveConfig: TBitBtn;
     tvDemo: TTreeView;
     xmlflstrgApp: TJvAppXMLFileStorage;
-    xmlsrlzrApp: TJvgXMLSerializer;
+	 xmlsrlzrApp: TJvgXMLSerializer;
     xmldocSamples: TXMLDocument;
     btnTestSerial: TBitBtn;
+    btnJVXMLSerializer: TBitBtn;
     procedure btnSaveConfigClick(Sender: TObject);
 	 procedure btnTestSerialClick(Sender: TObject);
+    procedure btnJVXMLSerializerClick(Sender: TObject);
   private
     { Private declarations }
 	 FRegional : TTRERegional;
@@ -45,6 +47,22 @@ uses
 
 
 {$R *.dfm}
+
+procedure TForm1.btnJVXMLSerializerClick(Sender: TObject);
+var
+	fs : TFileStream;
+begin
+	if FileExists( 'C:\Lixo.xml' ) then begin
+		fs:=TFileStream.Create('C:\Lixo.xml', fmOpenReadWrite );
+	end	else begin
+		fs:=TFileStream.Create('C:\Lixo.xml', fmCreate );
+   end;
+	try
+	Self.xmlsrlzrApp.Serialize( Self.tvDemo, fs );
+   finally
+    fs.Free();
+   end;
+end;
 
 procedure TForm1.btnSaveConfigClick(Sender: TObject);
 var
