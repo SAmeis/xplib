@@ -1,41 +1,38 @@
 ﻿[Closed Files]
-File_0=TSourceModule,'C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\DeHL.Base.pas',0,1,515,53,523,0,0,,
-File_1=TSourceModule,'C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Collections\DeHL.Collections.Dictionary.pas',0,1,474,1,496,0,0,{{46,4}
-File_2=TSourceModule,'C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Collections\DeHL.Collections.HashSet.pas',0,1,273,1,292,0,0,{{45,4}
-File_3=TSourceModule,'C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\DeHL.Exceptions.pas',0,1,555,1,569,0,0,,
-File_4=TSourceModule,'c:\arquivos de programas\embarcadero\rad studio\7.0\SOURCE\WIN32\RTL\SYS\System.pas',0,1,1,1,1,0,0,,
-File_5=TSourceModule,'c:\arquivos de programas\embarcadero\rad studio\7.0\source\Win32\rtl\common\Classes.pas',0,1,3619,11,3632,0,0,,{1
-File_6=TSourceModule,'C:\Sw\WorkDir\Testes\Delphi\DeHL_0.8.4\src\Serialization\DeHL.Serialization.pas',0,1,8,82,8,0,0,,
-File_7=TSourceModule,'C:\Sw\WorkDir\Testes\Delphi\DeHL_0.8.4\src\Serialization\DeHL.Serialization.XML.pas',0,1,717,17,729,0,0,,
-File_8=TSourceModule,'C:\Sw\WorkDir\Testes\Delphi\DeHL_0.8.4\src\Serialization\DeHL.Serialization.Abstract.pas',0,1,180,39,192,0,0,,
-File_9=TSourceModule,'C:\Sw\WorkDir\Testes\Delphi\DeHL_0.8.4\src\DeHL.Exceptions.pas',0,1,1,81,6,0,0,,
-File_10=TSourceModule,'C:\Sw\WorkDir\Testes\Delphi\DeHL_0.8.4\src\DeHL.Types.pas',0,1,2042,1,2056,0,0,,
-File_11=TSourceModule,'C:\Sw\WorkDir\Pcks\TRE\Demos\Src\XMLSerializer.pas',0,1,1,1,1,0,0,,
-File_12=TSourceModule,'C:\Sw\WorkDir\Pcks\TRE\Demos\Src\XmlSerial.pas',0,1,1,15,11,0,0,,
-File_13=TSourceModule,'C:\Sw\WorkDir\Pcks\TRE\Demos\Src\RttiUtils.pas',0,1,1,37,8,0,0,,
-File_14=TSourceModule,'C:\Sw\WorkDir\Testes\Delphi\DeHL_0.8.4\src\DeHL.Base.pas',0,1,174,18,187,0,0,,
+File_0=TSourceModule,'C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Serialization\DeHL.Serialization.Abstract.pas',0,1,1180,1,1192,0,0,,
+File_1=TSourceModule,'C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Collections\DeHL.Collections.Interop.pas',0,1,94,14,289,0,0,{{95,4},{282,15},{'Internal Collection Types'}},
+File_2=TSourceModule,'C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Serialization\DeHL.Serialization.XML.pas',0,1,581,1,590,0,0,,{1,590,53}{2,203,16}
+File_3=TSourceModule,'C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\DeHL.Types.pas',0,1,4960,81,4966,0,0,,
+File_4=TSourceModule,'C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Collections\DeHL.Collections.Stack.pas',0,1,717,1,734,0,0,{{44,4},{62,15},{'Internal Types'}},
+File_5=TSourceModule,'C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Serialization\DeHL.Serialization.Binary.pas',0,28,65,3,80,0,0,,
+File_6=TSourceModule,'C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Serialization\DeHL.Serialization.Ini.pas',0,1,61,3,73,0,0,,
+File_7=TSourceModule,'C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Serialization\DeHL.Serialization.pas',0,1,1165,1,1188,0,0,,
+File_8=TSourceModule,'C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\DeHL.Base.pas',0,1,515,53,523,0,0,,
+File_9=TSourceModule,'C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Collections\DeHL.Collections.Dictionary.pas',0,1,474,1,496,0,0,{{46,4}
+File_10=TSourceModule,'C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Collections\DeHL.Collections.HashSet.pas',0,1,273,1,292,0,0,{{45,4}
+File_11=TSourceModule,'C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\DeHL.Exceptions.pas',0,1,555,1,569,0,0,,
+File_12=TSourceModule,'c:\arquivos de programas\embarcadero\rad studio\7.0\SOURCE\WIN32\RTL\SYS\System.pas',0,1,1,1,1,0,0,,
+File_13=TSourceModule,'c:\arquivos de programas\embarcadero\rad studio\7.0\source\Win32\rtl\common\Classes.pas',0,1,3619,11,3632,0,0,,{1
+File_14=TSourceModule,'C:\Sw\WorkDir\Testes\Delphi\DeHL_0.8.4\src\Serialization\DeHL.Serialization.pas',0,1,8,82,8,0,0,,
 
 [Modules]
-Module0=C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\DeHL.Types.pas
-Module1=default.htm
-Module2=c:\arquivos de programas\embarcadero\rad studio\7.0\Source\Win32\rtl\common\Generics.Collections.pas
-Module3=c:\arquivos de programas\embarcadero\rad studio\7.0\source\Win32\rtl\common\Generics.Defaults.pas
-Module4=C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Collections\DeHL.Collections.Interop.pas
-Module5=C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Serialization\DeHL.Serialization.Abstract.pas
-Module6=C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Collections\DeHL.Collections.Stack.pas
-Module7=C:\Sw\WorkDir\Pcks\TRE\Demos\Src\MainDemoForm.pas
-Module8=C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Serialization\DeHL.Serialization.XML.pas
-Module9=C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Serialization\DeHL.Serialization.Binary.pas
-Module10=C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Serialization\DeHL.Serialization.Ini.pas
-Module11=C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Serialization\DeHL.Serialization.pas
-Module12=C:\Sw\WorkDir\Pcks\OPLib\Src\OPXMLSerializable.pas
-Module13=C:\Sw\WorkDir\Pcks\TRE\Src\TREZones.pas
-Module14=C:\Sw\WorkDir\Pcks\TRE\Src\TREConfig.pas
-Module15=C:\Sw\WorkDir\Pcks\TRE\Demos\Src\MainDemoUtils.pas
-Count=16
+Module0=C:\Sw\WorkDir\Pcks\TRE\Demos\Src\MainDemoForm.pas
+Module1=c:\arquivos de programas\embarcadero\rad studio\7.0\source\Win32\rtl\common\Generics.Defaults.pas
+Module2=default.htm
+Module3=c:\arquivos de programas\embarcadero\rad studio\7.0\Source\Win32\rtl\common\Generics.Collections.pas
+Module4=C:\Sw\WorkDir\Pcks\OPLib\Src\OPXMLSerializable.pas
+Module5=C:\Sw\WorkDir\Pcks\TRE\Src\TREZones.pas
+Module6=C:\Sw\WorkDir\Pcks\TRE\Src\TREConfig.pas
+Module7=C:\Sw\WorkDir\Pcks\TRE\Demos\Src\MainDemoUtils.pas
+Count=8
 EditWindowCount=1
 
-[C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\DeHL.Types.pas]
+[C:\Sw\WorkDir\Pcks\TRE\Demos\Src\MainDemoForm.pas]
+ModuleType=TSourceModule
+FormState=1
+FormOnTop=0
+
+[c:\arquivos de programas\embarcadero\rad studio\7.0\source\Win32\rtl\common\Generics.Defaults.pas]
 ModuleType=TSourceModule
 FormState=0
 FormOnTop=0
@@ -44,51 +41,6 @@ FormOnTop=0
 ModuleType=TURLModule
 
 [c:\arquivos de programas\embarcadero\rad studio\7.0\Source\Win32\rtl\common\Generics.Collections.pas]
-ModuleType=TSourceModule
-FormState=0
-FormOnTop=0
-
-[c:\arquivos de programas\embarcadero\rad studio\7.0\source\Win32\rtl\common\Generics.Defaults.pas]
-ModuleType=TSourceModule
-FormState=0
-FormOnTop=0
-
-[C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Collections\DeHL.Collections.Interop.pas]
-ModuleType=TSourceModule
-FormState=0
-FormOnTop=0
-
-[C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Serialization\DeHL.Serialization.Abstract.pas]
-ModuleType=TSourceModule
-FormState=0
-FormOnTop=0
-
-[C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Collections\DeHL.Collections.Stack.pas]
-ModuleType=TSourceModule
-FormState=0
-FormOnTop=0
-
-[C:\Sw\WorkDir\Pcks\TRE\Demos\Src\MainDemoForm.pas]
-ModuleType=TSourceModule
-FormState=1
-FormOnTop=0
-
-[C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Serialization\DeHL.Serialization.XML.pas]
-ModuleType=TSourceModule
-FormState=0
-FormOnTop=0
-
-[C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Serialization\DeHL.Serialization.Binary.pas]
-ModuleType=TSourceModule
-FormState=0
-FormOnTop=0
-
-[C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Serialization\DeHL.Serialization.Ini.pas]
-ModuleType=TSourceModule
-FormState=0
-FormOnTop=0
-
-[C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Serialization\DeHL.Serialization.pas]
 ModuleType=TSourceModule
 FormState=0
 FormOnTop=0
@@ -114,8 +66,8 @@ FormState=0
 FormOnTop=0
 
 [EditWindow0]
-ViewCount=16
-CurrentEditView=C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\DeHL.Types.pas
+ViewCount=8
+CurrentEditView=C:\Sw\WorkDir\Pcks\TRE\Demos\Src\MainDemoForm.pas
 View0=0
 View1=1
 View2=2
@@ -124,14 +76,6 @@ View4=4
 View5=5
 View6=6
 View7=7
-View8=8
-View9=9
-View10=10
-View11=11
-View12=12
-View13=13
-View14=14
-View15=15
 PercentageSizes=1
 Create=1
 Visible=1
@@ -210,81 +154,15 @@ EditViewName=C:\Sw\WorkDir\Pcks\OPLib\Src\OPXMLSerializable.pas
 [View5]
 CustomEditViewType=TEditView
 Module=C:\Sw\WorkDir\Pcks\TRE\Demos\Src\MainDemoForm.pas
-CursorX=1
-CursorY=71
-TopLine=66
+CursorX=76
+CursorY=56
+TopLine=49
 LeftCol=1
 Elisions=
 Bookmarks={1,123,64}
 EditViewName=C:\Sw\WorkDir\Pcks\TRE\Demos\Src\MainDemoForm.pas
 
 [View6]
-CustomEditViewType=TEditView
-Module=C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Collections\DeHL.Collections.Stack.pas
-CursorX=1
-CursorY=734
-TopLine=717
-LeftCol=1
-Elisions={{44,4},{62,15},{'Internal Types'}}
-Bookmarks=
-EditViewName=C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Collections\DeHL.Collections.Stack.pas
-
-[View7]
-CustomEditViewType=TEditView
-Module=C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Serialization\DeHL.Serialization.Abstract.pas
-CursorX=1
-CursorY=1192
-TopLine=1180
-LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Serialization\DeHL.Serialization.Abstract.pas
-
-[View8]
-CustomEditViewType=TEditView
-Module=C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Collections\DeHL.Collections.Interop.pas
-CursorX=14
-CursorY=289
-TopLine=94
-LeftCol=1
-Elisions={{95,4},{282,15},{'Internal Collection Types'}}
-Bookmarks=
-EditViewName=C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Collections\DeHL.Collections.Interop.pas
-
-[View9]
-CustomEditViewType=TEditView
-Module=C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Serialization\DeHL.Serialization.Ini.pas
-CursorX=3
-CursorY=73
-TopLine=61
-LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Serialization\DeHL.Serialization.Ini.pas
-
-[View10]
-CustomEditViewType=TEditView
-Module=C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Serialization\DeHL.Serialization.Binary.pas
-CursorX=3
-CursorY=80
-TopLine=65
-LeftCol=28
-Elisions=
-Bookmarks=
-EditViewName=C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Serialization\DeHL.Serialization.Binary.pas
-
-[View11]
-CustomEditViewType=TEditView
-Module=C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\DeHL.Types.pas
-CursorX=81
-CursorY=4966
-TopLine=4960
-LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\DeHL.Types.pas
-
-[View12]
 CustomEditViewType=TEditView
 Module=c:\arquivos de programas\embarcadero\rad studio\7.0\Source\Win32\rtl\common\Generics.Collections.pas
 CursorX=94
@@ -295,7 +173,7 @@ Elisions=
 Bookmarks=
 EditViewName=c:\arquivos de programas\embarcadero\rad studio\7.0\Source\Win32\rtl\common\Generics.Collections.pas
 
-[View13]
+[View7]
 CustomEditViewType=TEditView
 Module=c:\arquivos de programas\embarcadero\rad studio\7.0\source\Win32\rtl\common\Generics.Defaults.pas
 CursorX=34
@@ -305,28 +183,6 @@ LeftCol=1
 Elisions=
 Bookmarks=
 EditViewName=c:\arquivos de programas\embarcadero\rad studio\7.0\source\Win32\rtl\common\Generics.Defaults.pas
-
-[View14]
-CustomEditViewType=TEditView
-Module=C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Serialization\DeHL.Serialization.XML.pas
-CursorX=1
-CursorY=590
-TopLine=581
-LeftCol=1
-Elisions=
-Bookmarks={1,590,53}{2,203,16}
-EditViewName=C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Serialization\DeHL.Serialization.XML.pas
-
-[View15]
-CustomEditViewType=TEditView
-Module=C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Serialization\DeHL.Serialization.pas
-CursorX=1
-CursorY=1188
-TopLine=1165
-LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Serialization\DeHL.Serialization.pas
 
 [Watches]
 Count=2
@@ -903,5 +759,5 @@ ActiveTabID=ToolForm
 TabDockClients=ToolForm,TemplateView
 
 [ActiveProject]
-ActiveProject=4
+ActiveProject=1
 
