@@ -23,20 +23,20 @@ type
 
     TTREUnit = class(TTREXMLPersist); //Ancestral de zonas e de central
 
-	 [XmlAttributeAttribute]
-    TTRERegional = class(TTREUnit)
-    private
-        FLocalNetwork : TXMLSerializableList;
-        FDescription :  string;
-        function GetNetworks(index : Integer) : TTRELocalNet;
-    public
-        constructor Create; virtual;
-        function AddNetwork(ANet : TTRELocalNet) : Integer;
-        property Networks[index : Integer] : TTRELocalNet read GetNetworks;
+	 //[XmlAttributeAttribute]
+	 TTRERegional = class(TTREUnit)
+	 private
+		 FLocalNetwork : TXMLSerializableList;
+		 FDescription :  string;
+		 function GetNetworks(index : Integer) : TTRELocalNet;
+	 public
+		 constructor Create; virtual;
+		 function AddNetwork(ANet : TTRELocalNet) : Integer;
+		 property Networks[index : Integer] : TTRELocalNet read GetNetworks;
 	 published
-		 [XmlAttributeAttribute]
+		 //[XmlAttributeAttribute]
 		 property LocalNetwork : TXMLSerializableList read FLocalNetwork write FLocalNetwork;
-		 [XmlAttributeAttribute]
+		 //[XmlAttributeAttribute]
 		 property Description : string read FDescription write FDescription;
 	 end;
 

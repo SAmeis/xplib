@@ -92,6 +92,28 @@ object Form1: TForm1
     TabOrder = 4
     OnClick = btnJVXMLSerializerClick
   end
+  object btnDEHSerializer: TBitBtn
+    Left = 504
+    Top = 304
+    Width = 97
+    Height = 41
+    Caption = '&Test DEH Serializer'
+    DoubleBuffered = True
+    ParentDoubleBuffered = False
+    TabOrder = 5
+    OnClick = btnDEHSerializerClick
+  end
+  object btnDeHLUnserialize: TBitBtn
+    Left = 504
+    Top = 368
+    Width = 97
+    Height = 41
+    Caption = '&Test DEH UNSerializer'
+    DoubleBuffered = True
+    ParentDoubleBuffered = False
+    TabOrder = 6
+    OnClick = btnDeHLUnserializeClick
+  end
   object xmlflstrgApp: TJvAppXMLFileStorage
     StorageOptions.BooleanStringTrueValues = 'TRUE, YES, Y'
     StorageOptions.BooleanStringFalseValues = 'FALSE, NO, N'

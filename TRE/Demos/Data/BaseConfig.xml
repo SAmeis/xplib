@@ -1,3 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <BaseConfig version="1.0.0" class="TTRERegional" Description="TRE-PB">
+  <LocalNetwork class="TXMLSerializableList">
+    <Items>
+      <TTRELocalNet xmlns="Item" class="TTRELocalNet" PrimaryZone="80">
+        <Units class="TXMLSerializableList">
+          <Items/>
+        </Units>
+      </TTRELocalNet>
+      <TTRELocalNet xmlns="Item" class="TTRELocalNet" PrimaryZone="33">
+        <Units class="TXMLSerializableList">
+          <Items>
+            <TTREZone class="TTREZone"/>
+          </Items>
+        </Units>
+      </TTRELocalNet>
+    </Items>
+  </LocalNetwork>
 </BaseConfig>

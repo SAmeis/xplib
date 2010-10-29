@@ -20,6 +20,7 @@
 			<Base>true</Base>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Base)'!=''">
+			<DCC_UnitSearchPath>C:\Sw\WorkDir\Testes\Delphi\DeHL\bin;C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src;C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Serialization;C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Collections;C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Math;C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Extensions;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
 			<DCC_RunTimeTypeInfo>true</DCC_RunTimeTypeInfo>
 			<DCC_Define>FULL_RTTI;$(DCC_Define)</DCC_Define>
 			<DCC_ExeOutput>..\Debug</DCC_ExeOutput>
@@ -48,16 +49,38 @@
 				<Form>Form1</Form>
 			</DCCReference>
 			<DCCReference Include="..\..\Src\TREZones.pas"/>
-			<DCCReference Include="..\..\..\OPLib\Src\OPXMLSerializable.pas"/>
-			<DCCReference Include="XmlSerial.pas"/>
 			<DCCReference Include="RttiUtils.pas"/>
-			<DCCReference Include="c:\arquivos de programas\embarcadero\rad studio\7.0\source\Win32\rtl\common\Rtti.pas"/>
 			<DCCReference Include="MainDemoUtils.pas"/>
-			<DCCReference Include="..\..\..\Jedi\jvcl\run\JvgXMLSerializer.pas"/>
 			<None Include="ModelSupport_DemoTRELib\default.txaPackage"/>
 			<None Include="ModelSupport_DemoTRELib\default.txvpck"/>
 			<None Include="ModelSupport_DemoTRELib\MainDemoForm\default.txvpck"/>
 			<None Include="ModelSupport_DemoTRELib\DemoTRELib\default.txvpck"/>
+			<None Include="ModelSupport_DemoTRELib\DeHL\Math\Types\default.txaPackage"/>
+			<None Include="ModelSupport_DemoTRELib\DeHL\Serialization\default.txaPackage"/>
+			<None Include="ModelSupport_DemoTRELib\DeHL\Math\Half\default.txaPackage"/>
+			<None Include="ModelSupport_DemoTRELib\DeHL\Math\BigCardinal\default.txaPackage"/>
+			<None Include="ModelSupport_DemoTRELib\DeHL\Math\default.txaPackage"/>
+			<None Include="ModelSupport_DemoTRELib\DeHL\default.txaPackage"/>
+			<None Include="ModelSupport_DemoTRELib\DeHL\Base\default.txaPackage"/>
+			<None Include="ModelSupport_DemoTRELib\DeHL\StrConsts\default.txaPackage"/>
+			<None Include="ModelSupport_DemoTRELib\DeHL\Math\Primes\default.txaPackage"/>
+			<None Include="ModelSupport_DemoTRELib\DeHL\Math\BigDecimal\default.txaPackage"/>
+			<None Include="ModelSupport_DemoTRELib\DeHL\Exceptions\default.txaPackage"/>
+			<None Include="ModelSupport_DemoTRELib\DeHL\Math\BigInteger\default.txaPackage"/>
+			<None Include="ModelSupport_DemoTRELib\DeHL\StrConsts\default.txvpck"/>
+			<None Include="ModelSupport_DemoTRELib\DeHL\Serialization\default.txvpck"/>
+			<None Include="ModelSupport_DemoTRELib\DeHL\Serialization\Binary\default.txaPackage"/>
+			<None Include="ModelSupport_DemoTRELib\DeHL\Serialization\Ini\default.txaPackage"/>
+			<None Include="ModelSupport_DemoTRELib\DeHL\Serialization\Abstract\default.txaPackage"/>
+			<None Include="ModelSupport_DemoTRELib\DeHL\Serialization\XML\default.txaPackage"/>
+			<None Include="ModelSupport_DemoTRELib\DeHL\Math\Types\default.txvpck"/>
+			<None Include="ModelSupport_DemoTRELib\DeHL\Math\Primes\default.txvpck"/>
+			<None Include="ModelSupport_DemoTRELib\DeHL\Math\Half\default.txvpck"/>
+			<None Include="ModelSupport_DemoTRELib\DeHL\Math\BigInteger\default.txvpck"/>
+			<None Include="ModelSupport_DemoTRELib\DeHL\Math\BigDecimal\default.txvpck"/>
+			<None Include="ModelSupport_DemoTRELib\DeHL\Math\BigCardinal\default.txvpck"/>
+			<None Include="ModelSupport_DemoTRELib\DeHL\Exceptions\default.txvpck"/>
+			<None Include="ModelSupport_DemoTRELib\DeHL\Base\default.txvpck"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>
@@ -83,6 +106,7 @@
 						<Parameters Name="UseLauncher">False</Parameters>
 						<Parameters Name="LoadAllSymbols">True</Parameters>
 						<Parameters Name="LoadUnspecifiedSymbols">False</Parameters>
+						<Parameters Name="DebugSourceDirs">C:\Sw\WorkDir\Testes\Delphi\DeHL_0.8.4\src\Serialization\;C:\Sw\WorkDir\Testes\Delphi\DeHL_0.8.4\src\</Parameters>
 					</Parameters>
 					<VersionInfo>
 						<VersionInfo Name="IncludeVerInfo">False</VersionInfo>
