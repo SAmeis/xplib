@@ -81,58 +81,27 @@ object Form1: TForm1
     TabOrder = 3
     OnClick = btnTestSerialClick
   end
-  object btnJVXMLSerializer: TBitBtn
-    Left = 504
-    Top = 232
-    Width = 97
-    Height = 41
-    Caption = '&Test JVSerializer'
-    DoubleBuffered = True
-    ParentDoubleBuffered = False
-    TabOrder = 4
-    OnClick = btnJVXMLSerializerClick
-  end
   object btnDEHSerializer: TBitBtn
     Left = 504
-    Top = 304
+    Top = 232
     Width = 97
     Height = 41
     Caption = '&Test DEH Serializer'
     DoubleBuffered = True
     ParentDoubleBuffered = False
-    TabOrder = 5
+    TabOrder = 4
     OnClick = btnDEHSerializerClick
   end
   object btnDeHLUnserialize: TBitBtn
     Left = 504
-    Top = 368
+    Top = 296
     Width = 97
     Height = 41
     Caption = '&Test DEH UNSerializer'
     DoubleBuffered = True
     ParentDoubleBuffered = False
-    TabOrder = 6
+    TabOrder = 5
     OnClick = btnDeHLUnserializeClick
-  end
-  object xmlflstrgApp: TJvAppXMLFileStorage
-    StorageOptions.BooleanStringTrueValues = 'TRUE, YES, Y'
-    StorageOptions.BooleanStringFalseValues = 'FALSE, NO, N'
-    StorageOptions.InvalidCharReplacement = '_'
-    AutoFlush = True
-    FileName = 'C:\Sw\WorkDir\Pcks\TRE\Demos\Data\BaseConfig.xml'
-    RootNodeName = 'Configuration'
-    SubStorages = <>
-    Left = 432
-    Top = 176
-  end
-  object xmlsrlzrApp: TJvgXMLSerializer
-    ExcludeEmptyValues = True
-    ExcludeDefaultValues = True
-    ReplaceReservedSymbols = False
-    IgnoreUnknownTags = False
-    WrapCollections = False
-    Left = 432
-    Top = 112
   end
   object xmldocSamples: TXMLDocument
     Active = True

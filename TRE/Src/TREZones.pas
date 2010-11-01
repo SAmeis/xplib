@@ -8,30 +8,31 @@ unit TREZones;
 interface
 
 uses
-	 SysUtils, contnrs, Classes, TREConsts, TREUtils, XMLIntf, OPXMLSerializable;
+	 SysUtils, contnrs, Classes, TREConsts, TREUtils, XMLIntf, Generics.Collections;
 
 
 type
-	 TTRELocalNet = class(TXMLSerializable)
+	TTRESerializable = class( TPersistent );  // TXMLSerializable
+	TTRESerializableList  = class( TList ); //   TXMLSerializableList
+	TTREXMLPersist = class(TTRESerializable);
+	TTREUnits = class(TList<TTREXMLPersist>); //Ancestral de zonas e de central
+
+	 TTRELocalNet = class(TTRESerializable)
 	 private
 		 FPrimaryZone : Integer;
-		 FUnits :       TXMLSerializableList;
+		 FUnits :       TTRESerializableList;
 		 function GetSubNet : string;
 	 public
 		 constructor Create(APrimaryZoneId : Integer); virtual;
 		 property SubNet : string read GetSubNet;
 	 published
-		 property PrimaryZone : Integer read FPrimaryZone write FPrimaryZone;
-		 property Units : TXMLSerializableList read FUnits write FUnits;
+		 property PrimaryZoneId : Integer read FPrimaryZone write FPrimaryZone;
+		 property Units : TTRESerializableList read FUnits write FUnits;
 	 end;
 
-	 TTREXMLPersist = class(TXMLSerializable);
-
-	 TTREUnit = class(TTREXMLPersist); //Ancestral de zonas e de central
-
-	 TTRERegional = class(TTREUnit)
+	 TTRERegional = class(TTREUnits)
 	 private
-		 FLocalNetwork : TXMLSerializableList;
+		 FLocalNetwork : TTRESerializableList;
 		 FDescription :  string;
 		 function GetNetworks(index : Integer) : TTRELocalNet;
 	 public
@@ -39,7 +40,7 @@ type
 		 function AddNetwork(ANet : TTRELocalNet) : Integer;
 		 property Networks[index : Integer] : TTRELocalNet read GetNetworks;
 	 published
-		 property LocalNetwork : TXMLSerializableList read FLocalNetwork write FLocalNetwork;
+		 property LocalNetwork : TTRESerializableList read FLocalNetwork write FLocalNetwork;
 		 property Description : string read FDescription write FDescription;
 	 end;
 
@@ -50,53 +51,53 @@ type
         function GetIsPrimary : boolean;
         procedure SetIsPrimary(const Value : boolean);
     public
-        constructor Create(AUnit : TTREUnit); virtual;
-        property isPrimary : boolean read GetIsPrimary write SetIsPrimary;
-    published
-    end;
+		 constructor Create(AUnit : TTREUnits); virtual;
+		 property isPrimary : boolean read GetIsPrimary write SetIsPrimary;
+	 published
+	 end;
 
-    TTRECentral = class;
+	 TTRECentral = class;
 
-    TTREZone = class(TTREUnit)
-    private
-        FId :      Integer;
-        FCentral : TTRECentral;
-        function GetCentral : TTRECentral;
-        function GetCentralIndex : Integer;
-        procedure SetCentral(const Value : TTRECentral);
-    protected
-    public
-        constructor Create(AZoneId : Integer); virtual;
+	 TTREZone = class(TTREUnits)
+	 private
+		 FId :      Integer;
+		 FCentral : TTRECentral;
+		 function GetCentral : TTRECentral;
+		 function GetCentralIndex : Integer;
+		 procedure SetCentral(const Value : TTRECentral);
+	 protected
+	 public
+		 constructor Create(AZoneId : Integer); virtual;
 		 procedure BeforeDestruction; override;
-        property Id : Integer read FId;
-        /// <summary> Retorna ordem da zona dentro da central, caso haja uma definida para a mesma </summary>
-        /// <remarks>
-        /// Caso não haja central pai para esta zona -1 será retornado
-        /// </remarks>
-        property CentralIndex : Integer read GetCentralIndex;
-        property Central : TTRECentral read GetCentral write SetCentral;
-    end;
+		 property Id : Integer read FId;
+		 /// <summary> Retorna ordem da zona dentro da central, caso haja uma definida para a mesma </summary>
+		 /// <remarks>
+		 /// Caso não haja central pai para esta zona -1 será retornado
+		 /// </remarks>
+		 property CentralIndex : Integer read GetCentralIndex;
+		 property Central : TTRECentral read GetCentral write SetCentral;
+	 end;
 
-    TTRECentral = class(TTREUnit)
-    private
+	 TTRECentral = class(TTREUnits)
+	 private
 		 FId :       Integer;
-        FZoneList : TObjectList;
-        /// <summary>
-        /// Retorna a zona indexada pelo valor de index(lista interna)
-        /// </summary>
-        /// <param name="index"></param>
-        /// <returns>Zona eleitoral da central</returns>
-        function GetZones(index : Integer) : TTREZone;
-        function GetPrimaryZone : TTREZone;
-        ///  <summary> Ajusta a zona dada como sendo a zona primária </summary>
+		 FZoneList : TObjectList;
+		 /// <summary>
+		 /// Retorna a zona indexada pelo valor de index(lista interna)
+		 /// </summary>
+		 /// <param name="index"></param>
+		 /// <returns>Zona eleitoral da central</returns>
+		 function GetZones(index : Integer) : TTREZone;
+		 function GetPrimaryZone : TTREZone;
+		 ///  <summary> Ajusta a zona dada como sendo a zona primária </summary>
 		 procedure SetPrimaryZone(const Value : TTREZone);
-        function GetCount : Integer;
-    public
-        constructor Create(ACentralId : Integer); virtual;
-        property Id : Integer read FId;
-        property Count : Integer read GetCount;
-        property Zones[index : Integer] : TTREZone read GetZones;
-        property PrimaryZone : TTREZone read GetPrimaryZone write SetPrimaryZone;
+		 function GetCount : Integer;
+	 public
+		 constructor Create(ACentralId : Integer); virtual;
+		 property Id : Integer read FId;
+		 property Count : Integer read GetCount;
+		 property Zones[index : Integer] : TTREZone read GetZones;
+		 property PrimaryZone : TTREZone read GetPrimaryZone write SetPrimaryZone;
         ///  <summary> Adiciona uma zona a lista/central </summary>
         ///  <remarks> Impede a repetição das zonas por instância </remarks>
         function Add(Zone : TTREZone) : Integer;
@@ -109,9 +110,9 @@ type
         function GetZoneById(ZoneId : Integer) : TTREZone;
     end;
 
-    TTRECentralMapping = class(TTREXMLPersist)
+	 TTRECentralMapping = class(TTRESerializable)
     private
-		 FCentralList : TXMLSerializableList;
+		 FCentralList : TTRESerializableList;
         function GetCentrals(index : Integer) : TTRECentral;
         procedure SetCentrals(index : Integer; const Value : TTRECentral);
     public
@@ -244,7 +245,7 @@ end;
 
 constructor TTRECentralMapping.Create;
 begin
-    Self.FCentralList := TXMLSerializableList.Create;
+    Self.FCentralList := TTRESerializableList.Create;
 end;
 
 destructor TTRECentralMapping.Destroy;
@@ -379,7 +380,7 @@ end;
 constructor TTRERegional.Create;
 begin
     inherited;
-    Self.FLocalNetwork := TXMLSerializableList.Create;
+    Self.FLocalNetwork := TTRESerializableList.Create;
 end;
 
 function TTRERegional.GetNetworks(index : Integer) : TTRELocalNet;
@@ -392,7 +393,7 @@ end;
 constructor TTRELocalNet.Create(APrimaryZoneId : Integer);
 begin
 	 inherited Create;
-	 Self.FUnits:=TXMLSerializableList.Create;
+	 Self.FUnits:=TTRESerializableList.Create;
 	 Self.FPrimaryZone := APrimaryZoneId;
 end;
 

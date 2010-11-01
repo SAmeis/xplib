@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <BaseConfig version="1.0.0" class="TTRERegional" Description="TRE-PB">
-  <LocalNetwork class="TXMLSerializableList">
-    <Items>
+	<LocalNetwork class="TXMLSerializableList">
+		<Items>
       <TTRELocalNet xmlns="Item" class="TTRELocalNet" PrimaryZone="80">
         <Units class="TXMLSerializableList">
           <Items/>
@@ -15,5 +15,5 @@
         </Units>
       </TTRELocalNet>
     </Items>
-  </LocalNetwork>
+	</LocalNetwork>
 </BaseConfig>
