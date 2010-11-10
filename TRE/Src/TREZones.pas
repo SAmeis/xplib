@@ -355,7 +355,7 @@ end;
 
 { TTREStation }
 
-constructor TTREStation.Create(AUnit : TTREUnit);
+constructor TTREStation.Create(AUnit : TTREUnits);
 begin
 
 end;
