@@ -37,12 +37,15 @@ requires
   vcl,
   designide,
   StFLibD14,
-  OPLibD14;
+  OPLibD14,
+  Jcl,
+  WinSysLibD14;
 
 contains
   TREConsts in 'TREConsts.pas',
   TREZones in 'TREZones.pas',
   TREConfig in 'TREConfig.pas',
-  TREUtils in 'TREUtils.pas';
+  TREUtils in 'TREUtils.pas',
+  TREUsers in 'TREUsers.pas';
 
 end.

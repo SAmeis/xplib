@@ -64,10 +64,13 @@
 			<DCCReference Include="designide.dcp"/>
 			<DCCReference Include="StFLibD14.dcp"/>
 			<DCCReference Include="OPLibD14.dcp"/>
+			<DCCReference Include="Jcl.dcp"/>
+			<DCCReference Include="WinSysLibD14.dcp"/>
 			<DCCReference Include="TREConsts.pas"/>
 			<DCCReference Include="TREZones.pas"/>
 			<DCCReference Include="TREConfig.pas"/>
 			<DCCReference Include="TREUtils.pas"/>
+			<DCCReference Include="TREUsers.pas"/>
 			<None Include="ModelSupport_TRELib\default.txaPackage"/>
 			<None Include="ModelSupport_TRELib\default.txvpck"/>
 			<None Include="ModelSupport_TRELib\TREUtils\default.txvpck"/>
