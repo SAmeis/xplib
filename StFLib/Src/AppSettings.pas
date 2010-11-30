@@ -29,21 +29,21 @@ type
         FUsed :  boolean;
         FValue : variant;
         function GetAsBoolean : boolean;
-        procedure SetAsBoolean(const Value : boolean);
-        function GetAsDateTime : TDateTime;
-        procedure SetAsDateTime(const Value : TDateTime);
-        function GetAsFloat : double;
-        procedure SetAsFloat(const Value : double);
-        function GetAsInteger : Integer;
-        procedure SetAsInteger(const Value : Integer);
-        function GetAsString : string;
-        procedure SetAsString(const Value : string);
-        function GetValue : variant;
-        procedure SetValue(const Value : variant);
-    public
-        constructor Create; overload;
-        constructor Create(Value : variant); overload;
-        property AsBoolean : boolean read GetAsBoolean write SetAsBoolean;
+        procedure SetAsBoolean(const AValue : boolean);
+		 function GetAsDateTime : TDateTime;
+		 procedure SetAsDateTime(const AValue : TDateTime);
+		 function GetAsFloat : double;
+		 procedure SetAsFloat(const AValue : double);
+		 function GetAsInteger : Integer;
+		 procedure SetAsInteger(const AValue : Integer);
+		 function GetAsString : string;
+		 procedure SetAsString(const AValue : string);
+		 function GetValue : variant;
+		 procedure SetValue(const AValue : variant);
+	 public
+		 constructor Create; overload;
+		 constructor Create(AValue : variant); overload;
+		 property AsBoolean : boolean read GetAsBoolean write SetAsBoolean;
         property AsDateTime : TDateTime read GetAsDateTime write SetAsDateTime;
         property AsFloat : double read GetAsFloat write SetAsFloat;
         property AsInteger : Integer read GetAsInteger write SetAsInteger;
@@ -1209,6 +1209,9 @@ ADefaultValue : TDefaultSettingValue contendo o valor padrao para falha de leitu
 instancia. Se o valor retornado foi obtido pelo valor padrao seu atributo Used sera verdadeiro. Ver TDefaultSettingValue para mais
 detalhes.
 
+Caso o valor padrão seja utilizado e a instância tenha o atributo AutoCreate setado, o valor padrão será persistido, dispensando o
+recalculo, sendo sempre usado no futuro. Caso contrário o valor padrão será sempre recalculado e retornado.
+
 Returns: String contida na entrada.
 
 NOTAS: O valor padrao para falha de leitura sera EmptyStr.
@@ -1234,7 +1237,7 @@ begin
 
         if (DefVal.FValue <> Null) then begin
             Result := DefVal.AsString;
-            if (Self.FAutoCreate) then begin
+            if (Self.FAutoCreate and DefVal.Used) then begin //Persiste valor caso autocreate e used apenas
                 Self.FIni.WriteString(Key, Entry, Result);
             end;
         end else begin
@@ -1948,13 +1951,13 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-procedure TDefaultSettingValue.SetAsBoolean(const Value : boolean);
+procedure TDefaultSettingValue.SetAsBoolean(const AValue : boolean);
 {{
 Escrita do valor como boolean. Seta flag de uso para False.
 }
 begin
-    Self.FUsed  := False;
-    Self.FValue := Value;
+	 Self.FUsed  := False;
+	 Self.FValue := AValue;
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
@@ -1971,13 +1974,13 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-procedure TDefaultSettingValue.SetAsDateTime(const Value : TDateTime);
+procedure TDefaultSettingValue.SetAsDateTime(const AValue : TDateTime);
 {{
 Escrita do valor como DateTime. Seta flag de uso para False.
 }
 begin
-    Self.FUsed  := False;
-    Self.FValue := Value;
+	 Self.FUsed  := False;
+	 Self.FValue := AValue;
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
@@ -1994,13 +1997,13 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-procedure TDefaultSettingValue.SetAsFloat(const Value : double);
+procedure TDefaultSettingValue.SetAsFloat(const AValue : double);
 {{
 Escrita do valor como Float. Seta flag de uso para False.
 }
 begin
-    Self.FUsed  := False;
-    Self.FValue := Value;
+	 Self.FUsed  := False;
+    Self.FValue := AValue;
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
@@ -2017,36 +2020,39 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-procedure TDefaultSettingValue.SetAsInteger(const Value : Integer);
+procedure TDefaultSettingValue.SetAsInteger(const AValue : Integer);
 {{
 Escrita do valor como integer. Seta flag de uso para False.
 }
 begin
-    Self.FUsed  := False;
-    Self.FValue := Value;
+	 Self.FUsed  := False;
+	 Self.FValue := AValue;
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
 function TDefaultSettingValue.GetAsString : string;
 {{
 Leitura do valor como string. Seta flag de uso para verdadeiro.
+Revision - 20101130 - roger
+Portado para Unicode, ajustando de Self.FValue := 0; para Self.FValue := '';
 }
 begin
-    if (not Variants.VarIsType(Self.FValue, varString)) then begin
-        Self.FValue := 0;
-    end;
+	 //#if (not Variants.VarIsType(Self.FValue, varString  )) then begin
+	 if (not Variants.VarIsType(Self.FValue, [varString, varUString] )) then begin
+		 Self.FValue := '';
+	 end;
     Result := string(Self.FValue);
     FUsed  := True;
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-procedure TDefaultSettingValue.SetAsString(const Value : string);
+procedure TDefaultSettingValue.SetAsString(const AValue : string);
 {{
 Escrita do valor como string. Seta flag de uso para False.
 }
 begin
-    Self.FUsed  := False;
-    Self.FValue := Value;
+	 Self.FUsed  := False;
+    Self.FValue := AValue;
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
@@ -2060,13 +2066,13 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-procedure TDefaultSettingValue.SetValue(const Value : variant);
+procedure TDefaultSettingValue.SetValue(const AValue : variant);
 {{
 Escrita do valor como Variant. Seta flag de uso para False.
 }
 begin
-    Self.FUsed  := False;
-    Self.FValue := Value;
+	 Self.FUsed  := False;
+	 Self.FValue := AValue;
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
@@ -2081,13 +2087,13 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-constructor TDefaultSettingValue.Create(Value : variant);
+constructor TDefaultSettingValue.Create(AValue : variant);
 {{
 Construtor de TDefaultSettingValue. Iniciar atributos Used = False e Value com o valor passado.
 }
 begin
-    Create();
-    Self.FValue := Value;
+	 Create();
+	 Self.FValue := AValue;
 end;
 
 
@@ -2102,6 +2108,12 @@ end;
 {--------------------------------------------------------------------------------------------------------------------------------}
 function TXMLBasedSettings.GetAttributeValue(const FullName : string; VarType : Word; ADefaultValue : TDefaultSettingValue = nil) :
 variant;
+{{
+Realiza a leitura do valor do atributo
+
+Revision - 20101130 - roger
+Suporte para Unicode insere como retorno EmptyStr
+}
 var
     Node :   IXMLNode;
     key :    string;
@@ -2145,7 +2157,7 @@ begin
                         end;
                         //varWord64   = $0015; { vt_ui8         21 } {UNSUPPORTED as of v6.x code base}
                         {  if adding new items, update Variants' varLast, BaseTypeMap and OpTypeMap }
-                        varStrArg, varString : begin
+						 varStrArg, varString, varUString : begin
                             DefVal.Value := EmptyStr;
                         end;
                         varAny : begin

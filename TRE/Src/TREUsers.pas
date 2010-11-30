@@ -61,7 +61,6 @@ var
     PError :     DWORD;
     PDomain, PUsername : PWideChar;
     tokenIndex : Integer;
-    ErrorlogString : string;
 begin
     tokenIndex := Pos('\', Self.FUserName);
     if tokenIndex <> 0 then begin //conta de dominio
