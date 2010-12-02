@@ -17,6 +17,7 @@ uses
     Windows, SysUtils, Classes;
 
 type
+    {{Registro usado para nomear um thread para compilador anterior ao Delphi 2010}
     TThreadNameInfo = record
  {{
  Record for access to internal thread info, by Windows.RaiseException()
@@ -26,7 +27,7 @@ type
   Type for TThreadNameInfo.
   }
         {1 Type for TThreadNameInfo. }
-        FName:     PChar;
+        FName:     PAnsiChar;
   {{
   Name for TThreadNameInfo.
   }
@@ -117,6 +118,29 @@ uses
 
 var
     GlobalLockInstance : TCriticalSection;
+
+{$IF CompilerVersion >= 21.00}
+{{Rotina existente apenas para Delphi pre 2010. Ver NameThreadForDebugging() para versões posteriores}
+procedure SetThreadNamePreD2010( const AName : string );
+{{
+Changes the name for the execution thread using ThreadName.
+}
+var
+    ThreadNameInfo : TThreadNameInfo;
+begin
+ {$TYPEDADDRESS OFF}
+    ThreadNameInfo.FType     := $1000;
+    ThreadNameInfo.FName     := PAnsiChar(AName);
+    ThreadNameInfo.FThreadID := GetCurrentThreadId();
+    ThreadNameInfo.FFlags    := 0;
+    try
+        RaiseException($406D1388, 0, sizeof(ThreadNameInfo) div sizeof(longword), @ThreadNameInfo);
+    except
+        //Nada a ser feito segundo a documentacao da Borland
+    end;
+ {$TYPEDADDRESS ON}
+end;
+{$IFEND}
 
 {-**********************************************************************
 ************************************************************************
@@ -214,23 +238,12 @@ end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
 class procedure TXPNamedThread.SetCurrentThreadName(const ThreadName : string);
-{{
-Changes the name for the execution thread using ThreadName.
-}
-var
-    ThreadNameInfo : TThreadNameInfo;
 begin
- {$TYPEDADDRESS OFF}
-    ThreadNameInfo.FType     := $1000;
-    ThreadNameInfo.FName     := PChar(ThreadName);
-    ThreadNameInfo.FThreadID := GetCurrentThreadId();
-    ThreadNameInfo.FFlags    := 0;
-    try
-        RaiseException($406D1388, 0, sizeof(ThreadNameInfo) div sizeof(longword), @ThreadNameInfo);
-    except
-        //Nada a ser feito segundo a documentacao da Borland
-    end;
- {$TYPEDADDRESS ON}
+     {$IF CompilerVersion >= 21.00}
+     NameThreadForDebugging(ThreadName);
+     {$ELSE}
+     SetThreadNamePreD2010( ThreadName );
+     {$IFEND}
 end;
 
 {-**********************************************************************
