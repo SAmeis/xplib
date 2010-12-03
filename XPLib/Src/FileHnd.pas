@@ -230,8 +230,10 @@ type
         class function FileTimeToDateTime(FTime : TFileTime) : TDateTime;
         class function FileTimeProperties(FileHandle : THandle;
             var CreateDate, LastAccessDate, LastWriteDate : TDateTime) : Integer; overload;
-        class function FileTimeProperties(const FileName : string;
-            var CreateDate, LastAccessDate, LastWriteDate : TDateTime) : Integer; overload; platform;
+		 class function FileTimeProperties(const FileName : string;
+			 var CreateDate, LastAccessDate, LastWriteDate : TDateTime) : Integer; overload; platform;
+		 class function FileTimeChangeTime(const FileName : string ) : TDateTime;
+
     end;
 
 implementation
@@ -2240,6 +2242,13 @@ begin
     end else begin
         Result := GetLastError();
     end;
+end;
+
+class function TFileHnd.FileTimeChangeTime(const FileName: string): TDateTime;
+var
+	dummy : TDateTime;
+begin
+	FileTimeProperties( FileName, dummy, dummy, Result );
 end;
 
 class function TFileHnd.FileTimeProperties(const FileName : string;

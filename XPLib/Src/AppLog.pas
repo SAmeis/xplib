@@ -13,10 +13,16 @@ Implementa os tipos básicos para log de aplicativos.
 interface
 
 uses
-    SysUtils, Classes, Types;
+	 SysUtils, Classes, Types;
+
+const
+	DBGLEVEL_ULTIMATE = 10;
+	DBGLEVEL_DETAILED = 5;
+	DBGLEVEL_ALERT_ONLY = 1;
+	DBGLEVEL_NONE = 0;
 
 type
-    TLogMessageType = (lmtError, lmtInformation, lmtWarning, lmtDebug);
+	 TLogMessageType = (lmtError, lmtInformation, lmtWarning, lmtDebug);
 
 type
     TErrorLogMode      = (elmFormatted, elmUnFormatted);
@@ -62,6 +68,7 @@ type
 		 FFormatter : IFormatter;
 		 FLocked :    boolean;
 		 FOpenMode :  word;
+    FDebugLevel: integer;
 		 function GetBuffered : boolean;
 		 procedure SetBuffered(const Value : boolean);
 		 function GetBufferText : string;
@@ -81,7 +88,8 @@ type
         procedure Discard;
         class function GetDefaultLogFile : TLogFile;
         class procedure Initialize; virtual;
-        class procedure Log(const Msg : string; LogMessageType : TLogMessageType = lmtError);
+		 class procedure Log(const Msg : string; LogMessageType : TLogMessageType = lmtError);
+		 class procedure LogDebug(const Msg : string; CurrentDebugLevel : integer );
         class procedure SetDefaultLogFile(LogFile : TLogFile);
         procedure WriteLog(const Msg : string; LogMessageType : TLogMessageType = lmtError); virtual;
         property Buffered : boolean read GetBuffered write SetBuffered;
@@ -112,10 +120,16 @@ type
         }
         {1 Modo de abertura. Valem os valores para o construtor de TFileStream. }
         property Size : int64 read GetSize;
-        {{
-        Tamanho corrente do Streamer do log.
-        }
-        {1 Tamanho corrente do Streamer do log. }
+		 {{
+		 Tamanho corrente do Streamer do log.
+		 }
+		 {1 Tamanho corrente do Streamer do log. }
+		 property DebugLevel : integer read FDebugLevel write FDebugLevel;
+		 {{
+		 Nível de detalhamento para as mensagens de depuração. Usado em conjunção com o método
+		 TLogFile.LogDebug(Msg : string; CurrentDbgLevel : integer).
+		 }
+		 {1 Tamanho corrente do Streamer do log. }
     end;
 
 type
@@ -761,7 +775,8 @@ Rev. 19/5/2005
 }
 begin
 	 inherited Create;
-    Self.FFileName := AFileName;
+	 Self.FDebugLevel:=DBGLEVEL_ULTIMATE; //inicia com nivel mais alto possivel
+	 Self.FFileName := AFileName;
     TFileHnd.ForceFilename(Self.FFileName);
     Self.FLocked   := Lock;
     Self.FOpenMode := fmOpenReadWrite + fmShareDenyWrite; //Padrao para acesso exclusivo RW
@@ -944,7 +959,14 @@ Rotina chave onde o conteudo em Msg sera salvo pela instancia atribuida a Global
 Rev. 19/5/2005
 }
 begin
-    GlobalDefaultLogFile.WriteLog(Msg, LogMessageType);
+	 GlobalDefaultLogFile.WriteLog(Msg, LogMessageType);
+end;
+
+class procedure TLogFile.LogDebug(const Msg: string; CurrentDebugLevel: integer);
+begin
+	if ( GlobalDefaultLogFile.DebugLevel <= CurrentDebugLevel ) then begin
+		GlobalDefaultLogFile.WriteLog(Msg, lmtDebug );
+	end;
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
