@@ -1,9 +1,9 @@
 object AppLogDemoFrm: TAppLogDemoFrm
   Left = 204
   Top = 339
-  Width = 526
-  Height = 382
   Caption = 'AppLog Demo'
+  ClientHeight = 357
+  ClientWidth = 516
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

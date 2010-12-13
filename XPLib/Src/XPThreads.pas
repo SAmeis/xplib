@@ -60,16 +60,16 @@ type
     end;
 
 type
-	 TXPBaseThread = class(TThread)
-	 private
-		 FMaxTerminateTime : cardinal;
-		 FIsAlive : boolean;
-	 protected
-		 procedure DoTerminate(); override;
-	 public
-		 procedure Terminate;
-		 procedure Start; virtual;
-		 procedure Resume; virtual; deprecated;
+    TXPBaseThread = class(TThread)
+    private
+        FMaxTerminateTime : cardinal;
+        FIsAlive :          boolean;
+    protected
+        procedure DoTerminate(); override;
+    public
+        procedure Terminate;
+        procedure Start; virtual;
+        procedure Resume; virtual; deprecated;
         function WaitFor(MaxTime : cardinal) : longword; overload;
         property MaxTerminateTime : cardinal read FMaxTerminateTime write FMaxTerminateTime;
         {{
@@ -119,9 +119,9 @@ uses
 var
     GlobalLockInstance : TCriticalSection;
 
-{$IF CompilerVersion >= 21.00}
+{$IF CompilerVersion < 21.00}
 {{Rotina existente apenas para Delphi pre 2010. Ver NameThreadForDebugging() para versões posteriores}
-procedure SetThreadNamePreD2010( const AName : string );
+procedure SetThreadNamePreD2010(const AName : string);
 {{
 Changes the name for the execution thread using ThreadName.
 }
@@ -140,6 +140,7 @@ begin
     end;
  {$TYPEDADDRESS ON}
 end;
+
 {$IFEND}
 
 {-**********************************************************************
@@ -240,9 +241,9 @@ end;
 class procedure TXPNamedThread.SetCurrentThreadName(const ThreadName : string);
 begin
      {$IF CompilerVersion >= 21.00}
-     NameThreadForDebugging(ThreadName);
+    NameThreadForDebugging(ansistring(ThreadName));
      {$ELSE}
-     SetThreadNamePreD2010( ThreadName );
+    SetThreadNamePreD2010(ThreadName);
      {$IFEND}
 end;
 
@@ -318,12 +319,12 @@ end;
 
 procedure TXPBaseThread.Start;
 begin
-	 Self.FIsAlive := True;
-	{$IF CompilerVersion >= 21.00}
-	inherited Start;
-	{$ELSE}
-	inherited Resume;
-	{$IFEND}
+    Self.FIsAlive := True;
+    {$IF CompilerVersion >= 21.00}
+    inherited Start;
+    {$ELSE}
+    inherited Resume;
+    {$IFEND}
 end;
 
 procedure TXPBaseThread.Resume; deprecated;
@@ -337,7 +338,7 @@ procedure TXPBaseThread.Resume; deprecated;
  Método transformado para virtual de modo que se possa preparar ambiente para a execução de classe especializada.
 }
 begin
-	Self.Start;
+    Self.Start;
 end;
 
 procedure TXPBaseThread.Terminate;
@@ -351,12 +352,12 @@ begin
     inherited; //Atualmente pela VCL apenas seta Self.Terminated para True, indicando ao thread que ele deve ser finalizado
     if ((Self.FMaxTerminateTime > 0) and (GetCurrentThreadID() <> Self.ThreadID)) then begin
 
-		 while (Self.Suspended) do begin
-		 	{$IF CompilerVersion >= 21.00}
-			Self.Start;
-			{$ELSE}
-			 Self.Resume;
-			{$IFEND}
+        while (Self.Suspended) do begin
+             {$IF CompilerVersion >= 21.00}
+            Self.Start;
+            {$ELSE}
+            Self.Resume;
+            {$IFEND}
         end;
 
         if (Self.FMaxTerminateTime = Windows.INFINITE) then begin

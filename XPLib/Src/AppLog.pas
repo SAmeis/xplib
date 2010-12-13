@@ -1124,8 +1124,8 @@ begin
 	 try
 		 Self.StreamNeeded();
 		 try
-			ConvertStr:=Txt;
-			 Self.FStream.WriteBuffer(PChar(ConvertStr)^, Length(Txt));
+			ConvertStr:=AnsiString(Txt);
+			 Self.FStream.WriteBuffer(PAnsiChar(ConvertStr)^, Length(Txt));
         finally
             Self.StreamDispose;
         end;

@@ -16,52 +16,52 @@ type
 
     TPrnText = class
     private
-        Fph :      THandle;
-        FDevMode : TDeviceModeA;
-        FPrJob :   dword;
-        FPrnFile : TStringList;
-        FPrnFilePath : AnsiString;
-        FPrnDestiny : TPrnDestiny;
-        FPrnName : AnsiString;
-        FDataType : AnsiString;
+        Fph :          THandle;
+        FDevMode :     TDeviceModeA;
+        FPrJob :       dword;
+        FPrnFile :     TStringList;
+        FPrnFilePath : String;
+        FPrnDestiny :  TPrnDestiny;
+        FPrnName :     ansistring;
+        FDataType :    AnsiString;
 
-		 function GetOutFilePath : string;
+        function GetOutFilePath : string;
         procedure SetOutFilePath(const Value : string);
         function GetPrintDestiny : TPrnDestiny;
         procedure SetPrintDestiny(const Value : TPrnDestiny);
     protected
-        class function WinString(const str : AnsiString) : AnsiString;
+        class function WinString(const str : ansistring) : ansistring;
     public
-        constructor Create(const pPrnName : AnsiString= ''; pDataType : AnsiString= 'RAW'); virtual;
+        constructor Create(const pPrnName : ansistring = ''; pDataType : AnsiString = 'RAW'); virtual;
         class procedure EnumPrt(pSt : TStrings; var pDef : Integer);
-        procedure StartPrint(const pNameDoc : AnsiString; pCopies : Integer);
+        procedure StartPrint(const pNameDoc : ansistring; pCopies : Integer);
         procedure CancelPrint;
         procedure EndPrint;
-        class function DOSString(const AnsiStr : AnsiString) : AnsiString;
+        class function DOSString(const AnsiStr : ansistring) : ansistring;
         function ToPrn(const pText : string) : boolean;
         function ToPrnEmphasis(const pText : string) : boolean;
         function ToPrnBold(const pText : string) : boolean;
         function ToPrnLn(const pText : string) : boolean;
         function ToPrnFrm(const pFrmStr : string; const pArgs : array of const) : boolean;
-        function ToPrnFrmC(const pFrmStr : AnsiString; const pArgs : array of const) : boolean;
-		 property OutFilePath : string read GetOutFilePath write SetOutFilePath;
-      {{
-       Caminho do arquivo para impressгo.
-      }
-		 property PrinterName : AnsiString read FPrnName;
-      {{
-       Nome da impressora.
-      }
+        function ToPrnFrmC(const pFrmStr : ansistring; const pArgs : array of const) : boolean;
+        property OutFilePath : string read GetOutFilePath write SetOutFilePath;
+       {{
+        Caminho do arquivo para impressгo.
+       }
+        property PrinterName : ansistring read FPrnName;
+       {{
+        Nome da impressora.
+       }
         property PrintDestiny : TPrnDestiny read GetPrintDestiny write SetPrintDestiny;
-      {{
-       Destino da impressгo, podendo ser os seguintes valores:
+       {{
+        Destino da impressгo, podendo ser os seguintes valores:
 
-           pdSpool : Para o Spool da Impressora.
+            pdSpool : Para o Spool da Impressora.
 
-           pdFile : Para o Arquivo setado.
+            pdFile : Para o Arquivo setado.
 
-           pdBoth : Para ambos acima.
-      }
+            pdBoth : Para ambos acima.
+       }
     end;
 
     TPrnEpson = class(TPrnText)
@@ -76,6 +76,8 @@ type
 
 implementation
 
+uses
+    AnsiStrings;
 
  //----------------------------------------------------------------------------------------------------------------------
  //                            ***** ROTINAS AUXILIARES  *******
@@ -250,18 +252,15 @@ begin
     Result := Self.ToPrnLn(Format(pFrmStr, pArgs));
 end;
 
-function TPrnText.ToPrnFrmC(const pFrmStr : AnsiString; const pArgs : array of const) : boolean;
+function TPrnText.ToPrnFrmC(const pFrmStr : ansistring; const pArgs : array of const) : boolean;
     //----------------------------------------------------------------------------------------------------------------------
 {{
 Imprime string para a impressora direcionada formatando antes seu conteudo.
 
 Revision: 1/8/2005
 }
-var
-	s : string;
 begin
-	s:=string(pFrmStr);
-	Result := Self.ToPrnLn(string(DosString(SysUtils.Format(s, pArgs))));
+    Result := Self.ToPrnLn(string(DosString(AnsiStrings.Format(pFrmStr, pArgs))));
 end;
 
 { TPrnText }
@@ -281,7 +280,7 @@ begin
     end;
 end;
 
-constructor TPrnText.Create(const pPrnName : AnsiString = ''; pDataType : AnsiString = 'RAW');
+constructor TPrnText.Create(const pPrnName : ansistring = ''; pDataType : AnsiString = 'RAW');
 var
     lPrinters : TStringList;
     lIndex, lIndex2 : Integer;
@@ -293,24 +292,24 @@ begin
     if ((lIndex > -1) or (lPrinters.Find(string(pPrnName), lIndex2))) then begin
         // Verifica se existe alguma impressora ou a que foi solicitada
         if (lIndex2 > -1) then begin // Verifica se a impressora solicitada foi encontrada.
-            FPrnName := AnsiString(pPrnName);
+            FPrnName := ansistring(pPrnName);
         end else begin
-            FPrnName := AnsiString(lPrinters.Strings[lIndex]); // Atribui o nome da impressora padrгo.
+            FPrnName := ansistring(lPrinters.Strings[lIndex]); // Atribui o nome da impressora padrгo.
         end;
     end else begin
         raise Exception.CreateFmt('A impressora %s nгo existe! ', [pPrnName]);
     end;
     FPrnDestiny := pdSpool;
-    if (Trim(string(pDataType)) <> EmptyStr) then begin
-		 FDataType := Trim(string(pDataType));
+    if (AnsiStrings.Trim(pDataType) <> AnsiString(EmptyStr)) then begin
+        Self.FDataType := AnsiStrings.Trim(pDataType);
     end else begin
-        FDataType := 'RAW';
+        Self.FDataType := 'RAW';
     end;
     FPrnFile     := nil;
-	 FPrnFilePath := AnsiString(EmptyStr);
+    FPrnFilePath := EmptyStr;
 end;
 
-procedure TPrnText.StartPrint(const pNameDoc : AnsiString; pCopies : Integer);
+procedure TPrnText.StartPrint(const pNameDoc : ansistring; pCopies : Integer);
 //----------------------------------------------------------------------------------------------------------------------
 {{
    Inicia o spool da impressora para receber os caracteres
@@ -338,10 +337,10 @@ begin
         new(pdi);  { TODO -oRoger -cLIB : Tentar usar var local da pilha para alimentar este parametro da API do Spool do Windows }
         with pdi^ do begin
             pDocName := PAnsiChar(pNameDoc);
-			 if (FPrnFilePath = AnsiString(EmptyStr)) then begin
+            if (Self.FPrnFilePath = EmptyStr) then begin
                 pOutputFile := nil;
-			 end else begin
-                pOutputFile := PAnsiChar(FPrnFilePath);
+            end else begin
+                pOutputFile := PAnsiChar(AnsiString(FPrnFilePath));
             end;
             pDatatype := PAnsiChar(FDataType);
         end;
@@ -442,17 +441,17 @@ end;
 
 procedure TPrnText.SetOutFilePath(const Value : string);
 begin
-	 if (Trim(Value) <> EmptyStr) then begin
-        FPrnFilePath := Trim(Value);
+    if (Trim(Value) <> EmptyStr) then begin
+        Self.FPrnFilePath := Trim(Value);
     end else begin
-		 raise Exception.CreateFmt('Caminho do Arquivo Invбlido: "%s".', [Value]);
+        raise Exception.CreateFmt('Caminho do Arquivo Invбlido: "%s".', [Value]);
     end;
 end;
 
 procedure TPrnText.SetPrintDestiny(const Value : TPrnDestiny);
 begin
     if (Value = pdFile) or (Value = pdBoth) then begin
-		 if (FPrnFilePath <> AnsiString(EmptyStr)) then begin
+        if (Self.FPrnFilePath <> EmptyStr) then begin
             if (not Assigned(FPrnFile)) then begin
                 FPrnFile := TStringList.Create;
             end;
@@ -466,50 +465,50 @@ begin
     end;
 end;
 
-class function TPrnText.DOSString(const AnsiStr : AnsiString) : AnsiString;
+class function TPrnText.DOSString(const AnsiStr : ansistring) : ansistring;
 {{
 Converte a cadeia para o mapeamento de caracteres local.
 
 Revision: 17/8/2006 - Roger  
 }
 begin
-		SetLength(Result, Length(AnsiStr));
-		if Length(Result) > 0 then begin
-				AnsiToOem(PAnsiChar(AnsiStr), PAnsiChar(Result));
-		end;
-		//comantario original do autor russo
-		//OemToAnsi преобразует 15->253, а AnsiToOem 253->15 не делает, поэтому теряется код сжатия (замечено на русской Windows 95)
-		Result := ReplaceStr(string(Result), chr(253), chr(15));
+    SetLength(Result, Length(AnsiStr));
+    if Length(Result) > 0 then begin
+        AnsiToOem(PAnsiChar(AnsiStr), PAnsiChar(Result));
+    end;
+    //comantario original do autor russo
+    //OemToAnsi преобразует 15->253, а AnsiToOem 253->15 не делает, поэтому теряется код сжатия (замечено на русской Windows 95)
+    Result := AnsiStrings.ReplaceStr(Result, chr(253), chr(15));
 end;
 
-class function TPrnText.WinString(const str : AnsiString) : AnsiString;
+class function TPrnText.WinString(const str : ansistring) : ansistring;
 begin
-    if (str <> AnsiString(EmptyStr)) then begin
+    if (str <> ansistring(EmptyStr)) then begin
         CharToOemA(PAnsiChar(str), PAnsiChar(str));
         ///OemToAnsi(PAnsiChar(str), PAnsiChar(str));
         ///Foi removido para o uso de CharToOEM
         Result := str;
     end else begin
-        Result := AnsiString(EmptyStr);
+        Result := ansistring(EmptyStr);
     end;
 end;
 
 initialization
-//----------------------------------------------------------------------------------------------------------------------
-begin
+    //----------------------------------------------------------------------------------------------------------------------
+    begin
 {$IFDEF PRINT_TO_FILE}
-    PrnFile := TStringList.Create();
+        PrnFile := TStringList.Create();
 {$ENDIF}
-end;
+    end;
 
 finalization
-//----------------------------------------------------------------------------------------------------------------------
-begin
+    //----------------------------------------------------------------------------------------------------------------------
+    begin
    {$IFDEF PRINT_TO_FILE}
-   if Assigned(PrnFile) then begin
-       PrnFile.Free();
-   end;
+        if Assigned(PrnFile) then begin
+            PrnFile.Free();
+        end;
    {$ENDIF}
-end;
+    end;
 
 end.

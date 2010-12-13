@@ -8,7 +8,7 @@ unit OPXMLSerializable;
 interface
 
 uses
-	 Classes, SysUtils, TypInfo, XMLIntf, Generics.Collections, Rtti;
+	 Classes, SysUtils, TypInfo, XMLIntf, Rtti, Generics.Collections;
 
 
 type

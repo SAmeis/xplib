@@ -3,29 +3,29 @@ unit AppLogDemoForm;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, AppLog, StdCtrls, ExtCtrls;
+    Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+    Dialogs, AppLog, StdCtrls, ExtCtrls;
 
 type
-  TAppLogDemoFrm = class(TForm)
-    LogMemo: TMemo;
-    LogBtn: TButton;
-    CommitBtn: TButton;
-    LogMessageTypeRadio: TRadioGroup;
-    BufferizeCB: TCheckBox;
-    procedure BufferizeCBClick(Sender: TObject);
-	procedure LogBtnClick(Sender: TObject);
-    procedure CommitBtnClick(Sender: TObject);
-  private
-	{ Private declarations }
-	function GetLogType(): TLogMessageType;
-  public
-	{ Public declarations }
-	Class procedure execute();
-  end;
+    TAppLogDemoFrm = class(TForm)
+        LogMemo :     TMemo;
+        LogBtn :      TButton;
+        CommitBtn :   TButton;
+        LogMessageTypeRadio : TRadioGroup;
+        BufferizeCB : TCheckBox;
+        procedure BufferizeCBClick(Sender : TObject);
+        procedure LogBtnClick(Sender : TObject);
+        procedure CommitBtnClick(Sender : TObject);
+    private
+        { Private declarations }
+        function GetLogType() : TLogMessageType;
+    public
+        { Public declarations }
+        class procedure Execute();
+    end;
 
 var
-  AppLogDemoFrm: TAppLogDemoFrm;
+    AppLogDemoFrm : TAppLogDemoFrm;
 
 implementation
 
@@ -33,53 +33,53 @@ implementation
 
 { TForm1 }
 
-class procedure TAppLogDemoFrm.execute;
+class procedure TAppLogDemoFrm.Execute;
 var
-	Dlg : TAppLogDemoFrm;
+    Dlg : TAppLogDemoFrm;
 begin
-	Application.CreateForm( TAppLogDemoFrm, Dlg );
-	try
-		Dlg.ShowModal;
-	finally
-		Dlg.Free;
-	end;
+    Application.CreateForm(TAppLogDemoFrm, Dlg);
+    try
+        Dlg.ShowModal;
+    finally
+        Dlg.Free;
+    end;
 end;
 
-procedure TAppLogDemoFrm.BufferizeCBClick(Sender: TObject);
+procedure TAppLogDemoFrm.BufferizeCBClick(Sender : TObject);
 begin
-	Self.CommitBtn.Enabled:=Self.BufferizeCB.Checked;
-	TLogFile.GetDefaultLogFile.Buffered:=Self.BufferizeCB.Checked;
+    Self.CommitBtn.Enabled := Self.BufferizeCB.Checked;
+    TLogFile.GetDefaultLogFile.Buffered := Self.BufferizeCB.Checked;
 end;
 
-procedure TAppLogDemoFrm.LogBtnClick(Sender: TObject);
+procedure TAppLogDemoFrm.LogBtnClick(Sender : TObject);
 begin
-	AppLog.TLogFile.Log( Self.LogMemo.Lines.Text, Self.GetLogType() );
+    AppLog.TLogFile.Log(Self.LogMemo.Lines.Text, Self.GetLogType());
 end;
 
-function TAppLogDemoFrm.GetLogType: TLogMessageType;
+function TAppLogDemoFrm.GetLogType : TLogMessageType;
 begin
-	case Self.LogMessageTypeRadio.ItemIndex of
-		0 : begin
-			Result:=lmtError;
-		end;
-		1 : begin
-			Result:=lmtInformation;
-		end;
-		2 : begin
-			Result:=lmtWarning;
-		end;
-		3 : begin
-			Result:=lmtDebug;
-		end;
-		else begin
-          Result:=lmtError;
-		end;
-	end;
+    case Self.LogMessageTypeRadio.ItemIndex of
+        0 : begin
+            Result := lmtError;
+        end;
+        1 : begin
+            Result := lmtInformation;
+        end;
+        2 : begin
+            Result := lmtWarning;
+        end;
+        3 : begin
+            Result := lmtDebug;
+        end;
+        else begin
+            Result := lmtError;
+        end;
+    end;
 end;
 
-procedure TAppLogDemoFrm.CommitBtnClick(Sender: TObject);
+procedure TAppLogDemoFrm.CommitBtnClick(Sender : TObject);
 begin
-	TLogFile.GetDefaultLogFile.Commit;
+    TLogFile.GetDefaultLogFile.Commit;
 end;
 
 end.

@@ -20,6 +20,7 @@
 			<Base>true</Base>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Base)'!=''">
+			<DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
 			<DCC_DependencyCheckOutputName>..\Out\XPLibDemo.exe</DCC_DependencyCheckOutputName>
 			<DCC_UnitSearchPath>$(DELPHI)\Lib\Debug;..\Out;$(DLib);$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
 			<DCC_ExeOutput>..\Out</DCC_ExeOutput>
@@ -30,19 +31,15 @@
 			<DCC_UnitAlias>WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;WinTypes=Windows;WinProcs=Windows;$(DCC_UnitAlias)</DCC_UnitAlias>
 			<DCC_BplOutput>..\Out</DCC_BplOutput>
 			<DCC_Description>JCL Project Analyzer for Delphi 7</DCC_Description>
-			<DCC_Define>DEBUG;DEBUG_ALL;XPLib;FileHnd;$(DCC_Define)</DCC_Define>
-			<DCC_Optimize>false</DCC_Optimize>
 			<DCC_K>false</DCC_K>
 			<DCC_F>false</DCC_F>
 			<DCC_E>false</DCC_E>
 			<DCC_DcpOutput>..\Out</DCC_DcpOutput>
 			<DCC_S>false</DCC_S>
 			<DCC_N>true</DCC_N>
-			<DCC_WriteableConstants>true</DCC_WriteableConstants>
 			<DCC_UNSAFE_CAST>true</DCC_UNSAFE_CAST>
 			<DCC_UNSAFE_CODE>true</DCC_UNSAFE_CODE>
 			<DCC_DcuOutput>..\Out</DCC_DcuOutput>
-			<DCC_SymbolReferenceInfo>1</DCC_SymbolReferenceInfo>
 			<DebugSourcePath>..\Out;$(DebugSourcePath)</DebugSourcePath>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_1)'!=''">
@@ -51,7 +48,9 @@
 			<DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
 			<DCC_DebugInformation>false</DCC_DebugInformation>
 		</PropertyGroup>
-		<PropertyGroup Condition="'$(Cfg_2)'!=''"/>
+		<PropertyGroup Condition="'$(Cfg_2)'!=''">
+			<DCC_Define>DEBUG;DEBUG_ALL;XPLib;FileHnd;$(DCC_Define)</DCC_Define>
+		</PropertyGroup>
 		<ItemGroup>
 			<DelphiCompile Include="XPLibDemo.dpr">
 				<MainSource>MainSource</MainSource>
@@ -59,13 +58,7 @@
 			<DCCReference Include="MasterDemoForm.pas">
 				<Form>MasterDemoFrm</Form>
 			</DCCReference>
-			<DCCReference Include="CtrlsHnd\TestCtrlsHnd.pas">
-				<Form>CtrlsHndDemoFrm</Form>
-			</DCCReference>
 			<DCCReference Include="..\..\Src\CtrlsHnd.pas"/>
-			<DCCReference Include="AppLog\AppLogDemoForm.pas">
-				<Form>AppLogDemoFrm</Form>
-			</DCCReference>
 			<DCCReference Include="..\..\src\AppLog.pas"/>
 			<DCCReference Include="FileHnd\TestFileHnd.pas">
 				<Form>FileHndDemoForm</Form>
@@ -75,6 +68,12 @@
 				<Form>FormWinRegDemo</Form>
 			</DCCReference>
 			<DCCReference Include="..\..\Src\WinReg32.pas"/>
+			<DCCReference Include="CtrlsHnd\TestCtrlsHnd.pas">
+				<Form>CtrlsHndDemoFrm</Form>
+			</DCCReference>
+			<DCCReference Include="AppLog\AppLogDemoForm.pas">
+				<Form>AppLogDemoFrm</Form>
+			</DCCReference>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>
@@ -101,9 +100,6 @@
 						<Parameters Name="LoadAllSymbols">True</Parameters>
 						<Parameters Name="LoadUnspecifiedSymbols">False</Parameters>
 					</Parameters>
-					<Language>
-						<Language Name="RootDir">C:\Sw\WorkDir\Pcks\XPLib\Demos\MasterDemo\</Language>
-					</Language>
 					<VersionInfo>
 						<VersionInfo Name="IncludeVerInfo">True</VersionInfo>
 						<VersionInfo Name="AutoIncBuild">False</VersionInfo>
@@ -130,6 +126,12 @@
 						<VersionInfoKeys Name="ProductName"/>
 						<VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
 					</VersionInfoKeys>
+					<Excluded_Packages>
+						<Excluded_Packages Name="$(BDS)\bin\bcboffice2k140.bpl">Embarcadero C++Builder Office 2000 Servers Package</Excluded_Packages>
+						<Excluded_Packages Name="$(BDS)\bin\bcbofficexp140.bpl">Embarcadero C++Builder Office XP Servers Package</Excluded_Packages>
+						<Excluded_Packages Name="$(BDS)\bin\dcloffice2k140.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+						<Excluded_Packages Name="$(BDS)\bin\dclofficexp140.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+					</Excluded_Packages>
 				</Delphi.Personality>
 			</BorlandProject>
 			<ProjectFileVersion>12</ProjectFileVersion>

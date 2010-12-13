@@ -93,6 +93,9 @@
 			<DCCReference Include="XPTypes.pas"/>
 			<DCCReference Include="XPClasses.pas"/>
 			<DCCReference Include="XPFiles.pas"/>
+			<DCCReference Include="..\Demos\MasterDemo\WinRegistry\WinRegDemo.pas">
+				<Form>FormWinRegDemo</Form>
+			</DCCReference>
 			<None Include="ModelSupport_XPLibD14\default.txaPackage"/>
 			<None Include="ModelSupport_XPLibD14\default.txvpck"/>
 			<None Include="ModelSupport_XPLibD14\VCLHnd\default.txvpck"/>
