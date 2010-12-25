@@ -1,0 +1,72 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{7546B761-B682-40E9-9781-62FE9A544236}</ProjectGuid>
+		</PropertyGroup>
+		<ItemGroup>
+			<Projects Include="Demos\CypherDemo\Src\DemoCypher.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="Demos\DemoSettings\Src\DemoSettings.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="Demos\MP3Tag\demo.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="Src\StFLibD14.dproj">
+				<Dependencies/>
+			</Projects>
+		</ItemGroup>
+		<ProjectExtensions>
+			<Borland.Personality>Default.Personality.12</Borland.Personality>
+			<Borland.ProjectType/>
+			<BorlandProject>
+				<Default.Personality/>
+			</BorlandProject>
+		</ProjectExtensions>
+		<Target Name="DemoCypher">
+			<MSBuild Projects="Demos\CypherDemo\Src\DemoCypher.dproj"/>
+		</Target>
+		<Target Name="DemoCypher:Clean">
+			<MSBuild Targets="Clean" Projects="Demos\CypherDemo\Src\DemoCypher.dproj"/>
+		</Target>
+		<Target Name="DemoCypher:Make">
+			<MSBuild Targets="Make" Projects="Demos\CypherDemo\Src\DemoCypher.dproj"/>
+		</Target>
+		<Target Name="DemoSettings">
+			<MSBuild Projects="Demos\DemoSettings\Src\DemoSettings.dproj"/>
+		</Target>
+		<Target Name="DemoSettings:Clean">
+			<MSBuild Targets="Clean" Projects="Demos\DemoSettings\Src\DemoSettings.dproj"/>
+		</Target>
+		<Target Name="DemoSettings:Make">
+			<MSBuild Targets="Make" Projects="Demos\DemoSettings\Src\DemoSettings.dproj"/>
+		</Target>
+		<Target Name="demo">
+			<MSBuild Projects="Demos\MP3Tag\demo.dproj"/>
+		</Target>
+		<Target Name="demo:Clean">
+			<MSBuild Targets="Clean" Projects="Demos\MP3Tag\demo.dproj"/>
+		</Target>
+		<Target Name="demo:Make">
+			<MSBuild Targets="Make" Projects="Demos\MP3Tag\demo.dproj"/>
+		</Target>
+		<Target Name="StFLibD14">
+			<MSBuild Projects="Src\StFLibD14.dproj"/>
+		</Target>
+		<Target Name="StFLibD14:Clean">
+			<MSBuild Targets="Clean" Projects="Src\StFLibD14.dproj"/>
+		</Target>
+		<Target Name="StFLibD14:Make">
+			<MSBuild Targets="Make" Projects="Src\StFLibD14.dproj"/>
+		</Target>
+		<Target Name="Build">
+			<CallTarget Targets="DemoCypher;DemoSettings;demo;StFLibD14"/>
+		</Target>
+		<Target Name="Clean">
+			<CallTarget Targets="DemoCypher:Clean;DemoSettings:Clean;demo:Clean;StFLibD14:Clean"/>
+		</Target>
+		<Target Name="Make">
+			<CallTarget Targets="DemoCypher:Make;DemoSettings:Make;demo:Make;StFLibD14:Make"/>
+		</Target>
+		<Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+	</Project>
