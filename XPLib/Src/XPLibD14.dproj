@@ -131,6 +131,7 @@
 			<None Include="ModelSupport_XPLibD14\StatHnd\default.txvpck"/>
 			<None Include="ModelSupport_XPLibD14\Str_Null\default.txvpck"/>
 			<None Include="ModelSupport_XPLibD14\WinReg32\default.txvpck"/>
+			<None Include="..\Docs\History.txt"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>

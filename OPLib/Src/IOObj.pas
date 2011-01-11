@@ -11,19 +11,19 @@ uses
     Classes, TypInfo;
 
 type
-    TIOObj = Class (TObject)
+    TIOObj = class(TObject)
     private
-        FList : PPropList;
-        FCount : Integer;
-        FSize : Integer;
-        SBuffer : TStringList;
+        FList :      PPropList;
+        FCount :     Integer;
+        FSize :      Integer;
+        SBuffer :    TStringList;
         RootObject : TObject;
         function Get(Index : Integer) : PPropInfo;
         procedure SetAsText(const Value : string);
         function GetPropType(PInfo : PPropInfo) : PTypeInfo;
         procedure EnumChildren(Child : TComponent);
     protected
-        FObject : TObject;
+        FObject :  TObject;
         CastName : string; //Qdo a classe eh na verdade uma descendente od tipo da propriedade
         function ChildrenComponentsAsText : string;
         function GetAsText : string;
@@ -38,7 +38,7 @@ type
     public
         constructor Create(AObject, ARootObject : TObject; Filter : TTypeKinds); virtual;
         destructor Destroy; override;
-        function Contains(P : PPropInfo) : Boolean;
+        function Contains(P : PPropInfo) : boolean;
         function Find(const AName : string) : PPropInfo;
         procedure Delete(Index : Integer);
         procedure Intersect(List : TIOObj);
@@ -52,14 +52,14 @@ function ExportObjText(Obj : TPersistent) : string;
 procedure ImportObjText(Obj : TPersistent; const Str : string);
 
 type
-    THackWriter = Class (TWriter)
+    THackWriter = class(TWriter)
     protected
         procedure WriteProperties(Instance : TPersistent);
     end;
 
-    THackReader = Class (TReader);
+    THackReader = class(TReader);
 
-    THackPersistent = Class (TPersistent)
+    THackPersistent = class(TPersistent)
     protected
         //procedure DefineProperties(Filer: TFiler);
     end;
@@ -67,14 +67,14 @@ type
 implementation
 
 uses
-    SysUtils, Controls;
+    SysUtils, AnsiStrings, Controls;
 
 const
-    _ENDENT_ = '  '; //#9;
+    _ENDENT_ = #9; //#9;
 
 type
 
-    TComponentProtected = Class (TComponent)
+    TComponentProtected = class(TComponent)
     public
         procedure GetChildrenProctected(Proc : TGetChildProc; Root : TComponent);
     end;
@@ -82,26 +82,34 @@ type
 
 
 function ExportObjText(Obj : TPersistent) : string;
+    ///  <summary>
+    ///     Exporta objeto de forma simples para texto
+    ///  </summary>
+    ///  <remarks>
+    ///    Rotina usada no passado para serialização, não se aplica mais agora
+    /// Revision - 20101229 - Roger
+    /// Ajustada para suporte unicode
+    ///  </remarks>
     //----------------------------------------------------------------------------------------------------------------------
 var
-    W : THackWriter;
-    BinMS : TMemoryStream;
+    W :      THackWriter;
+    BinMS :  TMemoryStream;
     TextMS : TStringStream;
-    S : string;
-    j, i : integer;
+    S :      string;
+    j, i :   Integer;
     SL, SubSL : TStringList;
 begin
     BinMS := TMemoryStream.Create;
-    W := THackWriter.Create(BinMS, 4096);
+    W     := THackWriter.Create(BinMS, 4096);
     try
         W.WriteSignature;
         W.WritePrefix([], 0);
         //-- Como foi escrito um prefixo o duplo WritelistEnd no fim - comparar novamente a forma e ver q este modo deve ser chamado para TComponent. Testar usando um TPersitent puro
-        W.WriteStr(Obj.ClassName);
+        W.WriteStr(ansistring(Obj.ClassName));
         if Obj is TComponent then begin
-            W.WriteStr(TComponent(Obj).Name);
+            W.WriteStr(ansistring(TComponent(Obj).Name));
         end else begin
-            W.WriteStr(Obj.ClassName);
+            W.WriteStr(ansistring(Obj.ClassName));
         end;
         W.WriteProperties(Obj);
         W.WriteListEnd;
@@ -148,11 +156,11 @@ end;
 procedure ImportObjText(Obj : TPersistent; const Str : string);
 //----------------------------------------------------------------------------------------------------------------------
 var
-    R : THackReader;
-    BinMS : TMemoryStream;
+    R :      THackReader;
+    BinMS :  TMemoryStream;
     TextMS : TStringStream;
-    ChildPos : integer;
-    Flags : TFilerFlags;
+    ChildPos : Integer;
+    Flags :  TFilerFlags;
 begin
     { TODO -oRoger : Rotina para setar as properiedaddes atraver de um TReader }
     BinMS := TMemoryStream.Create;
@@ -198,40 +206,43 @@ constructor TIOObj.Create(AObject, ARootObject : TObject; Filter : TTypeKinds);
 begin
     inherited Create;
     Self.RootObject := ARootObject;
-    if AObject <> NIL then begin
+    if AObject <> nil then begin
         Self.FObject := AObject;
-        FCount := GetPropList(AObject.ClassInfo, Filter, NIL);
+        FCount := GetPropList(AObject.ClassInfo, Filter, nil);
         FSize  := FCount * SizeOf(Pointer);
         GetMem(FList, FSize);
         GetPropList(AObject.ClassInfo, Filter, FList);
     end else begin
         FCount := 0;
-        FList  := NIL;
+        FList  := nil;
     end;
 end;
 
 destructor TIOObj.Destroy;
     //----------------------------------------------------------------------------------------------------------------------
 begin
-    if FList <> NIL then begin
+    if FList <> nil then begin
         FreeMem(FList, FSize); //Alocado com GetMem em GetPropList
     end;
 end;
 
-function TIOObj.Contains(P : PPropInfo) : Boolean;
+function TIOObj.Contains(P : PPropInfo) : boolean;
     //----------------------------------------------------------------------------------------------------------------------
+    ///  <summary>
+    ///    Retorna true para o caso do objeto possuir uma propriedade de tipo e nome igual a informada
+    ///  </summary>
+    /// Revision - 20110103 - Roger
+    /// para suporte a unicode inserida unit especifica
 var
     I : Integer;
 begin
     for I := 0 to FCount - 1 do begin
-        with FList^[I]^ do begin
-            if (PropType = P^.PropType) and (CompareText(Name, P^.Name) = 0) then begin
-                Result := TRUE;
-                Exit;
-            end;
+        if (Self.FList^[i]^.PropType = P^.PropType) and (AnsiStrings.CompareText(Self.FList^[i]^.Name, P^.Name) = 0) then begin
+            Result := True;
+            Exit;
         end;
     end;
-    Result := FALSE;
+    Result := False;
 end;
 
 function TIOObj.Find(const AName : string) : PPropInfo;
@@ -247,7 +258,7 @@ begin
             end;
         end;
     end;
-    Result := NIL;
+    Result := nil;
 end;
 
 procedure TIOObj.Delete(Index : Integer);
@@ -282,8 +293,8 @@ function TIOObj.GetAsText : string;
     //----------------------------------------------------------------------------------------------------------------------
 var
     SubSL, SL : TStringList;
-    j, i : integer;
-    PInfo : PPropInfo;
+    j, i :      Integer;
+    PInfo :     PPropInfo;
     SubPropText, PropClassName : string;
 begin
     if not Assigned(Self.FObject) then begin
@@ -371,28 +382,28 @@ function TIOObj.SubPropAsText(PInfo : PPropInfo) : string;
     //----------------------------------------------------------------------------------------------------------------------
 begin
     case PInfo.PropType^.Kind of
-        tkUnknown    : begin
+        tkUnknown : begin
 
         end;
-        tkInteger    : begin
+        tkInteger : begin
             Result := Self.ValPropInteger(PInfo);
         end;
-        tkChar    : begin
+        tkChar : begin
             Result := Self.ValPropString(PInfo);
         end;
-        tkEnumeration    : begin
+        tkEnumeration : begin
             Result := Self.ValPropEnum(PInfo);
         end;
-        tkFloat    : begin
+        tkFloat : begin
             Result := Self.ValPropFloat(PInfo);
         end;
-        tkString    : begin
+        tkString : begin
             Result := Self.ValPropString(PInfo);
         end;
-        tkSet    : begin
+        tkSet : begin
             Result := Self.ValPropSet(PInfo);
         end;
-        tkClass    : begin
+        tkClass : begin
             Result := Self.ValPropClass(PInfo);
          {
             SubPropInstance:=TIOObj.Create( GetObjectProp( Self.FObject, PInfo ), Self.RootObject, tkAny );
@@ -414,34 +425,34 @@ begin
             Exit; //Nao agregar o PropName=Value do final
          }
         end;
-        tkMethod    : begin
+        tkMethod : begin
 
         end;
-        tkWChar    : begin
+        tkWChar : begin
             Result := Self.ValPropString(PInfo);
         end;
-        tkLString    : begin
+        tkLString : begin
             Result := Self.ValPropString(PInfo);
         end;
-        tkWString    : begin
+        tkWString : begin
             Result := Self.ValPropString(PInfo);
         end;
-        tkVariant    : begin
+        tkVariant : begin
             Result := Self.ValPropString(PInfo);
         end;
-        tkArray    : begin
+        tkArray : begin
 
         end;
-        tkRecord    : begin
+        tkRecord : begin
 
         end;
-        tkInterface    : begin
+        tkInterface : begin
 
         end;
-        tkInt64    : begin
+        tkInt64 : begin
             Result := Self.ValPropInt64(PInfo);
         end;
-        tkDynArray    : begin
+        tkDynArray : begin
 
         end;
     end;
@@ -468,7 +479,7 @@ end;
 function TIOObj.ValPropEnum(PInfo : PPropInfo) : string;
     //----------------------------------------------------------------------------------------------------------------------
 var
-    OrdVal : integer;
+    OrdVal : Integer;
 begin
     OrdVal := GetOrdProp(FObject, PInfo);
     if OrdVal <> PInfo^.Default then begin
@@ -487,11 +498,11 @@ function TIOObj.ValPropFloat(PInfo : PPropInfo) : string;
 const
     Precisions: array[TFloatType] of Integer = (7, 15, 18, 18, 19); //digitos
 var
-    Val : Extended;
+    Val :  Extended;
     Prec : TFloatType;
 begin
-    Val := GetFloatProp(FObject, PInfo);
-    Prec := GetTypeData(GetPropType(PInfo)).FloatType;
+    Val    := GetFloatProp(FObject, PInfo);
+    Prec   := GetTypeData(GetPropType(PInfo)).FloatType;
     Result := FloatToStrF(Val, ffGeneral, Precisions[Prec], 0);
 end;
 
@@ -518,12 +529,12 @@ begin
         //Na enumeracao faz uso de SBuffer
         if Self.FObject is TComponent then begin
             OLevel := TComponent(Self.FObject);
-            if Self.RootObject <> NIL then begin
+            if Self.RootObject <> nil then begin
                 RootOwner := TComponent(Self.RootObject).Owner;
             end else begin
-                RootOwner := NIL;
+                RootOwner := nil;
             end;
-            while (OLevel <> NIL) and (OLevel <> RootOwner) do begin //Ate nao ter dono ou componente raiz
+            while (OLevel <> nil) and (OLevel <> RootOwner) do begin //Ate nao ter dono ou componente raiz
                 Lixo := OLevel.ClassName;
                 TComponentProtected(Self.FObject).GetChildrenProctected(Self.EnumChildren, OLevel);
                 OLevel := TComponent(OLevel).Owner;
@@ -532,7 +543,7 @@ begin
         Result := SBuffer.Text;
     finally
         if Assigned(SBuffer) then begin
-            FreeANDNil(SBuffer);
+            FreeAndNil(SBuffer);
         end;
     end;
 end;
@@ -563,17 +574,17 @@ function TIOObj.ValPropClass(PInfo : PPropInfo) : string;
     //----------------------------------------------------------------------------------------------------------------------
 var
     Writer : TWriter;
-    BinMS : TMemoryStream;
+    BinMS :  TMemoryStream;
     TextMS : TStringStream;
-    s : string;
+    s :      string;
     Instance : TObject;
     SubObj : TIOObj;
-    W : THackWriter;
+    W :      THackWriter;
 begin
     Instance := TypInfo.GetObjectProp(Self.FObject, PInfo);
-    if Instance <> NIL then begin
-        if (Instance is TComponent) and ((Self.RootObject is TComponent) or (Self.RootObject = NIL)) then begin
-            BinMS := TMemoryStream.Create;
+    if Instance <> nil then begin
+        if (Instance is TComponent) and ((Self.RootObject is TComponent) or (Self.RootObject = nil)) then begin
+            BinMS  := TMemoryStream.Create;
             Writer := TWriter.Create(BinMS, 4096);
             try
                 Writer.WriteDescendent(TComponent(Instance), TComponent(Self.RootObject));
@@ -600,7 +611,7 @@ begin
             try
                 if SubObj.CastName = 'TStrings' then begin
                     BinMS := TMemoryStream.Create;
-                    W := THackWriter.Create(BinMS, 4096);
+                    W     := THackWriter.Create(BinMS, 4096);
                     try
                         W.WriteSignature;
                         W.WritePrefix([], 0);
@@ -651,7 +662,7 @@ begin
             GetPropInfos(Instance.ClassInfo, PropList);
             for I := 0 to Count - 1 do begin
                 PropInfo := PropList^[I];
-                if (PropInfo = NIL) then begin
+                if (PropInfo = nil) then begin
                     break;
                 end;
                 if IsStoredProp(Instance, PropInfo) and (PropInfo^.PropType^.Kind <> tkMethod) then begin
@@ -675,5 +686,3 @@ end;
 }
 
 end.
-
-
