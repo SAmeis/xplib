@@ -112,7 +112,7 @@ begin
 	IsNeg := (Pos('-', Text) > 0) or (Pos('(', Text) > 0);
 	TmpText := '';
 	for Tmp := 1 to Length(Text) do begin
-		if Text[Tmp] in ['0'..'9', '.'] then begin
+		if SysUtils.CharInSet( Text[Tmp] , ['0'..'9', '.'] ) then begin
 			TmpText := TmpText + Text[Tmp];
 		end;
 	end;
@@ -156,7 +156,7 @@ end;
 procedure TCurrencyEdt.KeyPress(var Key : Char);
 //----------------------------------------------------------------------------------------------------------------------------------
 begin
-	if not (Key in ['0'..'9', '.', '-']) then begin
+	if ( not SysUtils.CharInSet( Key , ['0'..'9', '.', '-']) ) then begin
 		Key := #0;
 	end;
 	inherited KeyPress(Key);

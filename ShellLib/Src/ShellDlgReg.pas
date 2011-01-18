@@ -89,9 +89,11 @@ procedure Register;
 begin
   {Register components.}
   {$WARN SYMBOL_PLATFORM OFF }
+
   RegisterComponents(PalettePageName, [TkbBrowseForFolderDialog, TkbShellAboutDialog, TkbFormatDriveDialog,
                                        TkbPickIconDialog, TkbFindFilesDialog, TkbRunFileDialog,
                                        TkbRestartWindowsDialog, TkbObjectPropertiesDialog]);
+
   {Register property editors.}
   RegisterPropertyEditor(TypeInfo(String), TkbBrowseForFolderDialog, 'Path', TPathProperty);
 end;

@@ -159,7 +159,7 @@ var
     sr :      TsearchRec;
     OldErrorMode : Word;
     DotPos :  byte;
-    pattern : string[6];
+    pattern : AnsiString;
 begin
     {TODO -oroger -clib : Corrigir este código para funcionar com Win XP SP2 ou superior}
     // VALOR Original = pattern:= 'c:\*.';
@@ -178,7 +178,7 @@ begin
     {stop errors and try}
     OldErrorMode := SetErrorMode(SEM_FAILCRITICALERRORS);
     try
-        if FindFirst(Pattern, faVolumeID, sr) = 0 then begin
+        if FindFirst(String(Pattern), faVolumeID, sr) = 0 then begin
             Result := sr.Name;
             DotPos := Pos('.', Result);
             if DotPos <> 0 then begin

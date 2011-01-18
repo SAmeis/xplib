@@ -88,7 +88,6 @@ var
     propList : PPropList;
     x, propCount : Integer;
     Filter :   TTypeKinds;
-    propInfo : PPropInfo;
 begin
     //Ajusta nome da classe registrada para a recuperação
     Node.Attributes['class'] := Self.ClassName;
@@ -190,7 +189,7 @@ end;
 
 procedure TXMLSerializable.SaveAttribute(PInfo : PPropInfo; Node : IXMLNode);
 var
-    SName, StrValue : string;
+    StrValue : string;
 begin
     {TODO -oroger -cdsg : Pegar demais metodos de IOObj}
     case PInfo.PropType^.Kind of
@@ -257,7 +256,7 @@ begin
     end;
     if (StrValue <> EmptyStr) and (PInfo.PropType^.Kind <> tkClass) then begin
 		 //StrValue := PInfo.Name + ' = ' + StrValue;
-		 Node.SetAttribute( PInfo.Name, StrValue);
+		 Node.SetAttribute( String(PInfo.Name), StrValue);
     end;
 end;
 
@@ -270,9 +269,9 @@ begin
     Instance := TypInfo.GetObjectProp(Self, PInfo);
     if (Instance <> nil) then begin
         if SysUtils.Supports(Instance, IXMLSerializable, subProp) then begin
-            subNode := ParentNode.ChildNodes.FindNode(PInfo.Name);
+            subNode := ParentNode.ChildNodes.FindNode(String(PInfo.Name));
             if (subNode = nil) then begin
-                subNode := ParentNode.AddChild(PInfo.Name);
+                subNode := ParentNode.AddChild(String(PInfo.Name));
                 subNode.Attributes['class'] := PInfo.PropType^.Name;
             end;
             subProp.SaveTo(subNode);

@@ -118,7 +118,6 @@ type
 		procedure CreateParams(var Params : TCreateParams); override;
 		procedure CreateWnd; override;
 		procedure DownClick(Sender : TObject); virtual;
-		procedure GetChildren(Proc : TGetChildProc; Root : TComponent); override;
 		function IsValidChar(Key : Char) : Boolean; virtual;
 		procedure KeyDown(var Key : Word; Shift : TShiftState); override;
 		procedure KeyPress(var Key : Char); override;
@@ -126,6 +125,7 @@ type
 	public
 		constructor Create(AOwner : TComponent); override;
 		destructor Destroy; override;
+       procedure GetChildren(Proc : TGetChildProc; Root : TComponent); override;
 		property Button : TXPSpinButton read FButton;
 	published
 		property Anchors;
@@ -595,11 +595,9 @@ end;
 {--------------------------------------------------------------------------------------------------------------------------------}
 function TXPSpinEdit.IsValidChar(Key : Char) : Boolean;
 begin
-	Result := (Key in [DecimalSeparator, '+', '-', '0'..'9', ',', '.']) or
-		((Key < #32) and (Key <> Chr(VK_RETURN)));
-	if not FEditorEnabled and Result and ((Key >= #32) or
-		(Key = Char(VK_BACK)) or (Key = Char(VK_DELETE))) then begin
-		Result := FALSE;
+	Result := SysUtils.CharInSet( Key , [DecimalSeparator, '+', '-', '0'..'9', ',', '.']) or ((Key < #32) and (Key <> Chr(VK_RETURN)));
+	if not FEditorEnabled and Result and ((Key >= #32) or (Key = Char(VK_BACK)) or (Key = Char(VK_DELETE))) then begin
+       Result := FALSE;
 	end;
 end;
 

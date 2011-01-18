@@ -39,7 +39,7 @@ type
         constructor Create(AObject, ARootObject : TObject; Filter : TTypeKinds); virtual;
         destructor Destroy; override;
         function Contains(P : PPropInfo) : boolean;
-        function Find(const AName : string) : PPropInfo;
+        function Find(const AName : ShortString ) : PPropInfo;
         procedure Delete(Index : Integer);
         procedure Intersect(List : TIOObj);
         property AsText : string read GetAsText write SetAsText;
@@ -245,18 +245,16 @@ begin
     Result := False;
 end;
 
-function TIOObj.Find(const AName : string) : PPropInfo;
+function TIOObj.Find(const AName : ShortString) : PPropInfo;
     //----------------------------------------------------------------------------------------------------------------------
 var
     I : Integer;
 begin
     for I := 0 to FCount - 1 do begin
-        with FList^[I]^ do begin
-            if (CompareText(Name, AName) = 0) then begin
+            if (CompareText(FList^[I]^.Name, AName) = 0) then begin
                 Result := FList^[I];
                 Exit;
             end;
-        end;
     end;
     Result := nil;
 end;
@@ -457,7 +455,7 @@ begin
         end;
     end;
     if (Result <> EmptyStr) and (PInfo.PropType^.Kind <> tkClass) then begin
-        Result := PInfo.Name + ' = ' + Result;
+        Result := string( PInfo.Name ) + ' = ' + Result;
     end;
 end;
 
@@ -607,7 +605,7 @@ begin
         end else begin
             //As propriedades sao enumeradas normalmente
             SubObj := TIOObj.Create(Instance, Self, tkAny);
-            SubObj.CastName := PInfo.PropType^.Name; //Corrige tipo esperado pela prop sobre o instanciado
+            SubObj.CastName := string(PInfo.PropType^.Name); //Corrige tipo esperado pela prop sobre o instanciado
             try
                 if SubObj.CastName = 'TStrings' then begin
                     BinMS := TMemoryStream.Create;
@@ -616,7 +614,7 @@ begin
                         W.WriteSignature;
                         W.WritePrefix([], 0);
                         //-- Como foi escrito um prefixo o duplo WritelistEnd no fim - comparar novamente a forma e ver q este modo deve ser chamado para TComponent. Testar usando um TPersitent puro
-                        W.WriteStr(SubObj.CastName);
+                        W.WriteStr(AnsiString(SubObj.CastName));
                         W.WriteStr(PInfo^.Name);
                         W.WriteProperty(TPersistent(Self.FObject), PInfo);
                         W.WriteListEnd;

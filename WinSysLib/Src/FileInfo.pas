@@ -925,7 +925,7 @@ var
 begin
     fi := TCustomFileVersionInfo.Create(nil);
     try
-        fi.FileName := Filename;
+        fi.FileName := String(Filename);
         inherited Create(fi.GetFileVersion);
     finally
         fi.Free;

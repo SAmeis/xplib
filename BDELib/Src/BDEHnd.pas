@@ -151,10 +151,15 @@ procedure BDEDbaseExpressionCreateIndex(Table : TTable; IdxTagName, IdxExpressio
 	Maintained : boolean = TRUE);
 {{
 Cria um novo indice para tabelas Xbase do tipo expressao
+
+Revision - Roger - 20110117
+
+Alterada a passagem de parametros para suporte a UNICODE
  }
 var
 	NewIndex : IDXDesc;
 	OldState, OldExc : boolean;
+   TblFilename : AnsiString;
 begin
 	OldState := Table.Active;
 	OldExc := Table.Exclusive;
@@ -182,7 +187,10 @@ begin
 		NewIndex.szKeyCond := '';
 		NewIndex.bCaseInsensitive := FALSE;
 		NewIndex.iBlockSize := 0;
-		Check(DbiAddIndex(Table.dbhandle, Table.handle, PAnsiChar(Table.TableName), szDBASE, NewIndex, NIL));
+       //Alterada a passagem de parametros para suporte a UNICODE
+		//Check(DbiAddIndex(Table.dbhandle, Table.handle, PAnsiChar(Table.TableName), szDBASE, NewIndex, NIL));
+       TblFilename:=AnsiString(Table.TableName);
+       Check(DbiAddIndex(Table.dbhandle, Table.handle, PAnsiChar( TblFilename ), szDBASE, NewIndex, NIL));
 	finally
 		if not OldExc then begin
 			Table.Active := FALSE;
@@ -195,11 +203,15 @@ end;
 procedure BDEDbaseFieldsCreateIndex(Table : TTable; const IdxTagName, FieldName : string);
 {{
 Cria indice por unico campo para tabelas XBase
+
+Revision - Roger - 20110117
+Ajustes de tipo para compatibilidade com UNICODE
 }
 var
 	Fld : TField;
 	NewIndex : IDXDesc;
 	OldState, OldExc : boolean;
+   TblFilename : AnsiString;
 begin
 	OldState := Table.Active;
 	OldExc := Table.Exclusive;
@@ -217,21 +229,20 @@ begin
 		FillChar(NewIndex, SizeOf(IDXDesc), #0);
 		Fld := Table.FieldByName(FieldName); //Erro se nao encontrar
 		NewIndex.aiKeyFld[0] := Fld.FieldNo;
-		with NewIndex do begin
-			StrLCopy(szTagName, PAnsiChar(IdxTagName), DBIMAXNAMELEN);
-			bPrimary := FALSE;
-			bUnique  := FALSE;
-			bDescending := FALSE;
-			bMaintained := TRUE;
-			bSubset  := FALSE;
-			bExpIdx  := FALSE;
-			iFldsInKey := 1; //Para DBase sempre unico campo
-			szKeyExp := '';   // Although this is not an Expression index,
-			szKeyCond := '';  // szKeyExp and szKeyCond must be set blank
-			bCaseInsensitive := FALSE;
-			iBlockSize := 0;
-		end;
-		Check(DbiAddIndex(Table.dbhandle, Table.handle, PAnsiChar(Table.TableName), szDBASE, NewIndex, NIL));
+       StrLCopy(NewIndex.szTagName, PAnsiChar(AnsiString(IdxTagName)), DBIMAXNAMELEN);
+       NewIndex.bPrimary := FALSE;
+       NewIndex.bUnique  := FALSE;
+       NewIndex.bDescending := FALSE;
+       NewIndex.bMaintained := TRUE;
+       NewIndex.bSubset  := FALSE;
+       NewIndex.bExpIdx  := FALSE;
+       NewIndex.iFldsInKey := 1; //Para DBase sempre unico campo
+       NewIndex.szKeyExp := '';   // Although this is not an Expression index,
+       NewIndex.szKeyCond := '';  // szKeyExp and szKeyCond must be set blank
+       NewIndex.bCaseInsensitive := FALSE;
+       NewIndex.iBlockSize := 0;
+       TblFilename:=AnsiString(Table.TableName);
+		Check(DbiAddIndex(Table.dbhandle, Table.handle, PAnsiChar(TblFilename), szDBASE, NewIndex, NIL));
 	finally
 		if not OldExc then begin
 			Table.Active := FALSE;
@@ -300,7 +311,7 @@ var
 	Msg : DBIMSG;
 begin
 	DbiGetErrorString(Code, Msg);
-	Result := Msg;
+	Result := String(Msg);
 	Trim(Result);
 end;
 
@@ -333,12 +344,12 @@ var
 	Params : TStrings;
 begin
 	Result := EmptyStr;
-	StrPLCopy(SAlias, AliasName, SizeOf(SAlias) - 1);
+	StrPLCopy(SAlias, AnsiString(AliasName), SizeOf(SAlias) - 1);
 	AnsiToOem(SAlias, SAlias);
 	Check(DbiGetDatabaseDesc(SAlias, @Desc));
 	if StrIComp(Desc.szDbType, szCFGDBSTANDARD) = 0 then begin
 		OemToAnsi(Desc.szPhyName, Desc.szPhyName);
-		Result := Desc.szPhyName;
+		Result := String(Desc.szPhyName);
 	end else begin
 		Params := TStringList.Create;
 		try

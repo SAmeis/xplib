@@ -62,6 +62,7 @@
 			<DCCReference Include="XPLibD14.dcp"/>
 			<DCCReference Include="BDEHnd.pas"/>
 			<DCCReference Include="MultiUpdateSQL.pas"/>
+			<None Include="BDELibD14.todo"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>
