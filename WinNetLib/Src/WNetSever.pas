@@ -1,3 +1,8 @@
+{$IFDEF WNetSever}
+	 {$DEFINE DEBUG_UNIT}
+{$ENDIF}
+{$I WinNetLib.inc}
+
 unit WNetSever;
 
 interface
