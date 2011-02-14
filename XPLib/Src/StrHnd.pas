@@ -35,9 +35,9 @@ type
 type
     TStrHnd = class(TObject)
     public
-		 class function ASCIISearchString(const NormalSrcString : string) : string;
-		 class function CopyAfterLast(const SubStr, Str : string) : string;
-		 class function endsWith(const fullStr : string; endChar : char) : boolean; overload;
+        class function ASCIISearchString(const NormalSrcString : string) : string;
+        class function CopyAfterLast(const SubStr, Str : string) : string;
+        class function endsWith(const fullStr : string; endChar : char) : boolean; overload;
         {{
         Indica se a string termina com o dado caracter
         }
@@ -45,11 +45,16 @@ type
         class function EnsurePrefix(const Prefix, Str : string) : string;
         class function FilterDigits(const Str : string) : string;
         class function IsRangeValue(Value : string; MinValue, MaxValue : Extended) : boolean;
+
+		 class procedure ResetLength(var S : WideString); overload;
+		 class procedure ResetLength(var S : ansistring); overload;
+		 class procedure ResetLength(var S : UnicodeString); overload;
+
         class function startsWith(const str, prefix : string) : boolean;
         class function StrPosChar(const S : string; const CharSet : TSysCharSet; StartPos : cardinal = 0) : Integer;
         class function StrToPChar(Str : string) : PChar;
-				class function IsPertinent(const Value : string; const Values : array of string; CaseSensitive : boolean) : boolean;
-				class function Contains(const SubStr, SuperStr : string ) : Boolean;
+        class function IsPertinent(const Value : string; const Values : array of string; CaseSensitive : boolean) : boolean;
+        class function Contains(const SubStr, SuperStr : string) : boolean;
     end;
 
     TStringConnector = class(TObject)
@@ -112,13 +117,13 @@ type
         constructor Create(AStream : TStream; BufferSize : Integer = 1024); virtual;
         destructor Destroy; override;
         function ReadChar : AnsiChar;
-        function ReadLine : AnsiString;
-        function ReadString(Len : Word) : AnsiString;
-        function ReadStringWord : AnsiString;
+        function ReadLine : ansistring;
+        function ReadString(Len : Word) : ansistring;
+        function ReadStringWord : ansistring;
         procedure Reset;
         procedure Seek(pos : int64);
-        function Search(const Str : AnsiString) : boolean; overload;
-        function Search(const Str : AnsiString; SkipStr : boolean) : boolean; overload;
+        function Search(const Str : ansistring) : boolean; overload;
+        function Search(const Str : ansistring; SkipStr : boolean) : boolean; overload;
         procedure SetWordDelimiters(WordDelimiters : PSysCharSet);
         property Eol : ansistring read FEol write FEol;
         property EoS : boolean read GetEoS;
@@ -127,9 +132,9 @@ type
     end;
 
 
-{$IFDEF VER150} //Delphi 7
-function AnsiStrAlloc(Size: Cardinal): PAnsiChar;
-function CharInSet(C: AnsiChar; const CharSet: TSysCharSet): Boolean;
+{$IFDEF VER150}//Delphi 7
+function AnsiStrAlloc(Size : cardinal) : PAnsiChar;
+function CharInSet(C : AnsiChar; const CharSet : TSysCharSet) : boolean;
 {$ENDIF}
 
 
@@ -139,18 +144,18 @@ implementation
 uses
     Math, Str_Pas, StrUtils;
 
-{$IFDEF VER150} //Delphi 7 apenas
-function AnsiStrAlloc(Size: Cardinal): PAnsiChar;
+{$IFDEF VER150}//Delphi 7 apenas
+function AnsiStrAlloc(Size : cardinal) : PAnsiChar;
 begin
-  Inc(Size, SizeOf(Cardinal));
-  GetMem(Result, Size);
-  Cardinal(Pointer(Result)^) := Size;
-  Inc(Result, SizeOf(Cardinal));
+    Inc(Size, SizeOf(cardinal));
+    GetMem(Result, Size);
+    cardinal(Pointer(Result)^) := Size;
+    Inc(Result, SizeOf(cardinal));
 end;
 
-function CharInSet(C: AnsiChar; const CharSet: TSysCharSet): Boolean;
+function CharInSet(C : AnsiChar; const CharSet : TSysCharSet) : boolean;
 begin
-  Result := C in CharSet;
+    Result := C in CharSet;
 end;
 
 {$ENDIF}
@@ -200,8 +205,7 @@ begin
                 'ª' : begin
                     Result[i] := 'A';
                 end;
-                else
-                begin
+                else begin
                     Result[i] := ' ';
                 end;
             end;
@@ -232,27 +236,27 @@ begin
     end;
 end;
 
-/// <summary>
-/// Retorna valor lógico indicando se SubStr está contida em SuperStr
-/// </summary>
-/// <param name="SubStr">Cadeia a ser procurada</param>
-/// <param name="SuperStr">Cadeia onde se procura</param>
-/// <returns></returns>
-class function TStrHnd.Contains(const SubStr, SuperStr: string): Boolean;
+ /// <summary>
+ /// Retorna valor lógico indicando se SubStr está contida em SuperStr
+ /// </summary>
+ /// <param name="SubStr">Cadeia a ser procurada</param>
+ /// <param name="SuperStr">Cadeia onde se procura</param>
+ /// <returns></returns>
+class function TStrHnd.Contains(const SubStr, SuperStr : string) : boolean;
 begin
-	Result:=( Pos(SubStr, SuperStr ) <> 0 );
+    Result := (Pos(SubStr, SuperStr) <> 0);
 end;
 
-/// <summary>
-/// This functions scans s for SubStr from the right and returns the portion after SubStr.
-/// Example: AfterRev('.','c:\my.file.txt') > 'txt'
-/// </summary>
-class function TStrHnd.CopyAfterLast(const SubStr, Str: string): string;
+ /// <summary>
+ /// This functions scans s for SubStr from the right and returns the portion after SubStr.
+ /// Example: AfterRev('.','c:\my.file.txt') > 'txt'
+ /// </summary>
+class function TStrHnd.CopyAfterLast(const SubStr, Str : string) : string;
 begin
-	 Result := StrRScanStr(PChar(SubStr), PChar(Str));
-	 if (Result <> EmptyStr) then begin
-		 Result := System.Copy(Result, Length(SubStr)+1, Length(Result));
-	 end;
+    Result := StrRScanStr(PChar(SubStr), PChar(Str));
+    if (Result <> EmptyStr) then begin
+        Result := System.Copy(Result, Length(SubStr) + 1, Length(Result));
+    end;
 end;
 
 class function TStrHnd.endsWith(const fullStr, endStr : string) : boolean;
@@ -409,6 +413,42 @@ begin
     end;
 end;
 
+class procedure TStrHnd.ResetLength(var S : WideString);
+var
+	 I : Integer;
+begin
+	 for I := 0 to Length(S) - 1 do begin
+		 if S[I + 1] = #0 then begin
+			 SetLength(S, I);
+			 Exit;
+		 end;
+	 end;
+end;
+
+class procedure TStrHnd.ResetLength(var S : ansistring);
+var
+	 I : Integer;
+begin
+	 for I := 0 to Length(S) - 1 do begin
+		 if S[I + 1] = #0 then begin
+			 SetLength(S, I);
+			 Exit;
+		 end;
+	 end;
+end;
+
+class procedure TStrHnd.ResetLength(var S : UnicodeString);
+var
+    I : Integer;
+begin
+    for I := 0 to Length(S) - 1 do begin
+        if S[I + 1] = #0 then begin
+            SetLength(S, I);
+            Exit;
+        end;
+    end;
+end;
+
 {--------------------------------------------------------------------------------------------------------------------------------}
 class function TStrHnd.StrToPChar(Str : string) : PChar;
 {{
@@ -532,7 +572,7 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-function TBufferedStringStream.ReadStringWord : AnsiString;
+function TBufferedStringStream.ReadStringWord : ansistring;
 {{
 Retorna a palavra imediatamente seguinte ao ponteiro interno.
 
@@ -541,7 +581,7 @@ AINDA A SER IMPLEMENTADO!!!
 var
     c : Ansichar;
 begin
-    Result := AnsiString(EmptyStr);
+    Result := ansistring(EmptyStr);
     repeat
         c      := ReadChar;
         Result := Result + c;
@@ -612,8 +652,7 @@ begin
         2 : begin
             Result := List.Strings[0] + Self.FFinalConnector + List.Strings[1];
         end;
-        else
-        begin    //3 ou mais
+        else begin    //3 ou mais
             Result := List.Strings[0] + Self.FInitialConnector;
             for c := 1 to List.Count - 2 do begin
                 Result := Result + List.Strings[c] + Self.FIntermediateConnector;
@@ -728,7 +767,7 @@ begin
     end;
 end;
 
-function TBufferedStringStream.ReadString(Len : Word) : AnsiString;
+function TBufferedStringStream.ReadString(Len : Word) : ansistring;
 {{
 Faz a leitura de uma cadeia aleatoria de Len caracteres.
 
@@ -782,7 +821,7 @@ begin
     end;
 end;
 
-function TBufferedStringStream.Search(const Str : AnsiString; SkipStr : boolean) : boolean;
+function TBufferedStringStream.Search(const Str : ansistring; SkipStr : boolean) : boolean;
 {{
 Realiza a busca de Str e caso encontre posiciona o cursor após a cadeia.
 Caso não encontre Str retorna falso e o cursor será posicionado no final do streamer/buffer.
@@ -799,7 +838,7 @@ begin
     end;
 end;
 
-function TBufferedStringStream.ReadLine : AnsiString;
+function TBufferedStringStream.ReadLine : ansistring;
 {{
 Retorna a cadeia que finaliza com a quebra de linha a partir do ponto corrente, avançando o cursor.
 
@@ -816,7 +855,7 @@ begin
     if (TokenSize <= 0) then begin
         raise Exception.Create('Quebra de linha nula');
     end;
-    Result := AnsiString(EmptyStr);
+    Result := ansistring(EmptyStr);
     FirstSearch : ;
     while (not Self.EoS) do begin
         TokenPos := SearchBuf(Self.FBuffer, Self.FBufferSize, Self.FOffSet, 0, Self.FEol[1], [soMatchCase, soDown]);

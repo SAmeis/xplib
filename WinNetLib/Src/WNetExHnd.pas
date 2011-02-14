@@ -19,27 +19,69 @@ interface
 
 
 uses
-    Windows, SysUtils, LmErr, LmApibuf, LmRemUtl;
+    Windows, SysUtils, LmErr, LmApibuf, LmRemUtl, StrHnd;
 
+function GetDomainFromComputerName(const ComputerName : string) : string;
 //Retorna o nome do domínio da estação passada, usando-se nil a em execução
-function GetWorkstationDomain(const WksName : string) : string;
+function GetWorkstationLocalGroup(const WksName : string) : string;
 //Pega a data/hora de um computador remoto 0 -> sucesso
 function GetRemoteDateTime(const UNCName : string; var RemoteTime : TDateTime) : Integer;
 //Envia mensagem popup para a rede
 function SendNetMessage(const Targ, Msg : string;
-    const SenderIdentification : string = ''; const FromComputer : string = ''; const ServerSender : string = '') : DWORD;
+	 const SenderIdentification : string = ''; const FromComputer : string = ''; const ServerSender : string = '') : DWORD;
 
 function SendNetMessageWin32(const ATargetIdentification, AMsg : string; const ASenderIdentification : string = '') : DWORD;
 function SendNetMessageWin9x(const TargetIdentification, Msg : string; const SenderIdentification : string = '';
-    const TargetUser : string = '') : DWORD;
+	 const TargetUser : string = '') : DWORD;
 
 implementation
 
 uses
 	 Str_Null, DateOper, Dialogs, LMMsg, WinNetHnd, jwaWindows;
 
-//Retorna o nome do domínio da estação passada, passando vazio usa-se a estaçao em execução
-function GetWorkstationDomain(const WksName : string) : string;
+
+function GetDomainFromComputerName(const ComputerName : string) : string;
+///
+/// Retorna o dominio ao qual o computador pertence
+/// NOTAS: Internamente a API exige que algum controlador de domínio esteja acessivel
+/// '.' Representa o computador local e tem como retorno 'BUILTIN'
+var
+	 Count1, Count2 : DWORD;
+	 Sd :   PSID; // PSecurityDescriptor; // FPC requires PSID
+	 Snu :  SID_Name_Use;
+	 Name : string;
+begin
+	 if ComputerName = EmptyStr then begin
+		 Name := WinNetHnd.GetComputerName();
+	 end else begin
+		 Name := ComputerName;
+	 end;
+	 if ( Name <> '.' ) and ( not TStrHnd.endsWith(Name, '$') ) then begin
+		 Name := Name + '$';
+	 end;
+	 Count1 := 0;
+	 Count2 := 0;
+	 Sd     := nil;
+	 Snu    := SIDTypeUser;
+	 Result := '';
+	 LookUpAccountName(nil, PChar(Name), Sd, Count1, PChar(Result), Count2, Snu);
+	 //set buffer size to Count2 + 2 characters for safety
+	 SetLength(Result, Count2 + 1);
+	 Sd := AllocMem(Count1);
+	 try
+		 if LookUpAccountName(nil, PChar(Name), Sd, Count1, PChar(Result), Count2, Snu) then begin
+			 TStrHnd.ResetLength(Result);
+		 end else begin
+			 Result := EmptyStr;
+		 end;
+	 finally
+		 FreeMem(Sd);
+	 end;
+end;
+
+function GetWorkstationLocalGroup(const WksName : string) : string;
+///Retorna o nome do domínio ou grupo de trabalho da estação passada, passando vazio usa-se a estaçao em execução
+///Esta rotina não diferencia domínio de grupo de trabalho e isso pode influenciar na lógica do programa chamador
 var
 	 Info : jwaWindows.PWKSTA_INFO_100;
 	 NetworkAddress : String;
