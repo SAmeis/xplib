@@ -1,0 +1,43 @@
+{$I WMILib.inc }
+
+package WMILib;
+
+{$R *.res}
+{$R 'WMILib.dcr'}
+{$ALIGN 8}
+{$ASSERTIONS OFF}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS OFF}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'AAA - WMI-Lib - (Super Library)'}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  vcl;
+
+contains
+  ActiveDs_TLB in 'ActiveDs_TLB.pas',
+  WbemScripting_TLB in 'WbemScripting_TLB.pas',
+  WMICNTLLib_TLB in 'WMICNTLLib_TLB.pas',
+  WMIEXTENSIONLib_TLB in 'WMIEXTENSIONLib_TLB.pas',
+  wmiUtils in 'wmiUtils.pas';
+
+end.
+

@@ -1,0 +1,23 @@
+
+
+Please note that there is a known memory leak issue caused by MS. Read this KB
+article: KB893317
+
+If you have no idea what WMI is, then you should start reading about it :)
+Start here(http://msdn.microsoft.com/library/en-us/wmisdk/wmi/wmi_start_page.asp)
+
+
+First, install WMI if you don't have it installed.
+Windows 2000 and older come with WMI installed by default.
+For the rest (win 9x and NT) you will have to download and install the WMI Core:
+A list of downloads can be found here(http://www.microsoft.com/downloads/results.aspx?displaylang=en&freeText=wmi+core).
+In any case, if the links above will become invalid/broken, you can find the downloads, information on Microsoft site, on MSDN.
+
+To set up delphi, you need to start the Delphi IDE and import the following type libraries:
+
+
+   1. Active DS Type Library (Version 1.0)
+   2. Microsoft WMI Scripting v1.1 Library (Version 1.1)
+
+
+Note: the versions are obolete since they will differ from system to system depending on the WMI version installed and so on, but you get the idea.
