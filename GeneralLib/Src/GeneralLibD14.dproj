@@ -57,6 +57,7 @@
 			<DCCReference Include="rtl.dcp"/>
 			<DCCReference Include="vcl.dcp"/>
 			<DCCReference Include="dbrtl.dcp"/>
+			<DCCReference Include="DesignIDE.dcp"/>
 			<DCCReference Include="bdertl.dcp"/>
 			<DCCReference Include="vclx.dcp"/>
 			<DCCReference Include="vclimg.dcp"/>
@@ -66,6 +67,10 @@
 			<DCCReference Include="Barcode.pas"/>
 			<DCCReference Include="qrBarcode.pas"/>
 			<DCCReference Include="bcchksum.pas"/>
+			<DCCReference Include="ujetanimbutton.pas"/>
+			<DCCReference Include="ujetbutton.pas"/>
+			<DCCReference Include="ujetcheckbox.pas"/>
+			<DCCReference Include="uJetButtonDesign.pas"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>

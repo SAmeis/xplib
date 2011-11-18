@@ -7,6 +7,13 @@
 {$ENDIF}
 
 
+///
+//History: 20111101 - Roger
+//1 - Formatação de codigo parcialmente realizada
+//2 - Removidas queixas menores do compilador
+///
+
+
 
 (********************************************************************************)
 (* QuickReport Angled Labels                                                    *)
@@ -190,7 +197,7 @@ type
     procedure Loaded; override;
     procedure Prepare; override;
     procedure ReadValues(pReader: TReader); virtual;
-    procedure Unprepare; override;
+    procedure UnPrepare; override;
     procedure WriteValues(pWriter: TWriter); virtual;
 {$ENDIF} {DEF QR1X}
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
@@ -855,29 +862,23 @@ var
   aComponent: TComponent;
 begin
   inherited Loaded;
-  if FDataSourceName <> '' then
-  begin
+  if FDataSourceName <> '' then   begin
     aComponent := Owner.FindComponent(FDataSourceName);
     if (aComponent <> nil) and (aComponent is TDataSource) then
-      DataSet:=TDataSource(aComponent).DataSet
-    ;
+      DataSet:=TDataSource(aComponent).DataSet;
   end;
 end;
 
 procedure TQRAngledDBText.Prepare;
 begin
   inherited Prepare;
-  if Assigned(FDataSet) then
-  begin
+  if Assigned(FDataSet) then begin
     FField := FDataSet.FindField(FDataField);
-    if FField <> nil then
-    begin
+    if FField <> nil then  begin
       FFieldNumber := FField.Index;
       FFieldOK := True;
     end;
-  end
-  else
-  begin
+  end  else   begin
     FField := nil;
     FFieldOK := False;
   end;

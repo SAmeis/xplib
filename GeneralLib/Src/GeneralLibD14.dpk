@@ -32,6 +32,7 @@ requires
   rtl,
   vcl,
   dbrtl,
+  DesignIDE,
   bdertl,
   vclx,
   vclimg,
@@ -42,6 +43,10 @@ contains
   QrAngLbl in 'QrAngLbl.pas',
   Barcode in 'Barcode.pas',
   qrBarcode in 'qrBarcode.pas',
-  bcchksum in 'bcchksum.pas';
+  bcchksum in 'bcchksum.pas',
+  ujetanimbutton in 'ujetanimbutton.pas',
+  ujetbutton in 'ujetbutton.pas',
+  ujetcheckbox in 'ujetcheckbox.pas',
+  uJetButtonDesign in 'uJetButtonDesign.pas';
 
 end.
