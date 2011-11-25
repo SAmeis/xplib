@@ -36,6 +36,7 @@ requires
   bdertl,
   vclx,
   vclimg,
+  designide,
   QR5RunD2010;
 
 contains
@@ -43,10 +44,13 @@ contains
   QrAngLbl in 'QrAngLbl.pas',
   Barcode in 'Barcode.pas',
   qrBarcode in 'qrBarcode.pas',
-  bcchksum in 'bcchksum.pas',
+<<<<<<< .mine  bcchksum in 'bcchksum.pas',
+  UPlasmaEd in 'UPlasmaEd.pas' {MaskForm},
+  UPlasmaForm in 'UPlasmaForm.pas';
+=======  bcchksum in 'bcchksum.pas',
   ujetanimbutton in 'ujetanimbutton.pas',
   ujetbutton in 'ujetbutton.pas',
   ujetcheckbox in 'ujetcheckbox.pas',
   uJetButtonDesign in 'uJetButtonDesign.pas';
-
+>>>>>>> .theirs
 end.
