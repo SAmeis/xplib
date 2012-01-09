@@ -6,6 +6,7 @@
 //History
 //Revision - 20111124 - roger
 //Importada para pacote, reformatda e inseridas as diretivas de compilação apropriadas
+//Removida toda a parte de suporte para Design de modo a torna o pacote compilavel diretamente
 
 {TODO -oroger -clib : Continuar com a profilaxia desta unit/componente, remover warnings, etc}
 
@@ -100,10 +101,9 @@ interface
 
 uses
     Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-    ExtCtrls, Buttons, StdCtrls, UPLasmaEd;
+    ExtCtrls, Buttons, StdCtrls, UPlasmaRegion;
 
 type
-
     TPlasmaForm = class(TImage)
     private
         FMoveable : boolean;
@@ -129,12 +129,9 @@ type
         property Moveable : boolean read FMoveable write FMoveable;
     end;
 
-procedure Register;
 
 implementation
 
-uses
-	DesignIntf;
 
 {==============================================================================}
 constructor TPlasmaForm.Create(Aowner : TComponent);
@@ -261,11 +258,6 @@ begin
 end;
 
 {==============================================================================}
-procedure Register;
-begin
-    RegisterComponents('Justus', [TPlasmaForm]);
-    RegisterPropertyEditor(TypeInfo(TPlasmaRegion), nil, '', TPlasmaMaskProperty);
-end;
-
+//Parte removida para GeneralLibDsgSupport
 {==============================================================================}
 end.

@@ -7,20 +7,14 @@ interface
 
 uses
     SysUtils, WinTypes, WinProcs, Messages, Classes, Graphics, Controls,
-    Forms, Buttons, DesignConst, DesignIntf, DesignEditors, StdCtrls;
+    Forms, Buttons, StdCtrls;
     {TODO -oroge -cdoc : Inserir alteração de pacote de design para esta unit}
 
 type
-    TAboutJetCheckbox = class(TPropertyEditor)
-    public
-        procedure Edit; override;
-        function GetAttributes : TPropertyAttributes; override;
-        function GetValue : string; override;
-    end;
 
     TJetCheckbox = class(TGraphicControl)
     private
-        AboutBox :           TAboutJetCheckbox;
+        //AboutBox :           TAboutJetCheckbox; removido por donzelice
         FAutoSize :          boolean;
         FBitmapUnchecked :   TBitmap;
         FBitmapChecked :     TBitmap;
@@ -69,7 +63,7 @@ type
         destructor Destroy; override;
         procedure SetBounds(ALeft, ATop, AWidth, AHeight : Integer); override;
     published
-        property About : TAboutJetCheckbox read AboutBox write AboutBox;
+        //property About : TAboutJetCheckbox read AboutBox write AboutBox;
         property Checked : boolean read FChecked write SetChecked;
         property TransparentColor : TColor read FTransparentColor write FTransparentColor;
         property BitmapUnchecked : TBitmap read FBitmapUnchecked write SetBitmapUnchecked;
@@ -87,8 +81,6 @@ type
         property OnMouseMove;
         property OnMouseUp;
     end;
-
-procedure Register;
 
 implementation
 
@@ -113,23 +105,6 @@ begin
     except
         TmpBitmap.Free;
     end;
-end;
-////////////////////////////////////////////////////////////////////////////////////////
-procedure TAboutJetCheckbox.Edit;
-begin
-    Application.MessageBox('TJetCheckbox v1.00 for Delphi32. (C) 1999 Jimmy Theo Weku.' + #10#13 +
-        'for more information about how to use this component please read README.TXT that included with this component',
-        'About TJetCheckbox Component', MB_OK + MB_ICONINFORMATION);
-end;
-
-function TAboutJetCheckbox.GetAttributes : TPropertyAttributes;
-begin
-    Result := [paMultiSelect, paDialog, paReadOnly];
-end;
-
-function TAboutJetCheckbox.GetValue : string;
-begin
-    Result := '(About)';
 end;
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -556,12 +531,6 @@ begin
         end;
         Invalidate;
     end;
-end;
-
-procedure Register;
-begin
-    RegisterComponents('Jet', [TJetCheckbox]);
-    RegisterPropertyEditor(TypeInfo(TAboutJetCheckbox), TJetCheckbox, 'ABOUT', TAboutJetCheckbox);
 end;
 
 end.

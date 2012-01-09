@@ -66,15 +66,17 @@
 			<DCCReference Include="QrAngLbl.pas"/>
 			<DCCReference Include="Barcode.pas"/>
 			<DCCReference Include="qrBarcode.pas"/>
-			<DCCReference Include="bcchksum.pas"/>
 			<DCCReference Include="UPlasmaEd.pas">
 				<Form>MaskForm</Form>
 			</DCCReference>
 			<DCCReference Include="UPlasmaForm.pas"/>
+			<DCCReference Include="bcchksum.pas"/>
 			<DCCReference Include="ujetanimbutton.pas"/>
 			<DCCReference Include="ujetbutton.pas"/>
 			<DCCReference Include="ujetcheckbox.pas"/>
 			<DCCReference Include="uJetButtonDesign.pas"/>
+			<DCCReference Include="GeneralLibDsgSupport.pas"/>
+			<DCCReference Include="UPlasmaRegion.pas"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>
@@ -129,6 +131,7 @@
 						<VersionInfoKeys Name="Comments">Rogerlais Andrade</VersionInfoKeys>
 					</VersionInfoKeys>
 				</Delphi.Personality>
+				<ModelSupport>False</ModelSupport>
 			</BorlandProject>
 			<ProjectFileVersion>12</ProjectFileVersion>
 		</ProjectExtensions>
