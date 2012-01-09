@@ -66,8 +66,14 @@ type
 
 implementation
 
+{$IF CompilerVersion >= 21.00}
 uses
-    SysUtils, AnsiStrings, Controls;
+	 SysUtils, AnsiStrings, Controls;
+{$ELSE}
+uses
+	 SysUtils, Controls;
+{$IFEND}
+
 
 const
     _ENDENT_ = #9; //#9;
@@ -232,14 +238,23 @@ function TIOObj.Contains(P : PPropInfo) : boolean;
     ///    Retorna true para o caso do objeto possuir uma propriedade de tipo e nome igual a informada
     ///  </summary>
     /// Revision - 20110103 - Roger
-    /// para suporte a unicode inserida unit especifica
-var
-    I : Integer;
+	 /// para suporte a unicode inserida unit especifica
+
+function LSRCompNames( idx : Integer ) : Boolean;
 begin
-    for I := 0 to FCount - 1 do begin
-        if (Self.FList^[i]^.PropType = P^.PropType) and (AnsiStrings.CompareText(Self.FList^[i]^.Name, P^.Name) = 0) then begin
-            Result := True;
-            Exit;
+	{$IF CompilerVersion >= 21.00}
+	Result:=(AnsiStrings.CompareText(Self.FList^[idx]^.Name, P^.Name) = 0);
+	{$ELSE}
+	Result:=(CompareText(Self.FList^[idx]^.Name, P^.Name) = 0);
+	{$IFEND}
+end;
+var
+	 I : Integer;
+begin
+	 for I := 0 to FCount - 1 do begin
+		 if ( ( Self.FList^[i]^.PropType = P^.PropType) and LSRCompNames(i) )  then begin
+			 Result := True;
+			 Exit;
         end;
     end;
     Result := False;

@@ -30,20 +30,20 @@ type
         FValue : variant;
         function GetAsBoolean : boolean;
         procedure SetAsBoolean(const AValue : boolean);
-		 function GetAsDateTime : TDateTime;
-		 procedure SetAsDateTime(const AValue : TDateTime);
-		 function GetAsFloat : double;
-		 procedure SetAsFloat(const AValue : double);
-		 function GetAsInteger : Integer;
-		 procedure SetAsInteger(const AValue : Integer);
-		 function GetAsString : string;
-		 procedure SetAsString(const AValue : string);
-		 function GetValue : variant;
-		 procedure SetValue(const AValue : variant);
-	 public
-		 constructor Create; overload;
-		 constructor Create(AValue : variant); overload;
-		 property AsBoolean : boolean read GetAsBoolean write SetAsBoolean;
+        function GetAsDateTime : TDateTime;
+        procedure SetAsDateTime(const AValue : TDateTime);
+        function GetAsFloat : double;
+        procedure SetAsFloat(const AValue : double);
+        function GetAsInteger : Integer;
+        procedure SetAsInteger(const AValue : Integer);
+        function GetAsString : string;
+        procedure SetAsString(const AValue : string);
+        function GetValue : variant;
+        procedure SetValue(const AValue : variant);
+    public
+        constructor Create; overload;
+        constructor Create(AValue : variant); overload;
+        property AsBoolean : boolean read GetAsBoolean write SetAsBoolean;
         property AsDateTime : TDateTime read GetAsDateTime write SetAsDateTime;
         property AsFloat : double read GetAsFloat write SetAsFloat;
         property AsInteger : Integer read GetAsInteger write SetAsInteger;
@@ -72,7 +72,7 @@ type
         FDefaultValue : TDefaultSettingValue;
         FKeyPrefix :    string;
         procedure SetKeyPrefix(const Value : string);
-        procedure SetAutoCreate(const Value: boolean); virtual;
+        procedure SetAutoCreate(const Value : boolean); virtual;
     protected
         FRefCount : Integer;
         function QueryInterface(const IID : TGUID; out Obj) : HResult; stdcall;
@@ -1956,8 +1956,8 @@ procedure TDefaultSettingValue.SetAsBoolean(const AValue : boolean);
 Escrita do valor como boolean. Seta flag de uso para False.
 }
 begin
-	 Self.FUsed  := False;
-	 Self.FValue := AValue;
+    Self.FUsed  := False;
+    Self.FValue := AValue;
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
@@ -1979,8 +1979,8 @@ procedure TDefaultSettingValue.SetAsDateTime(const AValue : TDateTime);
 Escrita do valor como DateTime. Seta flag de uso para False.
 }
 begin
-	 Self.FUsed  := False;
-	 Self.FValue := AValue;
+    Self.FUsed  := False;
+    Self.FValue := AValue;
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
@@ -2002,7 +2002,7 @@ procedure TDefaultSettingValue.SetAsFloat(const AValue : double);
 Escrita do valor como Float. Seta flag de uso para False.
 }
 begin
-	 Self.FUsed  := False;
+    Self.FUsed  := False;
     Self.FValue := AValue;
 end;
 
@@ -2025,8 +2025,8 @@ procedure TDefaultSettingValue.SetAsInteger(const AValue : Integer);
 Escrita do valor como integer. Seta flag de uso para False.
 }
 begin
-	 Self.FUsed  := False;
-	 Self.FValue := AValue;
+    Self.FUsed  := False;
+    Self.FValue := AValue;
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
@@ -2037,10 +2037,16 @@ Revision - 20101130 - roger
 Portado para Unicode, ajustando de Self.FValue := 0; para Self.FValue := '';
 }
 begin
-	 //#if (not Variants.VarIsType(Self.FValue, varString  )) then begin
-	 if (not Variants.VarIsType(Self.FValue, [varString, varUString] )) then begin
+    //#if (not Variants.VarIsType(Self.FValue, varString  )) then begin
+	 {$IF CompilerVersion >= 21.00}
+	 if (not Variants.VarIsType(Self.FValue, [varString, varUString])) then begin
 		 Self.FValue := '';
 	 end;
+	 {$ELSE}
+	 if (not Variants.VarIsType(Self.FValue, [varString])) then begin
+		 Self.FValue := '';
+	 end;
+	 {$IFEND}
     Result := string(Self.FValue);
     FUsed  := True;
 end;
@@ -2051,7 +2057,7 @@ procedure TDefaultSettingValue.SetAsString(const AValue : string);
 Escrita do valor como string. Seta flag de uso para False.
 }
 begin
-	 Self.FUsed  := False;
+    Self.FUsed  := False;
     Self.FValue := AValue;
 end;
 
@@ -2071,8 +2077,8 @@ procedure TDefaultSettingValue.SetValue(const AValue : variant);
 Escrita do valor como Variant. Seta flag de uso para False.
 }
 begin
-	 Self.FUsed  := False;
-	 Self.FValue := AValue;
+    Self.FUsed  := False;
+    Self.FValue := AValue;
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
@@ -2092,8 +2098,8 @@ constructor TDefaultSettingValue.Create(AValue : variant);
 Construtor de TDefaultSettingValue. Iniciar atributos Used = False e Value com o valor passado.
 }
 begin
-	 Create();
-	 Self.FValue := AValue;
+    Create();
+    Self.FValue := AValue;
 end;
 
 
@@ -2156,9 +2162,13 @@ begin
                             DefVal.Value := 0;
                         end;
                         //varWord64   = $0015; { vt_ui8         21 } {UNSUPPORTED as of v6.x code base}
-                        {  if adding new items, update Variants' varLast, BaseTypeMap and OpTypeMap }
+						 {  if adding new items, update Variants' varLast, BaseTypeMap and OpTypeMap }
+						 {$IF CompilerVersion >= 21.00}
 						 varStrArg, varString, varUString : begin
-                            DefVal.Value := EmptyStr;
+						 {$ELSE}
+						 varStrArg, varString : begin
+						 {$IFEND}
+							 DefVal.Value := EmptyStr;
                         end;
                         varAny : begin
                             DefVal.Value := Null;
@@ -2382,7 +2392,7 @@ var
     Child : IXMLNode;
 begin
     SubKeys.Clear;
-    Node := Self.OpenNode(Self.FKeyPrefix + Name, Self.AutoCreate );
+    Node := Self.OpenNode(Self.FKeyPrefix + Name, Self.AutoCreate);
     if Node <> nil then begin
         if (Node.HasChildNodes) and (not Node.IsTextElement) then begin
             SubKeys.BeginUpdate;
@@ -2620,7 +2630,7 @@ begin
         content := AnsiStrAlloc(contentSize);
         try
             BinToHex(Buffer, content, contentSize);  //Representacao Hexa do fluxo de bytes
-            Self.WriteString(Self.FKeyPrefix + Name, String(content));
+            Self.WriteString(Self.FKeyPrefix + Name, string(content));
         finally
             StrDispose(content);
         end;
@@ -2681,7 +2691,7 @@ Name : Nome da entrada a ser escrita.
 Value : Valor do string a ser escrita.
 }
 begin
-    SetAttributeValue(TFileHnd.ConcatPath([ Self.FKeyPrefix ,Name]), Value);
+    SetAttributeValue(TFileHnd.ConcatPath([Self.FKeyPrefix, Name]), Value);
 end;
 
 
@@ -2726,7 +2736,7 @@ begin
 end;
 
 
-procedure TBaseSettings.SetAutoCreate(const Value: boolean);
+procedure TBaseSettings.SetAutoCreate(const Value : boolean);
 {{
 TBaseSettings.SetAutoCreate
 Ajusta atributo de auto criação de chaves/valores
@@ -2734,7 +2744,7 @@ Ajusta atributo de auto criação de chaves/valores
 Revision: 11/5/2009 - roger 
 }
 begin
-     FAutoCreate := Value;
+    FAutoCreate := Value;
 end;
 
 initialization

@@ -11,7 +11,7 @@ unit StrHnd;
 interface
 
 uses
-    Classes, SysUtils;
+    Classes, SysUtils, XPTypes;
 
 
 const
@@ -48,7 +48,10 @@ type
 
 		 class procedure ResetLength(var S : WideString); overload;
 		 class procedure ResetLength(var S : ansistring); overload;
+		 {$IF CompilerVersion >= 21.00}
 		 class procedure ResetLength(var S : UnicodeString); overload;
+		 {$IFEND}
+
 
         class function startsWith(const str, prefix : string) : boolean;
         class function StrPosChar(const S : string; const CharSet : TSysCharSet; StartPos : cardinal = 0) : Integer;
@@ -437,17 +440,19 @@ begin
 	 end;
 end;
 
+{$IF CompilerVersion >= 21.00}
 class procedure TStrHnd.ResetLength(var S : UnicodeString);
 var
-    I : Integer;
+	 I : Integer;
 begin
-    for I := 0 to Length(S) - 1 do begin
-        if S[I + 1] = #0 then begin
-            SetLength(S, I);
-            Exit;
-        end;
-    end;
+	 for I := 0 to Length(S) - 1 do begin
+		 if S[I + 1] = #0 then begin
+			 SetLength(S, I);
+			 Exit;
+		 end;
+	 end;
 end;
+{$IFEND}
 
 {--------------------------------------------------------------------------------------------------------------------------------}
 class function TStrHnd.StrToPChar(Str : string) : PChar;

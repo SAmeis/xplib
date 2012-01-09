@@ -76,8 +76,10 @@ type
 
 implementation
 
+{$IF CompilerVersion >= 21.00}
 uses
-    AnsiStrings;
+	 AnsiStrings;
+{$IFEND}
 
  //----------------------------------------------------------------------------------------------------------------------
  //                            ***** ROTINAS AUXILIARES  *******
@@ -252,15 +254,19 @@ begin
     Result := Self.ToPrnLn(Format(pFrmStr, pArgs));
 end;
 
-function TPrnText.ToPrnFrmC(const pFrmStr : ansistring; const pArgs : array of const) : boolean;
-    //----------------------------------------------------------------------------------------------------------------------
+function TPrnText.ToPrnFrmC(const pFrmStr : AnsiString; const pArgs : array of const) : boolean;
+	 //----------------------------------------------------------------------------------------------------------------------
 {{
 Imprime string para a impressora direcionada formatando antes seu conteudo.
 
 Revision: 1/8/2005
 }
 begin
-    Result := Self.ToPrnLn(string(DosString(AnsiStrings.Format(pFrmStr, pArgs))));
+ {$IF CompilerVersion >= 21.00}
+	 Result := Self.ToPrnLn(string(DosString(AnsiStrings.Format(pFrmStr, pArgs))));
+ {$ELSE}
+	Result := Self.ToPrnLn(string(DosString(Format(pFrmStr, pArgs))));
+ {$IFEND}
 end;
 
 { TPrnText }
@@ -299,13 +305,21 @@ begin
     end else begin
         raise Exception.CreateFmt('A impressora %s nгo existe! ', [pPrnName]);
     end;
-    FPrnDestiny := pdSpool;
-    if (AnsiStrings.Trim(pDataType) <> AnsiString(EmptyStr)) then begin
-        Self.FDataType := AnsiStrings.Trim(pDataType);
-    end else begin
-        Self.FDataType := 'RAW';
-    end;
-    FPrnFile     := nil;
+	 FPrnDestiny := pdSpool;
+	 {$IF CompilerVersion >= 21.00}
+	 if (AnsiStrings.Trim(pDataType) <> AnsiString(EmptyStr)) then begin
+		 Self.FDataType := AnsiStrings.Trim(pDataType);
+	 end else begin
+		 Self.FDataType := 'RAW';
+	 end;
+	 {$ELSE}
+	 if (Trim(pDataType) <> AnsiString(EmptyStr)) then begin
+		 Self.FDataType := Trim(pDataType);
+	 end else begin
+		 Self.FDataType := 'RAW';
+	 end;
+	 {$IFEND}
+	 FPrnFile     := nil;
     FPrnFilePath := EmptyStr;
 end;
 
@@ -477,8 +491,13 @@ begin
         AnsiToOem(PAnsiChar(AnsiStr), PAnsiChar(Result));
     end;
     //comantario original do autor russo
-    //OemToAnsi преобразует 15->253, а AnsiToOem 253->15 не делает, поэтому теряется код сжатия (замечено на русской Windows 95)
-    Result := AnsiStrings.ReplaceStr(Result, chr(253), chr(15));
+	 //OemToAnsi преобразует 15->253, а AnsiToOem 253->15 не делает, поэтому теряется код сжатия (замечено на русской Windows 95)
+	 {$IF CompilerVersion >= 21.00}
+	 Result := AnsiStrings.ReplaceStr(Result, chr(253), chr(15));
+	 {$ELSE}
+    Result := ReplaceStr(Result, chr(253), chr(15));
+	 {$IFEND}
+
 end;
 
 class function TPrnText.WinString(const str : ansistring) : ansistring;

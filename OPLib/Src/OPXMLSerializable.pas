@@ -7,8 +7,13 @@ unit OPXMLSerializable;
 
 interface
 
+{$IF CompilerVersion >= 21.00}
 uses
 	 Classes, SysUtils, TypInfo, XMLIntf, Rtti, Generics.Collections;
+{$ELSE}
+uses
+	 Classes, SysUtils, TypInfo, XMLIntf;
+{$IFEND}
 
 
 type
@@ -19,22 +24,24 @@ type
 	 end;
 
 	 {TODO -oroger -clib : implementar classe para a lista  }
+	 {$IF CompilerVersion >= 21.00}
 	 TXMLSerializableList = class(TObjectList<TObject>, IXMLSerializable)
-    private
-        FRefCount : Integer;
-    protected
-        function QueryInterface(const IID : TGUID; out Obj) : HResult; stdcall;
-        function _AddRef : Integer; stdcall;
-        function _Release : Integer; stdcall;
-    public
-        procedure SaveTo(Node : IXMLNode);
-        procedure LoadFrom(Node : IXMLNode; CreateDefault : boolean);
-    end;
-
-    TXMLSerializable = class(TPersistent, IXMLSerializable)
 	 private
-        FRefCount : Integer;
-        procedure SaveAttribute(PInfo : PPropInfo; Node : IXMLNode);
+		 FRefCount : Integer;
+	 protected
+		 function QueryInterface(const IID : TGUID; out Obj) : HResult; stdcall;
+		 function _AddRef : Integer; stdcall;
+		 function _Release : Integer; stdcall;
+	 public
+		 procedure SaveTo(Node : IXMLNode);
+		 procedure LoadFrom(Node : IXMLNode; CreateDefault : boolean);
+	 end;
+	 {$IFEND}
+
+	 TXMLSerializable = class(TPersistent, IXMLSerializable)
+	 private
+		 FRefCount : Integer;
+		 procedure SaveAttribute(PInfo : PPropInfo; Node : IXMLNode);
         procedure SaveSubInstance(PInfo : PPropInfo; ParentNode : IXMLNode);
         function GetPropType(PInfo : PPropInfo) : PTypeInfo;
         function ValPropInteger(PInfo : PPropInfo) : string;
@@ -281,8 +288,8 @@ begin
     end;
 end;
 
+{$IF CompilerVersion >= 21.00}
 { TXMLSerializableList }
-
 procedure TXMLSerializableList.LoadFrom(Node : IXMLNode; CreateDefault : boolean);
 begin
 
@@ -327,15 +334,17 @@ end;
 
 function TXMLSerializableList._AddRef : Integer;
 begin
-    Result := InterlockedIncrement(Self.FRefCount);
+	 Result := InterlockedIncrement(Self.FRefCount);
 end;
 
 function TXMLSerializableList._Release : Integer;
 begin
-    Result := InterlockedDecrement(Self.FRefCount);
-    if Result < 0 then begin
-        Destroy;
-    end;
+	 Result := InterlockedDecrement(Self.FRefCount);
+	 if Result < 0 then begin
+		 Destroy;
+	 end;
 end;
+
+{$IFEND}
 
 end.
