@@ -31,7 +31,7 @@ type
 	 UnicodeString = WideString;
 	{$ENDIF}
 
-
+   TAnsiCharArray = array of AnsiChar;
 
 	PLongWordArray = ^TLongWordArray;
 	TLongWordArray = array[0..8192] of LongWord; //Totaliza 32KB

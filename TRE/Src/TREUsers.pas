@@ -1,5 +1,5 @@
 {$IFDEF TREUsers}
-	 {$DEFINE DEBUG_UNIT}
+     {$DEFINE DEBUG_UNIT}
 {$ENDIF}
 {$I TRELib.inc}
 
@@ -8,44 +8,59 @@ unit TREUsers;
 interface
 
 uses
-	SysUtils, Windows, Classes, LmAccess, LmCons, WinNetHnd;
+    SysUtils, Windows, Classes, LmAccess, LmCons, WinNetHnd;
+
+
+const
+    PWD_SEED_2010_SUPORTE    = 'admin<1>str<2>d<3>';
+    PWD_SEED_2010_10191      = 'util<1>z<2>d<3>';
+    PWD_SEED_2010_SUPERVISOR = 'autor<1>z<2>d<3>';
+    PWD_SEED_2010_OFICIAL    = 'ass<1>n<2>d<3>';
+    PWD_SEED_2010_INSTALADOR = 's<1>inst<2>l<3>';
+
+    //Sementes atuais
+    PWD_SEED_CURRENT_SUPORTE    = PWD_SEED_2010_SUPORTE;
+    PWD_SEED_CURRENT_10191      = PWD_SEED_2010_10191;
+    PWD_SEED_CURRENT_SUPERVISOR = PWD_SEED_2010_SUPERVISOR;
+    PWD_SEED_CURRENT_OFICIAL    = PWD_SEED_2010_OFICIAL;
+    PWD_SEED_CURRENT_INSTALADOR = PWD_SEED_2010_INSTALADOR;
 
 type
-	///Indentifica o tipo de conta em relação ao escopo de utilização
-	/// invalido - indefinido
-	/// usZone - titulo ordinário(exclui contas de suporte 10191, por exemplo)
-   /// usSupport - contas do sis ou privativas do suporte TRE-PB(vncacesso por exemplo)
-	 TUserScope = (usInvalid, usZone, usSupport);
+    ///Indentifica o tipo de conta em relação ao escopo de utilização
+    /// invalido - indefinido
+    /// usZone - titulo ordinário(exclui contas de suporte 10191, por exemplo)
+    /// usSupport - contas do sis ou privativas do suporte TRE-PB(vncacesso por exemplo)
+    TUserScope = (usInvalid, usZone, usSupport);
 
-	 TTREZEUser = class
-	 private
-		 FUserName : string;
-		 FPassword : string;
-		 FChecked :  boolean;
-		 FScope :    TUserScope;
-	 public
-		 constructor Create(const AName, APassword : string); virtual;
-		 /// <summary>
-		 ///  traduz a senha para a forma calculada
-		 /// </summary>
-		 /// <param name="Zone">Identificador da zona</param>
-		 /// <returns>senha calculada deste usuário</returns>
-		 function TranslatedPwd(Zone : Integer) : string;
-		 property UserName : string read FUserName;
-		 property Password : string read FPassword write FPassword;
-		 property Checked : boolean read FChecked write FChecked;
-		 property Scope : TUserScope read FScope write FScope;
-		 /// <summary>
-		 /// Troca a senha da conta deste usuário de zona no computador local
-		 /// </summary>
-		 /// <returns>Código de erro da operação</returns>
-		 function SetPassword(Zone : Integer) : NET_API_STATUS;
-	 end;
+    TTREZEUser = class
+    private
+        FUserName : string;
+        FPassword : string;
+        FChecked :  boolean;
+        FScope :    TUserScope;
+    public
+        constructor Create(const AName, APassword : string); virtual;
+        /// <summary>
+        ///  traduz a senha para a forma calculada
+        /// </summary>
+        /// <param name="Zone">Identificador da zona</param>
+        /// <returns>senha calculada deste usuário</returns>
+        function TranslatedPwd(Zone : Integer) : string;
+        property UserName : string read FUserName;
+        property Password : string read FPassword write FPassword;
+        property Checked : boolean read FChecked write FChecked;
+        property Scope : TUserScope read FScope write FScope;
+        /// <summary>
+        /// Troca a senha da conta deste usuário de zona no computador local
+        /// </summary>
+        /// <returns>Código de erro da operação</returns>
+        function SetPassword(Zone : Integer) : NET_API_STATUS;
+    end;
 
 implementation
 
 uses
-  Str_pas, StrHnd, TREUtils, WinReg32, JclWin32;
+    Str_pas, StrHnd, TREUtils, WinReg32, JclWin32;
 
 
 constructor TTREZEUser.Create(const AName, APassword : string);
@@ -67,26 +82,26 @@ begin
         PDomain   := StrNew(PWideChar(Copy(Self.UserName, 1, tokenIndex - 1)));
         PUsername := StrNew(PWideChar(Copy(Self.FUserName, tokenIndex + 1, Length(Self.UserName))));
     end else begin
-		 PDomain   := nil;
-		 PUsername := StrNew(PWideChar(Self.FUserName));
-	 end;
-	 userInfo.usri1003_password := StrNew(PWideChar(Self.TranslatedPwd(Zone)));
-	 try
-		 Result := NetUserSetInfo(PDomain, PUserName, 1003, PByte(@userInfo), @PError);
-	 finally
-		 StrDispose(PUsername);
-		 StrDispose(PDomain);
-		 StrDispose(userInfo.usri1003_password);
-	 end;
+        PDomain   := nil;
+        PUsername := StrNew(PWideChar(Self.FUserName));
+    end;
+    userInfo.usri1003_password := StrNew(PWideChar(Self.TranslatedPwd(Zone)));
+    try
+        Result := NetUserSetInfo(PDomain, PUserName, 1003, PByte(@userInfo), @PError);
+    finally
+        StrDispose(PUsername);
+        StrDispose(PDomain);
+        StrDispose(userInfo.usri1003_password);
+    end;
 end;
 
 function TTREZEUser.TranslatedPwd(Zone : Integer) : string;
 var
-	 chain : string;
-	 zv :    array[1..3] of char;
+    chain : string;
+    zv :    array[1..3] of char;
 begin
-	 chain  := Format('%3.3d', [Zone]);
-	 zv[1]  := Chr(Ord('i') + StrToInt(Copy(chain, 1, 1)));
+    chain  := Format('%3.3d', [Zone]);
+    zv[1]  := Chr(Ord('i') + StrToInt(Copy(chain, 1, 1)));
     zv[2]  := Chr(Ord('a') + StrToInt(Copy(chain, 2, 1)));
     zv[3]  := Chr(Ord('o') + StrToInt(Copy(chain, 3, 1)));
     Result := Self.Password;

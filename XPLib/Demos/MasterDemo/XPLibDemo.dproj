@@ -74,6 +74,8 @@
 			<DCCReference Include="AppLog\AppLogDemoForm.pas">
 				<Form>AppLogDemoFrm</Form>
 			</DCCReference>
+			<DCCReference Include="..\..\Src\XPTypes.pas"/>
+			<DCCReference Include="c:\program files\embarcadero\rad studio\7.0\source\Win32\rtl\common\Registry.pas"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>

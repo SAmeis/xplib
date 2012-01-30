@@ -12,7 +12,7 @@ Implements classes for Windows registry manipulation.
 interface
 
 uses
-    Windows, Registry, Classes, RegCLX;
+    Windows, Registry, Classes, RegCLX, XPTypes;
 
 type
     TRegistryNT = class(TCLXRegistry)
@@ -28,6 +28,7 @@ type
         procedure SetAccessMode(Value : REGSAM);
     protected
         function GetKey(const Key : string) : HKEY;
+        procedure PutDataXP(const Name : string; Buffer : Pointer; BufSize : Integer; RegDataEx : Integer);
     public
         constructor Create;
         function ClearValues : boolean;
@@ -50,7 +51,9 @@ type
         function ReadFullInteger(const FullKeyValueName : string; var Value : Integer) : boolean;
         function ReadFullMultiSZ(FullKeyValueName : string; var MultiSZValues : TStringList) : boolean;
         function ReadFullString(const FullKeyValueName : string; var Value : string) : boolean;
-        function ReadMultiSZ(ValueName : string; var MultiSZValues : TStringList) : boolean;
+        function ReadMultiSZ(const ValueName : string; var MultiSZValues : TStringList) : boolean;
+        function WriteMultiSZ(const ValueName : string; MultiSZValues : TStrings) : boolean;
+        procedure WriteFullMultiSZ(const FullKeyValueName : string; Value : TStringList; const CanCreate : boolean);
         procedure WriteFullBinaryData(const FullKeyValueName : string; var Buffer; BufSize : Integer);
         procedure WriteFullBool(const FullKeyValueName : string; const Value, CanCreate : boolean);
         procedure WriteFullDateTime(const FullKeyValueName : string; const Value : TDateTime; const CanCreate : boolean);
@@ -585,6 +588,17 @@ begin
     end;
 end;
 
+procedure TRegistryNT.PutDataXP(const Name : string; Buffer : Pointer; BufSize, RegDataEx : Integer);
+{{
+ Expoe metodo padrão da API do Windows para escrita no regitro.
+ Suplante a da VCL por permitir os demais tipos de dados
+}
+begin
+    if not CheckResult(RegSetValueEx(CurrentKey, PChar(Name), 0, RegDataEx, Buffer, BufSize)) then begin
+        raise ERegistryException.CreateResFmt(PResStringRec(@SRegSetDataFailed), [Name]);
+    end;
+end;
+
 {--------------------------------------------------------------------------------------------------------------------------------}
 function TRegistryNT.ReadFullBinaryData(const FullKeyValueName : string; var Buffer; BufSize : Integer) : Integer;
 {{
@@ -744,7 +758,7 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-function TRegistryNT.ReadMultiSZ(ValueName : string; var MultiSZValues : TStringList) : boolean;
+function TRegistryNT.ReadMultiSZ(const ValueName : string; var MultiSZValues : TStringList) : boolean;
 var
     MultiSZ, MultiSZOriginal : PChar;
     RegDataInfo :     TRegDataInfo;
@@ -856,6 +870,20 @@ begin
     end;
 end;
 
+procedure TRegistryNT.WriteFullMultiSZ(const FullKeyValueName : string; Value : TStringList; const CanCreate : boolean);
+{{ Write a MultiByteString at current hive
+
+Revision - 20120124 - Roger
+}
+begin
+    Self.Access := KEY_WRITE;
+    if OpenFullKey(ExtractFilePath(FullKeyValueName), CanCreate) then begin
+        Self.WriteMultiSZ(ExtractFileName(FullKeyValueName), Value);
+    end else begin
+        raise ERegistryException.CreateFmt(SRegSetDataFailed, [FullKeyValueName]);
+    end;
+end;
+
 {--------------------------------------------------------------------------------------------------------------------------------}
 procedure TRegistryNT.WriteFullString(const FullKeyValueName, Value : string; const CanCreate : boolean);
 {{
@@ -870,6 +898,35 @@ begin
     end else begin
         raise ERegistryException.CreateFmt(SRegSetDataFailed, [FullKeyValueName]);
     end;
+end;
+
+function TRegistryNT.WriteMultiSZ(const valueName : string; MultiSZValues : TStrings) : boolean;
+var
+    buffer :  array of Char;
+    Line :    String;
+    i, size : Integer;
+begin
+    Result := False;
+    size   := 0;
+    Line:=EmptyStr;
+    //Computa tamanho em caracteres
+    for i := 0 to MultiSZValues.Count - 1 do begin
+        Line:= MultiSZValues[i];
+        size := size + length(Line) + 1;
+    end;
+    Inc(size);
+    SetLength(buffer, size);
+    //FillChar(buffer, CharLength(Line, 1)*size, 0);
+
+    //Preenche buffer
+    size := 0;
+    for i := 0 to MultiSZValues.Count - 1 do begin
+        Line := MultiSZValues[i];
+        MoveChars(Line[1], buffer[size],Length(Line) );
+        Inc(size, Length(Line) + 1);
+    end;
+    Inc(size);   //Final da cadeia duplo zero
+    Self.PutDataXP(ValueName, buffer, size*SizeOf(Char), REG_MULTI_SZ);
 end;
 
 end.

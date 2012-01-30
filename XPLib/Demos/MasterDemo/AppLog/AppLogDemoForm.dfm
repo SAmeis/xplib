@@ -65,4 +65,13 @@ object AppLogDemoFrm: TAppLogDemoFrm
     TabOrder = 4
     OnClick = BufferizeCBClick
   end
+  object btnMultiSz: TButton
+    Left = 263
+    Top = 199
+    Width = 75
+    Height = 25
+    Caption = 'btnMultiSz'
+    TabOrder = 5
+    OnClick = btnMultiSzClick
+  end
 end

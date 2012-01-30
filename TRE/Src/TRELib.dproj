@@ -23,7 +23,7 @@
 			<DesignOnlyPackage>false</DesignOnlyPackage>
 			<DCC_UNSAFE_TYPE>true</DCC_UNSAFE_TYPE>
 			<DCC_ImageBase>00400000</DCC_ImageBase>
-			<DCC_DependencyCheckOutputName>..\..\..\Lib\D2010\TRELib.bpl</DCC_DependencyCheckOutputName>
+			<DCC_DependencyCheckOutputName>..\..\..\Lib\D2010\.bpl</DCC_DependencyCheckOutputName>
 			<DCC_UNSAFE_CAST>true</DCC_UNSAFE_CAST>
 			<DCC_UNSAFE_CODE>true</DCC_UNSAFE_CODE>
 			<DCC_UnitSearchPath>$(DLib);$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
@@ -71,13 +71,15 @@
 			<DCCReference Include="TREConfig.pas"/>
 			<DCCReference Include="TREUtils.pas"/>
 			<DCCReference Include="TREUsers.pas"/>
-			<None Include="ModelSupport_TRELib\default.txaPackage"/>
-			<None Include="ModelSupport_TRELib\default.txvpck"/>
-			<None Include="ModelSupport_TRELib\TREUtils\default.txvpck"/>
-			<None Include="ModelSupport_TRELib\TREZones\default.txvpck"/>
-			<None Include="ModelSupport_TRELib\TREZones\default.txaPackage"/>
-			<None Include="ModelSupport_TRELib\TREConfig\default.txvpck"/>
-			<None Include="ModelSupport_TRELib\TREConsts\default.txvpck"/>
+			<None Include="ModelSupport_\default.txaPackage"/>
+			<None Include="ModelSupport_\default.txvpck"/>
+			<None Include="ModelSupport_\TREZones\default.txaPackage"/>
+			<None Include="ModelSupport_\TREZones\default.txvpck"/>
+			<None Include="ModelSupport_\TREUtils\default.txvpck"/>
+			<None Include="ModelSupport_\TREConsts\default.txvpck"/>
+			<None Include="ModelSupport_\TREConfig\default.txvpck"/>
+			<None Include="ModelSupport_\TREUsers\default.txvpck"/>
+			<None Include="ModelSupport_\TREUsers\default.txaPackage"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>
