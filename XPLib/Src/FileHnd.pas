@@ -217,7 +217,8 @@ type
         class function ForceFileExtension(const OriginalName, DesiredExtension : string) : string;
         class procedure ForceFilename(const Filename : string);
         class function DirPathExisting( const Path : string ) : string;
-        class function GetHomeDir() : string;
+		 class function GetUserHomeDir() : string;
+		 class function GetUserMyDocuments() : string;
         class function GetFileSizeEx(const Filename : string) : int64;
         class function MakeDefaultFileExtension(const OriginalFileName, DefaultExtension : string) : string;
         class function ParentDir(const filename : string) : string; overload;
@@ -241,7 +242,7 @@ type
 implementation
 
 uses
-    Str_Pas, Super, Masks, DateOper, Contnrs, APIHnd, StrHnd;
+	 Str_Pas, Super, Masks, DateOper, Contnrs, APIHnd, StrHnd, ShlObj;
 
 function ConvSearchMaskArg(Mask : string) : string;
 var
@@ -2150,13 +2151,15 @@ class function TFileHnd.DirPathExisting(const Path: string): string;
 ///  </remarks>
 begin
      Result:= Path;
-     while ( (not DirectoryExists( Result ) and ( not IsRootDir(Result))  ) do begin
+     while ( (not DirectoryExists( Result ) and ( not IsRootDir(Result))  ) ) do begin
            Result := ParentDir( Result );
      end;
      if (IsRootDir(Result)) then begin
-        Result:=
+		 Result:=GetUserMyDocuments();
+		 if Result = EmptyStr then begin
+			Result:=GetUserHomeDir();
+        end;
      end;
-
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
@@ -2403,7 +2406,7 @@ begin
  {$WARN SYMBOL_PLATFORM ON}
 end;
 
-class function TFileHnd.GetHomeDir: string;
+class function TFileHnd.GetUserHomeDir: string;
 ///  <summary>
 ///    Retorna o caminho do Homedir do usuário do processo.
 ///  </summary>
@@ -2414,14 +2417,39 @@ class function TFileHnd.GetHomeDir: string;
 ///  </remarks>
 
 var
-   envValue : string;
+	envValue : string;
+	 path: array[0..MAX_PATH] of Char;
 begin
-     envValue:=TAPIHnd.GetEnvironmentVar('USERPROFILE');
-     if(envValue = EmptyStr) then begin
-         envValue:=TFileHnd.ConcatPath( [ TAPIHnd.GetEnvironmentVar('HOMEDRIVE'), TAPIHnd.GetEnvironmentVar('HOMEPATH') ] );
-     end;
-     Shellapi
+	  envValue:=TAPIHnd.GetEnvironmentVar('USERPROFILE');
+	  if(envValue = EmptyStr) then begin
+		  envValue:=TFileHnd.ConcatPath( [ TAPIHnd.GetEnvironmentVar('HOMEDRIVE'), TAPIHnd.GetEnvironmentVar('HOMEPATH') ] );
+			if DirectoryExists( envValue ) then begin
+				Result := envValue;
+			end else begin
+				if SHGetSpecialFolderPathW(0, path, CSIDL_PROFILE, False) then begin
+					Result := Path;
+				end else begin
+					Result := EmptyStr;
+				end;
+			end;
+	  end;
+end;
 
+///  <summary>
+///    Retorna o caminho para a pasta "Meu documentos do usuário chamador
+///  </summary>
+///  <remarks>
+///	Caso falhe retorna EmptytStr
+///  </remarks>
+class function TFileHnd.GetUserMyDocuments: string;
+ var
+	 path: array[0..MAX_PATH] of Char;
+ begin
+	 if SHGetSpecialFolderPathW(0, path, CSIDL_MYDOCUMENTS, False) then begin
+		Result := Path;
+	 end else begin
+	  	Result := EmptyStr;
+	 end;
 end;
 
 class function TFileHnd.IsValidFilename(const Filename : string; ConstrainLevel : Integer) : boolean;
