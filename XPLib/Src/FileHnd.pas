@@ -1,5 +1,5 @@
 {$IFDEF FileHnd}
-	{$DEFINE DEBUG_UNIT}
+    {$DEFINE DEBUG_UNIT}
 {$ENDIF}
 {$I XPLib.inc}
 
@@ -207,8 +207,8 @@ type
  Class for file related manipulation.
  }
     public
-		 class procedure BuildVersionInfo(const Filename : string; var V1, V2, V3, V4 : Word);
-		 class function ChangeFileName( const OriginalFullPath, Filename : string ) : string;
+        class procedure BuildVersionInfo(const Filename : string; var V1, V2, V3, V4 : Word);
+        class function ChangeFileName(const OriginalFullPath, Filename : string) : string;
         class function ConcatPath(Paths : array of string) : string;
         class function CopyDir(const SourceDir, DestDir : TFilename) : Integer;
         class function CreateTempFileName(const Prefix : PChar; const Number : byte; CreateFile : boolean) : string;
@@ -216,6 +216,8 @@ type
         class function FileSize(const FileName : string) : int64;
         class function ForceFileExtension(const OriginalName, DesiredExtension : string) : string;
         class procedure ForceFilename(const Filename : string);
+        class function DirPathExisting( const Path : string ) : string;
+        class function GetHomeDir() : string;
         class function GetFileSizeEx(const Filename : string) : int64;
         class function MakeDefaultFileExtension(const OriginalFileName, DefaultExtension : string) : string;
         class function ParentDir(const filename : string) : string; overload;
@@ -223,16 +225,16 @@ type
         class function SlashRem(const Path : string; PreserveRoot : boolean = False) : string;
         class function SlashAdd(const Path : string) : string;
         class function VersionInfo(const Filename : string) : string;
-		 class function IsValidFilename(const Filename : string; ConstrainLevel : Integer) : boolean;
-		 class function IsWritable( const Filename : string ) : Boolean;
-		 class function RmDir(const Path : string) : Integer;
+        class function IsValidFilename(const Filename : string; ConstrainLevel : Integer) : boolean;
+        class function IsWritable(const Filename : string) : boolean;
+        class function RmDir(const Path : string) : Integer;
         class function NextFamilyFilename(const BaseFilename : string) : string;
         class function FileTimeToDateTime(FTime : TFileTime) : TDateTime;
         class function FileTimeProperties(FileHandle : THandle;
             var CreateDate, LastAccessDate, LastWriteDate : TDateTime) : Integer; overload;
-		 class function FileTimeProperties(const FileName : string;
-			 var CreateDate, LastAccessDate, LastWriteDate : TDateTime) : Integer; overload; platform;
-		 class function FileTimeChangeTime(const FileName : string ) : TDateTime;
+        class function FileTimeProperties(const FileName : string;
+            var CreateDate, LastAccessDate, LastWriteDate : TDateTime) : Integer; overload; platform;
+        class function FileTimeChangeTime(const FileName : string) : TDateTime;
 
     end;
 
@@ -289,7 +291,7 @@ begin
         FindClose(Entry);
     end;
 {$ELSE}
-	raise Exception.Create('Método não implementado.');
+    raise Exception.Create('Método não implementado.');
 {$ENDIF}
 end;
 
@@ -365,7 +367,7 @@ begin
     Status := FindFirst(PathMask, faDirectory, SRec);
     if Status = 0 then begin
         while Status = 0 do begin
-            if (SRec.Attr and (faAnyFile - faDirectory ) <> 0) then begin
+            if (SRec.Attr and (faAnyFile - faDirectory) <> 0) then begin
                 Inc(Result);
             end;
             Status := FindNext(SRec);
@@ -568,10 +570,10 @@ begin
             end;
         end;
         //Último passo a eliminação do diretorio caso nenhum error anterior
-        if ( (Result = ERROR_SUCCESS ) and IncludeSelf ) then begin
-           if ( not RemoveDir(Path) ) then begin
-              Result:=GetLastError();
-           end;
+        if ((Result = ERROR_SUCCESS) and IncludeSelf) then begin
+            if (not RemoveDir(Path)) then begin
+                Result := GetLastError();
+            end;
         end;
     finally
         Lst.Free;
@@ -906,15 +908,15 @@ var
 {$IFNDEF WIN32}
     Tmp : array[0..255] of char;
 {$ELSE}
-	Tmp : PChar;
+    Tmp : PChar;
 {$ENDIF}
 begin
 {$IFNDEF WIN32}
     Result := AllTrim(Copy(List.Strings[i], Pos('.', List.Strings[i])));
 {$ELSE}
-	Tmp := TStrHnd.StrToPChar(FileName);
-	Result := AllTrim(Copy(StrPas(StrRScan(Tmp, '.')), 2, StrLen(Tmp)));
-	StrDispose(Tmp);
+    Tmp    := TStrHnd.StrToPChar(FileName);
+    Result := AllTrim(Copy(StrPas(StrRScan(Tmp, '.')), 2, StrLen(Tmp)));
+    StrDispose(Tmp);
 {$ENDIF}
 end;
 
@@ -1407,12 +1409,12 @@ var
     SR : TSearchRec;
 begin
 {$IFDEF WIN32}
-	if FindFirst(FileName, faAnyFile, SR) = 0 then begin
-		Result := (SR.FindData.nFileSizeHigh shl 32) + SR.FindData.nFileSizeLow;
-		FindClose(SR);
-	end else begin
-		Result := -1;
-	end;
+    if FindFirst(FileName, faAnyFile, SR) = 0 then begin
+        Result := (SR.FindData.nFileSizeHigh shl 32) + SR.FindData.nFileSizeLow;
+        FindClose(SR);
+    end else begin
+        Result := -1;
+    end;
   {$WARN SYMBOL_PLATFORM ON}
   {$ELSE}
     raise Exception.Create('Sem solução disponível para Linux.');
@@ -1428,8 +1430,8 @@ var
     Reg : Word;
 begin
     asm
-        INT $11
-        MOV Reg,AX
+               INT     $11
+               MOV     Reg,AX
     end;
     {intr($11,regs);}
     Result := '';
@@ -1621,10 +1623,11 @@ begin
         Rep := Length(Name);
         case (Rep) of
             2 : begin
-                Result := CharInSet(UpCase(Name[1]) , ['A'..'Z']) and (Name[2] = ':'); //Exemplo (L:\) or (C:)
+                Result := CharInSet(UpCase(Name[1]), ['A'..'Z']) and (Name[2] = ':'); //Exemplo (L:\) or (C:)
             end;
             3 : begin
-                Result := CharInSet(UpCase(Name[1]) , ['A'..'Z']) and (Name[2] = ':') and (Name[3] = PathDelim); //Exemplo (L:\) or (C:)
+                Result := CharInSet(UpCase(Name[1]), ['A'..'Z']) and (Name[2] = ':') and (Name[3] = PathDelim);
+                //Exemplo (L:\) or (C:)
             end;
             else begin
                 Result := False;
@@ -1930,8 +1933,8 @@ begin
         Drive  := Ord((ExtractFileDrive(UpperCase(PathName))[1]));
         Drive  := Drive - Ord('A') + 1;
   {$IFDEF WIN32}
-		Result := DiskFree(Drive);
-		{$ELSE}
+        Result := DiskFree(Drive);
+        {$ELSE}
         Result := _DiskFree(Drive);
   {$ENDIF}
     end else begin //Recurso via UNC
@@ -2018,14 +2021,14 @@ begin
     end;
 end;
 
-class function TFileHnd.ChangeFileName(const OriginalFullPath, Filename: string): string;
+class function TFileHnd.ChangeFileName(const OriginalFullPath, Filename : string) : string;
 {{
 Retorna c caminho completo para o nome de arquivo baseado no nome original.
 Ex.: ChangeFileName( 'c:\teste.pqp', '\windows\temp\novo.txt' ) -> c:\windows\temp\novo.txt
 }
 begin
-	Result:=ExtractFilePath( OriginalFullPath );
-	Result:=TFileHnd.ConcatPath([ Result, Filename ]);
+    Result := ExtractFilePath(OriginalFullPath);
+    Result := TFileHnd.ConcatPath([Result, Filename]);
 end;
 
 class function TFileHnd.ConcatPath(Paths : array of string) : string;
@@ -2138,6 +2141,24 @@ begin
     end;
 end;
 
+class function TFileHnd.DirPathExisting(const Path: string): string;
+///  <summary>
+///    Rtorna o caminho mais profundo válido. Caso não exista nem mesmo o raiz do caminho passado o home_dir é retornado.
+///  </summary>
+///  <remarks>
+///
+///  </remarks>
+begin
+     Result:= Path;
+     while ( (not DirectoryExists( Result ) and ( not IsRootDir(Result))  ) do begin
+           Result := ParentDir( Result );
+     end;
+     if (IsRootDir(Result)) then begin
+        Result:=
+     end;
+
+end;
+
 {--------------------------------------------------------------------------------------------------------------------------------}
 class function TFileHnd.ExpandFilename(const BasePath, path : string) : string;
 {{
@@ -2244,11 +2265,11 @@ begin
     end;
 end;
 
-class function TFileHnd.FileTimeChangeTime(const FileName: string): TDateTime;
+class function TFileHnd.FileTimeChangeTime(const FileName : string) : TDateTime;
 var
-	dummy : TDateTime;
+    dummy : TDateTime;
 begin
-	FileTimeProperties( FileName, dummy, dummy, Result );
+    FileTimeProperties(FileName, dummy, dummy, Result);
 end;
 
 class function TFileHnd.FileTimeProperties(const FileName : string;
@@ -2299,6 +2320,7 @@ DesiredExtension : Extensao desejada
 
 Ver também:
 TFileHnd.MakeDefaultFileExtension
+SysUtils.ChangeFileExt()
 }
 var
     originalExt, ForceExt : string;
@@ -2381,6 +2403,27 @@ begin
  {$WARN SYMBOL_PLATFORM ON}
 end;
 
+class function TFileHnd.GetHomeDir: string;
+///  <summary>
+///    Retorna o caminho do Homedir do usuário do processo.
+///  </summary>
+///  <remarks>
+/// Este valor é lido inicialmente iniciamente pela variavel de embiente USERPROFILE,
+/// Alternativamente por HOMEDRIVE + HOMEPATH
+/// caso não exista usa-se o caminho apontado pelo shell
+///  </remarks>
+
+var
+   envValue : string;
+begin
+     envValue:=TAPIHnd.GetEnvironmentVar('USERPROFILE');
+     if(envValue = EmptyStr) then begin
+         envValue:=TFileHnd.ConcatPath( [ TAPIHnd.GetEnvironmentVar('HOMEDRIVE'), TAPIHnd.GetEnvironmentVar('HOMEPATH') ] );
+     end;
+     Shellapi
+
+end;
+
 class function TFileHnd.IsValidFilename(const Filename : string; ConstrainLevel : Integer) : boolean;
 {{
 Valida se o conjunto de caracteres que compoe o nome do arquivo pode ser gerado, isto é não viola o conjunto de caracteres invalidos
@@ -2413,7 +2456,8 @@ begin
     end;
     LPart := ExtractFilePath(Filename);
     if (LPart = Filename) then begin  //raiz ou nome final da sequencia
-        Result := (Length(LPart) = 3) and CharInSet(GetIChar(LPart, 2) , ['a'..'Z']) and (GetIChar(LPart, 3) = PathSep); //algo do tipo c:\
+        Result := (Length(LPart) = 3) and CharInSet(GetIChar(LPart, 2), ['a'..'Z']) and (GetIChar(LPart, 3) = PathSep);
+        //algo do tipo c:\
         Result := Result or (TStrHnd.StrPosChar(ExtractFileName(Filename), CSet) = 0);
     end else begin
         if (LPart = EmptyStr) then begin
@@ -2425,33 +2469,33 @@ begin
     end;
 end;
 
-class function TFileHnd.IsWritable(const Filename: string): Boolean;
+class function TFileHnd.IsWritable(const Filename : string) : boolean;
 {{
 Identifica se o arquivo passado pode ser escrito pelo thread em contexto
 
 }
 var
-	fs : TFileStream;
+    fs : TFileStream;
 begin
-	Result:=False;
-	if FileExists( Filename ) then begin
-		try
-			fs:=TFileStream.Create( Filename , fmOpenWrite );
-			fs.Free;
-			Result:=True;
-		except
-			Exit; //Apenas retorna false
-		end;
-	end else begin
-		try
-			fs:=TFileStream.Create( Filename , fmCreate );
-			fs.Free;
-			Result:=True;
-			DeleteFile( Filename ); //ignora erros de deleção(objetivo apenas escrever)
-		except
-			Exit; //Apenas retorna false
-		end;
-   end;
+    Result := False;
+    if FileExists(Filename) then begin
+        try
+            fs := TFileStream.Create(Filename, fmOpenWrite);
+            fs.Free;
+            Result := True;
+        except
+            Exit; //Apenas retorna false
+        end;
+    end else begin
+        try
+            fs := TFileStream.Create(Filename, fmCreate);
+            fs.Free;
+            Result := True;
+            DeleteFile(Filename); //ignora erros de deleção(objetivo apenas escrever)
+        except
+            Exit; //Apenas retorna false
+        end;
+    end;
 end;
 
 class function TFileHnd.MakeDefaultFileExtension(const OriginalFileName, DefaultExtension : string) : string;
@@ -2496,7 +2540,7 @@ begin
     repeat
         Inc(TargetCount);
         Result := Prefix + '(' + IntToStr(TargetCount) + ')' + TargetExt;
-    until ( (not FileExists(Result)) and ( not DirectoryExists(Result)) );
+    until ((not FileExists(Result)) and (not DirectoryExists(Result)));
 end;
 
 
