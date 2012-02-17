@@ -70,6 +70,7 @@ contains
   XPTypes in 'XPTypes.pas',
   XPClasses in 'XPClasses.pas',
   XPFiles in 'XPFiles.pas',
-  WinRegDemo in '..\Demos\MasterDemo\WinRegistry\WinRegDemo.pas' {FormWinRegDemo};
+  WinRegDemo in '..\Demos\MasterDemo\WinRegistry\WinRegDemo.pas' {FormWinRegDemo},
+  XPFileEnumerator in 'XPFileEnumerator.pas';
 
 end.

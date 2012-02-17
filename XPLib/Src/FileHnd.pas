@@ -216,7 +216,7 @@ type
         class function FileSize(const FileName : string) : int64;
         class function ForceFileExtension(const OriginalName, DesiredExtension : string) : string;
         class procedure ForceFilename(const Filename : string);
-        class function DirPathExisting( const Path : string ) : string;
+        class function DeepExistingPath( const Path : string ) : string;
 		 class function GetUserHomeDir() : string;
 		 class function GetUserMyDocuments() : string;
         class function GetFileSizeEx(const Filename : string) : int64;
@@ -2142,7 +2142,7 @@ begin
     end;
 end;
 
-class function TFileHnd.DirPathExisting(const Path: string): string;
+class function TFileHnd.DeepExistingPath(const Path: string): string;
 ///  <summary>
 ///    Rtorna o caminho mais profundo válido. Caso não exista nem mesmo o raiz do caminho passado o home_dir é retornado.
 ///  </summary>
