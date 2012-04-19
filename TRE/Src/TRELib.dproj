@@ -23,7 +23,7 @@
 			<DesignOnlyPackage>false</DesignOnlyPackage>
 			<DCC_UNSAFE_TYPE>true</DCC_UNSAFE_TYPE>
 			<DCC_ImageBase>00400000</DCC_ImageBase>
-			<DCC_DependencyCheckOutputName>..\..\..\Lib\D2010\.bpl</DCC_DependencyCheckOutputName>
+			<DCC_DependencyCheckOutputName>..\..\..\Lib\D2010\TRELib.bpl</DCC_DependencyCheckOutputName>
 			<DCC_UNSAFE_CAST>true</DCC_UNSAFE_CAST>
 			<DCC_UNSAFE_CODE>true</DCC_UNSAFE_CODE>
 			<DCC_UnitSearchPath>$(DLib);$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
@@ -80,6 +80,7 @@
 			<None Include="ModelSupport_\TREConfig\default.txvpck"/>
 			<None Include="ModelSupport_\TREUsers\default.txvpck"/>
 			<None Include="ModelSupport_\TREUsers\default.txaPackage"/>
+			<None Include="ModelSupport_TRELib\TREConfig\default.txaPackage"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>

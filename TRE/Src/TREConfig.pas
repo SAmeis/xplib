@@ -21,9 +21,12 @@ type
 		 XMLDoc : TXMLDocument;
 		 FCfg : TBaseSettings;
 		 function GetCentralMapping : TTRECentralMapping;
+    function GetDebugLevel: Integer;
+    procedure SetDebugLevel(const Value: Integer);
 	 public
 		 constructor Create(const XMLFilename : string); reintroduce;
 		 destructor Destroy; override;
+		 property DebugLevel : Integer read GetDebugLevel write SetDebugLevel;
 	 published
 		 property CentralMapping : TTRECentralMapping read GetCentralMapping;
 	 end;
@@ -43,6 +46,7 @@ begin
 	 end;
 	 Self.FAnchor:=TComponent.Create(nil);
 	 xmlDoc := TXMLDocument.Create(Self.FAnchor);
+	 XMLDoc.Options:= XMLDoc.Options + [ doNodeAutoCreate ];
 	 try
 		xmlDoc.LoadFromFile(XMLFilename);
 	 except
@@ -70,6 +74,18 @@ begin
         {TODO -oroger -cdsg : Realizar a carga das instancias das centrais e zonas pela instancia de configuracao}
     end;
     Result := Self._FCentralMapping;
+end;
+
+function TTREBaseConfig.GetDebugLevel: Integer;
+begin
+	{ TODO -oroger -curgente : Leitura falha deste atributo, valor padrao = zero }
+	result:=10;
+end;
+
+procedure TTREBaseConfig.SetDebugLevel(const Value: Integer);
+begin
+	{ TODO -oroger -curgente : Constante para entrada }
+
 end;
 
 initialization
