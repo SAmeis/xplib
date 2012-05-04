@@ -2,7 +2,7 @@
 		<PropertyGroup>
 			<ProjectGuid>{22280305-3162-4DE1-8301-23AE5C56426E}</ProjectGuid>
 			<MainSource>TRELib.dpk</MainSource>
-			<Config Condition="'$(Config)'==''">Release</Config>
+			<Config Condition="'$(Config)'==''">Debug</Config>
 			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
 			<ProjectVersion>12.0</ProjectVersion>
 		</PropertyGroup>
@@ -49,6 +49,10 @@
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_1)'!=''"/>
 		<PropertyGroup Condition="'$(Cfg_2)'!=''">
+			<DCC_DependencyCheckOutputName>..\..\..\Lib\D2010\Debug\TRELib.bpl</DCC_DependencyCheckOutputName>
+			<DCC_BplOutput>$(DLib)\Debug</DCC_BplOutput>
+			<DCC_DcpOutput>$(DLib)\Debug</DCC_DcpOutput>
+			<DCC_DcuOutput>$(DLib)\Debug</DCC_DcuOutput>
 			<DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
 		</PropertyGroup>
 		<ItemGroup>

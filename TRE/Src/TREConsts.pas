@@ -11,9 +11,10 @@ const
    //Informações inferidas pelo nome do computador 
    CMPNAME_LOCAL_ZONE = 'Z';
    CMPNAME_LOCAL_CENTRAL = 'C';
-   CMPNAME_LOCAL_REGIONAL = 'R';
-   CMPNAME_TYPE_LENGHT = 3;  //Refere-se aos tipos abaixo
-   CMPNAME_TYPE_WORKGROUP = 'STD';
+	CMPNAME_LOCAL_REGIONAL = 'R';
+	CMPNAME_LOCAL_POS = 4; //Inicio da localização do computador, podendo ser numero da zona ou central
+	CMPNAME_TYPE_LENGHT = 3;  //Refere-se aos tipos abaixo
+	CMPNAME_TYPE_WORKGROUP = 'STD';
    CMPNAME_TYPE_DOMAIN = 'WKS';
    CMPNAME_TYPE_DOMAIN_CONTROLLER = 'PDC';
 

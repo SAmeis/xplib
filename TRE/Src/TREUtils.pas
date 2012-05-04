@@ -192,8 +192,6 @@ PRE: Computername no formato de nome de computador de zona eleitoral
 
 Revision: 1/6/2008 - roger
 }
-const
-    CMPNAME_LOCAL_POS = 4; { TODO -oroger -clib : Levar para TREConsts }
 var
     zone : string;
 begin
