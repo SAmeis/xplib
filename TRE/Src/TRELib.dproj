@@ -2,7 +2,7 @@
 		<PropertyGroup>
 			<ProjectGuid>{22280305-3162-4DE1-8301-23AE5C56426E}</ProjectGuid>
 			<MainSource>TRELib.dpk</MainSource>
-			<Config Condition="'$(Config)'==''">Debug</Config>
+			<Config Condition="'$(Config)'==''">Release</Config>
 			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
 			<ProjectVersion>12.0</ProjectVersion>
 		</PropertyGroup>
