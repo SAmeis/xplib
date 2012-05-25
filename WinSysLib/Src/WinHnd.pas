@@ -59,6 +59,8 @@ function FindWindowChildByTitle(const ParentWnd : HWnd; const Title : string) : 
 function FindWindowClassInThread(ThreadId : Integer; ClassName : PChar) : HWnd;
 //#### A ser depurada #### function GetModuleNameByWinHnd( Hnd : HWND ) : string;
 procedure HideAppTaskButton(AppHandle : DWORD);
+//Ajsuta token de privilégio para outra conta
+function ImpersonateAnotherUser( const UserName, Pwd : string ) : Integer;
 function IsThreadValid(dwThreadID : longword) : boolean;
 function LookForClass(hWnd : HWND; lParam : LPARAM) : BOOL; stdcall;
 //Simula uma suspensao da tarefa em 16 bits
@@ -450,17 +452,37 @@ begin
         or WS_EX_TOOLWINDOW and not WS_EX_APPWINDOW);
 end;
 
-function IsThreadValid(dwThreadID : longword) : boolean;
-    {-------------------------------------------------------------------------------------------------------------}
-    {..................................................................................................}
-    function ThreadWin(hwnd : HWND; lparam : LPARAM) : BOOL; stdcall;
-    begin
-        Result := True;
-    end;
-
-    {..................................................................................................}
+function ImpersonateAnotherUser(const UserName, Pwd : string ) : Integer;
+	 //----------------------------------------------------------------------------------------------------------------------------------
+var
+	 TKHandle :   THandle;
+	 User, Pass : PChar;
 begin
-    Result := EnumThreadWindows(dwThreadID, @ThreadWin, 0);
+	 User   := PChar(UserName);
+	 Pass   := PChar(Pwd);
+	 Result := ERROR_SUCCESS;
+	 SetLastError(Result);
+	 if LogonUser(User, nil, Pass, LOGON32_LOGON_INTERACTIVE, LOGON32_PROVIDER_DEFAULT, TKHandle) then begin
+		 if not ImpersonateLoggedOnUser(TKHandle) then begin
+			 Result := GetLastError();
+		 end;
+	 end else begin
+		 Result := GetLastError();
+	 end;
+end;
+
+
+function IsThreadValid(dwThreadID : longword) : boolean;
+	 {-------------------------------------------------------------------------------------------------------------}
+	 {..................................................................................................}
+	 function ThreadWin(hwnd : HWND; lparam : LPARAM) : BOOL; stdcall;
+	 begin
+		 Result := True;
+	 end;
+
+	 {..................................................................................................}
+begin
+	 Result := EnumThreadWindows(dwThreadID, @ThreadWin, 0);
 end;
 
 

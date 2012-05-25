@@ -1,5 +1,5 @@
 {$IFDEF AppLog}
-	{$DEFINE DEBUG_UNIT}
+    {$DEFINE DEBUG_UNIT}
 {$ENDIF}
 {$I XPLib.inc}
 
@@ -13,16 +13,16 @@ Implementa os tipos básicos para log de aplicativos.
 interface
 
 uses
-	 SysUtils, Classes, Types;
+    SysUtils, Classes, Types;
 
 const
-	DBGLEVEL_ULTIMATE = 10;
-	DBGLEVEL_DETAILED = 5;
-	DBGLEVEL_ALERT_ONLY = 1;
-	DBGLEVEL_NONE = 0;
+    DBGLEVEL_ULTIMATE   = 10;
+    DBGLEVEL_DETAILED   = 5;
+    DBGLEVEL_ALERT_ONLY = 1;
+    DBGLEVEL_NONE       = 0;
 
 type
-	 TLogMessageType = (lmtError, lmtInformation, lmtWarning, lmtDebug);
+    TLogMessageType = (lmtError, lmtInformation, lmtWarning, lmtDebug);
 
 type
     TErrorLogMode      = (elmFormatted, elmUnFormatted);
@@ -59,26 +59,26 @@ type
     end;
 
 type
-	 TLogFile = class(TObject)
-	 {{
-	 Classe usada como base para registro de logs de aplicativos.
-	 }
-	 private
-		 FFileName :  string;
-		 FFormatter : IFormatter;
-		 FLocked :    boolean;
-		 FOpenMode :  word;
-    FDebugLevel: integer;
-		 function GetBuffered : boolean;
-		 procedure SetBuffered(const Value : boolean);
-		 function GetBufferText : string;
-		 procedure SetFileName(const Value : string);
-		 function GetSize : int64;
-	 protected
-		 FLogBuffer : TStringList;
-		 FStream :    TStream;
-		 procedure StreamDispose;
-		 procedure StreamNeeded;
+    TLogFile = class(TObject)
+     {{
+     Classe usada como base para registro de logs de aplicativos.
+     }
+    private
+        FFileName :   string;
+        FFormatter :  IFormatter;
+        FLocked :     boolean;
+        FOpenMode :   Word;
+        FDebugLevel : Integer;
+        function GetBuffered : boolean;
+        procedure SetBuffered(const Value : boolean);
+        function GetBufferText : string;
+        procedure SetFileName(const Value : string);
+        function GetSize : int64;
+    protected
+        FLogBuffer : TStringList;
+        FStream :    TStream;
+        procedure StreamDispose;
+        procedure StreamNeeded;
         procedure WriteTo(const Txt : string);
     public
         constructor Create(const AFileName : string; Lock : boolean); virtual;
@@ -88,8 +88,8 @@ type
         procedure Discard;
         class function GetDefaultLogFile : TLogFile;
         class procedure Initialize; virtual;
-		 class procedure Log(const Msg : string; LogMessageType : TLogMessageType = lmtError);
-		 class procedure LogDebug(const Msg : string; CurrentDebugLevel : integer );
+        class procedure Log(const Msg : string; LogMessageType : TLogMessageType = lmtError);
+        class procedure LogDebug(const Msg : string; CurrentDebugLevel : Integer);
         class procedure SetDefaultLogFile(LogFile : TLogFile);
         procedure WriteLog(const Msg : string; LogMessageType : TLogMessageType = lmtError); virtual;
         property Buffered : boolean read GetBuffered write SetBuffered;
@@ -114,22 +114,22 @@ type
         Flag de travamento do streamer. Com ela ativa outros processos não podem ter acesso ao destino do log.
         }
         {1 Flag de travamento do streamer. Com ela ativa outros processos não podem ter acesso ao destino do log. }
-        property OpenMode : word read FOpenMode write FOpenMode;
+        property OpenMode : Word read FOpenMode write FOpenMode;
         {{
         Modo de abertura. Valem os valores para o construtor de TFileStream.
         }
         {1 Modo de abertura. Valem os valores para o construtor de TFileStream. }
         property Size : int64 read GetSize;
-		 {{
-		 Tamanho corrente do Streamer do log.
-		 }
-		 {1 Tamanho corrente do Streamer do log. }
-		 property DebugLevel : integer read FDebugLevel write FDebugLevel;
-		 {{
-		 Nível de detalhamento para as mensagens de depuração. Usado em conjunção com o método
-		 TLogFile.LogDebug(Msg : string; CurrentDbgLevel : integer).
-		 }
-		 {1 Tamanho corrente do Streamer do log. }
+         {{
+         Tamanho corrente do Streamer do log.
+         }
+        {1 Tamanho corrente do Streamer do log. }
+        property DebugLevel : Integer read FDebugLevel write FDebugLevel;
+         {{
+         Nível de detalhamento para as mensagens de depuração. Usado em conjunção com o método
+         TLogFile.LogDebug(Msg : string; CurrentDbgLevel : integer).
+         }
+        {1 Tamanho corrente do Streamer do log. }
     end;
 
 type
@@ -146,20 +146,20 @@ type
     public
         constructor Create(const Msg : string); virtual;
         constructor CreateFmt(const Msg : string; const Args : array of const);
-        constructor CreateFmtHelp(const Msg : string; const Args : array of const; AHelpContext : integer);
-        constructor CreateHelp(const Msg : string; AHelpContext : integer);
-        constructor CreateRes(Ident : integer); overload;
+        constructor CreateFmtHelp(const Msg : string; const Args : array of const; AHelpContext : Integer);
+        constructor CreateHelp(const Msg : string; AHelpContext : Integer);
+        constructor CreateRes(Ident : Integer); overload;
         constructor CreateRes(ResStringRec : PResStringRec); overload;
-        constructor CreateResFmt(Ident : integer; const Args : array of const); overload;
+        constructor CreateResFmt(Ident : Integer; const Args : array of const); overload;
         constructor CreateResFmt(ResStringRec : PResStringRec; const Args : array of const); overload;
-        constructor CreateResFmtHelp(Ident : integer; const Args : array of const; AHelpContext : integer); overload;
-        constructor CreateResFmtHelp(ResStringRec : PResStringRec; const Args : array of const; AHelpContext : integer); overload;
-        constructor CreateResHelp(Ident : integer; AHelpContext : integer); overload;
-        constructor CreateResHelp(ResStringRec : PResStringRec; AHelpContext : integer); overload;
+        constructor CreateResFmtHelp(Ident : Integer; const Args : array of const; AHelpContext : Integer); overload;
+        constructor CreateResFmtHelp(ResStringRec : PResStringRec; const Args : array of const; AHelpContext : Integer); overload;
+        constructor CreateResHelp(Ident : Integer; AHelpContext : Integer); overload;
+        constructor CreateResHelp(ResStringRec : PResStringRec; AHelpContext : Integer); overload;
     end;
 
 
-procedure AppFatalError(const Msg : string; ExitCode : integer = 1; InteractiveApp : boolean = True );
+procedure AppFatalError(const Msg : string; ExitCode : Integer = 1; InteractiveApp : boolean = True);
 procedure CloseErrorLogBuffer(); deprecated;
 function FormatErrorLogMsg(const ErrorMsg : string; LogMessageType : TLogMessageType = lmtError) : string;
 procedure FlushErrorLogBuffer(); deprecated;
@@ -177,10 +177,10 @@ function FormatSimpleLineLogMsg(const LogMsg : string; LogMessageType : TLogMess
 
 
 var
-    ErrorLogMode : TErrorLogMode = elmFormatted;
+    ErrorLogMode :      TErrorLogMode = elmFormatted;
     FormatMessageProc : TFormatMessageProc = FormatLogMsg;
-    LogUserName : string;
-    LogBuffered : boolean = False;
+    LogUserName :       string;
+    LogBuffered :       boolean = False;
 
 implementation
 
@@ -194,7 +194,7 @@ var
     GlobalLogFileName : string = ''; //Na inicializacao assume variacao do nome do aplicativo,
     LogBuffer : TStringList = nil;
     LogCriticalSection : TRtlCriticalSection;
-	 GlobalDefaultLogFile : TLogFile = nil;
+    GlobalDefaultLogFile : TLogFile = nil;
 
 
 procedure SetLogFileName(const LogFileName : string);
@@ -208,7 +208,7 @@ begin
 end;
 
 
-procedure AppFatalError(const Msg : string; ExitCode : integer = 1; InteractiveApp : boolean = True );
+procedure AppFatalError(const Msg : string; ExitCode : Integer = 1; InteractiveApp : boolean = True);
 {{
 Termina o aplicativo setando o ExitCode dado, e repassando a mensagem ao usuário inicialmente. Registra esta mesma mensagem no log do aplicativo.
 
@@ -219,7 +219,7 @@ Rev. 19/5/2005
 begin
     TLogFile.Log('ERRO FATAL:'#13 + Msg, lmtError);
     //Alerta e impede processamento posterior se indicado que aplicativo roda no modo interativo
-    if ( InteractiveApp ) then begin
+    if (InteractiveApp) then begin
         Windows.MessageBox(GetActiveWindow(), PChar(Msg), 'Erro fatal', MB_ICONERROR + MB_OK + MB_TASKMODAL);
     end;
     Halt(ExitCode);
@@ -250,7 +250,7 @@ Rotina padrao de formatacao de messagens de erro para arquivo de LOG
 Rev. 19/5/2005
 }
 var
-    i :  integer;
+    i :  Integer;
     SL : TStringList;
 begin
     SL := TStringList.Create;
@@ -275,7 +275,7 @@ Rotina padrao de formatacao de messagens de erro. Recebe  LogMessageType indican
 Rev. 19/5/2005
 }
 var
-    i :  integer;
+    i :  Integer;
     SL : TStringList;
 begin
     SL := TStringList.Create;
@@ -577,7 +577,7 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-constructor ELoggedException.CreateFmtHelp(const Msg : string; const Args : array of const; AHelpContext : integer);
+constructor ELoggedException.CreateFmtHelp(const Msg : string; const Args : array of const; AHelpContext : Integer);
 {{
 Construtor básico de ELoggedException.
 
@@ -593,7 +593,7 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-constructor ELoggedException.CreateHelp(const Msg : string; AHelpContext : integer);
+constructor ELoggedException.CreateHelp(const Msg : string; AHelpContext : Integer);
 {{
 Construtor de ELoggedException com suporte a Ajuda de contexto.
 
@@ -607,7 +607,7 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-constructor ELoggedException.CreateRes(Ident : integer);
+constructor ELoggedException.CreateRes(Ident : Integer);
 {{
 Construtor de ELoggedException que realiza a leitura de identificador de recurso.
 
@@ -635,7 +635,7 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-constructor ELoggedException.CreateResFmt(Ident : integer; const Args : array of const);
+constructor ELoggedException.CreateResFmt(Ident : Integer; const Args : array of const);
 {{
 Construtor de ELoggedException que faz a leitura da mensagem de um recurso a ser formatado posteriormente.
 
@@ -667,7 +667,7 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-constructor ELoggedException.CreateResFmtHelp(Ident : integer; const Args : array of const; AHelpContext : integer);
+constructor ELoggedException.CreateResFmtHelp(Ident : Integer; const Args : array of const; AHelpContext : Integer);
 {{
 Construtor de ELoggedException que faz a leitura da mensagem de um identificador de recurso a ser formatado posteriormente.
 
@@ -683,7 +683,7 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-constructor ELoggedException.CreateResFmtHelp(ResStringRec : PResStringRec; const Args : array of const; AHelpContext : integer);
+constructor ELoggedException.CreateResFmtHelp(ResStringRec : PResStringRec; const Args : array of const; AHelpContext : Integer);
 {{
 Construtor de ELoggedException que faz a leitura da mensagem de um PResStringRec a ser formatado posteriormente.
 
@@ -698,7 +698,7 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-constructor ELoggedException.CreateResHelp(Ident : integer; AHelpContext : integer);
+constructor ELoggedException.CreateResHelp(Ident : Integer; AHelpContext : Integer);
 {{
 Construtor de ELoggedException que faz a leitura da mensagem de um identificador de recurso a ser formatado posteriormente.
 
@@ -712,7 +712,7 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
-constructor ELoggedException.CreateResHelp(ResStringRec : PResStringRec; AHelpContext : integer);
+constructor ELoggedException.CreateResHelp(ResStringRec : PResStringRec; AHelpContext : Integer);
 {{
 Construtor de ELoggedException que faz a leitura da mensagem de um PResStringRec e com suporte a ajuda de contexto.
 
@@ -772,15 +772,21 @@ Lock : Flag para deixar este streamer no modo exclusivo. Assim este arquivo de l
 E também não será liberado entre as chamadas de StreamNeeded/StreamDispose.
 
 Rev. 19/5/2005
+
+Revision - 20120522 - roger
+Removido a ForceFile para os casos onde não se exite a necessidade de Lock, assim o arquivo de log pode ser inicializado em outro
+local fora da mesma pasta do runtime
+
 }
 begin
-	 inherited Create;
-	 Self.FDebugLevel:=DBGLEVEL_ULTIMATE; //inicia com nivel mais alto possivel
-	 Self.FFileName := AFileName;
-    TFileHnd.ForceFilename(Self.FFileName);
-    Self.FLocked   := Lock;
-    Self.FOpenMode := fmOpenReadWrite + fmShareDenyWrite; //Padrao para acesso exclusivo RW
-    if Self.FLocked then begin
+    inherited Create;
+    Self.FDebugLevel := DBGLEVEL_ULTIMATE; //inicia com nivel mais alto possivel
+    Self.FFileName   := AFileName;
+	 //TFileHnd.ForceFilename(Self.FFileName);
+	 Self.FLocked   := Lock;
+	 Self.FOpenMode := fmOpenReadWrite + fmShareDenyWrite; //Padrao para acesso exclusivo RW
+	 if Self.FLocked then begin
+	 	 TFileHnd.ForceFilename(Self.FFileName);
         Self.FStream := TFileStream.Create(AFileName, Self.OpenMode);
     end else begin
         Self.FStream := nil;
@@ -909,7 +915,7 @@ Retorna instância do Logger padrao do aplicativo.
 Rev. 19/5/2005
 }
 begin
-	 Result := GlobalDefaultLogFile;
+    Result := GlobalDefaultLogFile;
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
@@ -941,13 +947,13 @@ Método de classe que garante a existencia de uma instancia valida em GlobalDefau
 Rev. 19/5/2005
 }
 begin
-	 GlobalLogFileName := ChangeFileExt(ParamStr(0), DEFAULT_APP_LOG_EXTENSION);
+    GlobalLogFileName := ChangeFileExt(ParamStr(0), DEFAULT_APP_LOG_EXTENSION);
     LogUserName := GetWindowsUserName();
     if LogUserName = EmptyStr then begin
         LogUserName := '"Usuário desconhecido"';
     end;
     if (GlobalDefaultLogFile = nil) then begin
-		 GlobalDefaultLogFile := TLogFile.Create(GlobalLogFileName, False);//Streamer de saida não locked para outros
+        GlobalDefaultLogFile := TLogFile.Create(GlobalLogFileName, False);//Streamer de saida não locked para outros
     end;
 end;
 
@@ -959,14 +965,14 @@ Rotina chave onde o conteudo em Msg sera salvo pela instancia atribuida a Global
 Rev. 19/5/2005
 }
 begin
-	 GlobalDefaultLogFile.WriteLog(Msg, LogMessageType);
+    GlobalDefaultLogFile.WriteLog(Msg, LogMessageType);
 end;
 
-class procedure TLogFile.LogDebug(const Msg: string; CurrentDebugLevel: integer);
+class procedure TLogFile.LogDebug(const Msg : string; CurrentDebugLevel : Integer);
 begin
-	if ( GlobalDefaultLogFile.DebugLevel <= CurrentDebugLevel ) then begin
-		GlobalDefaultLogFile.WriteLog(Msg, lmtDebug );
-	end;
+    if (GlobalDefaultLogFile.DebugLevel <= CurrentDebugLevel) then begin
+        GlobalDefaultLogFile.WriteLog(Msg, lmtDebug);
+    end;
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
@@ -1067,7 +1073,7 @@ Assim para o caso de sobreescrever o modo como o streamer de saída é gerado, amb
 }
 {1 Recupera/cria um streamer de saida. }
 begin
-	 if not Assigned(Self.FStream) then begin
+    if not Assigned(Self.FStream) then begin
         if not FileExists(Self.FFileName) then begin
             TFileHnd.ForceFilename(Self.FFileName);
         end;
@@ -1118,14 +1124,14 @@ Sempre salvará arquivo no modo AnsiString
 }
 {1 Rotina chave onde o texto capturado sera salvo no streamer de saida }
 var
-	ConvertStr : AnsiString;
+    ConvertStr : ansistring;
 begin
-	 EnterCriticalSection(LogCriticalSection);
-	 try
-		 Self.StreamNeeded();
-		 try
-			ConvertStr:=AnsiString(Txt);
-			 Self.FStream.WriteBuffer(PAnsiChar(ConvertStr)^, Length(Txt));
+    EnterCriticalSection(LogCriticalSection);
+    try
+        Self.StreamNeeded();
+        try
+            ConvertStr := ansistring(Txt);
+            Self.FStream.WriteBuffer(PAnsiChar(ConvertStr)^, Length(Txt));
         finally
             Self.StreamDispose;
         end;
@@ -1149,7 +1155,7 @@ Rotina padrao de formatacao de messagens de log. Recebe  LogMessageType indicand
 }
     {1 Rotina padrao de formatacao de messagens de log. Recebe  LogMessageType indicando o tipo de log. }
 var
-    i :  integer;
+    i :  Integer;
     SL : TStringList;
 begin
     SL := TStringList.Create;
@@ -1224,7 +1230,7 @@ initialization
         InitializeCriticalSection(LogCriticalSection);
         EnterCriticalSection(LogCriticalSection);
         try
-			 TLogFile.Initialize();
+            TLogFile.Initialize();
         finally
             LeaveCriticalSection(LogCriticalSection);
         end;
@@ -1232,14 +1238,14 @@ initialization
 
 finalization
     begin
-		 EnterCriticalSection(LogCriticalSection);
-		 try
-			 if (Assigned(GlobalDefaultLogFile)) then begin
-				 GlobalDefaultLogFile.Free;
-			 end;
-		 finally
-			 LeaveCriticalSection(LogCriticalSection);
-		 end;
-		 DeleteCriticalSection(LogCriticalSection);
-	 end;
+        EnterCriticalSection(LogCriticalSection);
+        try
+            if (Assigned(GlobalDefaultLogFile)) then begin
+                GlobalDefaultLogFile.Free;
+            end;
+        finally
+            LeaveCriticalSection(LogCriticalSection);
+        end;
+        DeleteCriticalSection(LogCriticalSection);
+    end;
 end.
