@@ -963,23 +963,24 @@ end;
 function FileCopy(const Source, Dest : string; Over : boolean) : Integer;
 {{
 Copia um arquivo para outro lugar
+
+Revision - 20120529 - roger
+Removida chamada interna para identificar se arquivo existe por chamada a SysUtils.FileExists
 }
 var
-    Buffer : TMemoryStream;
-    Attr :   Integer;
-    Info :   TSearchRec;
-    Age :    longint;
-    Hnd :    Integer;
+	 Buffer : TMemoryStream;
+	 Attr :   Integer;
+Age :    longint;
+	 Hnd :    Integer;
 begin
-    if (FindFirst(Source, faAnyFile, Info) = 0) then begin //source exists
-        FindClose(Info); //Fecha handle de pesquisa desnecessario
-        if DirectoryExists(ExtractFilePath(Dest)) then begin //dest exists
+	 if ( SysUtils.FileExists( Source )) then begin //source exists
+		if DirectoryExists(ExtractFilePath(Dest)) then begin //dest exists
             if (Over or (not (__FileExists(Dest)))) then begin
                 if (TFileHnd.FileSize(Source) > SpaceFree(ExtractFilePath(Dest))) then begin //falta espaco
                     Result := ERROR_DISK_FULL;
-                    Exit;
-                end;
-                if __FileExists(Dest) and (FileSetAttr(Dest, faArchive) <> 0) then begin
+					 Exit;
+				 end;
+				 if SysUtils.FileExists(Dest) and (FileSetAttr(Dest, SysUtils.faArchive ) <> 0) then begin
                     //atributos de protecao nao foram resetados
                     Result := ERROR_OPEN_FAILED;
                     Exit;

@@ -77,10 +77,10 @@ type
     protected
         FLogBuffer : TStringList;
         FStream :    TStream;
-        procedure StreamDispose;
-        procedure StreamNeeded;
-        procedure WriteTo(const Txt : string);
-    public
+		 procedure StreamDispose; virtual;
+		 procedure StreamNeeded; virtual;
+		 procedure WriteTo(const Txt : string);
+	 public
         constructor Create(const AFileName : string; Lock : boolean); virtual;
         destructor Destroy; override;
         procedure Commit;
@@ -89,7 +89,7 @@ type
         class function GetDefaultLogFile : TLogFile;
         class procedure Initialize; virtual;
         class procedure Log(const Msg : string; LogMessageType : TLogMessageType = lmtError);
-        class procedure LogDebug(const Msg : string; CurrentDebugLevel : Integer);
+        class procedure LogDebug(const Msg : string; MinDebugLevel : Integer);
         class procedure SetDefaultLogFile(LogFile : TLogFile);
         procedure WriteLog(const Msg : string; LogMessageType : TLogMessageType = lmtError); virtual;
         property Buffered : boolean read GetBuffered write SetBuffered;
@@ -968,10 +968,10 @@ begin
     GlobalDefaultLogFile.WriteLog(Msg, LogMessageType);
 end;
 
-class procedure TLogFile.LogDebug(const Msg : string; CurrentDebugLevel : Integer);
+class procedure TLogFile.LogDebug(const Msg : string; MinDebugLevel : Integer);
 begin
-    if (GlobalDefaultLogFile.DebugLevel <= CurrentDebugLevel) then begin
-        GlobalDefaultLogFile.WriteLog(Msg, lmtDebug);
+	 if (GlobalDefaultLogFile.DebugLevel >= MinDebugLevel) then begin
+		 GlobalDefaultLogFile.WriteLog(Msg, lmtDebug);
     end;
 end;
 
@@ -1060,7 +1060,7 @@ Assim para o caso de sobreescrever o modo como o streamer de saída é gerado, amb
 }
 {1 Libera se não estiver locked o streamer de saida }
 begin
-    if (not Self.Locked) and Assigned(Self.FStream) then begin //Libera apenas se naum exclusivo
+	 if (not Self.Locked) and Assigned(Self.FStream) then begin //Libera apenas se naum exclusivo
         FreeAndNil(Self.FStream);
     end;
 end;
@@ -1073,7 +1073,7 @@ Assim para o caso de sobreescrever o modo como o streamer de saída é gerado, amb
 }
 {1 Recupera/cria um streamer de saida. }
 begin
-    if not Assigned(Self.FStream) then begin
+	 if not Assigned(Self.FStream) then begin
         if not FileExists(Self.FFileName) then begin
             TFileHnd.ForceFilename(Self.FFileName);
         end;
