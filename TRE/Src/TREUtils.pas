@@ -221,7 +221,8 @@ var
     EnvChar : char;
     part :    string;
 begin
-    Result := EmptyStr;
+    {TODO -oroger -clib : Considerar o uso da envvar pdcname para pegar o DC do domínio, bem como usaro computador local quando argumento nulo }
+	 Result := EmptyStr;
     if StationName <> EmptyStr then begin
         EnvChar := StationName[1];
         if CharInSet(EnvChar, ['C', 'Z']) then begin //Tipo permitido de estação
