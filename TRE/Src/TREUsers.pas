@@ -60,7 +60,7 @@ type
 implementation
 
 uses
-    Str_pas, StrHnd, TREUtils, WinReg32, JclWin32;
+    Str_pas, StrHnd, TREUtils, WinReg32;
 
 
 constructor TTREZEUser.Create(const AName, APassword : string);

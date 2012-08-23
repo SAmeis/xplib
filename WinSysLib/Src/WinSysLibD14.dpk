@@ -52,6 +52,7 @@ contains
   WinNetHnd in 'WinNetHnd.pas',
   WinProcess in 'WinProcess.pas',
   WinODBC in 'WinODBC.pas',
-  InstanceMonitor in 'InstanceMonitor.pas';
+  InstanceMonitor in 'InstanceMonitor.pas',
+  WinHotKey in 'WinHotKey.pas';
 
 end.

@@ -68,7 +68,6 @@
 			<DCCReference Include="designide.dcp"/>
 			<DCCReference Include="StFLibD14.dcp"/>
 			<DCCReference Include="OPLibD14.dcp"/>
-			<DCCReference Include="Jcl.dcp"/>
 			<DCCReference Include="WinSysLibD14.dcp"/>
 			<DCCReference Include="TREConsts.pas"/>
 			<DCCReference Include="TREZones.pas"/>

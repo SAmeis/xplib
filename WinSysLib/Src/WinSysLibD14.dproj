@@ -76,6 +76,7 @@
 			<DCCReference Include="WinProcess.pas"/>
 			<DCCReference Include="WinODBC.pas"/>
 			<DCCReference Include="InstanceMonitor.pas"/>
+			<DCCReference Include="WinHotKey.pas"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>

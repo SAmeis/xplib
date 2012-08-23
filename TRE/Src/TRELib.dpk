@@ -38,7 +38,6 @@ requires
   designide,
   StFLibD14,
   OPLibD14,
-  Jcl,
   WinSysLibD14;
 
 contains
