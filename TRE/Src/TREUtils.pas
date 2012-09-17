@@ -195,7 +195,7 @@ Revision: 1/6/2008 - roger
 var
     zone : string;
 begin
-    zone   := Copy(Computername, CMPNAME_LOCAL_POS, CMPNAME_LOCAL_LENGHT);
+	 zone   := Copy(Computername, CMPNAME_LOCAL_POS, CMPNAME_LOCAL_LENGHT);
     Result := StrToInt(zone);
 end;
 
