@@ -17,7 +17,7 @@ que tenham o nome iniciando com o valor dado, corrigir a unit AppSettings com ur
 interface
 
 uses
-    Classes, IniFiles, SyncObjs, SysUtils, Windows, WinReg32, XMLIntf, XMLDoc;
+	 Classes, IniFiles, SyncObjs, SysUtils, Windows, WinReg32, XMLIntf, XMLDoc;
 
 const
     APP_SETTINGS_FRAMEWORK_VERSION = '1.0.0.0';
@@ -117,7 +117,7 @@ type
     end;
 
 
-    TXMLBasedSettings = class(TBaseSettings)
+	 TXMLBasedSettings = class(TBaseSettings)
     private
         FRootNode : IXMLNode;
     protected
@@ -129,7 +129,8 @@ type
     public
         constructor Create(ARootNode : IXMLNode); reintroduce; overload; virtual;
         destructor Destroy; override;
-        class function CreateEmptyXMLFile(const Filename : string) : TXMLDocument;
+		 class function CreateEmptyXMLFile(const Filename : string) : TXMLDocument;
+		 class function CreateFromFile( const Filename, RootNodeName : string ) :  TXMLBasedSettings; virtual;
         procedure EraseKey(const Name : string); override;
         procedure EraseValue(const Name : string); override;
         function KeyExists(const Name : string) : boolean; override;
@@ -1469,7 +1470,7 @@ procedure TBaseSettings.RaiseEntryNotFound(const FullEntry : string);
 Eleva a excessão EConfigException informando que a entrada não foi encontrada.
 }
 begin
-    raise EConfigException.CreateFmt('A entrada "%s" não foi encontrada.', [FullEntry]);
+	 raise EConfigException.CreateFmt('A entrada "%s" não foi encontrada.', [FullEntry]);
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
@@ -1572,7 +1573,7 @@ class function TBaseSettings.DOMOwnerComponent : TComponent;
 Retorna a instancia reservada para ser o container padrao para os DOM´s
 }
 begin
-    Result := InternalDOMOwnerComponent;
+	 Result := InternalDOMOwnerComponent;
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
@@ -2308,19 +2309,44 @@ Cria um documento vazio para uso generico
 Este documento sera criado baseado em um arquivo temporario não liberado automaticamente na sua destruicao.
 
 NOTA: O Owner da instancia retornada sempre será o InternalDOMOwnerComponent para evitar erros do parser MS-XML
+No momento da descarga desta unit todos os documentos serão liberados, ou no momento explicitamente invocado.
 }
 var
-    stm : TFileStream;
+	 w : TStrings;
 begin
-    stm := TFileStream.Create(Filename, fmCreate);
-    try
-        stm.WriteBuffer(PChar(EMPTY_CFG)^, Length(EMPTY_CFG));
-    finally
-        stm.Free;
+	 //stm := TFileStream.Create(Filename, fmCreate);
+	 w:=TStringList.Create;
+	 try
+		w.Text:=EMPTY_CFG;
+		w.SaveToFile( Filename );
+		(*
+		stm.WriteBuffer(PWideChar(EMPTY_CFG)^, Length(WideString(EMPTY_CFG))); //Será avalido como double byte, pois está no código
+		{$ELSE}
+		stm.WriteBuffer(PChar(EMPTY_CFG)^, Length(EMPTY_CFG));
+		{$ENDIF}
+		*)
+	 finally
+		w.Free;
+		//stm.Free;
     end;
     Result := TXMLDocument.Create(InternalDOMOwnerComponent);
-    Result.FileName := Filename;
+	 Result.FileName := Filename;
+	 Result.ParseOptions := Result.ParseOptions - [poResolveExternals, poValidateOnParse];
     Result.Active := True;
+end;
+
+class function TXMLBasedSettings.CreateFromFile(const Filename, RootNodeName: string): TXMLBasedSettings;
+var
+	RootDoc : TXMLDocument;
+	RootNode : IXMLNode;
+begin
+	if ( not FileExists( Filename ) ) then begin
+		raise EConfigException.CreateFmt('Arquivo "%s" não encontrado.', [Filename]);
+	end;
+	RootDoc:=TXMLDocument.Create( InternalDOMOwnerComponent );
+	RootNode:=RootDoc.DocumentElement; //noh raiz
+	Result:=TXMLBasedSettings.Create( RootNode );
+	Result.KeyPrefix:=RootNodeName;
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
