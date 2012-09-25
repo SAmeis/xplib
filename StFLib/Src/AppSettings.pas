@@ -128,7 +128,7 @@ type
         property RootNode : IXMLNode read FRootNode write SetRootNode;
     public
         constructor Create(ARootNode : IXMLNode); reintroduce; overload; virtual;
-        destructor Destroy; override;
+		 destructor Destroy; override;
 		 class function CreateEmptyXMLFile(const Filename : string) : TXMLDocument;
 		 class function CreateFromFile( const Filename, RootNodeName : string ) :  TXMLBasedSettings; virtual;
         procedure EraseKey(const Name : string); override;
@@ -267,12 +267,12 @@ type
 implementation
 
 uses
-    ActiveX, FileHnd, Registry, Str_Pas, StreamHnd, Variants, StrHnd;
+	 ActiveX, FileHnd, Registry, Str_Pas, StreamHnd, Variants, StrHnd;
 
 
 const
-    EMPTY_CFG = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'#13 +
-        '<!DOCTYPE ConfigDocumentXML>'#13 +
+	 EMPTY_CFG = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'#13 +
+		 //'<!DOCTYPE ConfigDocument>'#13 +
         '<ConfigDocument>'#13 +
         '</ConfigDocument>'#13;
 
@@ -2301,33 +2301,25 @@ begin
     end;
 end;
 
-{--------------------------------------------------------------------------------------------------------------------------------}
+
+
+/// Cria um documento vazio para uso generico
+/// Este documento sera criado baseado em um arquivo temporario não liberado automaticamente na sua destruicao.
+/// NOTA: O Owner da instancia retornada sempre será o InternalDOMOwnerComponent para evitar erros do parser MS-XML
+/// No momento da descarga desta unit todos os documentos serão liberados, ou no momento explicitamente invocado.
+/// Revision: Roger 20120925
+/// Salvar arquivo usando TStrings de modo a converter para a codificação de forma automática
+///
 class function TXMLBasedSettings.CreateEmptyXMLFile(const Filename : string) : TXMLDocument;
-{{
-Cria um documento vazio para uso generico
-
-Este documento sera criado baseado em um arquivo temporario não liberado automaticamente na sua destruicao.
-
-NOTA: O Owner da instancia retornada sempre será o InternalDOMOwnerComponent para evitar erros do parser MS-XML
-No momento da descarga desta unit todos os documentos serão liberados, ou no momento explicitamente invocado.
-}
 var
 	 w : TStrings;
 begin
-	 //stm := TFileStream.Create(Filename, fmCreate);
 	 w:=TStringList.Create;
 	 try
 		w.Text:=EMPTY_CFG;
 		w.SaveToFile( Filename );
-		(*
-		stm.WriteBuffer(PWideChar(EMPTY_CFG)^, Length(WideString(EMPTY_CFG))); //Será avalido como double byte, pois está no código
-		{$ELSE}
-		stm.WriteBuffer(PChar(EMPTY_CFG)^, Length(EMPTY_CFG));
-		{$ENDIF}
-		*)
 	 finally
 		w.Free;
-		//stm.Free;
     end;
     Result := TXMLDocument.Create(InternalDOMOwnerComponent);
 	 Result.FileName := Filename;
@@ -2338,13 +2330,21 @@ end;
 class function TXMLBasedSettings.CreateFromFile(const Filename, RootNodeName: string): TXMLBasedSettings;
 var
 	RootDoc : TXMLDocument;
+	IDoc : IXMLDocument;
 	RootNode : IXMLNode;
 begin
 	if ( not FileExists( Filename ) ) then begin
 		raise EConfigException.CreateFmt('Arquivo "%s" não encontrado.', [Filename]);
 	end;
 	RootDoc:=TXMLDocument.Create( InternalDOMOwnerComponent );
-	RootNode:=RootDoc.DocumentElement; //noh raiz
+	RootDoc.Active:=True;
+	IDoc := XMLDoc.LoadXMLDocument( Filename );
+
+	if ( not Assigned( IDoc.DocumentElement ) ) then begin
+		raise EConfigException.Create('Documento sem elemento raiz');
+	end;
+
+	RootNode:=IDoc.DocumentElement;
 	Result:=TXMLBasedSettings.Create( RootNode );
 	Result.KeyPrefix:=RootNodeName;
 end;
