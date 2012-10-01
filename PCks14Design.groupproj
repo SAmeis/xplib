@@ -40,7 +40,7 @@
 				<Dependencies/>
 			</Projects>
 			<Projects Include="ShellLib\Src\ShellLibD14.dproj">
-				<Dependencies/>
+				<Dependencies>XPLib\Src\XPLibD14.dproj;OPLib\Src\OPLibD14.dproj;WinSysLib\Src\WinSysLibD14.dproj;WinNetLib\Src\WinNetLibD14.dproj</Dependencies>
 			</Projects>
 			<Projects Include="DlgLib\Src\DlgLibD14.dproj">
 				<Dependencies/>
@@ -164,13 +164,13 @@
 		<Target Name="ECLibD14:Make">
 			<MSBuild Targets="Make" Projects="ECLib\Src\ECLibD14.dproj"/>
 		</Target>
-		<Target Name="ShellLibD14">
+		<Target DependsOnTargets="XPLibD14;OPLibD14;WinSysLibD14;WinNetLibD14" Name="ShellLibD14">
 			<MSBuild Projects="ShellLib\Src\ShellLibD14.dproj"/>
 		</Target>
-		<Target Name="ShellLibD14:Clean">
+		<Target DependsOnTargets="XPLibD14:Clean;OPLibD14:Clean;WinSysLibD14:Clean;WinNetLibD14:Clean" Name="ShellLibD14:Clean">
 			<MSBuild Targets="Clean" Projects="ShellLib\Src\ShellLibD14.dproj"/>
 		</Target>
-		<Target Name="ShellLibD14:Make">
+		<Target DependsOnTargets="XPLibD14:Make;OPLibD14:Make;WinSysLibD14:Make;WinNetLibD14:Make" Name="ShellLibD14:Make">
 			<MSBuild Targets="Make" Projects="ShellLib\Src\ShellLibD14.dproj"/>
 		</Target>
 		<Target Name="DlgLibD14">

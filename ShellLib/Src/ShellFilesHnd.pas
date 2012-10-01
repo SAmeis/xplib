@@ -3,15 +3,16 @@ unit ShellFilesHnd;
 interface
 
 uses
-    Windows, SysUtils, ShellAPI, Types, Str_Pas, FileHnd, Graphics, Classes, Controls;
+	 Windows, SysUtils, ShellAPI, Types, Str_Pas, FileHnd, Graphics, Classes, Controls;
 
 type
-    TExecutableType = (etDOS, etWIN16, etWIN32, etWINCONSOLE, etBATCH, etPIF, etLINK, etERROR);
+	 TExecutableType = (etDOS, etWIN16, etWIN32, etWINCONSOLE, etBATCH, etPIF, etLINK, etERROR);
 
-    TShellHnd = class
-    public
-        class function GetAllUsersDesktop() : string;
-    end;
+	 TShellHnd = class
+	 public
+		 class function GetAllUsersDesktop() : string;
+		 class procedure CreateShellShortCut(const TargetName, LinkFileName, IconFilename : WideString; IconIndex : Integer = 0);
+	 end;
 
 const
     FOF_DEFAULT_IDEAL    = FOF_MULTIDESTFILES + FOF_RENAMEONCOLLISION + FOF_NOCONFIRMATION + FOF_ALLOWUNDO +
@@ -349,6 +350,30 @@ end;
 
 
 { TShellHnd }
+
+class procedure TShellHnd.CreateShellShortCut(const TargetName, LinkFileName, IconFilename: WideString; IconIndex: Integer);
+var
+    IObject : IUnknown;
+    ISLink :  IShellLink;
+    IPFile :  IPersistFile;
+begin
+
+    //Apaga link anterior com o mesmo nome
+    DeleteFile(PWChar(LinkFileName));
+
+    IObject := CreateComObject(CLSID_ShellLink);
+    ISLink  := IObject as IShellLink;
+    IPFile  := IObject as IPersistFile;
+
+    ISLink.SetPath(PChar(TargetName));
+    ISLink.SetWorkingDirectory(PChar(ExtractFilePath(TargetName)));
+    if (IconFilename = EmptyStr) then begin
+        ISLink.SetIconLocation(PWideChar(TargetName), IconIndex);
+	 end else begin
+		 ISLink.SetIconLocation(PWideChar(IconFilename), IconIndex);
+	 end;
+	 IPFile.Save(PWChar(LinkFileName), False);
+end;
 
 class function TShellHnd.GetAllUsersDesktop : string;
 var

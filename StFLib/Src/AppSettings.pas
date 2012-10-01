@@ -53,6 +53,8 @@ type
     end;
 
 
+	 {TODO -oroger -clib : Incorporar os métodos SysUtils.FindCmdLineSwitch implementando a coleta de valores de variaveis
+	 com os tokens ":" ou "=" para coletar os valores após o identificador }
     TBaseSettings = class(TCriticalSection)
  {{
  Denominador comum para todos os tipos de armazenagem desejáveis:
@@ -142,7 +144,7 @@ type
         function ReadDateTime(const Name : string; ADefaultValue : TDefaultSettingValue = nil) : TDateTime; override;
         function ReadFloat(const Name : string; ADefaultValue : TDefaultSettingValue = nil) : double; override;
         function ReadInteger(const Name : string; ADefaultValue : TDefaultSettingValue = nil) : Integer; override;
-        function ReadString(const Name : string; ADefaultValue : TDefaultSettingValue = nil) : string; override;
+		 function ReadString(const Name : string; ADefaultValue : TDefaultSettingValue = nil) : string; override;
         procedure Refresh;
         procedure Update;
         function ValueExists(const Name : string) : boolean; override;
@@ -2141,7 +2143,7 @@ begin
             if (DefVal.FValue = Null) then begin  //Valor padrao invalido
                 Self.RaiseEntryNotFound(FullName);
             end else begin
-                if (not VarIsType(DefVal.Value, VarType)) then begin
+				 if (not VarIsType(DefVal.Value, VarType)) then begin  //Caso o tipo informado incompativel com o solicitado -> padrão
 
                     case VarType of
                         varEmpty, varNull, varSmallint, varInteger, varSingle, varDouble, varCurrency, varDate : begin
@@ -2573,7 +2575,12 @@ Name : Nome da entrada a ser lida.
 Returns: String contida na entrada.
 }
 begin
-    Result := GetAttributeValue(Self.FKeyPrefix + Name, varString, ADefaultValue);
+	 if ( Assigned( ADefaultValue ) ) then begin
+	 	//NOTA: devido a confusão do UNICODE , a opção foi usar tipo nativo do Variant
+		Result := GetAttributeValue(Self.FKeyPrefix + Name, FindVarData(ADefaultValue.Value)^.VType , ADefaultValue);
+	 end else begin
+		Result := GetAttributeValue(Self.FKeyPrefix + Name, varString, ADefaultValue);
+	 end;
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}

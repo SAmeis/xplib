@@ -69,6 +69,7 @@ type
         FLocked :     boolean;
         FOpenMode :   Word;
         FDebugLevel : Integer;
+    FFreeOnRelease: boolean;
         function GetBuffered : boolean;
         procedure SetBuffered(const Value : boolean);
         function GetBufferText : string;
@@ -129,7 +130,8 @@ type
          Nível de detalhamento para as mensagens de depuração. Usado em conjunção com o método
          TLogFile.LogDebug(Msg : string; CurrentDbgLevel : integer).
          }
-        {1 Tamanho corrente do Streamer do log. }
+		 {1 Tamanho corrente do Streamer do log. }
+		 property FreeOnRelease : boolean read FFreeOnRelease write FFreeOnRelease;
     end;
 
 type
@@ -780,7 +782,8 @@ local fora da mesma pasta do runtime
 }
 begin
     inherited Create;
-    Self.FDebugLevel := DBGLEVEL_ULTIMATE; //inicia com nivel mais alto possivel
+    Self.FreeOnRelease:=True; //Libera quando liberada como Default
+	 Self.FDebugLevel := DBGLEVEL_ULTIMATE; //inicia com nivel mais alto possivel
     Self.FFileName   := AFileName;
 	 //TFileHnd.ForceFilename(Self.FFileName);
 	 Self.FLocked   := Lock;
@@ -1018,13 +1021,16 @@ end;
 Rev. 19/5/2005
 }
 var
-    OldRef : TLogFile;
+	 OldRef : TLogFile;
 begin
-    OldRef := GlobalDefaultLogFile;
-    if (OldRef <> LogFile) then begin
-        GlobalDefaultLogFile := LogFile;
-        OldRef.Free;
-    end;
+	 OldRef := GlobalDefaultLogFile;
+	 if (OldRef <> LogFile) then begin
+		 GlobalDefaultLogFile := LogFile;
+		 if ( OldRef.FreeOnRelease ) then begin
+		 	//Libera a instancia
+			OldRef.Free;
+		 end;
+	 end;
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
