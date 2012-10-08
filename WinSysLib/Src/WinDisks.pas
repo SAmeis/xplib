@@ -198,15 +198,15 @@ end;
 
 function GetVolumeLabel(Value : char) : string;
 var
-    VolumeLabel, FileSystem :    array[0..$FF] of char;
+	 VolumeLabel, FileSystem :    array[0..MAX_PATH] of Char;
     SerialNumber, DW, SysFlags : DWord;
 begin
     Value := UpCase(Value);
     if (Value >= 'A') and (Value <= 'Z') then begin
-        GetVolumeInformation(PChar(Value + ':\'), VolumeLabel, SizeOf(VolumeLabel), @SerialNumber, DW, SysFlags,
-            FileSystem, SizeOf(FileSystem));
+		 GetVolumeInformation(PChar(Value + ':\'), VolumeLabel, Length(VolumeLabel), @SerialNumber, DW, SysFlags,
+			 FileSystem, Length(FileSystem));
         Result := VolumeLabel;
-    end;
+	 end;
 end;
 
 function GetDrivesStringChain(DesiredDriveType : UINT) : string;

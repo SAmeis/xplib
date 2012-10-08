@@ -111,7 +111,7 @@ begin
   end   {if}
   {If not NT, copy path as a standard ANSI null-term string.}
   else begin
-    StrPLCopy(PChar(@Buffer), ThePath, SizeOf(Buffer));
+	 StrPLCopy(PChar(@Buffer), ThePath, Length(Buffer)); //Roger: Trocado SizeOf por Length de modo a corrigir retorno
   end;
 
   {Convert Path into PIDL}
@@ -210,7 +210,7 @@ begin
   {Check PIDL is not nil...}
   if (PIDL <> nil) then begin
     {There will always be at least two bytes for the terminating cb.}
-    Result := SizeOf(CurrentID.cb);
+	 Result := SizeOf(CurrentID.cb);
 
     {Initialize the local item id pointer and walk through the list
      until the terminating cb = 0 is encountered.  Add the value of

@@ -84,7 +84,8 @@ var
 begin
     Result := True;
     Master := TInstanceMonitor(Param); //Le classname para as top-level windows especificadas por Handle
-    GetClassName(Handle, ClassName, SizeOf(ClassName));
+	 //GetClassName(Handle, ClassName, SizeOf(ClassName));
+	 GetClassName(Handle, ClassName, Length(ClassName));  {TODO -oroger -clib : Confirmar uso correto desta chamada comparar acima}
     if SameText(ClassName, Master.RootWindow.ClassName) then begin
         ChildWnd := WinHnd.FindWindowChildByClass(Handle, TInstanceMonitorCaptureWinControl.ClassName);
         if ChildWnd <> 0 then begin

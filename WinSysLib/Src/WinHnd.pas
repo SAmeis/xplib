@@ -1,5 +1,5 @@
 {$IFDEF WinHnd}
-	{$DEFINE DEBUG_UNIT}
+     {$DEFINE DEBUG_UNIT}
 {$ENDIF}
 {$I WinSysLib.inc}
 
@@ -60,7 +60,7 @@ function FindWindowClassInThread(ThreadId : Integer; ClassName : PChar) : HWnd;
 //#### A ser depurada #### function GetModuleNameByWinHnd( Hnd : HWND ) : string;
 procedure HideAppTaskButton(AppHandle : DWORD);
 //Ajsuta token de privilégio para outra conta
-function ImpersonateAnotherUser( const UserName, Pwd : string ) : Integer;
+function ImpersonateAnotherUser(const UserName, Pwd : string) : Integer;
 function IsThreadValid(dwThreadID : longword) : boolean;
 function LookForClass(hWnd : HWND; lParam : LPARAM) : BOOL; stdcall;
 //Simula uma suspensao da tarefa em 16 bits
@@ -145,11 +145,13 @@ var
     I :    Integer;
     pidNeeded : DWORD;
     PIDList : array[0..1000] of Integer;
-    PIDName : array [0..MAX_PATH - 1] of char;
+    PIDName : array [0..MAX_PATH - 1] of AnsiChar;
+    //Alterado em 20121008 de Char para AnsiChar devido a limitação de rotinas abaixo
     PH :   THandle;
     hMod : HMODULE;
     dwSize2 : DWORD;
 begin
+    {TODO -oroger -clib : Checar a limitação de nomes ANSI, e remover se possivel}
     PList.Clear;
     if not EnumProcesses(PDWORD(@PIDList), 1000, pidNeeded) then begin
         raise Exception.Create('PSAPI.DLL Falhou ao ser carregada');
@@ -389,18 +391,21 @@ begin
     end;
 end;
 
+
+
+
 function FindWindowChildByClass(const ParentWnd : HWnd; const ClassName : string) : HWnd;
     //------------------------------------------------------------------------------
 var
     W1st, Wth : HWnd;
-    WinClass :  array[0..256] of char;
+    WinClass :  array[0..256] of WideChar;
 begin
     Result := 0;
     W1st   := GetWindow(ParentWnd, GW_CHILD);
     if W1st <> 0 then begin
         Wth := W1st;
-        repeat
-            GetClassName(Wth, WinClass, SizeOf(WinClass));
+		 repeat
+			 GetClassName(Wth, WinClass, Length(WinClass));
             if (SameText(WinClass, ClassName)) then begin
                 Result := Wth;
                 break;
@@ -452,37 +457,37 @@ begin
         or WS_EX_TOOLWINDOW and not WS_EX_APPWINDOW);
 end;
 
-function ImpersonateAnotherUser(const UserName, Pwd : string ) : Integer;
-	 //----------------------------------------------------------------------------------------------------------------------------------
+function ImpersonateAnotherUser(const UserName, Pwd : string) : Integer;
+    //----------------------------------------------------------------------------------------------------------------------------------
 var
-	 TKHandle :   THandle;
-	 User, Pass : PChar;
+    TKHandle :   THandle;
+    User, Pass : PChar;
 begin
-	 User   := PChar(UserName);
-	 Pass   := PChar(Pwd);
-	 Result := ERROR_SUCCESS;
-	 SetLastError(Result);
-	 if LogonUser(User, nil, Pass, LOGON32_LOGON_INTERACTIVE, LOGON32_PROVIDER_DEFAULT, TKHandle) then begin
-		 if not ImpersonateLoggedOnUser(TKHandle) then begin
-			 Result := GetLastError();
-		 end;
-	 end else begin
-		 Result := GetLastError();
-	 end;
+    User   := PChar(UserName);
+    Pass   := PChar(Pwd);
+    Result := ERROR_SUCCESS;
+    SetLastError(Result);
+    if LogonUser(User, nil, Pass, LOGON32_LOGON_INTERACTIVE, LOGON32_PROVIDER_DEFAULT, TKHandle) then begin
+        if not ImpersonateLoggedOnUser(TKHandle) then begin
+            Result := GetLastError();
+        end;
+    end else begin
+        Result := GetLastError();
+    end;
 end;
 
 
 function IsThreadValid(dwThreadID : longword) : boolean;
-	 {-------------------------------------------------------------------------------------------------------------}
-	 {..................................................................................................}
-	 function ThreadWin(hwnd : HWND; lparam : LPARAM) : BOOL; stdcall;
-	 begin
-		 Result := True;
-	 end;
+    {-------------------------------------------------------------------------------------------------------------}
+    {..................................................................................................}
+    function ThreadWin(hwnd : HWND; lparam : LPARAM) : BOOL; stdcall;
+    begin
+        Result := True;
+    end;
 
-	 {..................................................................................................}
+    {..................................................................................................}
 begin
-	 Result := EnumThreadWindows(dwThreadID, @ThreadWin, 0);
+    Result := EnumThreadWindows(dwThreadID, @ThreadWin, 0);
 end;
 
 

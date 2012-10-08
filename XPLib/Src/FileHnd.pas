@@ -2306,7 +2306,7 @@ begin
         DWrite := SR.FindData.ftLastWriteTime;
         FileTimeToLocalFileTime(DWrite, DWrite);
         LastWriteDate := TFileHnd.FileTimeToDateTime(DWrite);
-        FindClose(SR);
+        FindClose(SR); {TODO -oroger -clib : Ajustar o retorno para caso de alteração de atributos falha}
     end;
 end;
 

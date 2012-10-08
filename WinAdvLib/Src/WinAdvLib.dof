@@ -88,13 +88,13 @@ RemoteSymbols=0
 MinStackSize=16384
 MaxStackSize=1048576
 ImageBase=4194304
-ExeDescription=AAA - Template-Lib - (Super Library)
+ExeDescription=AAA - WinAdvLib-Lib - (Super Library)
 [Directories]
 OutputDir=
-UnitOutputDir=C:\sw\WorkDir\Lib\D2010
-PackageDLLOutputDir=C:\sw\WorkDir\Lib\D2010
-PackageDCPOutputDir=C:\sw\WorkDir\Lib\D2010
-SearchPath=C:\sw\WorkDir\Lib\D2010
+UnitOutputDir=C:\sw\WorkDir\Lib.7
+PackageDLLOutputDir=C:\sw\WorkDir\Lib.7
+PackageDCPOutputDir=C:\sw\WorkDir\Lib.7
+SearchPath=C:\sw\WorkDir\Lib.7
 Packages=
 Conditionals=
 DebugSourceDirs=
@@ -124,12 +124,12 @@ DLL=0
 Locale=1046
 CodePage=1252
 [Version Info Keys]
-CompanyName=3E®
+CompanyName=Speechway®
 FileDescription=
 FileVersion=7.0.0.0
 InternalName=
 LegalCopyright=
-LegalTrademarks=3E®
+LegalTrademarks=Speechway®
 OriginalFilename=
 ProductName=
 ProductVersion=7.0.0.0
@@ -142,22 +142,22 @@ Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
 [HistoryLists\hlSearchPath]
 Count=4
-Item0=C:\sw\WorkDir\Lib\D2010
-Item1=C:\Local\Lib\D2010
+Item0=C:\sw\WorkDir\Lib.7
+Item1=C:\Local\Lib.7
 Item2=C:\Local\Lib
 Item3=$(DELPHI)\Lib\Debug;C:\Local\Lib.6
 [HistoryLists\hlUnitOutputDirectory]
 Count=3
-Item0=C:\sw\WorkDir\Lib\D2010
-Item1=C:\Local\Lib\D2010
+Item0=C:\sw\WorkDir\Lib.7
+Item1=C:\Local\Lib.7
 Item2=C:\Local\Lib.6
 [HistoryLists\hlBPLOutput]
 Count=3
-Item0=C:\sw\WorkDir\Lib\D2010
-Item1=C:\Local\Lib\D2010
+Item0=C:\sw\WorkDir\Lib.7
+Item1=C:\Local\Lib.7
 Item2=C:\Local\Lib.6
 [HistoryLists\hlDCPOutput]
 Count=3
-Item0=C:\sw\WorkDir\Lib\D2010
-Item1=C:\Local\Lib\D2010
+Item0=C:\sw\WorkDir\Lib.7
+Item1=C:\Local\Lib.7
 Item2=C:\Local\Lib.6

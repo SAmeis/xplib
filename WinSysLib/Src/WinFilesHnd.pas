@@ -71,7 +71,7 @@ var
 	FileName: array[0..255] of Char;
 begin
 	if IsLibrary then begin
-		GetModuleFileName(HInstance, FileName, SizeOf(FileName) - 1);
+		GetModuleFileName(HInstance, FileName, Length(FileName) - 1);
 		Result := StrPas(FileName);
 	end else begin
 		Result := ParamStr(0);

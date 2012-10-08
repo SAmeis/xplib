@@ -421,7 +421,8 @@ var
 begin
     K := 0;
     repeat
-        BytesRead := Input.Read(InBuf, SizeOf(InBuf));
+		 //BytesRead := Input.Read(InBuf, SizeOf(InBuf)); //embora mesma coisa computada qtd de bytes lidos
+		 BytesRead := Input.Read(InBuf, Length(InBuf)); {TODO -oroger -croger : Tratar diferenca entre sizeof e length ao lado }
         I      := 0;
         BufPtr := OutBuf;
         while I < BytesRead do begin
@@ -465,7 +466,7 @@ end;
 
 procedure DecodeStream(Input, Output : TStream);
 var
-    InBuf :  array[0..75] of char;
+	 InBuf :  array[0..75] of char;
     OutBuf : array[0..60] of byte;
     InBufPtr, OutBufPtr : PChar;
     I, J, K, BytesRead : Integer;
@@ -494,11 +495,11 @@ var
         WhiteFound, EndReached : boolean;
         CntRead, Idx, IdxEnd :   Integer;
     begin
-        IdxEnd := 0;
+		 IdxEnd := 0;
         repeat
             WhiteFound := False;
-            CntRead := Input.Read(InBuf[IdxEnd], (SizeOf(InBuf) - IdxEnd));
-            EndReached := CntRead < (SizeOf(InBuf) - IdxEnd);
+			 CntRead := Input.Read(InBuf[IdxEnd], (SizeOf(InBuf) - IdxEnd)); {TODO -oroger -croger : Tratar diferenca entre sizeof e length ao lado }
+			 EndReached := CntRead < (SizeOf(InBuf) - IdxEnd); {TODO -oroger -croger : Tratar diferenca entre sizeof e length ao lado }
             Idx    := IdxEnd;
             IdxEnd := CntRead + IdxEnd;
             while (Idx < IdxEnd) do begin

@@ -188,7 +188,7 @@ var
 begin
     LibHandle := LoadLibraryEx(ResourceLibName[Win32Platform = VER_PLATFORM_WIN32_NT], 0, LOAD_LIBRARY_AS_DATAFILE);
     if LibHandle <> 0 then begin
-        SetString(Result, Buffer, LoadString(LibHandle, ErrorCode, Buffer, Sizeof(Buffer)));
+        SetString(Result, Buffer, LoadString(LibHandle, ErrorCode, Buffer, Length(Buffer)));
         FreeLibrary(LibHandle);
     end else begin
         Result := Format( 'Erro extendido de rede desconhecido(%d)', [ ErrorCode ] );;
