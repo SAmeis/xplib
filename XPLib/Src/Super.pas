@@ -132,6 +132,8 @@ function MinVal(const Val1, Val2 : double) : double;
 
 function ReturnAddress : Pointer;
 
+procedure MemMoveESBOffset (const Source; const Ofs1: Integer; var Dest; const Ofs2: Integer; const Size: Integer);
+
 function SwapInstances(pInstance1, pInstance2 : Pointer; InstSize : Word) : boolean;
 
 implementation
@@ -280,6 +282,53 @@ begin
     SwapInstances := True;
 end;
 
+procedure MemMoveESBOffset (const Source; const Ofs1: Integer; var Dest; const Ofs2: Integer; const Size: Integer);
+//----------------------------------------------------------------------------------------------------------------------------------
+asm
+	   push		esi
+	   push		edi
+
+	   mov		esi,		Source
+	   add		esi,		Ofs1
+	   mov		edi,		Dest
+	   add		edi,		Ofs2
+
+	   mov		eax,		Size
+	   mov		ecx,		eax
+
+	   cmp		edi,		esi
+	   jg		@@DOWN
+	   je		@@EXIT
+
+	   sar		ecx,2           		//copy count DIV 4 dwords
+	   js		@@EXIT
+
+	   rep		movsd
+
+	   mov		ecx,		eax
+	   and		ecx,		03h
+	   rep		movsb           		//copy count MOD 4 bytes
+	   jmp		@@EXIT
+
+@@DOWN:
+	   lea		esi,		[esi+ecx-4] // point ESI to last dword of source
+	   lea		edi,		[edi+ecx-4] // point EDI to last dword of dest
+
+	   sar		ecx,		2			// copy count DIV 4 dwords
+	   js		@@EXIT
+	   std
+	   rep		movsd
+
+	   mov		ecx,		eax
+	   and		ecx,		03h         // Copy count MOD 4 bytes
+	   add		esi,		4-1         // point to last byte of rest
+	   add		edi,		4-1
+	   rep		movsb
+	   cld
+@@EXIT:
+	   pop		edi
+	   pop		esi
+end;
 
 (* o programa abaixo desabilita ctrl+alt+del ???????
 program small;
