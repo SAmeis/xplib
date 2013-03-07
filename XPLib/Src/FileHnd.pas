@@ -2152,7 +2152,7 @@ end;
 
 class function TFileHnd.DeepExistingPath(const Path : string) : string;
     ///  <summary>
-    ///    Rtorna o caminho mais profundo válido. Caso não exista nem mesmo o raiz do caminho passado o home_dir é retornado.
+    ///    Retorna o caminho mais profundo válido. Caso não exista nem mesmo o raiz do caminho passado o home_dir é retornado.
     ///  </summary>
     ///  <remarks>
     ///
