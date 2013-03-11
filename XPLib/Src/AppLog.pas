@@ -1,5 +1,5 @@
 {$IFDEF AppLog}
-    {$DEFINE DEBUG_UNIT}
+     {$DEFINE DEBUG_UNIT}
 {$ENDIF}
 {$I XPLib.inc}
 
@@ -27,6 +27,8 @@ type
 type
     TErrorLogMode      = (elmFormatted, elmUnFormatted);
     TFormatMessageProc = function(const Msg : string; LogMessageType : TLogMessageType = lmtError) : string;
+    TLogMessageEvent   = procedure(Sender : TObject; var Text : string; MessageType : TLogMessageType;
+        var Canceled : boolean) of object;
 
 type
     IFormatter = interface(IInterface)
@@ -64,12 +66,14 @@ type
      Classe usada como base para registro de logs de aplicativos.
      }
     private
-        FFileName :   string;
-        FFormatter :  IFormatter;
-        FLocked :     boolean;
-        FOpenMode :   Word;
-        FDebugLevel : Integer;
-    FFreeOnRelease: boolean;
+        FFileName :       string;
+        FFormatter :      IFormatter;
+        FLocked :         boolean;
+        FOpenMode :       Word;
+        FDebugLevel :     Integer;
+        FFreeOnRelease :  boolean;
+        FOnMessageReceived : TLogMessageEvent;
+        FOnMessageWrite : TLogMessageEvent;
         function GetBuffered : boolean;
         procedure SetBuffered(const Value : boolean);
         function GetBufferText : string;
@@ -78,10 +82,10 @@ type
     protected
         FLogBuffer : TStringList;
         FStream :    TStream;
-		 procedure StreamDispose; virtual;
-		 procedure StreamNeeded; virtual;
-		 procedure WriteTo(const Txt : string);
-	 public
+        procedure StreamDispose; virtual;
+        procedure StreamNeeded; virtual;
+        procedure WriteTo(const Txt : string);
+    public
         constructor Create(const AFileName : string; Lock : boolean); virtual;
         destructor Destroy; override;
         procedure Commit;
@@ -129,9 +133,16 @@ type
          {{
          Nível de detalhamento para as mensagens de depuração. Usado em conjunção com o método
          TLogFile.LogDebug(Msg : string; CurrentDbgLevel : integer).
-         }
-		 {1 Tamanho corrente do Streamer do log. }
-		 property FreeOnRelease : boolean read FFreeOnRelease write FFreeOnRelease;
+          }
+        {1 Tamanho corrente do Streamer do log. }
+        property FreeOnRelease : boolean read FFreeOnRelease write FFreeOnRelease;
+
+        //Mensagem recebida no formato cru(cuidado já no modo de acesso exclusivo)
+        property OnMessageReceived : TLogMessageEvent read FOnMessageReceived write FOnMessageReceived;
+
+        //Mensagem recebida formatada e prestes a ser escrita(cuidado já no modo de acesso exclusivo)
+        property OnMessageWrite : TLogMessageEvent read FOnMessageWrite write FOnMessageWrite;
+
     end;
 
 type
@@ -782,14 +793,14 @@ local fora da mesma pasta do runtime
 }
 begin
     inherited Create;
-    Self.FreeOnRelease:=True; //Libera quando liberada como Default
-	 Self.FDebugLevel := DBGLEVEL_ULTIMATE; //inicia com nivel mais alto possivel
-    Self.FFileName   := AFileName;
-	 //TFileHnd.ForceFilename(Self.FFileName);
-	 Self.FLocked   := Lock;
-	 Self.FOpenMode := fmOpenReadWrite + fmShareDenyWrite; //Padrao para acesso exclusivo RW
-	 if Self.FLocked then begin
-	 	 TFileHnd.ForceFilename(Self.FFileName);
+    Self.FreeOnRelease := True; //Libera quando liberada como Default
+    Self.FDebugLevel := DBGLEVEL_ULTIMATE; //inicia com nivel mais alto possivel
+    Self.FFileName := AFileName;
+    //TFileHnd.ForceFilename(Self.FFileName);
+    Self.FLocked   := Lock;
+    Self.FOpenMode := fmOpenReadWrite + fmShareDenyWrite; //Padrao para acesso exclusivo RW
+    if Self.FLocked then begin
+        TFileHnd.ForceFilename(Self.FFileName);
         Self.FStream := TFileStream.Create(AFileName, Self.OpenMode);
     end else begin
         Self.FStream := nil;
@@ -973,8 +984,8 @@ end;
 
 class procedure TLogFile.LogDebug(const Msg : string; MinDebugLevel : Integer);
 begin
-	 if (GlobalDefaultLogFile.DebugLevel >= MinDebugLevel) then begin
-		 GlobalDefaultLogFile.WriteLog(Msg, lmtDebug);
+    if (GlobalDefaultLogFile.DebugLevel >= MinDebugLevel) then begin
+        GlobalDefaultLogFile.WriteLog(Msg, lmtDebug);
     end;
 end;
 
@@ -1021,16 +1032,16 @@ end;
 Rev. 19/5/2005
 }
 var
-	 OldRef : TLogFile;
+    OldRef : TLogFile;
 begin
-	 OldRef := GlobalDefaultLogFile;
-	 if (OldRef <> LogFile) then begin
-		 GlobalDefaultLogFile := LogFile;
-		 if ( OldRef.FreeOnRelease ) then begin
-		 	//Libera a instancia
-			OldRef.Free;
-		 end;
-	 end;
+    OldRef := GlobalDefaultLogFile;
+    if (OldRef <> LogFile) then begin
+        GlobalDefaultLogFile := LogFile;
+        if (OldRef.FreeOnRelease) then begin
+            //Libera a instancia
+            OldRef.Free;
+        end;
+    end;
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
@@ -1066,7 +1077,7 @@ Assim para o caso de sobreescrever o modo como o streamer de saída é gerado, amb
 }
 {1 Libera se não estiver locked o streamer de saida }
 begin
-	 if (not Self.Locked) and Assigned(Self.FStream) then begin //Libera apenas se naum exclusivo
+    if (not Self.Locked) and Assigned(Self.FStream) then begin //Libera apenas se naum exclusivo
         FreeAndNil(Self.FStream);
     end;
 end;
@@ -1079,7 +1090,7 @@ Assim para o caso de sobreescrever o modo como o streamer de saída é gerado, amb
 }
 {1 Recupera/cria um streamer de saida. }
 begin
-	 if not Assigned(Self.FStream) then begin
+    if not Assigned(Self.FStream) then begin
         if not FileExists(Self.FFileName) then begin
             TFileHnd.ForceFilename(Self.FFileName);
         end;
@@ -1100,14 +1111,29 @@ LogMessageType : Tipo da mensage a ser salva.
 }
 {1 Formata e salva para o buffer ou streamer de saida a mensagem passada }
 var
-    Txt : string;
+    Txt :      string;
+    Canceled : boolean;
 begin
+    Canceled := False;
     EnterCriticalSection(LogCriticalSection);
     try
+		 Txt := Msg; //Remove limitação de modo constante
+        if (Assigned(Self.FOnMessageReceived)) then begin
+            Self.FOnMessageReceived(Self, Txt, LogMessageType, Canceled);
+            if (Canceled) then begin
+                Exit;
+            end;
+        end;
         if (Assigned(Self.FFormatter)) then begin
-            Txt := Self.FFormatter.FormatLogMsg(Msg, LogMessageType);
+			 Txt := Self.FFormatter.FormatLogMsg(Txt, LogMessageType);
         end else begin
-            Txt := FormatMessageProc(Msg, LogMessageType); //Asumido que sempre existe ponteiro para rotina atribuido
+			 Txt := FormatMessageProc(Txt, LogMessageType); //Assumindo que sempre existe ponteiro para rotina atribuido
+        end;
+        if (Assigned(Self.FOnMessageWrite)) then begin
+			 Self.FOnMessageWrite(Self, Txt, LogMessageType, Canceled);
+            if (Canceled) then begin
+                Exit;
+            end;
         end;
         if (Self.FLogBuffer <> nil) then begin
             Self.FLogBuffer.Add(Txt);
