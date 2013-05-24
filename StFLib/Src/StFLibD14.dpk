@@ -45,7 +45,6 @@ contains
   CryptIni in 'CryptIni.pas',
   mp3Tag in 'mp3Tag.pas',
   StreamHnd in 'StreamHnd.pas',
-  ConfigurationLayer in 'ConfigurationLayer.pas',
-  AppSettings in 'AppSettings.pas';
+  ConfigurationLayer in 'ConfigurationLayer.pas';
 
 end.

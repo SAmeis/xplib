@@ -214,6 +214,7 @@ type
         class function CreateTempFileName(const Prefix : PChar; const Number : byte; CreateFile : boolean) : string;
         class function ExpandFilename(const BasePath, path : string) : string;
         class function FileSize(const FileName : string) : int64;
+        class function FirstOccurrence(const Path, Mask : string) : string;
         class function ForceFileExtension(const OriginalName, DesiredExtension : string) : string;
         class procedure ForceFilename(const Filename : string);
         class function DeepExistingPath(const Path : string) : string;
@@ -968,19 +969,19 @@ Revision - 20120529 - roger
 Removida chamada interna para identificar se arquivo existe por chamada a SysUtils.FileExists
 }
 var
-	 Buffer : TMemoryStream;
-	 Attr :   Integer;
-Age :    longint;
-	 Hnd :    Integer;
+    Buffer : TMemoryStream;
+    Attr :   Integer;
+    Age :    longint;
+    Hnd :    Integer;
 begin
-	 if ( SysUtils.FileExists( Source )) then begin //source exists
-		if DirectoryExists(ExtractFilePath(Dest)) then begin //dest exists
+    if (SysUtils.FileExists(Source)) then begin //source exists
+        if DirectoryExists(ExtractFilePath(Dest)) then begin //dest exists
             if (Over or (not (__FileExists(Dest)))) then begin
                 if (TFileHnd.FileSize(Source) > SpaceFree(ExtractFilePath(Dest))) then begin //falta espaco
                     Result := ERROR_DISK_FULL;
-					 Exit;
-				 end;
-				 if SysUtils.FileExists(Dest) and (FileSetAttr(Dest, SysUtils.faArchive ) <> 0) then begin
+                    Exit;
+                end;
+                if SysUtils.FileExists(Dest) and (FileSetAttr(Dest, SysUtils.faArchive) <> 0) then begin
                     //atributos de protecao nao foram resetados
                     Result := ERROR_OPEN_FAILED;
                     Exit;
@@ -2321,6 +2322,27 @@ var
 begin
     FileTimeToSystemTime(FTime, ST);
     Result := EncodeDate(ST.wYear, ST.wMonth, ST.wDay) + EncodeTime(ST.wHour, ST.wMinute, ST.wSecond, ST.wMilliSeconds);
+end;
+
+class function TFileHnd.FirstOccurrence(const Path, Mask : string) : string;
+    ///<summary>
+    ///Retorna caminho completo de arquivo obedecendo os criterios de path e mask, ou vazio se nada ocorrer
+    ///</summary>
+    ///<remarks>
+    ///
+    ///</remarks>
+var
+    sr : TSearchRec;
+begin
+	 try
+		 if (FindFirst( TFileHnd.ConcatPath( [ Path, Mask ] ), faAllFiles, sr) = ERROR_SUCCESS ) then begin
+            Result := TFileHnd.ConcatPath( [ Path, sr.FindData.cFileName ] );
+        end else begin
+            Result := EmptyStr;
+        end;
+    finally
+        FindClose(sr);
+    end;
 end;
 
 class function TFileHnd.ForceFileExtension(const OriginalName, DesiredExtension : string) : string;
