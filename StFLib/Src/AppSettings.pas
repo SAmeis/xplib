@@ -21,7 +21,8 @@ uses
 
 const
     APP_SETTINGS_FRAMEWORK_VERSION = '1.0.0.0';
-    APP_SETTINGS_DEFAULT_ENTRYNAME = '@';
+	 APP_SETTINGS_DEFAULT_ENTRYNAME = '@';
+	 APP_SETTINGS_EXTENSION_FILE_INI = '.ini';
 
 type
     TDefaultSettingValue = class(TPersistent)
