@@ -1613,8 +1613,15 @@ begin
 		 SubKeysNames.Free;
        end;
 	end;
-	---
-	leitura das entradas
+	ValueNames:=TStringList.Create;
+	try
+	Source.ListValuesNames( SourceKeyName, ValueNames );
+	for x := 0 to ValueNames.Count - 1 do begin
+		Self.WriteString( TFileHnd.ConcatPath([DestKeyName, ValueNames[x]]), Source.ReadString( ValueNames[x] ));
+   end;
+   finally
+    ValueNames.Free;
+   end;
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
