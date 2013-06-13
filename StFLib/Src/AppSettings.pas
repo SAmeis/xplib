@@ -94,8 +94,9 @@ type
         function GetVersion : string; virtual;
         function KeyExists(const Name : string) : boolean; virtual; abstract;
         procedure ListSubKeys(const Name : string; SubKeys : TStrings); virtual; abstract;
-        procedure ListValuesNames(const Name : string; Values : TStrings); virtual; abstract;
-        class function NewInstance : TObject; override;
+		 procedure ListValuesNames(const Name : string; Values : TStrings); virtual; abstract;
+		 procedure Import( Source : TBaseSettings; const SourceKeyName, DestKeyName : string; Recursive : Boolean );
+		 class function NewInstance : TObject; override;
         function ReadBinary(const Name : string; Stream : TStream) : Integer; virtual; abstract;
         function ReadBoolean(const Name : string; ADefaultValue : TDefaultSettingValue = nil) : boolean; virtual; abstract;
         function ReadBooleanDefault(const Name : string; ADefaultValue : boolean = False) : boolean; virtual;
@@ -190,7 +191,7 @@ type
         procedure EraseKey(const Name : string); override;
         procedure EraseValue(const Name : string); override;
         function KeyExists(const Name : string) : boolean; override;
-        procedure ListSubKeys(const Name : string; SubKeys : TStrings); override;
+		 procedure ListSubKeys(const Name : string; SubKeys : TStrings); override;
         procedure ListValuesNames(const Name : string; Values : TStrings); override;
         function ReadBinary(const Name : string; Stream : TStream) : Integer; override;
         function ReadBoolean(const Name : string; ADefaultValue : TDefaultSettingValue = nil) : boolean; override;
@@ -1592,6 +1593,28 @@ Retorna versao do framework de acesso a configuracoes, este metodo foi criado ap
 }
 begin
     Result := APP_SETTINGS_FRAMEWORK_VERSION;
+end;
+
+procedure TBaseSettings.Import(Source: TBaseSettings; const SourceKeyName, DestKeyName: string; Recursive: Boolean);
+var
+	ValueNames, SubKeysNames : TStringList;
+	x : Integer;
+begin
+	if ( Recursive ) then begin
+		SubKeysNames:=TStringList.Create;
+		try
+			Source.ListSubKeys( SourceKeyName, SubKeysNames );
+			for x := 0 to SubKeysNames.Cout - 1 do begin
+				Self.Import( Source,
+				TFileHnd.ConcatPath([ SourceKeyName, SubKeysNames[x] ] ),
+				TFileHnd.ConcatPath([ DestKeyName, SubKeysNames[x] ] ), Recursive );
+			end;
+		finally
+		 SubKeysNames.Free;
+       end;
+	end;
+	---
+	leitura das entradas
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
