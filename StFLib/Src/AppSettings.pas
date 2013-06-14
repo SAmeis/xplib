@@ -1,5 +1,5 @@
 {$IFDEF AppSettings}
-    {$DEFINE DEBUG_UNIT}
+	 {$DEFINE DEBUG_UNIT}
 {$ENDIF}
 {$I StFLib.inc}
 
@@ -17,12 +17,12 @@ que tenham o nome iniciando com o valor dado, corrigir a unit AppSettings com ur
 interface
 
 uses
-	 Classes, IniFiles, SyncObjs, SysUtils, Windows, WinReg32, XMLIntf, XMLDoc;
+    Classes, IniFiles, SyncObjs, SysUtils, Windows, WinReg32, XMLIntf, XMLDoc;
 
 const
-    APP_SETTINGS_FRAMEWORK_VERSION = '1.0.0.0';
-	 APP_SETTINGS_DEFAULT_ENTRYNAME = '@';
-	 APP_SETTINGS_EXTENSION_FILE_INI = '.ini';
+    APP_SETTINGS_FRAMEWORK_VERSION  = '1.0.0.0';
+    APP_SETTINGS_DEFAULT_ENTRYNAME  = '@';
+    APP_SETTINGS_EXTENSION_FILE_INI = '.ini';
 
 type
     TDefaultSettingValue = class(TPersistent)
@@ -54,12 +54,12 @@ type
     end;
 
 
-	 {TODO -oroger -clib : Incorporar os métodos SysUtils.FindCmdLineSwitch implementando a coleta de valores de variaveis
-	 com os tokens ":" ou "=" para coletar os valores após o identificador }
+     {TODO -oroger -clib : Incorporar os métodos SysUtils.FindCmdLineSwitch implementando a coleta de valores de variaveis
+     com os tokens ":" ou "=" para coletar os valores após o identificador }
     TBaseSettings = class(TCriticalSection)
  {{
  Denominador comum para todos os tipos de armazenagem desejáveis:
- 
+
  IniFiles, Registry e XML.
  
  Esta classe é a ancestral para os tipos de configurações gerais de um aplicativo padrão Digitalsys:
@@ -94,9 +94,9 @@ type
         function GetVersion : string; virtual;
         function KeyExists(const Name : string) : boolean; virtual; abstract;
         procedure ListSubKeys(const Name : string; SubKeys : TStrings); virtual; abstract;
-		 procedure ListValuesNames(const Name : string; Values : TStrings); virtual; abstract;
-		 procedure Import( Source : TBaseSettings; const SourceKeyName, DestKeyName : string; Recursive : Boolean );
-		 class function NewInstance : TObject; override;
+        procedure ListValuesNames(const Name : string; Values : TStrings); virtual; abstract;
+        procedure Import(Source : TBaseSettings; const SourceKeyName, DestKeyName : string; Recursive : boolean);
+        class function NewInstance : TObject; override;
         function ReadBinary(const Name : string; Stream : TStream) : Integer; virtual; abstract;
         function ReadBoolean(const Name : string; ADefaultValue : TDefaultSettingValue = nil) : boolean; virtual; abstract;
         function ReadBooleanDefault(const Name : string; ADefaultValue : boolean = False) : boolean; virtual;
@@ -121,7 +121,7 @@ type
     end;
 
 
-	 TXMLBasedSettings = class(TBaseSettings)
+    TXMLBasedSettings = class(TBaseSettings)
     private
         FRootNode : IXMLNode;
     protected
@@ -132,9 +132,9 @@ type
         property RootNode : IXMLNode read FRootNode write SetRootNode;
     public
         constructor Create(ARootNode : IXMLNode); reintroduce; overload; virtual;
-		 destructor Destroy; override;
-		 class function CreateEmptyXMLFile(const Filename : string) : TXMLDocument;
-		 class function CreateFromFile( const Filename, RootNodeName : string ) :  TXMLBasedSettings; virtual;
+        destructor Destroy; override;
+        class function CreateEmptyXMLFile(const Filename : string) : TXMLDocument;
+        class function CreateFromFile(const Filename, RootNodeName : string) : TXMLBasedSettings; virtual;
         procedure EraseKey(const Name : string); override;
         procedure EraseValue(const Name : string); override;
         function KeyExists(const Name : string) : boolean; override;
@@ -146,7 +146,7 @@ type
         function ReadDateTime(const Name : string; ADefaultValue : TDefaultSettingValue = nil) : TDateTime; override;
         function ReadFloat(const Name : string; ADefaultValue : TDefaultSettingValue = nil) : double; override;
         function ReadInteger(const Name : string; ADefaultValue : TDefaultSettingValue = nil) : Integer; override;
-		 function ReadString(const Name : string; ADefaultValue : TDefaultSettingValue = nil) : string; override;
+        function ReadString(const Name : string; ADefaultValue : TDefaultSettingValue = nil) : string; override;
         procedure Refresh;
         procedure Update;
         function ValueExists(const Name : string) : boolean; override;
@@ -191,7 +191,7 @@ type
         procedure EraseKey(const Name : string); override;
         procedure EraseValue(const Name : string); override;
         function KeyExists(const Name : string) : boolean; override;
-		 procedure ListSubKeys(const Name : string; SubKeys : TStrings); override;
+        procedure ListSubKeys(const Name : string; SubKeys : TStrings); override;
         procedure ListValuesNames(const Name : string; Values : TStrings); override;
         function ReadBinary(const Name : string; Stream : TStream) : Integer; override;
         function ReadBoolean(const Name : string; ADefaultValue : TDefaultSettingValue = nil) : boolean; override;
@@ -271,12 +271,12 @@ type
 implementation
 
 uses
-	 ActiveX, FileHnd, Registry, Str_Pas, StreamHnd, Variants, StrHnd;
+    ActiveX, FileHnd, Registry, Str_Pas, StreamHnd, Variants, StrHnd;
 
 
 const
-	 EMPTY_CFG = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'#13 +
-		 //'<!DOCTYPE ConfigDocument>'#13 +
+    EMPTY_CFG = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'#13 +
+        //'<!DOCTYPE ConfigDocument>'#13 +
         '<ConfigDocument>'#13 +
         '</ConfigDocument>'#13;
 
@@ -948,10 +948,10 @@ SubKeys : TStrings na qual será a lista de nomes das sub-chaves.
 Notas: As sub-chaves sem permissão de acesso podem não ser listadas. Caso Name vazio o raiz sera usado.
 }
 var
-    i :    Integer;
+    i, BasePos : Integer;
     CollectorList : TStringList;
     List : TStringList;
-    SectionPrefix : string;
+    SectionPrefix, BaseKey : string;
 begin
     if Name = EmptyStr then begin
         SectionPrefix := Self.FKeyPrefix + PathDelim;
@@ -980,7 +980,13 @@ begin
             end else begin
                 for i := 0 to List.Count - 1 do begin
                     if (Pos(SectionPrefix, List.Strings[i]) = 1) then begin
-                        SubKeys.Add(List.Strings[i]);
+                        BaseKey := Copy(List.Strings[i], Length(SectionPrefix) + 2, Length(List.Strings[i]));
+                        //remove caminho de busca pai
+                        BaseKey := Str_Pas.GetDelimitedSubStr(PathDelim, BaseKey, 0); //descarta subcaminhos caso existam
+                        if ((SubKeys.IndexOf(BaseKey) < 0) and (BaseKey <> EmptyStr)) then begin
+                            //evita duplicidade e ela mesma
+                            SubKeys.Add(BaseKey);
+                        end;
                     end;
                 end;
             end;
@@ -1474,7 +1480,7 @@ procedure TBaseSettings.RaiseEntryNotFound(const FullEntry : string);
 Eleva a excessão EConfigException informando que a entrada não foi encontrada.
 }
 begin
-	 raise EConfigException.CreateFmt('A entrada "%s" não foi encontrada.', [FullEntry]);
+    raise EConfigException.CreateFmt('A entrada "%s" não foi encontrada.', [FullEntry]);
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
@@ -1577,7 +1583,7 @@ class function TBaseSettings.DOMOwnerComponent : TComponent;
 Retorna a instancia reservada para ser o container padrao para os DOM´s
 }
 begin
-	 Result := InternalDOMOwnerComponent;
+    Result := InternalDOMOwnerComponent;
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
@@ -1595,33 +1601,36 @@ begin
     Result := APP_SETTINGS_FRAMEWORK_VERSION;
 end;
 
-procedure TBaseSettings.Import(Source: TBaseSettings; const SourceKeyName, DestKeyName: string; Recursive: Boolean);
+procedure TBaseSettings.Import(Source : TBaseSettings; const SourceKeyName, DestKeyName : string; Recursive : boolean);
 var
-	ValueNames, SubKeysNames : TStringList;
-	x : Integer;
+    ValueNames, SubKeysNames : TStringList;
+    x : Integer;
+    tmp, tmp2 : string;
 begin
-	if ( Recursive ) then begin
-		SubKeysNames:=TStringList.Create;
-		try
-			Source.ListSubKeys( SourceKeyName, SubKeysNames );
-			for x := 0 to SubKeysNames.Cout - 1 do begin
-				Self.Import( Source,
-				TFileHnd.ConcatPath([ SourceKeyName, SubKeysNames[x] ] ),
-				TFileHnd.ConcatPath([ DestKeyName, SubKeysNames[x] ] ), Recursive );
-			end;
-		finally
-		 SubKeysNames.Free;
-       end;
-	end;
-	ValueNames:=TStringList.Create;
-	try
-	Source.ListValuesNames( SourceKeyName, ValueNames );
-	for x := 0 to ValueNames.Count - 1 do begin
-		Self.WriteString( TFileHnd.ConcatPath([DestKeyName, ValueNames[x]]), Source.ReadString( ValueNames[x] ));
-   end;
-   finally
-    ValueNames.Free;
-   end;
+    if (Recursive) then begin
+        SubKeysNames := TStringList.Create;
+        try
+            Source.ListSubKeys(SourceKeyName, SubKeysNames);
+            for x := 0 to SubKeysNames.Count - 1 do begin
+                Self.Import(Source, TFileHnd.ConcatPath([SourceKeyName, SubKeysNames[x]]), TFileHnd.ConcatPath(
+                    [DestKeyName, SubKeysNames[x]]), Recursive);
+            end;
+        finally
+            SubKeysNames.Free;
+        end;
+    end;
+    ValueNames := TStringList.Create;
+    try
+        Source.ListValuesNames(SourceKeyName, ValueNames);
+		 for x := 0 to ValueNames.Count - 1 do begin
+			 tmp  := TFileHnd.ConcatPath([Self.KeyPrefix, DestKeyName, ValueNames[x]]);
+			 tmp2:=TFileHnd.ConcatPath([ Source.KeyPrefix, SourceKeyName, ValueNames[x]]);
+			 tmp2 := Source.ReadString( tmp2 );
+            Self.WriteString(tmp, tmp2);
+        end;
+    finally
+        ValueNames.Free;
+    end;
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
@@ -2072,11 +2081,11 @@ Portado para Unicode, ajustando de Self.FValue := 0; para Self.FValue := '';
 }
 begin
     //#if (not Variants.VarIsType(Self.FValue, varString  )) then begin
-	 {$IF CompilerVersion >= 21.00}
-	 if (not Variants.VarIsType(Self.FValue, [varString, varUString])) then begin
-		 Self.FValue := '';
-	 end;
-	 {$ELSE}
+     {$IF CompilerVersion >= 21.00}
+    if (not Variants.VarIsType(Self.FValue, [varString, varUString])) then begin
+        Self.FValue := '';
+    end;
+     {$ELSE}
 	 if (not Variants.VarIsType(Self.FValue, [varString])) then begin
 		 Self.FValue := '';
 	 end;
@@ -2174,7 +2183,8 @@ begin
             if (DefVal.FValue = Null) then begin  //Valor padrao invalido
                 Self.RaiseEntryNotFound(FullName);
             end else begin
-				 if (not VarIsType(DefVal.Value, VarType)) then begin  //Caso o tipo informado incompativel com o solicitado -> padrão
+                if (not VarIsType(DefVal.Value, VarType)) then begin
+                    //Caso o tipo informado incompativel com o solicitado -> padrão
 
                     case VarType of
                         varEmpty, varNull, varSmallint, varInteger, varSingle, varDouble, varCurrency, varDate : begin
@@ -2196,13 +2206,13 @@ begin
                             DefVal.Value := 0;
                         end;
                         //varWord64   = $0015; { vt_ui8         21 } {UNSUPPORTED as of v6.x code base}
-						 {  if adding new items, update Variants' varLast, BaseTypeMap and OpTypeMap }
-						 {$IF CompilerVersion >= 21.00}
-						 varStrArg, varString, varUString : begin
-						 {$ELSE}
+                        {  if adding new items, update Variants' varLast, BaseTypeMap and OpTypeMap }
+                         {$IF CompilerVersion >= 21.00}
+                        varStrArg, varString, varUString : begin
+                         {$ELSE}
 						 varStrArg, varString : begin
 						 {$IFEND}
-							 DefVal.Value := EmptyStr;
+                            DefVal.Value := EmptyStr;
                         end;
                         varAny : begin
                             DefVal.Value := Null;
@@ -2336,50 +2346,50 @@ end;
 
 
 
-/// Cria um documento vazio para uso generico
-/// Este documento sera criado baseado em um arquivo temporario não liberado automaticamente na sua destruicao.
-/// NOTA: O Owner da instancia retornada sempre será o InternalDOMOwnerComponent para evitar erros do parser MS-XML
-/// No momento da descarga desta unit todos os documentos serão liberados, ou no momento explicitamente invocado.
-/// Revision: Roger 20120925
-/// Salvar arquivo usando TStrings de modo a converter para a codificação de forma automática
-///
+ /// Cria um documento vazio para uso generico
+ /// Este documento sera criado baseado em um arquivo temporario não liberado automaticamente na sua destruicao.
+ /// NOTA: O Owner da instancia retornada sempre será o InternalDOMOwnerComponent para evitar erros do parser MS-XML
+ /// No momento da descarga desta unit todos os documentos serão liberados, ou no momento explicitamente invocado.
+ /// Revision: Roger 20120925
+ /// Salvar arquivo usando TStrings de modo a converter para a codificação de forma automática
+ ///
 class function TXMLBasedSettings.CreateEmptyXMLFile(const Filename : string) : TXMLDocument;
 var
-	 w : TStrings;
+    w : TStrings;
 begin
-	 w:=TStringList.Create;
-	 try
-		w.Text:=EMPTY_CFG;
-		w.SaveToFile( Filename );
-	 finally
-		w.Free;
+    w := TStringList.Create;
+    try
+        w.Text := EMPTY_CFG;
+        w.SaveToFile(Filename);
+    finally
+        w.Free;
     end;
     Result := TXMLDocument.Create(InternalDOMOwnerComponent);
-	 Result.FileName := Filename;
-	 Result.ParseOptions := Result.ParseOptions - [poResolveExternals, poValidateOnParse];
+    Result.FileName := Filename;
+    Result.ParseOptions := Result.ParseOptions - [poResolveExternals, poValidateOnParse];
     Result.Active := True;
 end;
 
-class function TXMLBasedSettings.CreateFromFile(const Filename, RootNodeName: string): TXMLBasedSettings;
+class function TXMLBasedSettings.CreateFromFile(const Filename, RootNodeName : string) : TXMLBasedSettings;
 var
-	RootDoc : TXMLDocument;
-	IDoc : IXMLDocument;
-	RootNode : IXMLNode;
+    RootDoc :  TXMLDocument;
+    IDoc :     IXMLDocument;
+    RootNode : IXMLNode;
 begin
-	if ( not FileExists( Filename ) ) then begin
-		raise EConfigException.CreateFmt('Arquivo "%s" não encontrado.', [Filename]);
-	end;
-	RootDoc:=TXMLDocument.Create( InternalDOMOwnerComponent );
-	RootDoc.Active:=True;
-	IDoc := XMLDoc.LoadXMLDocument( Filename );
+    if (not FileExists(Filename)) then begin
+        raise EConfigException.CreateFmt('Arquivo "%s" não encontrado.', [Filename]);
+    end;
+    RootDoc := TXMLDocument.Create(InternalDOMOwnerComponent);
+    RootDoc.Active := True;
+    IDoc    := XMLDoc.LoadXMLDocument(Filename);
 
-	if ( not Assigned( IDoc.DocumentElement ) ) then begin
-		raise EConfigException.Create('Documento sem elemento raiz');
-	end;
+    if (not Assigned(IDoc.DocumentElement)) then begin
+        raise EConfigException.Create('Documento sem elemento raiz');
+    end;
 
-	RootNode:=IDoc.DocumentElement;
-	Result:=TXMLBasedSettings.Create( RootNode );
-	Result.KeyPrefix:=RootNodeName;
+    RootNode := IDoc.DocumentElement;
+    Result   := TXMLBasedSettings.Create(RootNode);
+    Result.KeyPrefix := RootNodeName;
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
@@ -2606,12 +2616,12 @@ Name : Nome da entrada a ser lida.
 Returns: String contida na entrada.
 }
 begin
-	 if ( Assigned( ADefaultValue ) ) then begin
-	 	//NOTA: devido a confusão do UNICODE , a opção foi usar tipo nativo do Variant
-		Result := GetAttributeValue(Self.FKeyPrefix + Name, FindVarData(ADefaultValue.Value)^.VType , ADefaultValue);
-	 end else begin
-		Result := GetAttributeValue(Self.FKeyPrefix + Name, varString, ADefaultValue);
-	 end;
+    if (Assigned(ADefaultValue)) then begin
+        //NOTA: devido a confusão do UNICODE , a opção foi usar tipo nativo do Variant
+        Result := GetAttributeValue(Self.FKeyPrefix + Name, FindVarData(ADefaultValue.Value)^.VType, ADefaultValue);
+    end else begin
+        Result := GetAttributeValue(Self.FKeyPrefix + Name, varString, ADefaultValue);
+    end;
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
