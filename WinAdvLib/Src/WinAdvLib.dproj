@@ -23,7 +23,7 @@
 			<DesignOnlyPackage>false</DesignOnlyPackage>
 			<DllSuffix>_7_0</DllSuffix>
 			<DCC_DebugInformation>false</DCC_DebugInformation>
-			<DCC_DependencyCheckOutputName>..\..\..\Lib\D2010\WinAdvLib_7_0.bpl</DCC_DependencyCheckOutputName>
+			<DCC_DependencyCheckOutputName>C:\Users\Public\Documents\RAD Studio\7.0\Bpl\WinAdvLib_7_0.bpl</DCC_DependencyCheckOutputName>
 			<DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
 			<DCC_Description>AAA - WinAdvLib - (Super Library)</DCC_Description>
 			<DCC_AssertionsAtRuntime>false</DCC_AssertionsAtRuntime>
@@ -36,6 +36,7 @@
 			<DCC_Platform>x86</DCC_Platform>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_1)'!=''">
+			<DCC_DependencyCheckOutputName>..\..\..\Lib\D2010\WinAdvLib_7_0.bpl</DCC_DependencyCheckOutputName>
 			<DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
 			<DCC_ExeOutput>..\Release</DCC_ExeOutput>
 			<DCC_BplOutput>$(DLib)</DCC_BplOutput>

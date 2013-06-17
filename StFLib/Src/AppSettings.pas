@@ -1500,6 +1500,9 @@ begin
         KeyPath   := FullName;
         EntryName := APP_SETTINGS_DEFAULT_ENTRYNAME;  //Valor padrao para o raiz
     end else begin
+        if( TStrHnd.startsWith( KeyPath, PathDelim ) ) then begin //Caso composicao com o keyprefix seja \ eliminar caracter
+            KeyPath:=Copy( KeyPath, 2, Length( KeyPath ) );
+        end;
         EntryName := ExtractFileName(FullName);
         if (EntryName = EmptyStr) then begin
             EntryName := APP_SETTINGS_DEFAULT_ENTRYNAME;
@@ -1622,10 +1625,10 @@ begin
     ValueNames := TStringList.Create;
     try
         Source.ListValuesNames(SourceKeyName, ValueNames);
-		 for x := 0 to ValueNames.Count - 1 do begin
-			 tmp  := TFileHnd.ConcatPath([Self.KeyPrefix, DestKeyName, ValueNames[x]]);
-			 tmp2:=TFileHnd.ConcatPath([ Source.KeyPrefix, SourceKeyName, ValueNames[x]]);
-			 tmp2 := Source.ReadString( tmp2 );
+        for x := 0 to ValueNames.Count - 1 do begin
+            tmp  := TFileHnd.ConcatPath([DestKeyName, ValueNames[x]]);
+            tmp2 := TFileHnd.ConcatPath([SourceKeyName, ValueNames[x]]);
+            tmp2 := Source.ReadString(tmp2);
             Self.WriteString(tmp, tmp2);
         end;
     finally
