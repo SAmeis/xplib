@@ -69,6 +69,7 @@
 			<DCCReference Include="mp3Tag.pas"/>
 			<DCCReference Include="StreamHnd.pas"/>
 			<DCCReference Include="ConfigurationLayer.pas"/>
+			<DCCReference Include="AppSettings.pas"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>
