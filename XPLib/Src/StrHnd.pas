@@ -46,11 +46,11 @@ type
         class function FilterDigits(const Str : string) : string;
         class function IsRangeValue(Value : string; MinValue, MaxValue : Extended) : boolean;
 
-		 class procedure ResetLength(var S : WideString); overload;
-		 class procedure ResetLength(var S : ansistring); overload;
-		 {$IF CompilerVersion >= 21.00}
-		 class procedure ResetLength(var S : UnicodeString); overload;
-		 {$IFEND}
+        class procedure ResetLength(var S : WideString); overload;
+        class procedure ResetLength(var S : ansistring); overload;
+         {$IF CompilerVersion >= 21.00}
+        class procedure ResetLength(var S : UnicodeString); overload;
+         {$IFEND}
 
 
         class function startsWith(const str, prefix : string) : boolean;
@@ -58,6 +58,11 @@ type
         class function StrToPChar(Str : string) : PChar;
         class function IsPertinent(const Value : string; const Values : array of string; CaseSensitive : boolean) : boolean;
         class function Contains(const SubStr, SuperStr : string) : boolean;
+    end;
+
+    TXPStringList = class(TStringList)
+    public
+        function FindPos(const SubStr : string; var Line, Col : Integer) : boolean;
     end;
 
     TStringConnector = class(TObject)
@@ -418,40 +423,41 @@ end;
 
 class procedure TStrHnd.ResetLength(var S : WideString);
 var
-	 I : Integer;
+    I : Integer;
 begin
-	 for I := 0 to Length(S) - 1 do begin
-		 if S[I + 1] = #0 then begin
-			 SetLength(S, I);
-			 Exit;
-		 end;
-	 end;
+    for I := 0 to Length(S) - 1 do begin
+        if S[I + 1] = #0 then begin
+            SetLength(S, I);
+            Exit;
+        end;
+    end;
 end;
 
 class procedure TStrHnd.ResetLength(var S : ansistring);
 var
-	 I : Integer;
+    I : Integer;
 begin
-	 for I := 0 to Length(S) - 1 do begin
-		 if S[I + 1] = #0 then begin
-			 SetLength(S, I);
-			 Exit;
-		 end;
-	 end;
+    for I := 0 to Length(S) - 1 do begin
+        if S[I + 1] = #0 then begin
+            SetLength(S, I);
+            Exit;
+        end;
+    end;
 end;
 
 {$IF CompilerVersion >= 21.00}
 class procedure TStrHnd.ResetLength(var S : UnicodeString);
 var
-	 I : Integer;
+    I : Integer;
 begin
-	 for I := 0 to Length(S) - 1 do begin
-		 if S[I + 1] = #0 then begin
-			 SetLength(S, I);
-			 Exit;
-		 end;
-	 end;
+    for I := 0 to Length(S) - 1 do begin
+        if S[I + 1] = #0 then begin
+            SetLength(S, I);
+            Exit;
+        end;
+    end;
 end;
+
 {$IFEND}
 
 {--------------------------------------------------------------------------------------------------------------------------------}
@@ -886,6 +892,37 @@ begin
             Self.FOffSet := Self.FBufferSize;
             Self.FillBuffer;
         end;
+    end;
+end;
+
+{ TXPStringList }
+
+function TXPStringList.FindPos(const SubStr : string; var Line, Col : Integer) : boolean;
+    ///<summary>
+    ///Retorna a linha e coluna de onde se achou SubStr. Retornando true neste caso apenas
+    /// Line e Col representam o ponto inicial da busca
+    /// <bold>IMPORTANTE</bold> ambos, Line e Col, baseados em 1
+    ///</summary>
+    ///<remarks>
+    ///
+    ///</remarks>
+var
+    x, y, ofs : Integer;
+begin
+    Result := False;
+    if (Line > Self.Count) then begin
+        Exit;
+    end;
+    ofs := Max(1, Col); //Primeira passagem a partir do offset passado(ajuste para a base 1 no minimo)
+    for y := Line - 1 to Self.Count - 1 do begin
+        x := PosEx(SubStr, Self.Strings[y], ofs);
+        if (x > 0) then begin
+            Line   := y + 1; //ajuste retorno da base 1
+            Col    := x;
+            Result := True;
+            Exit;
+        end;
+        ofs := 1; //zera offset apos primeira passagem
     end;
 end;
 
