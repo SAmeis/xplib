@@ -218,6 +218,7 @@ type
         class function ForceFileExtension(const OriginalName, DesiredExtension : string) : string;
         class procedure ForceFilename(const Filename : string);
         class function DeepExistingPath(const Path : string) : string;
+        class function ExtractFilenamePure(const Filename : string) : string;
         class function GetUserHomeDir() : string;
         class function GetUserMyDocuments() : string;
         class function GetFileSizeEx(const Filename : string) : int64;
@@ -2228,6 +2229,20 @@ begin
     end;
 end;
 
+class function TFileHnd.ExtractFilenamePure(const Filename : string) : string;
+    ///<summary>
+    ///Extrai apenas o nome do arquivo desconsiderando inclusive a extensão do mesmo
+    ///</summary>
+var
+    I : Integer;
+begin
+    Result := ExtractFileName(Filename);
+	 I      := LastDelimiter('.', Result);
+	 if (I > 0) then begin
+		 Result := Copy(Result, 1, I - 1);
+    end;
+end;
+
 {--------------------------------------------------------------------------------------------------------------------------------}
 class function TFileHnd.FileSize(const FileName : string) : int64;
 {{
@@ -2334,9 +2349,9 @@ class function TFileHnd.FirstOccurrence(const Path, Mask : string) : string;
 var
     sr : TSearchRec;
 begin
-	 try
-		 if (FindFirst( TFileHnd.ConcatPath( [ Path, Mask ] ), faAllFiles, sr) = ERROR_SUCCESS ) then begin
-            Result := TFileHnd.ConcatPath( [ Path, sr.FindData.cFileName ] );
+    try
+        if (FindFirst(TFileHnd.ConcatPath([Path, Mask]), faAllFiles, sr) = ERROR_SUCCESS) then begin
+            Result := TFileHnd.ConcatPath([Path, sr.FindData.cFileName]);
         end else begin
             Result := EmptyStr;
         end;
