@@ -34,7 +34,10 @@ requires
   XPLibD14,
   xmlrtl,
   inet,
-  vclx;
+  vclx,
+  IndyCore,
+  IndySystem,
+  IndyProtocols;
 
 contains
   Modulo11 in 'Modulo11.PAS',

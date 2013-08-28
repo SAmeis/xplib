@@ -16,7 +16,16 @@ type
         Class function ReadStream(SrcStream, DestStream : TStream; HowMany : int64) : int64;
     end;
 
+	 THashHnd = class
+	 public
+		class function MD5(const fileName : string) : string; overload;
+		class function MD5(const strm : TStream) : string; overload;
+	 end;
+
+
 implementation
+
+uses IdHashMessageDigest, idHash;
 
 Class function TStreamHnd.ReadStream(SrcStream, DestStream : TStream; HowMany : int64) : int64;
 {{
@@ -39,6 +48,34 @@ begin
         FreeMem(Buffer);
     end;
 end;
+
+{ TRedundancyCheck }
+
+class function THashHnd.MD5(const fileName : string) : string;
+var
+	 fs : TFileStream;
+begin
+	 fs := TFileStream.Create(fileName, fmOpenRead or fmShareDenyWrite);
+	 try
+		 Result := MD5(fs);
+	 finally
+		 fs.Free;
+	 end;
+end;
+
+class function THashHnd.MD5(const strm : TStream) : string;
+var
+	 idmd5 : TIdHashMessageDigest5;
+begin
+	 strm.Seek( 0, soBeginning );
+	 idmd5 := TIdHashMessageDigest5.Create;
+	 try
+		 Result := idmd5.HashStreamAsHex(strm);
+	 finally
+		 idmd5.Free;
+	 end;
+end;
+
 
 end.
 

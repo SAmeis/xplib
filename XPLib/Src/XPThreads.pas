@@ -66,7 +66,8 @@ type
         FIsAlive :          boolean;
     protected
         procedure DoTerminate(); override;
-    public
+	 public
+	 	 constructor Create(CreateSuspended: Boolean);
         procedure Terminate;
         procedure Start; virtual;
         procedure Resume; virtual; deprecated;
@@ -308,6 +309,18 @@ begin
 end;
 
 
+constructor TXPBaseThread.Create(CreateSuspended: Boolean);
+///<summary>
+///Ajusta o tempo de espera de finalização forçada para infinito, a ser ajustado de acord com a necessidade
+///</summary>
+///<remarks>
+///
+///</remarks>
+begin
+	Self.FMaxTerminateTime := Windows.INFINITE;
+  	inherited;
+end;
+
 procedure TXPBaseThread.DoTerminate;
 {{
  Indica que o thread saiu do metodo Execute normalmente( com ou sem excessao )
@@ -352,13 +365,8 @@ begin
     inherited; //Atualmente pela VCL apenas seta Self.Terminated para True, indicando ao thread que ele deve ser finalizado
     if ((Self.FMaxTerminateTime > 0) and (GetCurrentThreadID() <> Self.ThreadID)) then begin
 
-        while (Self.Suspended) do begin
-             {$IF CompilerVersion >= 21.00}
-            Self.Start;
-            {$ELSE}
-            Self.Resume;
-            {$IFEND}
-        end;
+		Self.Suspended:=False; //Permite a liberação de execução normal
+		///revision: anteriormente loop esperando sair do modo suspenso, agora força a liberação
 
         if (Self.FMaxTerminateTime = Windows.INFINITE) then begin
             Self.WaitFor();

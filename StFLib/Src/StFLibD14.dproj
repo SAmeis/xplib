@@ -60,6 +60,9 @@
 			<DCCReference Include="xmlrtl.dcp"/>
 			<DCCReference Include="inet.dcp"/>
 			<DCCReference Include="vclx.dcp"/>
+			<DCCReference Include="IndyCore.dcp"/>
+			<DCCReference Include="IndySystem.dcp"/>
+			<DCCReference Include="IndyProtocols.dcp"/>
 			<DCCReference Include="Modulo11.PAS"/>
 			<DCCReference Include="PasParser.pas"/>
 			<DCCReference Include="HKStreamRoutines.pas"/>
