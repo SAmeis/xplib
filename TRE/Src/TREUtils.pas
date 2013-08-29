@@ -231,15 +231,16 @@ begin
 			 part := Copy(StationName, 7, 3);
             if (SameText(part, 'WKS') or SameText(part, 'PDC')) then begin
                 part := 'PDC';
-            end else begin
-                if SameText(part, 'STD') then begin
-                    part := 'STD';
-                end else begin
-                    raise Exception.CreateFmt('O nome do computador "%s" não suportado para este serviço', [StationName]);
-                end;
-            end;
-            Result := Copy(StationName, 1, 3) + Format('%3.3d', [ZoneId]) + part + '01';
-        end else begin
+			 end else begin
+				 if SameText(part, 'STD') then begin
+					 part := 'STD';
+				 end else begin
+					 raise Exception.CreateFmt('O nome do computador "%s" não suportado para este serviço', [StationName]);
+				 end;
+			 end;
+			 Result := Copy(StationName, 1, 3) + Format('%3.3d', [ZoneId]) + part + '01';
+		 end else begin
+			{TODO -oroger -clib/future : DsGetDcName ou DsGetDcName(preferencialmente) para carregar o DC deste computador  }
             raise Exception.CreateFmt('O nome do computador "%s" não suportado para este serviço', [StationName]);
         end;
     end;
