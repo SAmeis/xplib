@@ -22,7 +22,7 @@ const
     DBGLEVEL_NONE       = 0;
 
 type
-    TLogMessageType = (lmtError, lmtInformation, lmtWarning, lmtDebug);
+    TLogMessageType = (lmtError, lmtInformation, lmtWarning, lmtDebug, lmtAlarm);
 
 type
     TErrorLogMode      = (elmFormatted, elmUnFormatted);
@@ -1117,7 +1117,7 @@ begin
     Canceled := False;
     EnterCriticalSection(LogCriticalSection);
     try
-		 Txt := Msg; //Remove limitação de modo constante
+        Txt := Msg; //Remove limitação de modo constante
         if (Assigned(Self.FOnMessageReceived)) then begin
             Self.FOnMessageReceived(Self, Txt, LogMessageType, Canceled);
             if (Canceled) then begin
@@ -1125,12 +1125,12 @@ begin
             end;
         end;
         if (Assigned(Self.FFormatter)) then begin
-			 Txt := Self.FFormatter.FormatLogMsg(Txt, LogMessageType);
+            Txt := Self.FFormatter.FormatLogMsg(Txt, LogMessageType);
         end else begin
-			 Txt := FormatMessageProc(Txt, LogMessageType); //Assumindo que sempre existe ponteiro para rotina atribuido
+            Txt := FormatMessageProc(Txt, LogMessageType); //Assumindo que sempre existe ponteiro para rotina atribuido
         end;
         if (Assigned(Self.FOnMessageWrite)) then begin
-			 Self.FOnMessageWrite(Self, Txt, LogMessageType, Canceled);
+            Self.FOnMessageWrite(Self, Txt, LogMessageType, Canceled);
             if (Canceled) then begin
                 Exit;
             end;
@@ -1197,24 +1197,29 @@ begin
         for i := 0 to SL.Count - 1 do begin
             SL.Strings[i] := #9 + SL.Strings[i];
         end;
-        if LogMessageType = lmtError then begin
-            SL.Insert(0, Format('-Registro de erro: (%s) ', [LogUserName]) +
-                FormatDateTime('dddd, mmmm d, yyyy, " às " hh:mm:ss AM/PM', Now()));
-        end else begin
-            if LogMessageType = lmtInformation then begin
+        case LogMessageType of
+            lmtError : begin
+                SL.Insert(0, Format('-Registro de erro: (%s) ', [LogUserName]) +
+                    FormatDateTime('dddd, mmmm d, yyyy, " às " hh:mm:ss AM/PM', Now()));
+            end;
+            lmtInformation : begin
                 SL.Insert(0, Format('-Registro de Informação: (%s) ', [LogUserName]) +
                     FormatDateTime('dddd, mmmm d, yyyy, " às " hh:mm:ss AM/PM', Now()));
-            end else begin
-                if LogMessageType = lmtWarning then begin
-                    SL.Insert(0, Format('-Registro de Alerta: (%s) ', [LogUserName]) +
-                        FormatDateTime('dddd, mmmm d, yyyy, " às " hh:mm:ss AM/PM', Now()));
-                end else begin
-                    if LogMessageType = lmtDebug then begin
-                        SL.Insert(0, Format('-Registro de Debug: (%s) ', [LogUserName]) +
-                            FormatDateTime('dddd, mmmm d, yyyy, " às " hh:mm:ss AM/PM', Now()));
-                    end;
-                end;
             end;
+            lmtWarning : begin
+                SL.Insert(0, Format('-Registro de Alerta: (%s) ', [LogUserName]) +
+					 FormatDateTime('dddd, mmmm d, yyyy, " às " hh:mm:ss AM/PM', Now()));
+			 end;
+			 lmtDebug : begin
+				 SL.Insert(0, Format('-Registro de Debug: (%s) ', [LogUserName]) +
+					 FormatDateTime('dddd, mmmm d, yyyy, " às " hh:mm:ss AM/PM', Now()));
+			 end;
+			 lmtAlarm : begin
+				 SL.Insert(0, Format('-Registro de Alarme: (%s) ', [LogUserName]) +
+					 FormatDateTime('dddd, mmmm d, yyyy, " às " hh:mm:ss AM/PM', Now()));
+			 end else begin
+				raise Exception.Create('Tipo de mensagem de log não identificado!');
+			 end;
         end;
         Result := SL.Text; //Usa var para adcionar Separadores
     finally
