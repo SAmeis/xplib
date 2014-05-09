@@ -115,26 +115,26 @@ type
         FEol :           ansistring;
         FMaxBufferSize : Integer;
         FOffSet :        Integer;
-        FStream :        TStream;
-        FWordDelimiters : PSysCharSet;
-        function GetEoS : boolean;
-        function GetPosition : int64;
-        function GetSize : int64;
-    protected
-        function FillBuffer() : Integer;
-    public
-        constructor Create(AStream : TStream; BufferSize : Integer = 1024); virtual;
-        destructor Destroy; override;
-        function ReadChar : AnsiChar;
-        function ReadLine : ansistring;
-        function ReadString(Len : Word) : ansistring;
-        function ReadStringWord : ansistring;
-        procedure Reset;
-        procedure Seek(pos : int64);
-        function Search(const Str : ansistring) : boolean; overload;
-        function Search(const Str : ansistring; SkipStr : boolean) : boolean; overload;
-        procedure SetWordDelimiters(WordDelimiters : PSysCharSet);
-        property Eol : ansistring read FEol write FEol;
+		 FStream :        TStream;
+		 FWordDelimiters : PSysCharSet;
+		 function GetEoS : boolean;
+		 function GetPosition : int64;
+		 function GetSize : int64;
+	 protected
+		 function FillBuffer() : Integer;
+	 public
+		 constructor Create(AStream : TStream; BufferSize : Integer = 1024); virtual;
+		 destructor Destroy; override;
+		 function ReadChar : AnsiChar;
+		 function ReadLine : ansistring;
+		 function ReadString(Len : Word) : ansistring;
+		 function ReadStringWord : ansistring;
+		 procedure Reset;
+		 procedure Seek(pos : int64);
+		 function Search(const Str : ansistring) : boolean; overload;
+		 function Search(const Str : ansistring; SkipStr : boolean) : boolean; overload;
+		 procedure SetWordDelimiters(WordDelimiters : PSysCharSet);
+		 property Eol : ansistring read FEol write FEol;
         property EoS : boolean read GetEoS;
         property Position : int64 read GetPosition;
         property Size : int64 read GetSize;
@@ -577,7 +577,7 @@ Retorna o caracter da posicao corrente e incrementa o cursor
 }
 begin
     if ((Self.FOffSet >= Self.FBufferSize) and (not Self.EoS)) then begin
-        Self.FillBuffer;
+		 Self.FillBuffer;
     end;
     Result := (Self.FBuffer + Self.FOffSet)^;
     Inc(Self.FOffSet);
@@ -620,7 +620,7 @@ begin
     Self.FStream.Position := pos;
     Self.FOffSet     := 0;
     Self.FBufferSize := 0;
-    Self.FillBuffer();
+	 Self.FillBuffer();
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}

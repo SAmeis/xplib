@@ -1,3 +1,8 @@
+{$IFDEF MainWnd}
+	 {$DEFINE DEBUG_UNIT}
+{$ENDIF}
+{$I bir.inc}
+
 unit MainWnd;
 
 interface
@@ -11,7 +16,7 @@ type
         SimpleProgress1 : TSimpleProgress;
         Button1 : TButton;
         procedure Button1Click(Sender : TObject);
-    procedure SimpleProgress1UpdateProgress(Sender: TSimpleProgress);
+    	 procedure SimpleProgress1UpdateProgress(Sender: TSimpleProgress);
     private
         { Private declarations }
     public
