@@ -8,7 +8,7 @@ unit TREUtils;
 interface
 
 uses
-    SysUtils, Windows, Classes, TREConsts;
+    SysUtils, Windows, Classes, BRRules, TREConsts;
 
 
 type
@@ -22,6 +22,7 @@ type
         class procedure CheckComputername(const Name : string; ComputerType : TTREComputerType); overload;
         class procedure CheckComputername(const Name : string; Local : Integer; ComputerType : TTREComputerType); overload;
         class procedure CheckComputername(const Name : string; Local, CompId : Integer; ComputerType : TTREComputerType); overload;
+        class function GetComputerTypeByName(const Name : string) : TTREComputerType;
         class function GetComputerZone(const Computername : string) : Integer;
         class function GetComputerId(const Computername : string) : Integer;
         class function GetNetworkType(const ComputerName : string) : TTRENetType;
@@ -184,6 +185,88 @@ begin
     end;
 end;
 
+class function TTREUtils.GetComputerTypeByName(const Name : string) : TTREComputerType;
+    ///
+    /// Identifica o tipo de computador pelo seu nome de acordo com os padrões da Módulo(SiS)
+    /// O padrão original é o seguinte:
+    /// <L(1)><UF(2)>[OS(1)]<lll><WKS|STD><sss>
+    /// L(1) - Local(Z - Zona, C - Central, R - Regional )
+    /// UF(2) - Sigla de unidade federativa
+    /// OS(1) - Tipo do SO( W - Windows )
+    /// lll - Número do local com 3 dígitos, caso máquina <> de secretária, neste caso o id tem inúmeros dígitos
+    /// WKS|STD - Tipo do domínio
+    /// sss - Número da estação com 3 dígitos
+    ///
+var
+    PrefixLocal : char;
+    PrefixUF :    string[2];
+    PrefixOS :    char;
+    ZoneID, StationID : Integer;
+    NormName :    string;
+    NumberChain : string;
+    NetType :     string;
+begin
+    Result := ctUnknow;
+    if (Length(Name) < 6) then begin //não obedece nehum padrão válido
+        Exit;
+    end;
+
+    NormName    := UpperCase(Name); //Normatiza o nome
+    PrefixLocal := NormName[1];
+    //Filtra classe do computador
+    case PrefixLocal of   //Diferencia o local do computador Zona/Central/Secretaria/outras
+        CMPNAME_LOCAL_ZONE, CMPNAME_LOCAL_CENTRAL, CMPNAME_LOCAL_REGIONAL : begin
+            PrefixUF := Copy(NormName, 2, 2);
+            if (BRRules.TBRRules.ProvinceNameByCode(PrefixUF) = EmptyStr) then begin //nome de UF invalida
+                Result := ctUnknow;
+            end else begin
+                //Identifica se pc virtual
+                if (NormName[4] = 'W') then begin
+                    StationID   := TStrHnd.GetInteger(NormName, 5, 0);
+                    NumberChain := Copy(NormName, 4, Length(NormName));
+                    Result      := ctTREWKS;
+                end;
+                ZoneID  := TStrHnd.GetInteger(NormName, 4, 0);
+                NetType := TStrHnd.GetAlphaText(NormName, 7, EmptyStr);
+                case ZoneId of
+					 1..80, 226..999 : begin  {TODO -oroger -cdsg : Passar constantes para biblioteca ???}
+						 if SameText(NetType, CMPNAME_TYPE_DOMAIN) then begin
+							 Result := ctZoneWKS;
+						 end else begin
+							 if (SameText(NetType, CMPNAME_TYPE_WORKGROUP)) then begin
+								 Result := ctZoneSTD;
+							 end else begin
+								if (SameText(NetType, CMPNAME_TYPE_DOMAIN_CONTROLLER )) then begin
+									Result := ctZonePDC;
+								end else begin
+									Result := ctUnknow;
+								end;
+							 end;
+						 end;
+					 end;
+					 200..205 : begin
+						 Result := ctNATU;
+					 end;
+					 220..225 : begin
+						 Result := ctNATT;
+					 end;
+					 210..215 : begin
+						 Result := ctDFE;
+					 end;
+					 else begin
+					 	 //Mesmo sabendo que primeiro case pega quase tudo fica a regra abaixo
+						 Result := ctUnknow;
+                    end;
+                end;
+            end;
+        end;
+        else begin
+            //Computador sem padrão conhecido
+            Result := ctUnknow;
+		 end;
+	 end;
+end;
+
 class function TTREUtils.GetComputerZone(const Computername : string) : Integer;
 {{
 Leitura da zona do computador baseado em seu nome
@@ -195,7 +278,7 @@ Revision: 1/6/2008 - roger
 var
     zone : string;
 begin
-	 zone   := Copy(Computername, CMPNAME_LOCAL_POS, CMPNAME_LOCAL_LENGHT);
+    zone   := Copy(Computername, CMPNAME_LOCAL_POS, CMPNAME_LOCAL_LENGHT);
     Result := StrToInt(zone);
 end;
 
@@ -222,25 +305,25 @@ var
     part :    string;
 begin
     {TODO -oroger -clib : Considerar o uso da envvar pdcname para pegar o DC do domínio, bem como usaro computador local quando argumento nulo }
-	 Result := EmptyStr;
+    Result := EmptyStr;
     if StationName <> EmptyStr then begin
         EnvChar := StationName[1];
         if CharInSet(EnvChar, ['C', 'Z']) then begin //Tipo permitido de estação
-			 part := Copy(StationName, 4, 3);
-			 TryStrToInt(part, ZoneId);
-			 part := Copy(StationName, 7, 3);
+            part := Copy(StationName, 4, 3);
+            TryStrToInt(part, ZoneId);
+            part := Copy(StationName, 7, 3);
             if (SameText(part, 'WKS') or SameText(part, 'PDC')) then begin
                 part := 'PDC';
-			 end else begin
-				 if SameText(part, 'STD') then begin
-					 part := 'STD';
-				 end else begin
-					 raise Exception.CreateFmt('O nome do computador "%s" não suportado para este serviço', [StationName]);
-				 end;
-			 end;
-			 Result := Copy(StationName, 1, 3) + Format('%3.3d', [ZoneId]) + part + '01';
-		 end else begin
-			{TODO -oroger -clib/future : DsGetDcName ou DsGetDcName(preferencialmente) para carregar o DC deste computador  }
+            end else begin
+                if SameText(part, 'STD') then begin
+                    part := 'STD';
+                end else begin
+                    raise Exception.CreateFmt('O nome do computador "%s" não suportado para este serviço', [StationName]);
+                end;
+            end;
+            Result := Copy(StationName, 1, 3) + Format('%3.3d', [ZoneId]) + part + '01';
+        end else begin
+            {TODO -oroger -clib/future : DsGetDcName ou DsGetDcName(preferencialmente) para carregar o DC deste computador  }
             raise Exception.CreateFmt('O nome do computador "%s" não suportado para este serviço', [StationName]);
         end;
     end;

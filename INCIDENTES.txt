@@ -11,6 +11,22 @@ Solução:
 ---------
 *********** Fim Template de Registro **********
 
+************* Checkout dos pacotes da JEDI(JCL e JVCL) ************
+Compilador: Qualuer
+Data: 20140819
+
+---------
+Descricão : Usando o caminho normal para o repositório SVN para as bibliotecas JEDI não obtemos o arquivo 
+\jcl\jcl\source\include\jedi\jedi.inc
+Tal arquivo é necessário para a correta instalação, tanto do pacote JCL quanto JVCL.
+---------
+
+---------
+Solução: Inserir outro componente externo no repositório apontando para a pasta dos includes apenas separadamente.
+Foi usado o trunk na falta de outra melhor.
+---------
+************* Fim Checkout dos pacotes da JEDI(JCL e JVCL) ************
+
 *****************  Captura de versão de compilador de acordo com a IDE ****************
 Compilador: Delphi 5.0 e superior
 Data: 20100904

@@ -43,7 +43,9 @@ type
         }
         class function endsWith(const fullStr, endStr : string) : boolean; overload;
         class function EnsurePrefix(const Prefix, Str : string) : string;
-        class function FilterDigits(const Str : string) : string;
+		 class function FilterDigits(const Str : string) : string;
+		 class function GetInteger( const Str : string; Index, ErrorValue : Integer ) : Integer;
+		 class function GetAlphaText( const Str : string; Index : integer; ErrorValue : string ) : string;
         class function IsRangeValue(Value : string; MinValue, MaxValue : Extended) : boolean;
 
         class procedure ResetLength(var S : WideString); overload;
@@ -325,6 +327,36 @@ begin
     end;
 end;
 
+class function TStrHnd.GetAlphaText(const Str: string; Index : integer; ErrorValue: string): string;
+//Retorna cadeia a partir da posição Index até o final da Cadeia original ou até encontrar caracter não alfabético
+var
+	x , ML : integer;
+begin
+	Result:=EmptyStr;
+	x:=Index;
+	while ( ( x <= ML )
+		and
+	( ( CharInSet( Str[x], [ 'a'..'z' ] ) or CharInSet( Str[x] , ['A'..'Z'] )  ) ) )
+	do begin
+		Result:=Result + Str[x];
+		Inc( x );
+	end;
+end;
+
+class function TStrHnd.GetInteger(const Str : string ; Index, ErrorValue: Integer): Integer;
+var
+	x, ML : Integer;
+	chain : string;
+begin
+	ML := Length( Str );
+	X:=Index;
+	while ( ( X <= ML ) and CharInSet( Str[X] , [ '0'..'9' ] ) )do begin
+		chain := chain + Str[X];
+		Inc( X );
+	end;
+	Result:=StrToInt( chain );
+end;
+
 {--------------------------------------------------------------------------------------------------------------------------------}
 class function TStrHnd.IsPertinent(const Value : string; const Values : array of string; CaseSensitive : boolean) : boolean;
 {{
@@ -349,11 +381,11 @@ begin
         CmpValue := UpperCase(Value);
         for i := Low(Values) to High(Values) do begin
             if (CmpValue = UpperCase(Values[i])) then begin
-                Result := True;
-                Exit;
-            end;
-        end;
-    end;
+				 Result := True;
+				 Exit;
+			 end;
+		 end;
+	 end;
 end;
 
 class function TStrHnd.IsRangeValue(Value : string; MinValue, MaxValue : Extended) : boolean;
@@ -371,9 +403,9 @@ returns: Resultado da comparacao.
 Notas: se MaxValue < MinValue sempre teremos resultado falso.
 }
 var
-    ConvertValue : Extended;
+	 ConvertValue : Extended;
 begin
-    if (TryStrToFloat(Value, ConvertValue)) then begin
+	 if (TryStrToFloat(Value, ConvertValue)) then begin
         Result := (ConvertValue >= MinValue) and (ConvertValue <= MaxValue);
     end else begin
         Result := False;
