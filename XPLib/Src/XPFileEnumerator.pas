@@ -3,6 +3,18 @@
 {$ENDIF}
 {$I XPLib.inc}
 
+///Exemplo basico de enumeração de arquivos
+(*
+	 IFiles :  IEnumerable<TFileSystemEntry>;
+	 f :      TFileSystemEntry;
+begin
+	IFiles := TDirectory.FileSystemEntries( Path, FileMaks, RecursiveFlag );
+	for f in IFiles do begin
+		WriteLn( System.Output, f.FullName );
+	end;
+end;
+*)
+
 
 unit XPFileEnumerator;
 

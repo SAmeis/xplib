@@ -53,6 +53,7 @@ contains
   WinProcess in 'WinProcess.pas',
   WinODBC in 'WinODBC.pas',
   InstanceMonitor in 'InstanceMonitor.pas',
-  WinHotKey in 'WinHotKey.pas';
+  WinHotKey in 'WinHotKey.pas',
+  WinFileNotification in 'WinFileNotification.pas';
 
 end.
