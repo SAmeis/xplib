@@ -144,7 +144,8 @@ begin
 
 	 TFolderMonWorker(FWorker).Owner := nil;
 	 TFolderMonWorker(FWorker).MaxTerminateTime:=100;
-	 TFolderMonWorker(FWorker).Start;
+	 TFolderMonWorker(FWorker).Suspended:=False;
+	 //TFolderMonWorker(FWorker).Start;
 	 TFolderMonWorker(FWorker).DoTerminate;
 
     FWorker := nil;
@@ -216,7 +217,6 @@ end;
 constructor TFolderMonWorker.Create(AOwner : TWinFileSystemMonitor);
 begin
 	//ajustado para compatibilidade com o mecanismo original do componente
-	 Self.MaxTerminateTime:=100;
 	 Self.FreeOnTerminate:=True;
 	 //fim ajustes
 
@@ -225,6 +225,7 @@ begin
 		 raise Exception.Create('Reference to TFolderMon instance must be specified');
 	 end;
 	 inherited Create(False, Self.ClassName );
+ 	 Self.MaxTerminateTime:=100;
 	 FreeOnTerminate := True;
     SetUp;
 end;
@@ -266,15 +267,7 @@ begin
                 Exit;
             end;
 
-            if ReadDirectoryChangesW(FFolder
-                , B
-                , cBufSize
-                , Owner.Recursive
-                , FMonFilter
-                , @vCount
-                , nil
-                , nil
-                )
+			 if ReadDirectoryChangesW(FFolder  , B, cBufSize, Owner.Recursive, FMonFilter, @vCount, nil, nil)
                 and (vCount > 0) then begin
                 if Owner = nil then begin
                     Exit;

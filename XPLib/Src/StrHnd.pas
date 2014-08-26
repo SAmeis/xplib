@@ -333,6 +333,7 @@ var
 	x , ML : integer;
 begin
 	Result:=EmptyStr;
+	ML:=Length( Str );
 	x:=Index;
 	while ( ( x <= ML )
 		and

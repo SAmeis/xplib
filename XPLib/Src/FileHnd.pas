@@ -1032,11 +1032,8 @@ var
 begin
     SubDir := TFileHnd.ParentDir(Dest);
     if not (DirectoryExists(SubDir)) then begin
-  {$I-}
-        MkDirEx(SubDir);
-  {$I+}
-        if IoResult <> 0 then begin
-            Result := GetLastError;
+        if (not ForceDirectories(SubDir)) then begin
+            Result := GetLastError();
             Exit;
         end;
     end;
@@ -1798,13 +1795,13 @@ Ajusta as datas de criacao/acesso/escrita de um dado arquivo
 var
     Hnd : THandle;
 begin
-	{TODO -oroger -clib : Avaliar das chamadas abaixo qual a menos restritiva}
-	{
-	 Hnd := CreateFile(PChar(Filename), GENERIC_WRITE, 0, nil, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL or
-		 FILE_FLAG_SEQUENTIAL_SCAN, 0);
-	}
-	Hnd := CreateFile(PChar(Filename), GENERIC_WRITE, FILE_SHARE_WRITE, nil, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, 0);
-	 try
+    {TODO -oroger -clib : Avaliar das chamadas abaixo qual a menos restritiva}
+    {
+     Hnd := CreateFile(PChar(Filename), GENERIC_WRITE, 0, nil, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL or
+         FILE_FLAG_SEQUENTIAL_SCAN, 0);
+    }
+    Hnd := CreateFile(PChar(Filename), GENERIC_WRITE, FILE_SHARE_WRITE, nil, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, 0);
+    try
         if Hnd <> INVALID_HANDLE_VALUE then begin
             Result := SetFileTimeProperties(Hnd, CreateDate, LastAccessDate, LastWriteDate);
         end else begin
@@ -2241,9 +2238,9 @@ var
     I : Integer;
 begin
     Result := ExtractFileName(Filename);
-	 I      := LastDelimiter('.', Result);
-	 if (I > 0) then begin
-		 Result := Copy(Result, 1, I - 1);
+    I      := LastDelimiter('.', Result);
+    if (I > 0) then begin
+        Result := Copy(Result, 1, I - 1);
     end;
 end;
 
