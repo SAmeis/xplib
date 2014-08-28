@@ -36,7 +36,8 @@ type
     TStrHnd = class(TObject)
     public
         class function ASCIISearchString(const NormalSrcString : string) : string;
-        class function CopyAfterLast(const SubStr, Str : string) : string;
+		 class function CopyAfterLast(const SubStr, Str : string) : string;
+		 class function CopyAfterFirst(const SubStr, Str : string) : string;
         class function endsWith(const fullStr : string; endChar : char) : boolean; overload;
         {{
         Indica se a string termina com o dado caracter
@@ -258,11 +259,28 @@ begin
     Result := (Pos(SubStr, SuperStr) <> 0);
 end;
 
+class function TStrHnd.CopyAfterFirst(const SubStr, Str: string): string;
+ /// <summary>
+ /// This functions scans s for SubStr from the left and returns the portion after SubStr(Case Sensitive).
+ /// Example: AfterRev('.','c:\my.file.txt') > 'file.txt'
+ /// Example: AfterRev('T','c:\my.file.txt') > ''
+ /// </summary>
+var
+	p : integer;
+begin
+	p:= Pos( SubStr, Str );
+	if ( p > 0 ) then begin
+		Result:=Copy( Str, Length( SubStr ) + 1, Length( Str ) );
+	end else begin
+		Result:=EmptyStr;
+	end;
+end;
+
+class function TStrHnd.CopyAfterLast(const SubStr, Str : string) : string;
  /// <summary>
  /// This functions scans s for SubStr from the right and returns the portion after SubStr.
  /// Example: AfterRev('.','c:\my.file.txt') > 'txt'
  /// </summary>
-class function TStrHnd.CopyAfterLast(const SubStr, Str : string) : string;
 begin
     Result := StrRScanStr(PChar(SubStr), PChar(Str));
     if (Result <> EmptyStr) then begin

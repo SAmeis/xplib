@@ -91,7 +91,8 @@ type
         procedure StreamDispose; virtual;
         procedure StreamNeeded; virtual;
         procedure WriteTo(const Txt : string);
-    public
+	 public
+	 	 {TODO -oroger -clib : Criar atributo, inicialmente desligado, para formatar nome do thread no log (ver TThread.CurrentThread para pegar a classe) }
         constructor Create(const AFileName : string; Lock : boolean); virtual;
         destructor Destroy; override;
         procedure Commit;

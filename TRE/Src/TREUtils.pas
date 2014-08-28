@@ -172,7 +172,7 @@ begin
     Para esta implementação(fator tempo sempre) vamos pegar os digitos finais}
     x := Pos(CMPNAME_TYPE_WORKGROUP, Computername);
     if x <= 0 then begin //tipo std
-        x := Pos(CMPNAME_TYPE_DOMAIN, Computername);
+        x := Pos(CMPNAME_TYPE_DOMAIN_WORKSTATION, Computername);
         if x <= 0 then begin
             x := Pos(CMPNAME_TYPE_DOMAIN_CONTROLLER, Computername);
         end;
@@ -229,33 +229,33 @@ begin
                 ZoneID  := TStrHnd.GetInteger(NormName, 4, 0);
                 NetType := TStrHnd.GetAlphaText(NormName, 7, EmptyStr);
                 case ZoneId of
-					 1..80, 226..999 : begin  {TODO -oroger -cdsg : Passar constantes para biblioteca ???}
-						 if SameText(NetType, CMPNAME_TYPE_DOMAIN) then begin
-							 Result := ctZoneWKS;
-						 end else begin
-							 if (SameText(NetType, CMPNAME_TYPE_WORKGROUP)) then begin
-								 Result := ctZoneSTD;
-							 end else begin
-								if (SameText(NetType, CMPNAME_TYPE_DOMAIN_CONTROLLER )) then begin
-									Result := ctZonePDC;
-								end else begin
-									Result := ctUnknow;
-								end;
-							 end;
-						 end;
-					 end;
-					 200..205 : begin
-						 Result := ctNATU;
-					 end;
-					 220..225 : begin
-						 Result := ctNATT;
-					 end;
-					 210..215 : begin
-						 Result := ctDFE;
-					 end;
-					 else begin
-					 	 //Mesmo sabendo que primeiro case pega quase tudo fica a regra abaixo
-						 Result := ctUnknow;
+                    1..80, 226..999 : begin  {TODO -oroger -cdsg : Passar constantes para biblioteca ???}
+                        if SameText(NetType, CMPNAME_TYPE_DOMAIN_WORKSTATION) then begin
+                            Result := ctZoneWKS;
+                        end else begin
+                            if (SameText(NetType, CMPNAME_TYPE_WORKGROUP)) then begin
+                                Result := ctZoneSTD;
+                            end else begin
+                                if (SameText(NetType, CMPNAME_TYPE_DOMAIN_CONTROLLER)) then begin
+                                    Result := ctZonePDC;
+                                end else begin
+                                    Result := ctUnknow;
+                                end;
+                            end;
+                        end;
+                    end;
+                    200..205 : begin
+                        Result := ctNATU;
+                    end;
+                    220..225 : begin
+                        Result := ctNATT;
+                    end;
+                    210..215 : begin
+                        Result := ctDFE;
+                    end;
+                    else begin
+                        //Mesmo sabendo que primeiro case pega quase tudo fica a regra abaixo
+                        Result := ctUnknow;
                     end;
                 end;
             end;
@@ -263,8 +263,8 @@ begin
         else begin
             //Computador sem padrão conhecido
             Result := ctUnknow;
-		 end;
-	 end;
+        end;
+    end;
 end;
 
 class function TTREUtils.GetComputerZone(const Computername : string) : Integer;
@@ -287,7 +287,8 @@ begin
     if (Pos(CMPNAME_TYPE_WORKGROUP, ComputerName) > 0) then begin   //Rede workgroup
         Result := ntWorkGroup;
     end else begin
-        if ((Pos(CMPNAME_TYPE_DOMAIN, ComputerName) > 0) or (Pos(CMPNAME_TYPE_DOMAIN_CONTROLLER, ComputerName) > 0)) then begin
+        if ((Pos(CMPNAME_TYPE_DOMAIN_WORKSTATION, ComputerName) > 0) or (Pos(CMPNAME_TYPE_DOMAIN_CONTROLLER, ComputerName) > 0))
+        then begin
             Result := ntDomain;
         end else begin
             raise ETREException.CreateFmt('"%s" não representa um nome de computador válido para uma zona eleitoral', [
@@ -297,33 +298,36 @@ begin
 end;
 
 class function TTREUtils.GetZonePrimaryComputer(const StationName : string) : string;
-    //Calcula o nome do computador primário da zona. O nome da estação deve obedecer o padrão ZPB<zzz><NetType><nn>
-    //IMPORTANTE: Esta rotina desconsidera a existência das centrais de atendimento!!!!!
+    /// <summary>
+    /// Calcula o nome do computador primário da zona. O nome da estação deve obedecer o padrão ZPB<zzz><NetType><nn>
+    /// IMPORTANTE: Esta rotina desconsidera a existência das centrais de atendimento!!!!!
+    /// </summary>
+    /// Revision - 2014-08-26 19:13:46 - Roger
+    /// Este ano o controlador de domínio passou a ser centralizado para todas as zonas, centrais, etc. Assim a figura do pc-primario passa a ser
+    /// a máquina de ID 1, tanto para zne, como para central
 var
     ZoneId :  Integer;
     EnvChar : char;
-    part :    string;
+    SZonId :  string;
+    SPCType : string;
 begin
-    {TODO -oroger -clib : Considerar o uso da envvar pdcname para pegar o DC do domínio, bem como usaro computador local quando argumento nulo }
     Result := EmptyStr;
     if StationName <> EmptyStr then begin
         EnvChar := StationName[1];
-        if CharInSet(EnvChar, ['C', 'Z']) then begin //Tipo permitido de estação
-            part := Copy(StationName, 4, 3);
-            TryStrToInt(part, ZoneId);
-            part := Copy(StationName, 7, 3);
-            if (SameText(part, 'WKS') or SameText(part, 'PDC')) then begin
-                part := 'PDC';
-            end else begin
-                if SameText(part, 'STD') then begin
-                    part := 'STD';
-                end else begin
-                    raise Exception.CreateFmt('O nome do computador "%s" não suportado para este serviço', [StationName]);
+        if CharInSet(EnvChar, [CMPNAME_LOCAL_ZONE, CMPNAME_LOCAL_CENTRAL, CMPNAME_LOCAL_REGIONAL]) then
+        begin //Tipo permitido de estação
+            SZonId := Copy(StationName, 4, 3); //Id da zona
+            TryStrToInt(SZonId, ZoneId);
+            SPCType := Copy(StationName, 7, 3);
+            if ( not TStrHnd.IsPertinent(SPCType, [CMPNAME_TYPE_WORKGROUP, CMPNAME_TYPE_DOMAIN_WORKSTATION], True)) then
+			 begin //estacao normal - primario = wks/std(01)
+				 if (SameText(SPCType, CMPNAME_TYPE_DOMAIN_CONTROLLER)) then begin
+                    Result := StationName;
+                    Exit;
                 end;
             end;
-            Result := Copy(StationName, 1, 3) + Format('%3.3d', [ZoneId]) + part + '01';
+            Result := Copy(StationName, 1, 3) + Format('%3.3d', [ZoneId]) + SPCType + '01';
         end else begin
-            {TODO -oroger -clib/future : DsGetDcName ou DsGetDcName(preferencialmente) para carregar o DC deste computador  }
             raise Exception.CreateFmt('O nome do computador "%s" não suportado para este serviço', [StationName]);
         end;
     end;
