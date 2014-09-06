@@ -28,7 +28,8 @@ type
             ShortEval : boolean) : TFileCompareAttributes; overload;
         class function CompareFiles(const Filename1, Filename2 : string) : TFileCompareAttributes; overload;
         class function MD5(const fileName : string) : string; overload;
-        class function MD5(const strm : TStream) : string; overload;
+		 class function MD5(const strm : TStream) : string; overload;
+		 class function MD5(const strm : TStream; Length : int64 ) : string; overload;
     end;
 
 
@@ -169,23 +170,51 @@ begin
 	 Result := THashHnd.CompareFiles(Filename1, Filename2, FCA_ALL_ATTRIBUTES - [ fcaAccessDate, fcaCreateDate ], False);
 end;
 
-class function THashHnd.MD5(const strm : TStream) : string;
-    ///<summary>
-    ///Calcula o MD5 do stream passado
-    ///</summary>
-    ///<remarks>
-    /// Rotina usa lib da indy
-    ///</remarks>
+class function THashHnd.MD5(const strm: TStream; Length: int64): string;
+	 ///<summary>
+	 ///Calcula o MD5 do stream passado até a quantidade de bytes dado por Length
+	 ///</summary>
+	 ///<remarks>
+	 /// Rotina usa lib da indy
+	 ///</remarks>
 var
-    idmd5 : TIdHashMessageDigest5;
+	 idmd5 : TIdHashMessageDigest5;
 begin
-    strm.Seek(0, soBeginning);
-    idmd5 := TIdHashMessageDigest5.Create;
-    try
-        Result := idmd5.HashStreamAsHex(strm);
-    finally
-        idmd5.Free;
-    end;
+	 {$IF CompilerVersion = 21.00}
+	 if ( (Length mod 2048 ) <> 0 ) then begin
+	 	//Para a Indy presente no RAD 21(D2010) um bug impede qq tamanho de blovo
+		raise Exception.Create('Implementação de hash DEVE ser calculada em multiplos de 2048 para esta versão(ver notas de codificação)');
+	 end;
+	 {$ELSE}
+	  {$WARNING 'REVER BLOCO DE CÓDIGO PRÓXIMO'}
+	 {$IFEND}
+
+
+	 idmd5 := TIdHashMessageDigest5.Create;
+	 try
+		 Result := idmd5.HashStreamAsHex(strm, strm.Position, Length );
+	 finally
+		 idmd5.Free;
+	 end;
+end;
+
+class function THashHnd.MD5(const strm : TStream) : string;
+	 ///<summary>
+	 ///Calcula o MD5 do stream passado, de seu início ao seu fim
+	 ///</summary>
+	 ///<remarks>
+	 /// Rotina usa lib da indy
+	 ///</remarks>
+var
+	 idmd5 : TIdHashMessageDigest5;
+begin
+	 strm.Seek(0, soBeginning);
+	 idmd5 := TIdHashMessageDigest5.Create;
+	 try
+		 Result := idmd5.HashStreamAsHex(strm);
+	 finally
+		 idmd5.Free;
+	 end;
 end;
 
 

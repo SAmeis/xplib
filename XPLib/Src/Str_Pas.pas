@@ -811,22 +811,23 @@ end;
 
 function StrLastPos(const SubStr, Str : string) : integer;
     //----------------------------------------------------------------------------------------------------------------------
-    //posicao da ultima ocorrenia de SubStr em Str
+	 //posicao da ultima ocorrenia de SubStr em Str
+	 //rev roger - devido ao comprimento duplo divisão por 2 no valor do resultado
 var
-    P, LPos, Start : PChar;
+	 P, LPos, Start : PWideChar;
 begin
-    LPos := NIL;
-    Start := PChar(Str);
-    P := Start;
-    while Assigned(P) do begin
-        P := StrPos(Start, PChar(SubStr));
-        if Assigned(P) then begin
-            LPos := P;
-        end;
-        Start := P + Length(SubStr);
-    end;
-    if Assigned(LPos) then begin
-        Result := (Integer(LPos) - Integer(PChar(Str)));
+	 LPos := NIL;
+	 Start := PChar(Str);
+	 P := Start;
+	 while Assigned(P) do begin
+		 P := StrPos(Start, PChar(SubStr));
+		 if Assigned(P) then begin
+			 LPos := P;
+		 end;
+		 Start := P + Length(SubStr);
+	 end;
+	 if Assigned(LPos) then begin
+        Result := (Integer(LPos) - Integer(PChar(Str))) div 2; //pulo duplo(cada char 2 bytes aqui)
     end else begin
         Result := 0;
     end;
