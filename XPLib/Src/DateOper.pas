@@ -420,11 +420,12 @@ end;
 function MonthLongNameToInt(const StrMonth : string) : Integer;
     //----------------------------------------------------------------------------------------------------------------------
     //Recupera o valor do mes pela sua grafia longa
+    {TODO -oroger -clib : dever receber SysUtils.FormatSettings passado com o padrao classico }
 var
     i : Integer;
 begin
-    for i := 1 to high(SysUtils.LongMonthNames) do begin
-        if LongMonthNames[i] = StrMonth then begin
+    for i := 1 to high(SysUtils.FormatSettings.LongMonthNames) do begin
+        if SysUtils.FormatSettings.LongMonthNames[i] = StrMonth then begin
             Result := i;
             Exit;
         end;
@@ -435,11 +436,12 @@ end;
 function MonthShortNameToInt(const StrMonth : string) : Integer;
     //----------------------------------------------------------------------------------------------------------------------
     //Recupera o valor do mes pela sua grafia curta
+    {TODO -oroger -clib : dever receber SysUtils.FormatSettings passado com o padrao classico }
 var
     i : Integer;
 begin
-    for i := 1 to high(SysUtils.ShortMonthNames) do begin
-        if LongMonthNames[i] = StrMonth then begin
+    for i := 1 to high(SysUtils.FormatSettings.ShortMonthNames) do begin
+        if SysUtils.FormatSettings.LongMonthNames[i] = StrMonth then begin
             Result := i;
             Exit;
         end;
@@ -820,12 +822,13 @@ begin
 end;
 
 class function TTimeHnd.MonthFromName(const S : string; MaxLen : byte) : byte;
+{TODO -oroger -clib : dever receber SysUtils.FormatSettings passado com o padrao classico }
 begin
     if Length(S) > 0 then begin
         for Result := 1 to 12 do begin
-            if (Length(LongMonthNames[Result]) > 0) and
+            if (Length(SysUtils.FormatSettings.LongMonthNames[Result]) > 0) and
                 (AnsiCompareText(Copy(S, 1, MaxLen),
-                Copy(LongMonthNames[Result], 1, MaxLen)) = 0) then begin
+                Copy(SysUtils.FormatSettings.LongMonthNames[Result], 1, MaxLen)) = 0) then begin
                 Exit;
             end;
         end;

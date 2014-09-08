@@ -1193,22 +1193,22 @@ begin
     DotSep := StrRScan(PChar(Str), '.');
     SemiCSep := StrRScan(PChar(Str), ',');
     if ((DWORD(DotSep) or DWORD(SemiCSep)) <> $0) then begin //Existe separador
-        OldDecimalSeparator := DecimalSeparator; //***Caso outro thread alterar esse valor UM ABRACO !!!!!!!
+        OldDecimalSeparator := SysUtils.FormatSettings.DecimalSeparator; //***Caso outro thread alterar esse valor UM ABRACO !!!!!!!
         if LongInt(DotSep) > LongInt(SemiCSep) then begin //Assume que o separador sera ponto
             try
-                DecimalSeparator := '.';
+                SysUtils.FormatSettings.DecimalSeparator := '.';
                 StringReplace(Str, ',', EmptyStr, [rfReplaceAll]);
                 Result := StrToCurr(Str);
             finally
-                DecimalSeparator := OldDecimalSeparator;
+                SysUtils.FormatSettings.DecimalSeparator := OldDecimalSeparator;
             end;
         end else begin //Separador sera virgula
             try
-                DecimalSeparator := ',';
+                SysUtils.FormatSettings.DecimalSeparator := ',';
                 StringReplace(Str, '.', EmptyStr, [rfReplaceAll]);
                 Result := StrToCurr(Str);
             finally
-                DecimalSeparator := OldDecimalSeparator;
+                SysUtils.FormatSettings.DecimalSeparator := OldDecimalSeparator;
             end;
         end;
     end else begin //Converte direto
@@ -1226,22 +1226,22 @@ begin
     DotSep := StrRScan(PChar(Str), '.');
     SemiCSep := StrRScan(PChar(Str), ',');
     if ((DWORD(DotSep) or DWORD(SemiCSep)) <> $0) then begin //Existe separador
-        OldDecimalSeparator := DecimalSeparator; //***Caso outro thread alterar esse valor UM ABRACO !!!!!!!
+        OldDecimalSeparator := SysUtils.FormatSettings.DecimalSeparator; //***Caso outro thread alterar esse valor UM ABRACO !!!!!!!
         if LongInt(DotSep) > LongInt(SemiCSep) then begin //Assume que o separador sera ponto
             try
-                DecimalSeparator := '.';
+                SysUtils.FormatSettings.DecimalSeparator := '.';
                 StringReplace(Str, ',', EmptyStr, [rfReplaceAll]);
                 Result := StrToFloat(Str);
             finally
-                DecimalSeparator := OldDecimalSeparator;
+                SysUtils.FormatSettings.DecimalSeparator := OldDecimalSeparator;
             end;
         end else begin //Separador sera virgula
             try
-                DecimalSeparator := ',';
+                SysUtils.FormatSettings.DecimalSeparator := ',';
                 StringReplace(Str, '.', EmptyStr, [rfReplaceAll]);
                 Result := StrToFloat(Str);
             finally
-                DecimalSeparator := OldDecimalSeparator;
+                SysUtils.FormatSettings.DecimalSeparator := OldDecimalSeparator;
             end;
         end;
     end else begin //Converte direto
