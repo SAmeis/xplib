@@ -1193,6 +1193,8 @@ begin
     DotSep := StrRScan(PChar(Str), '.');
     SemiCSep := StrRScan(PChar(Str), ',');
     if ((DWORD(DotSep) or DWORD(SemiCSep)) <> $0) then begin //Existe separador
+        -Em unit separada criar registro de formatsettings e usar como nova global
+        -caso compilador superior ao xe6 usar instancia de sysutils
         OldDecimalSeparator := SysUtils.FormatSettings.DecimalSeparator; //***Caso outro thread alterar esse valor UM ABRACO !!!!!!!
         if LongInt(DotSep) > LongInt(SemiCSep) then begin //Assume que o separador sera ponto
             try
