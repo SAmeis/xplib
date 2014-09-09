@@ -97,6 +97,7 @@
 				<Form>FormWinRegDemo</Form>
 			</DCCReference>
 			<DCCReference Include="XPFileEnumerator.pas"/>
+			<DCCReference Include="StrConverters.pas"/>
 			<None Include="ModelSupport_XPLibD14\default.txaPackage"/>
 			<None Include="ModelSupport_XPLibD14\default.txvpck"/>
 			<None Include="ModelSupport_XPLibD14\VCLHnd\default.txvpck"/>

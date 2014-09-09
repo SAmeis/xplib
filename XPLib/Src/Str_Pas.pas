@@ -7,7 +7,7 @@ unit Str_pas;
 
 interface
 
-uses SysUtils, Classes, Windows;
+uses SysUtils, Classes, Windows, StrConverters;
 
 const
 	DEFAULT_WORD_DELIMITERS_LIST = [#0, ' ', #13, #10, #9]; //Caracteres que podem preceder/anteceder um palavra;
@@ -105,11 +105,11 @@ procedure StrTabifyStrings(Str : TStrings);
 //Converte um valor para um logico
 function StrToBool(const Str : string) : boolean;
 //Converte string para currency
-function StrToCurrency(Str : string) : Currency;
+function StrToCurrency(Str : string) : Currency; deprecated;
 //Converte string em inteiro tentando removendo caracteres improvaveis
 function StrToIntFilter(const Str : string) : integer;
 //Converte string para float
-function StrToFloat2(Str : string) : Extended;
+function StrToFloat2(Str : string) : Extended; deprecated;
 //Remoe caracteres invalidos antes dee converter para um float
 function StrToFloatFilter(const Str : string) : double;
 // Aloca e copia a string para um PChar ( Usar TStrHnd )
@@ -1079,6 +1079,14 @@ begin
     until Tmp = NIL;
 end;
 
+function StrToCurrency(Str : string) : currency;
+/// Usar TStrConv.StrToCurrency
+///
+begin
+	Result:= TStrConv.StrToCurrency( Str );
+end;
+
+
 function StrToIntFilter(const Str : string) : integer;
     //----------------------------------------------------------------------------------------------------------------------
 var
@@ -1183,72 +1191,9 @@ begin
     Result := (UC = 'SIM') or (UC = 'S') or (UC = 'YES') or (UC = 'ON');
 end;
 
-function StrToCurrency(Str : string) : Currency;
-    //----------------------------------------------------------------------------------------------------------------------
-    //Converte string para currency
-var
-    DotSep, SemiCSep : PChar;
-    OldDecimalSeparator : char;
-begin
-    DotSep := StrRScan(PChar(Str), '.');
-    SemiCSep := StrRScan(PChar(Str), ',');
-    if ((DWORD(DotSep) or DWORD(SemiCSep)) <> $0) then begin //Existe separador
-        -Em unit separada criar registro de formatsettings e usar como nova global
-        -caso compilador superior ao xe6 usar instancia de sysutils
-        OldDecimalSeparator := SysUtils.FormatSettings.DecimalSeparator; //***Caso outro thread alterar esse valor UM ABRACO !!!!!!!
-        if LongInt(DotSep) > LongInt(SemiCSep) then begin //Assume que o separador sera ponto
-            try
-                SysUtils.FormatSettings.DecimalSeparator := '.';
-                StringReplace(Str, ',', EmptyStr, [rfReplaceAll]);
-                Result := StrToCurr(Str);
-            finally
-                SysUtils.FormatSettings.DecimalSeparator := OldDecimalSeparator;
-            end;
-        end else begin //Separador sera virgula
-            try
-                SysUtils.FormatSettings.DecimalSeparator := ',';
-                StringReplace(Str, '.', EmptyStr, [rfReplaceAll]);
-                Result := StrToCurr(Str);
-            finally
-                SysUtils.FormatSettings.DecimalSeparator := OldDecimalSeparator;
-            end;
-        end;
-    end else begin //Converte direto
-        Result := StrToCurr(Str);
-    end;
-end;
-
 function StrToFloat2(Str : string) : Extended;
-    //----------------------------------------------------------------------------------------------------------------------
-    //Converte string para float
-var
-    DotSep, SemiCSep : PChar;
-    OldDecimalSeparator : char;
 begin
-    DotSep := StrRScan(PChar(Str), '.');
-    SemiCSep := StrRScan(PChar(Str), ',');
-    if ((DWORD(DotSep) or DWORD(SemiCSep)) <> $0) then begin //Existe separador
-        OldDecimalSeparator := SysUtils.FormatSettings.DecimalSeparator; //***Caso outro thread alterar esse valor UM ABRACO !!!!!!!
-        if LongInt(DotSep) > LongInt(SemiCSep) then begin //Assume que o separador sera ponto
-            try
-                SysUtils.FormatSettings.DecimalSeparator := '.';
-                StringReplace(Str, ',', EmptyStr, [rfReplaceAll]);
-                Result := StrToFloat(Str);
-            finally
-                SysUtils.FormatSettings.DecimalSeparator := OldDecimalSeparator;
-            end;
-        end else begin //Separador sera virgula
-            try
-                SysUtils.FormatSettings.DecimalSeparator := ',';
-                StringReplace(Str, '.', EmptyStr, [rfReplaceAll]);
-                Result := StrToFloat(Str);
-            finally
-                SysUtils.FormatSettings.DecimalSeparator := OldDecimalSeparator;
-            end;
-        end;
-    end else begin //Converte direto
-        Result := StrToFloat(Str);
-    end;
+	Result := TStrConv.StrToFloat2( Str );
 end;
 
 function StrToFloatFilter(const Str : string) : double;

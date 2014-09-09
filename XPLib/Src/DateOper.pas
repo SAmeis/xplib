@@ -84,7 +84,7 @@ type
     public
         class function DayPeriod(const Time : TDateTime) : TDayPeriod;
         class function StrToDateFmt(const DateFormat, S : string) : TDateTime;
-        class function MonthFromName(const S : string; MaxLen : byte) : byte;
+        class function MonthFromName(const S : string; MaxLen : byte) : byte; deprecated;
         class function ExpandYear(Year : Integer) : Integer;
         class procedure SetCenturyOffset(Value : Integer);
         class function GetDateOrder(const DateFormat : string) : TXPDateOrder;
@@ -171,9 +171,9 @@ function MonthEnumListNames(Months : TMonthSet) : string;
 //Monta lista com os meses incluidos em Months na forma de numerais
 function MonthEnumListNumbers(Months : TMonthSet; TwoDigits : boolean = False) : string;
 //Recupera o valor do mes pela sua grafia longa
-function MonthLongNameToInt(const StrMonth : string) : Integer;
+function MonthLongNameToInt(const StrMonth : string) : Integer; deprecated;
 //Recupera o valor do mes pela sua grafia curta
-function MonthShortNameToInt(const StrMonth : string) : Integer;
+function MonthShortNameToInt(const StrMonth : string) : Integer; deprecated;
 function SecondsOfDay : double;
 //Ajusta a hora da maquina de acordo o padrao MS -> GMT
 function SetLocalDateTime(DateTime : TDateTime) : Integer;
@@ -181,7 +181,7 @@ function SetLocalDateTime(DateTime : TDateTime) : Integer;
 implementation
 
 uses
-    SysUtils, Str_Pas, Math, DateUtils, SysConst;
+	 SysUtils, Str_Pas, Math, DateUtils, SysConst, StrConverters;
 
 
 resourcestring
@@ -418,35 +418,18 @@ begin
 end;
 
 function MonthLongNameToInt(const StrMonth : string) : Integer;
-    //----------------------------------------------------------------------------------------------------------------------
-    //Recupera o valor do mes pela sua grafia longa
-    {TODO -oroger -clib : dever receber SysUtils.FormatSettings passado com o padrao classico }
-var
-    i : Integer;
+//----------------------------------------------------------------------------------------------------------------------
+//Recupera o valor do mes pela sua grafia longa
+// Usar StrConverters.MonthLongNameToInt
 begin
-    for i := 1 to high(SysUtils.FormatSettings.LongMonthNames) do begin
-        if SysUtils.FormatSettings.LongMonthNames[i] = StrMonth then begin
-            Result := i;
-            Exit;
-        end;
-    end;
-    Result := -1; //Valor invalido
+		Result := TStrConv.MonthLongNameToInt( StrMonth );
 end;
 
 function MonthShortNameToInt(const StrMonth : string) : Integer;
-    //----------------------------------------------------------------------------------------------------------------------
-    //Recupera o valor do mes pela sua grafia curta
-    {TODO -oroger -clib : dever receber SysUtils.FormatSettings passado com o padrao classico }
-var
-    i : Integer;
+	 //----------------------------------------------------------------------------------------------------------------------
+	 //Recupera o valor do mes pela sua grafia curta
 begin
-    for i := 1 to high(SysUtils.FormatSettings.ShortMonthNames) do begin
-        if SysUtils.FormatSettings.LongMonthNames[i] = StrMonth then begin
-            Result := i;
-            Exit;
-        end;
-    end;
-    Result := -1; //Valor invalido
+	Result := TStrConv.MonthShortNameToInt( StrMonth );
 end;
 
 function SecondsOfDay : double;
@@ -822,18 +805,9 @@ begin
 end;
 
 class function TTimeHnd.MonthFromName(const S : string; MaxLen : byte) : byte;
-{TODO -oroger -clib : dever receber SysUtils.FormatSettings passado com o padrao classico }
+// usar TStrConv.MonthFromName( S, MaxLen )
 begin
-    if Length(S) > 0 then begin
-        for Result := 1 to 12 do begin
-            if (Length(SysUtils.FormatSettings.LongMonthNames[Result]) > 0) and
-                (AnsiCompareText(Copy(S, 1, MaxLen),
-                Copy(SysUtils.FormatSettings.LongMonthNames[Result], 1, MaxLen)) = 0) then begin
-                Exit;
-            end;
-        end;
-    end;
-    Result := 0;
+	Result:= TStrConv.MonthFromName( S, MaxLen );
 end;
 
 class procedure TTimeHnd.ScanBlanks(const S : string; var Pos : Integer);
