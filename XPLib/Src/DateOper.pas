@@ -1,5 +1,5 @@
 {$IFDEF DateOper}
-    {$DEFINE DEBUG_UNIT}
+		{$DEFINE DEBUG_UNIT}
 {$ENDIF}
 {$I XPLib.inc}
 //NOTAS: Para usar esta unit setar Z4
@@ -23,7 +23,7 @@ const
      Constantes de formatação data/hora para uso comum
      }
     DATE_FORMAT_SHORT_ORDERED = 'yyyymmdd';
-    DATE_FORMAT_LONG_ORDERED  = 'yyyymmddhhnnss';
+		DATE_FORMAT_LONG_ORDERED  = 'yyyymmddhhnnss';
     DATE_FORMAT_FULL_ORDERED  = 'yyyymmddhhnnsszzz';
 
 const
@@ -49,7 +49,7 @@ type
     TMonthSet  = set of TMonthEnum;
 
 type
-    TDayPeriod  = (dpMorning, dpAfternoon, dpNight, dpDawn);
+		TDayPeriod  = (dpMorning, dpAfternoon, dpNight, dpDawn);
     TDayPeriods = set of TDayPeriod;
 
 const
@@ -76,12 +76,12 @@ type
         class function InternalStrToDate(const DateFormat, S : string; var Date : TDateTime) : boolean;
         class function ScanDateStr(const Format, S : string; var D, M, Y : Integer) : boolean;
         class procedure ExtractMask(const Format, S : string; Ch : char; Cnt : Integer; var I : Integer; Blank, Default : Integer);
-        class function ScanDate(const S, DateFormat : string; var Pos : Integer; var Y, M, D : Integer) : boolean;
+				class function ScanDate(const S, DateFormat : string; var Pos : Integer; var Y, M, D : Integer) : boolean;
         class function ScanNumber(const S : string; MaxLength : Integer; var Pos : Integer; var Number : longint) : boolean;
         class function ScanChar(const S : string; var Pos : Integer; Ch : char) : boolean;
         class procedure ScanBlanks(const S : string; var Pos : Integer);
         class procedure ScanToNumber(const S : string; var Pos : Integer);
-    public
+		public
         class function DayPeriod(const Time : TDateTime) : TDayPeriod;
         class function StrToDateFmt(const DateFormat, S : string) : TDateTime;
         class function MonthFromName(const S : string; MaxLen : byte) : byte; deprecated;
@@ -834,21 +834,24 @@ end;
 class function TTimeHnd.ScanDate(const S, DateFormat : string; var Pos, Y, M, D : Integer) : boolean;
 var
     DateOrder :  TXPDateOrder;
-    N1, N2, N3 : longint;
+		N1, N2, N3 : longint;
+		FS : TFormatSettings;
 begin
-    Result := False;
-    Y      := 0;
-    M      := 0;
-    D      := 0;
-    DateOrder := GetDateOrder(DateFormat);
-    if ShortDateFormat[1] = 'g' then { skip over prefix text } begin
+		//carrega valores de formatação
+		FS:=TStrConv.FormatSettings;
+		Result := False;
+		Y      := 0;
+		M      := 0;
+		D      := 0;
+		DateOrder := GetDateOrder(DateFormat);
+		if FS.ShortDateFormat[1] = 'g' then { skip over prefix text } begin
         ScanToNumber(S, Pos);
     end;
-    if not (ScanNumber(S, MaxInt, Pos, N1) and ScanChar(S, Pos, DateSeparator) and
+    if not (ScanNumber(S, MaxInt, Pos, N1) and ScanChar(S, Pos, FS.DateSeparator) and
         ScanNumber(S, MaxInt, Pos, N2)) then begin
         Exit;
     end;
-    if ScanChar(S, Pos, DateSeparator) then begin
+    if ScanChar(S, Pos, FS.DateSeparator) then begin
         if not ScanNumber(S, MaxInt, Pos, N3) then begin
             Exit;
         end;
@@ -880,10 +883,10 @@ begin
             D := N2;
         end;
     end;
-    ScanChar(S, Pos, DateSeparator);
+    ScanChar(S, Pos, FS.DateSeparator);
     ScanBlanks(S, Pos);
-    if SysLocale.FarEast and (System.Pos('ddd', ShortDateFormat) <> 0) then begin { ignore trailing text }
-        if CharInSet(ShortTimeFormat[1] , ['0'..'9'] ) then { stop at time digit } begin
+    if SysLocale.FarEast and (System.Pos('ddd', FS.ShortDateFormat) <> 0) then begin { ignore trailing text }
+        if CharInSet(FS.ShortTimeFormat[1] , ['0'..'9'] ) then { stop at time digit } begin
             ScanToNumber(S, Pos);
         end else { stop at time prefix } begin
             repeat
@@ -892,8 +895,8 @@ begin
                 end;
                 ScanBlanks(S, Pos);
             until (Pos > Length(S)) or
-                (AnsiCompareText(TimeAMString, Copy(S, Pos, Length(TimeAMString))) = 0) or
-                (AnsiCompareText(TimePMString, Copy(S, Pos, Length(TimePMString))) = 0);
+								(AnsiCompareText(FS.TimeAMString, Copy(S, Pos, Length(FS.TimeAMString))) = 0) or
+                (AnsiCompareText(FS.TimePMString, Copy(S, Pos, Length(FS.TimePMString))) = 0);
         end;
     end;
     Result := IsValidDate(Y, M, D) and (Pos > Length(S));
