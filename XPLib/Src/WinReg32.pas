@@ -743,10 +743,13 @@ Revision:27/5/2005
 var
     Name : string;
 begin
+  {$MESSAGE WARN 'cuidado com a chave de acesso, ver http://msdn.microsoft.com/en-us/library/windows/desktop/aa384253(v=vs.85).aspx '}
 	 {$IF CompilerVersion >= 22.00}
-	 atenção abaixo
+   Self.Access := KEY_QUERY_VALUE or KEY_WOW64_RES;
+   {$ELSE}
+   //pode gerar confusão se o objetivo era acesso a parte de 32bits mesmo
+   Self.Access := KEY_QUERY_VALUE or KEY_WOW64_64KEY; {TODO -oroger -clib : avaliar a inclusão de KEY_WOW64_KEY (para aplicativos 32) ao lado}
 	 {$IFEND}
-	 Self.Access := KEY_QUERY_VALUE or KEY_WOW64_64KEY; {TODO -oroger -clib : avaliar a inclusão de KEY_WOW64_KEY (para aplicativos 32) ao lado}
 	 if OpenFullKey(ExtractFilePath(FullKeyValueName), False) then begin
         Name := ExtractFileName(FullKeyValueName);
         if (Self.ValueExists(Name)) then begin

@@ -643,7 +643,7 @@ Msg : String com a mensagem a ser logada e repassada para o sub-sistema de exces
 Rev. 19/5/2005
 }
 begin
-    inherited;
+    inherited CreateRes( Ident );
     Self.WriteLog(Self.Message);
 end;
 
@@ -673,7 +673,7 @@ Args: Vetor com os valores para a formatação da cadeia.
 Rev. 19/5/2005
 }
 begin
-    inherited;
+    inherited CreateResFmt(Ident , Args );
     Self.WriteLog(Self.Message);
 end;
 
@@ -705,7 +705,7 @@ Args: Vetor com os valores para a formatação da cadeia.
 Rev. 19/5/2005
 }
 begin
-    inherited;
+    inherited CreateResFmtHelp(Ident, Args , AHelpContext );
     Self.WriteLog(Self.Message);
 end;
 
@@ -734,7 +734,7 @@ Ident : Identificador do recurso do com a mensagem a ser logada e repassada para
 Rev. 19/5/2005
 }
 begin
-    inherited;
+    inherited CreateResHelp(Ident , AHelpContext );
     Self.WriteLog(Self.Message);
 end;
 

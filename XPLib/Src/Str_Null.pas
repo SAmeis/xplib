@@ -44,7 +44,7 @@ Aloca e converte o mapa de caracteres para o tipo especificado pelo sistema oper
 }
 begin
     Result := StrNew(Str);
-    {$IFDEF VER210} //Delphi 2010
+    {$IF CompilerVersion >= 21.00}
     CharToOEMA(PAnsiChar(Result), PAnsiChar(Result));
     {$ELSE}
     CharToOEM(Result, Result);
