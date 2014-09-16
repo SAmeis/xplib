@@ -12,6 +12,9 @@ Implementa rotinas, classes e constantes para a validação, formatação e captura 
 
 interface
 
+uses
+	XPTypes, SysUtils;
+
 
 const
     BR_PROV_NAME_ACRE = 'Acre';
@@ -145,18 +148,22 @@ type
     TBRRules = Class (TObject)
  {{
  Classe utilitária para implementação das regras brasileiras.
- }
-    public
-        Class function CheckVerifierDigit(check : longint) : Byte;
-        Class function ProvinceCodeByName(const ProvinceName : string) : string;
-        Class function ProvinceNameByCode(const ProvinceCode : string) : string;
-        Class procedure SetBRDefaultFormats;
-    end;
+	}
+		private
+			class var BRFormatSettings : TFormatSettings;
+			class function GetPFormatSettingsRef: PFormatSettings; static;
+		public
+				Class function CheckVerifierDigit(check : longint) : Byte;
+				Class function ProvinceCodeByName(const ProvinceName : string) : string;
+				Class function ProvinceNameByCode(const ProvinceCode : string) : string;
+				Class procedure SetBRDefaultFormats;
+				class property FormatSettingsRef : PFormatSettings read GetPFormatSettingsRef;
+		end;
 
 implementation
 
 uses
-    SysUtils, StrHnd, Str_Pas;
+    StrHnd, Str_Pas;
 
 function CPFVerifierDigit(CPF : Double) : Integer;
     //----------------------------------------------------------------------------------------------------------------------
@@ -382,6 +389,11 @@ begin
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}
+class function TBRRules.GetPFormatSettingsRef: PFormatSettings;
+begin
+	Result := @TBRRules.BRFormatSettings;
+end;
+
 Class function TBRRules.ProvinceCodeByName(const ProvinceName : string) : string;
 {{
 Retorna a sigla de um estado brasileiro passado o seu nome.
@@ -508,13 +520,16 @@ CurrencyFormat := 0;
 CurrencyDecimals := 2;
 }
 {1 Ajusta os parametros de formatação globais do aplicativo para PT-BR( valores comuns ) }
+var
+	PFS : PFormatSettings;
 begin
-    { SETA BRASIL }
-    DecimalSeparator := ',';
-    ShortDateFormat := 'dd/mm/yyyy';
-    CurrencyString := '';
-    CurrencyFormat := 0;
-    CurrencyDecimals := 2;
+	  PFS:=TBRRules.FormatSettingsRef;
+		{ SETA BRASIL }
+		PFS^.DecimalSeparator := ',';
+		PFS^.ShortDateFormat := 'dd/mm/yyyy';
+		PFS^.CurrencyString := '';
+		PFS^.CurrencyFormat := 0;
+		PFS^.CurrencyDecimals := 2;
 end;
 
 end.

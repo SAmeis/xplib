@@ -39,6 +39,7 @@ type
         {1 Responsável pela liberacao da instancia, geralmente ele mesmo ou outra. }
     end;
 
+
 implementation
 
 { TInterfaceImplementorObject }

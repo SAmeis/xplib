@@ -20,7 +20,7 @@ interface
 
 
 uses
-	Windows;
+	SysUtils, Windows;
 
 const
 	XPPixelMaxCount = 32768;
@@ -71,6 +71,8 @@ type
 	end;
 
 	TPoint3DDynArray = array of TPoint3D;
+
+		PFormatSettings = ^TFormatSettings; ///Ponteiro para estrutura de formatação regionais
 
 implementation
 

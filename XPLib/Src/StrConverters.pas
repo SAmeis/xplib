@@ -3,11 +3,9 @@ unit StrConverters;
 interface
 
 uses
-    SysUtils, Classes;
+		SysUtils, Classes, XPTypes;
 
 type
-    PFormatSettings = ^TFormatSettings;
-
     TStrConv = class
     private
         //FFormatSettings : PFormatSettings;  static;

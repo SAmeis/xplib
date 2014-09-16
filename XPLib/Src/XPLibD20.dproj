@@ -55,21 +55,20 @@
         <SanitizedProjectName>XPLibD20</SanitizedProjectName>
         <DCC_ImageBase>00400000</DCC_ImageBase>
         <DCC_DependencyCheckOutputName>..\..\..\Lib\D2010\XPLibD14.bpl</DCC_DependencyCheckOutputName>
-        <DesignOnlyPackage>false</DesignOnlyPackage>
         <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
-        <DCC_UnitSearchPath>$(DLib);$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
-        <DCC_BplOutput>$(DLib)</DCC_BplOutput>
+        <DCC_UnitSearchPath>$(DLib)\$(PLATFORM)\$(Config);$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_BplOutput>$(DLib)\$(PLATFORM)\$(Config)</DCC_BplOutput>
         <DCC_Platform>x86</DCC_Platform>
         <DCC_Description>AAA - XP-Lib - Delphi 2010</DCC_Description>
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
         <GenPackage>true</GenPackage>
         <DCC_S>false</DCC_S>
         <DCC_N>true</DCC_N>
-        <DCC_DcpOutput>$(DLib)</DCC_DcpOutput>
+        <DCC_DcpOutput>$(DLib)\$(PLATFORM)\$(Config)</DCC_DcpOutput>
         <GenDll>true</GenDll>
         <DCC_OutputNeverBuildDcps>true</DCC_OutputNeverBuildDcps>
         <DCC_K>false</DCC_K>
-        <DCC_DcuOutput>$(DLib)</DCC_DcuOutput>
+        <DCC_DcuOutput>$(DLib)\$(PLATFORM)\$(Config)</DCC_DcuOutput>
         <DCC_ImportedDataReferences>false</DCC_ImportedDataReferences>
         <DCC_AssertionsAtRuntime>false</DCC_AssertionsAtRuntime>
         <DCC_F>false</DCC_F>
@@ -145,6 +144,7 @@
             <Form>FormWinRegDemo</Form>
         </DCCReference>
         <DCCReference Include="XPFileEnumerator.pas"/>
+        <DCCReference Include="StrConverters.pas"/>
         <None Include="ModelSupport_XPLibD14\default.txaPackage"/>
         <None Include="ModelSupport_XPLibD14\default.txvpck"/>
         <None Include="ModelSupport_XPLibD14\VCLHnd\default.txvpck"/>
@@ -234,6 +234,12 @@
                     <VersionInfoKeys Name="ProductVersion">7.2.2005.2</VersionInfoKeys>
                     <VersionInfoKeys Name="Comments">Rogerlais Andrade</VersionInfoKeys>
                 </VersionInfoKeys>
+                <Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\bcboffice2k200.bpl">Embarcadero C++Builder Office 2000 Servers Package</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\bcbofficexp200.bpl">Embarcadero C++Builder Office XP Servers Package</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k200.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp200.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                </Excluded_Packages>
             </Delphi.Personality>
             <ModelSupport>False</ModelSupport>
             <Platforms>
