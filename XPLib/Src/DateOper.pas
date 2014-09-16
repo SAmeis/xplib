@@ -746,7 +746,7 @@ begin
         I := Blank;
     end else
     if Cnt > 1 then begin
-        I := MonthFromName(Tmp, Length(Tmp));
+        I := TStrConv.MonthFromName(Tmp, Length(Tmp));
         if I = 0 then begin
             I := -1;
         end;

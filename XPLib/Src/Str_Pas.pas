@@ -1201,7 +1201,7 @@ function StrToFloatFilter(const Str : string) : double;
 Remove caracteres invalidos antes dee converter para um float
 }
 begin
-	Result := StrToFloat2(StrFilterChars(Str, FLOAT_CHARS_LIST));
+	Result := TStrConv.StrToFloat2(StrFilterChars(Str, FLOAT_CHARS_LIST));
 end;
 
 {--------------------------------------------------------------------------------------------------------------------------------}

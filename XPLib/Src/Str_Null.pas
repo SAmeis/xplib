@@ -48,7 +48,7 @@ begin
     CharToOEMA(PAnsiChar(Result), PAnsiChar(Result));
     {$ELSE}
     CharToOEM(Result, Result);
-    {$ENDIF}
+	 {$IFEND}
 end;
 
 end.
