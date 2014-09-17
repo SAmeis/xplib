@@ -1,0 +1,80 @@
+//Diretivas adcionais
+{$I XPLib.inc}
+
+package XPLibD20;
+
+{$R *.res}
+{$R 'XPLib.dcr'}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS OFF}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA OFF}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS OFF}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE RELEASE}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'AAA - XP-Lib - Delphi 2010'}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  vcl,
+  vclx,
+  designide,
+  vclactnband;
+
+contains
+  Super in 'Super.pas',
+  BinHnd in 'BinHnd.PAS',
+  Str_Pas in 'Str_Pas.pas',
+  Cripto in 'Cripto.pas',
+  Dateoper in 'Dateoper.pas',
+  CtrlsHnd in 'CtrlsHnd.pas',
+  FileHnd in 'FileHnd.pas',
+  Str_Null in 'Str_Null.pas',
+  DOS2Unix in 'DOS2Unix.pas',
+  MathHnd in 'MathHnd.pas',
+  Grf_Hnd in 'Grf_Hnd.pas',
+  VCLHnd in 'VCLHnd.pas',
+  ImgLHnd in 'ImgLHnd.pas',
+  ColorHnd in 'ColorHnd.pas',
+  LBHorz in 'LBHorz.PAS',
+  WinReg32 in 'WinReg32.pas',
+  RegCLX in 'RegCLX.pas',
+  StatHnd in 'StatHnd.pas',
+  AppsHnd in 'AppsHnd.pas',
+  AppLog in 'AppLog.pas',
+  BRRules in 'BRRules.pas',
+  PrnText in 'PrnText.pas',
+  ListHnd in 'ListHnd.pas',
+  APIHnd in 'APIHnd.pas',
+  MenuHnd in 'MenuHnd.pas',
+  XPThreads in 'XPThreads.pas',
+  XPImgDesign in 'XPImgDesign.pas',
+  XPLists in 'XPLists.pas',
+  StrHnd in 'StrHnd.pas',
+  XPGraph in 'XPGraph.pas',
+  XPTypes in 'XPTypes.pas',
+  XPClasses in 'XPClasses.pas',
+  XPFiles in 'XPFiles.pas',
+  WinRegDemo in '..\Demos\MasterDemo\WinRegistry\WinRegDemo.pas' {FormWinRegDemo},
+  XPFileEnumerator in 'XPFileEnumerator.pas',
+  StrConverters in 'StrConverters.pas';
+
+end.
