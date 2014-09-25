@@ -1,27 +1,26 @@
 {$IFDEF AppsHnd}
-	{$DEFINE DEBUG_UNIT}
+{$DEFINE DEBUG_UNIT}
 {$ENDIF}
 {$I XPLib.inc}
-
 unit AppsHnd;
 
 interface
 
 uses
-	Windows, Messages;
+  Windows, Messages;
 
-//Verifica se o Depurador do IDE esta carregado
-function  DebbugerIDELoaded() : boolean;{$IF CompilerVersion >= 21.00}platform;{$IFEND}
-
+// Verifica se o Depurador do IDE esta carregado
+function DebbugerIDELoaded(): boolean;
 
 implementation
 
-function  DebbugerIDELoaded() : boolean;{$IF CompilerVersion >= 21.00}platform;{$IFEND}
-
-//----------------------------------------------------------------------------------------------------------------------------------
-//Verifica se o Depurador do IDE esta carregado
+function DebbugerIDELoaded(): boolean;
+// ----------------------------------------------------------------------------------------------------------------------------------
+// Verifica se o Depurador do IDE esta carregado
 begin
-	Result:=( System.DebugHook <> 0 );
+  {$WARN SYMBOL_PLATFORM OFF}
+  Result := (System.DebugHook <> 0);
+  {$WARN SYMBOL_PLATFORM ON}
 end;
 
 end.

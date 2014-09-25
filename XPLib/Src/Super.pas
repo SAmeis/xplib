@@ -75,6 +75,7 @@ type
   {$ENDIF}
 
 type
+  {$WARN UNSAFE_TYPE OFF }
   QUADWORD = record
 	case Tag: boolean of
 	  True:
@@ -88,6 +89,7 @@ type
 			WORD4: Word;
 		);
   end;
+  {$WARN UNSAFE_TYPE ON }
 
 type
   PLong = ^longint;
@@ -252,32 +254,38 @@ begin
   end;
 end;
 
-function ReturnAddress: Pointer;
+function ReturnAddress: Pointer; {$MESSAGE WARN 'levar para plataforma windows apenas'}
 { {1 Retorna o endereco do metodo anterior da pilha }
+{$WARN UNSAFE_CODE OFF}
 asm
   // MOV     EAX,[ESP + 4] !!! codegen dependant
   MOV     EAX,[EBP - 4]
+  {$WARN UNSAFE_CODE ON}
 end;
 
 function SwapInstances(pInstance1, pInstance2: Pointer; InstSize: Word): boolean;
-{ {1 Troca o conteúdo das instancias de classes iguais }
+{ {1 Troca o conteúdo das instancias de alocações iguais }
 var
   TempBuffer: Pointer;
 begin
-  GetMem(TempBuffer, InstSize);
+  TempBuffer := GetMemory(InstSize); // GetMem(TempBuffer, InstSize) gera alerta com o compilador
   if TempBuffer = nil then begin
 	SwapInstances := False;
 	Exit;
   end;
+  {$WARN UNSAFE_CODE OFF}
   Move(Pointer(pInstance1^), Pointer(TempBuffer^), InstSize);
   Move(Pointer(pInstance2^), Pointer(pInstance1^), InstSize);
   Move(Pointer(TempBuffer^), Pointer(pInstance2^), InstSize);
-  FreeMem(TempBuffer, InstSize);
+  {$WARN UNSAFE_CODE ON}
+  FreeMemory(TempBuffer); // FreeMem gera alerta com o compilador
   SwapInstances := True;
 end;
 
 procedure MemMoveESBOffset(const Source; const Ofs1: Integer; var Dest; const Ofs2: Integer; const Size: Integer);
+{$MESSAGE WARN 'levar para plataforma windows apenas'}
 // ----------------------------------------------------------------------------------------------------------------------------------
+{$WARN UNSAFE_CODE OFF}
 asm
   push		esi
   push		edi
@@ -322,6 +330,7 @@ asm
 @@EXIT:
   pop		edi
   pop		esi
+  {$WARN UNSAFE_CODE ON}
 end;
 
 (* o programa abaixo desabilita ctrl+alt+del ???????

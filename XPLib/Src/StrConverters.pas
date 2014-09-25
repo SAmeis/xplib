@@ -32,8 +32,10 @@ var
 
 procedure InitDefaultFormatSettings();
 begin
-	SysUtils.GetLocaleFormatSettings(LOCALE_SYSTEM_DEFAULT, DefaultFormatSettings);
+	DefaultFormatSettings := TFormatSettings.Create( '' ); //usar a nativa do thread corrente para alterar o valor global????
+	{$WARN UNSAFE_TYPE OFF}
 	GlobalFormatSettings := @DefaultFormatSettings;
+	{$WARN UNSAFE_TYPE ON}
 end;
 
 { TStrConv }
@@ -49,12 +51,13 @@ begin
 end;
 
 class function TStrConv.GlobalLocalSettings: TFormatSettings;
-var
-	fs: TFormatSettings;
 begin
 	if (not Assigned(GlobalFormatSettings)) then begin
-		SysUtils.GetLocaleFormatSettings(0, fs);
+		InitDefaultFormatSettings();
 	end;
+	{$WARN UNSAFE_TYPE OFF}
+	Result := GlobalFormatSettings^;
+	{$WARN UNSAFE_TYPE ON}
 end;
 
 class function TStrConv.MonthFromName(const S: string; MaxLen: byte): byte;
