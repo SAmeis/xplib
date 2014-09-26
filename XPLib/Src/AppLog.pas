@@ -89,7 +89,6 @@ type
 	procedure StreamNeeded; virtual;
 	procedure WriteTo(const Txt: string);
   public
-	{ TODO -oroger -clib : Criar atributo, inicialmente desligado, para formatar nome do thread no log (ver TThread.CurrentThread para pegar a classe) }
 	constructor Create(const AFileName: string; Lock: boolean); virtual;
 	destructor Destroy; override;
 	procedure Commit;
@@ -117,7 +116,7 @@ type
 	}
 	{ 1 Nome do arquivo usado para se obter o streamer de saída do log. }
 	property Formatter: IFormatter read FFormatter write FFormatter;
-	{ 1 Referência ao formatador desta instância, se nulo a rotina padrao será usada ( esta sempre válida ) }
+	{ 1 Referência ao formatador desta instância, se nulo a rotina padrao será usada ( esta sempre válida ) ver variante FormatLogThreadNameMsg }
 	property Locked: boolean read FLocked;
 	{ {
 	  Flag de travamento do streamer. Com ela ativa outros processos não podem ter acesso ao destino do log.
@@ -840,6 +839,8 @@ constructor TLogFile.Create(const AFileName: string; Lock: boolean);
   Construtor que inicializa o streamer de saída.
 
   AFileName : caminho completo para um arquivo/identificador do streamer de saída
+
+  NOTAS: Pode-se usar formatador diferenciado através do campo Formatter, como exemplo temos o método FormatLogThreadNameMsg desta unit
 
   Lock : Flag para deixar este streamer no modo exclusivo. Assim este arquivo de log será acessivel apenas para um processo por vez.
   E também não será liberado entre as chamadas de StreamNeeded/StreamDispose.

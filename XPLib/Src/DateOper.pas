@@ -3,7 +3,7 @@
 {$ENDIF}
 {$I XPLib.inc}
 // NOTAS: Para usar esta unit setar Z4
-{ TODO -oRoger -cLIB : Validar a informacao acima, se verdadeira descomentar a linha abaixo
+{ TODO -oRoger -cFUTURE : Validar a informacao acima, se verdadeira descomentar a linha abaixo
   Esta unit possui enumerações longas que não são suportadas por byte(suspeita)
   Z4 = DWORD
   Z1 = byte(padrão compilador) }
@@ -67,7 +67,7 @@ type
 
 	  Revision: 10/8/2005 - Roger
 	}
-	{ TODO -oroger -clib : re-alocar os metodos privados desta classe }
+	{ TODO -oroger -cFUTURE : re-alocar os metodos privados desta classe }
   private
 	class function InternalStrToDate(const DateFormat, S: string; var Date: TDateTime): boolean;
 	class function ScanDateStr(const Format, S: string; var D, M, Y: Integer): boolean;
@@ -80,7 +80,7 @@ type
   public
 	class function DayPeriod(const Time: TDateTime): TDayPeriod;
 	class function StrToDateFmt(const DateFormat, S: string): TDateTime;
-	class function MonthFromName(const S: string; MaxLen: byte): byte; deprecated;
+	class function MonthFromName(const S: string; MaxLen: byte): byte; deprecated 'use TStrConv.MonthFromName';
 	class function ExpandYear(Year: Integer): Integer;
 	class procedure SetCenturyOffset(Value: Integer);
 	class function GetDateOrder(const DateFormat: string): TXPDateOrder;
@@ -676,7 +676,6 @@ class function TTimeHnd.DayPeriod(const Time: TDateTime): TDayPeriod;
 var
   h, dummy: Word;
 begin
-  { TODO -oRoger -cLIB : pode ser optmizada se usada a parte fracionaria do valor }
   DecodeTime(Time, h, dummy, dummy, dummy);
   if (h >= 5) then begin
 	if (h >= 12) then begin
@@ -960,11 +959,12 @@ class function TTimeConvert.DateTimeToFileTime(const DateTime: TDateTime): TFile
 var
   E: Extended;
   F64: int64;
-
 begin
   E := (DateTime - FILETIME_BASE) * FILETIME_STEP;
   F64 := Round(E);
+  {$WARN UNSAFE_CAST OFF}
   Result := TFileTime(F64);
+  {$WARN UNSAFE_CAST ON}
 end;
 
 class function TTimeConvert.DateTimeToLocalDateTime(const DateTime: TDateTime): TDateTime;
@@ -1005,8 +1005,10 @@ end;
 
 class function TTimeConvert.FileTimeToDateTime(const FileTime: TFileTime): TDateTime;
 begin
+  {$WARN UNSAFE_CAST OFF}
   Result := int64(FileTime) / FILETIME_STEP;
   Result := Result + FILETIME_BASE;
+  {$WARN UNSAFE_CAST ON}
 end;
 
 class function TTimeConvert.FileTimeToDosDateTime(const FileTime: TFileTime): Integer;

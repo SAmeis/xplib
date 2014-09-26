@@ -46,10 +46,9 @@ object LoginDlgs: TLoginDlgs
     Top = 109
     Width = 77
     Height = 27
-    DoubleBuffered = True
     Kind = bkOK
     Margin = 2
-    ParentDoubleBuffered = False
+    NumGlyphs = 2
     Spacing = -1
     TabOrder = 2
   end
@@ -58,10 +57,9 @@ object LoginDlgs: TLoginDlgs
     Top = 109
     Width = 77
     Height = 27
-    DoubleBuffered = True
     Kind = bkCancel
     Margin = 2
-    ParentDoubleBuffered = False
+    NumGlyphs = 2
     Spacing = -1
     TabOrder = 3
   end
