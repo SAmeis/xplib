@@ -16,7 +16,9 @@ const
   ERROR_XP_BASE         = 80000;
   ERROR_XP_ALREADY_DONE = ERROR_XP_BASE + 1;
 
-  { TODO -oroger -clib : Validar as constantes e explicitar em local apropriado futuramente }
+  {$IFNDEF VER270} //alterar para futura migração para versão posterior
+  {$MESSAGE 'Validar as constantes e explicitar em local apropriado futuramente' }
+  {$ENDIF}
   NERR_BASE = 2100;
   NERR_MAX  = NERR_BASE + 899;
 
@@ -195,8 +197,10 @@ begin
 end;
 
 class function TAPIHnd.SysErrorMessageEx(LastError: Integer): string;
+/// <summary>
+/// Traduz todas as mensagens de erro extendidos ou não da Win API
+/// </summary>
 begin
-  { TODO -oroger -clib : Traduz todas as mensagens de erro extendidos ou não da Win API }
   if (LastError >= NERR_BASE) and (LastError <= NERR_MAX) then begin
 	// Captura os erros da API de rede
 	Result := NetErrorMessage(LastError);

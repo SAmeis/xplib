@@ -19,6 +19,7 @@ Revision: 10/8/2006 - Roger
 }
 interface
 
+{TODO -oroger -clib : Avaliar uso das classes em System.IOUtils }
 uses Windows, Classes, SysUtils;
 
 const

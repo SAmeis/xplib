@@ -176,7 +176,7 @@ type
   end;
 
 procedure AppFatalError(const Msg: string; ExitCode: Integer = 1; InteractiveApp: boolean = True);
-procedure CloseErrorLogBuffer(); deprecated;
+procedure CloseErrorLogBuffer(); deprecated 'Use TLogFile.GetDefaultLogFile.Commit';
 function FormatErrorLogMsg(const ErrorMsg: string; LogMessageType: TLogMessageType = lmtError): string; deprecated;
 procedure FlushErrorLogBuffer(); deprecated;
 procedure OpenErrorLogBuffer(); deprecated;
@@ -186,6 +186,7 @@ function WriteErrorLogMsg(const ErrorMsg: string): boolean; deprecated;
 function WriteErrorLogMsgFmt(const ErrorMsg: string; Params: array of const): boolean; deprecated;
 function WriteLogMsg(const LogMsg: string; LogMessageType: TLogMessageType = lmtError): boolean; deprecated;
 function FormatLogMsg(const LogMsg: string; LogMessageType: TLogMessageType = lmtError): string;
+function FormatLogThreadNameMsg(const LogMsg: string; LogMessageType: TLogMessageType = lmtError): string;
 procedure SetLogFileName(const LogFileName: string); deprecated;
 function WriteSingleLineLogMsg(const LogMsg: string; LogMessageType: TLogMessageType = lmtError): boolean; deprecated;
 function FormatSimpleLineLogMsg(const LogMsg: string; LogMessageType: TLogMessageType = lmtError): string;
@@ -199,7 +200,7 @@ var
 implementation
 
 uses
-  FileHnd, Windows, SysConst;
+  FileHnd, Windows, SysConst, XPThreads;
 
 const
   DEFAULT_APP_LOG_EXTENSION = '.log';
@@ -209,6 +210,25 @@ var
   LogBuffer: TStringList    = nil;
   LogCriticalSection: TRtlCriticalSection;
   GlobalDefaultLogFile: TLogFile = nil;
+
+function GetWindowsUserName: string;
+{ {
+  Rotina serve apenas para leitura do usuário para thread em execução
+  Retorna o nome do usuário logado no computador, existe duvida se na realidade isso se aplica ao thread corrente
+
+  Rev. 19/5/2005
+}
+var
+  Buf: array [0 .. 2 * MAX_COMPUTERNAME_LENGTH + 1] of char;
+  Len: cardinal;
+begin
+  Len := high(Buf);
+  if Windows.GetUserName(Buf, Len) then begin
+	Result := string(Buf);
+  end else begin
+	Result := EmptyStr;
+  end;
+end;
 
 procedure SetLogFileName(const LogFileName: string);
 { {
@@ -239,8 +259,8 @@ end;
 
 procedure CloseErrorLogBuffer();
 { {
-  Fecha o buffer de erros do aplicativo. Depois desta chamada os erros registrados ( inclusive pendentes ) serão diretamente repassados ao arquivo de registro.
-
+  Fecha o buffer de erros do aplicativo. Depois desta chamada os erros registrados ( inclusive pendentes ) serão diretamente
+  repassados ao arquivo de registro.
   Comportamento deste método deve ser acessado pelos atributos coletados em GetDefaultLogFile
 
   Rev. 19/5/2005
@@ -315,6 +335,61 @@ begin
 		end;
 	  lmtAlarm: begin
 		  SL.Insert(0, Format('-Registro de Alarme: (%s) ', [LogUserName]) +
+			  FormatDateTime('dddd, mmmm d, yyyy, " às " hh:mm:ss', Now()));
+		end;
+	else begin
+		raise Exception.Create('Tipo de registro de log não reconhecido/tratado');
+	  end;
+	end;
+	Result := SL.Text; // Usa var para adcionar Separadores
+  finally
+	SL.Free;
+  end;
+end;
+
+function FormatLogThreadNameMsg(const LogMsg: string; LogMessageType: TLogMessageType = lmtError): string;
+var
+  i: Integer;
+  SL: TStringList;
+  T: TThread;
+  ThreadUserName, ThreadSignature: string;
+begin
+  T := TThread.CurrentThread;
+  if (Assigned(T)) then begin
+	if (T is TXPNamedThread) then begin
+	  ThreadSignature := 'Thread.Name(' + TXPNamedThread(T).Name + ')';
+	end else begin
+	  ThreadSignature := 'Thread.Class(' + T.ClassName + ')';
+	end;
+  end;
+  ThreadUserName := GetWindowsUserName();
+
+  SL := TStringList.Create;
+  try
+	// Identa o texto
+	SL.Text := LogMsg;
+	for i := 0 to SL.Count - 1 do begin
+	  SL.Strings[i] := #9 + SL.Strings[i];
+	end;
+	case LogMessageType of
+	  lmtError: begin
+		  SL.Insert(0, Format('-Registro de Erro[%s]: (%s) ', [ThreadSignature, ThreadUserName]) +
+			  FormatDateTime('dddd, mmmm d, yyyy, " às " hh:mm:ss', Now()));
+		end;
+	  lmtInformation: begin
+		  SL.Insert(0, Format('-Registro de Informação[%s]: (%s) ', [ThreadSignature, ThreadUserName]) +
+			  FormatDateTime('dddd, mmmm d, yyyy, " às " hh:mm:ss', Now()));
+		end;
+	  lmtWarning: begin
+		  SL.Insert(0, Format('-Registro de Alerta[%s]: (%s) ', [ThreadSignature, ThreadUserName]) +
+			  FormatDateTime('dddd, mmmm d, yyyy, " às " hh:mm:ss', Now()));
+		end;
+	  lmtDebug: begin
+		  SL.Insert(0, Format('-Registro de Debug[%s]: (%s) ', [ThreadSignature, ThreadUserName]) +
+			  FormatDateTime('dddd, mmmm d, yyyy, " às " hh:mm:ss', Now()));
+		end;
+	  lmtAlarm: begin
+		  SL.Insert(0, Format('-Registro de Alarme[%s]: (%s) ', [ThreadSignature, ThreadUserName]) +
 			  FormatDateTime('dddd, mmmm d, yyyy, " às " hh:mm:ss', Now()));
 		end;
 	else begin
@@ -456,25 +531,6 @@ procedure FlushErrorLogBuffer();
 }
 begin
   TLogFile.GetDefaultLogFile.Commit();
-end;
-
-function GetWindowsUserName: string;
-{ {
-  Rotina sem sentido nesta unit, serve apenas para suporte a outras da mesma forma deprecated use a mesma em WinNetHnd
-  Retorna o nome do usuário logado no computador, existe duvida se na realidade isso se aplica ao thread corrente
-
-  Rev. 19/5/2005
-}
-var
-  Buf: array [0 .. 2 * MAX_COMPUTERNAME_LENGTH + 1] of char;
-  Len: cardinal;
-begin
-  Len := high(Buf);
-  if Windows.GetUserName(Buf, Len) then begin
-	Result := string(Buf);
-  end else begin
-	Result := EmptyStr;
-  end;
 end;
 
 procedure OpenErrorLogBuffer();

@@ -135,60 +135,63 @@ function CriptoFileByOffSet(const FileIn, FileOut: string; cripto: boolean): boo
 /// </summary>
 /// Modified by roger 24/09/2014 18:41:35 - Removido o modo arcaico de acesso(file-BlockRead) para o uso de TFileStream
 const
-  AValChave: array [1 .. 80] of integer = (7, 5, 3, 3, 5, 3, 7, 9, 5, 23, 11, 34, 3, 16, 15, 16, 13, 58, 19, 30, 21, 24, 33, 24, 22,
-	  21, 77, 28, 79, 30, 91, 32, 43, 35, 65, 36, 77, 38, 35, 44, 41, 52, 13, 15, 16, 16, 37, 18, 32, 12, 11, 22, 13, 15, 18, 56,
-	  17, 58, 16, 60, 21, 62, 23, 24, 35, 24, 37, 22, 39, 33, 41, 35, 63, 64, 37, 34, 47, 32, 29, 30);
+  LOW_BUFFER                                              = 0;
+  HIGH_BUFFER                                             = 79;
+  AValChave: array [LOW_BUFFER .. HIGH_BUFFER] of integer = (7, 5, 3, 3, 5, 3, 7, 9, 5, 23, 11, 34, 3, 16, 15, 16, 13, 58, 19, 30,
+	  21, 24, 33, 24, 22, 21, 77, 28, 79, 30, 91, 32, 43, 35, 65, 36, 77, 38, 35, 44, 41, 52, 13, 15, 16, 16, 37, 18, 32, 12, 11,
+	  22, 13, 15, 18, 56, 17, 58, 16, 60, 21, 62, 23, 24, 35, 24, 37, 22, 39, 33, 41, 35, 63, 64, 37, 34, 47, 32, 29, 30);
   // ................................................................................................................................
 var
   fDestino, fOrigem: TFileStream;
   iBytesLidos: integer;
-  aBuffer: array [1 .. 80] of Byte;
-  aCripto: array [1 .. 80] of Char;
+  aCripto, aBuffer: TBytes;
 
   procedure Criptografa;
   var
 	i: integer;
   begin
 	if cripto then begin
-	  for i := 1 to 80 do begin
-		aCripto[i] := Chr(Ord(aBuffer[i]) + AValChave[i]);
+	  for i := low(aCripto) to high(aCripto) do begin
+		aCripto[i] := Byte(AnsiChar(Ord(aBuffer[i]) + AValChave[i]));
 	  end;
 	end else begin
-	  for i := 1 to 80 do begin
-		aCripto[i] := Chr(Ord(aBuffer[i]) - AValChave[i]);
+	  for i := low(aCripto) to high(aCripto) do begin
+		aCripto[i] := Byte(AnsiChar(Ord(aBuffer[i]) - AValChave[i]));
 	  end;
 	end;
   end;
 
 // ................................................................................................................................
 begin
-
-  Result := False;
-  fOrigem := TFileStream.Create(FileIn, fmOpenRead);
-
-
-  --ponto de parada
-
-  if FileExists(FileOut) then begin
-	fDestino := TFileStream.Create(FileOut, fmOpenReadWrite + fmExclusive);
-  end else begin
-	fDestino := TFileStream.Create(FileOut, fmCreate + fmExclusive);
+  try
+	SetLength(aBuffer, HIGH_BUFFER);
+	SetLength(aCripto, HIGH_BUFFER);
+	fOrigem := TFileStream.Create(FileIn, fmOpenRead); // abre origem
+	try
+	  if FileExists(FileOut) then begin // abre destino
+		fDestino := TFileStream.Create(FileOut, fmOpenReadWrite + fmExclusive);
+	  end else begin
+		fDestino := TFileStream.Create(FileOut, fmCreate + fmExclusive);
+	  end;
+	  try
+		iBytesLidos := fOrigem.ReadData(aBuffer, SizeOf(aBuffer));
+		while ( iBytesLidos > 0 ) do begin
+		  Criptografa;
+		  fDestino.WriteData(aCripto, iBytesLidos);
+		  iBytesLidos := fOrigem.ReadData(aBuffer, SizeOf(aBuffer));
+		end;
+		Result := True;
+	  finally
+		fDestino.Free;
+	  end;
+	finally
+	  fOrigem.Free;
+	end;
+  except
+	on E: Exception do begin
+	  Result := False;
+	end;
   end;
-
-  if IOresult <> 0 then begin
-	CloseFile(fOrigem);
-	Exit;
-  end;
-  BlockRead(fOrigem, aBuffer, SizeOf(aBuffer), iBytesLidos);
-  while iBytesLidos > 0 do begin
-	Criptografa;
-	BlockWrite(fDestino, aCripto, iBytesLidos);
-	BlockRead(fOrigem, aBuffer, SizeOf(aBuffer), iBytesLidos);
-  end;
-  CloseFile(fOrigem);
-  CloseFile(fDestino); { Fecha o Arquivo, atualizando fisicamente as alteracoes }
-  Result := True;
-
 end;
 
 end.
