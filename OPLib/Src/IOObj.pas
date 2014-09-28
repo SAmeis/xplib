@@ -66,13 +66,8 @@ type
 
 implementation
 
-{$IF CompilerVersion >= 21.00}
 uses
 	 SysUtils, AnsiStrings, Controls;
-{$ELSE}
-uses
-	 SysUtils, Controls;
-{$IFEND}
 
 
 const
@@ -242,11 +237,7 @@ function TIOObj.Contains(P : PPropInfo) : boolean;
 
 function LSRCompNames( idx : Integer ) : Boolean;
 begin
-	{$IF CompilerVersion >= 21.00}
 	Result:=(AnsiStrings.CompareText(Self.FList^[idx]^.Name, P^.Name) = 0);
-	{$ELSE}
-	Result:=(CompareText(Self.FList^[idx]^.Name, P^.Name) = 0);
-	{$IFEND}
 end;
 var
 	 I : Integer;

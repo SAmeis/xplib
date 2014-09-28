@@ -184,7 +184,6 @@ function TPrnText.ToPrn(const pText: string): boolean;
 
   Revision: 1/8/2005
 }
-
 var
   cp: dword;
 begin
@@ -253,7 +252,9 @@ function TPrnText.ToPrnFrmC(const pFrmStr: AnsiString; const pArgs: array of con
   Revision: 1/8/2005
 }
 begin
+  {$WARN EXPLICIT_STRING_CAST OFF}
   Result := Self.ToPrnLn(string(DOSString(AnsiStrings.Format(pFrmStr, pArgs))));
+  {$WARN EXPLICIT_STRING_CAST ON}
 end;
 
 { TPrnText }
@@ -278,6 +279,8 @@ var
   lPrinters: TStringList;
   lIndex, lIndex2: Integer;
 begin
+
+  {$WARN EXPLICIT_STRING_CAST OFF} {$WARN EXPLICIT_STRING_CAST_LOSS OFF}
   lIndex := -1;
   lIndex2 := -1;
   lPrinters := TStringList.Create;
@@ -293,21 +296,14 @@ begin
 	raise Exception.CreateFmt('A impressora %s não existe! ', [pPrnName]);
   end;
   FPrnDestiny := pdSpool;
-  {$IF CompilerVersion >= 21.00}
   if (AnsiStrings.Trim(pDataType) <> AnsiString(EmptyStr)) then begin
 	Self.FDataType := AnsiStrings.Trim(pDataType);
   end else begin
 	Self.FDataType := 'RAW';
   end;
-  {$ELSE}
-  if (Trim(pDataType) <> AnsiString(EmptyStr)) then begin
-	Self.FDataType := Trim(pDataType);
-  end else begin
-	Self.FDataType := 'RAW';
-  end;
-  {$IFEND}
   FPrnFile := nil;
   FPrnFilePath := EmptyStr;
+  {$WARN EXPLICIT_STRING_CAST ON} {$WARN EXPLICIT_STRING_CAST_LOSS ON}
 end;
 
 procedure TPrnText.StartPrint(const pNameDoc: AnsiString; pCopies: Integer);
@@ -321,7 +317,7 @@ var
   pd: TPrinterDefaultsA;
 begin
   { TODO -oRoger -cFUTURE : Verificar o modo de tracao da impressora Epson }
-
+  {$WARN UNSAFE_CODE OFF}
   if (FPrnDestiny = pdFile) then begin // Se instanciada StringList para arquivo nao inicia spool(ver diretivas de compilacao)
 	Exit;
   end;
@@ -334,6 +330,7 @@ begin
   // na Propiedade da Impressora->Avançados->Processador de Impressão.
   pd.pDevMode := @FDevMode;
   pd.DesiredAccess := PRINTER_ACCESS_USE;
+  {TODO -oroger	-cFUTURE : Usar a versão unicode desta API, bem como a sua estrutura }
   if OpenPrinterA(PAnsiChar(FPrnName), Fph, @pd) then begin
 	new(pdi); { TODO -oRoger -cLIB : Tentar usar var local da pilha para alimentar este parametro da API do Spool do Windows }
 	with pdi^ do begin
@@ -341,7 +338,9 @@ begin
 	  if (Self.FPrnFilePath = EmptyStr) then begin
 		pOutputFile := nil;
 	  end else begin
+		{$WARN EXPLICIT_STRING_CAST_LOSS OFF}
 		pOutputFile := PAnsiChar(AnsiString(FPrnFilePath));
+		{$WARN EXPLICIT_STRING_CAST_LOSS ON}
 	  end;
 	  pDataType := PAnsiChar(FDataType);
 	end;
@@ -352,7 +351,7 @@ begin
   end else begin
 	RaiseLastOSError;
   end;
-
+  {$WARN UNSAFE_CODE ON}
 end;
 
 function TPrnText.ToPrnEmphasis(const pText: string): boolean;
@@ -409,7 +408,7 @@ begin
   pDef := -1; // Nenhuma Impressora Encontrada.
   Level := 2;
   EnumPrinters(PRINTER_ENUM_LOCAL or PRINTER_ENUM_CONNECTIONS, nil, Level, nil, 0, Need, Returned);
-  GetMem(buf, Need);
+  buf := GetMemory(Need);
   try
 	EnumPrinters(PRINTER_ENUM_LOCAL or PRINTER_ENUM_CONNECTIONS, nil, Level, PByte(buf), Need, Need, Returned);
 	PrInfoArr := buf;
@@ -425,7 +424,7 @@ begin
 	  pDef := pSt.indexOf(LSRGetDefaultPrinter());
 	end;
   finally
-	FreeMem(buf);
+	FreeMemory(buf);
   end;
 end;
 
@@ -483,6 +482,7 @@ end;
 
 class function TPrnText.WinString(const str: AnsiString): AnsiString;
 begin
+  {$WARN EXPLICIT_STRING_CAST_LOSS OFF}
   if (str <> AnsiString(EmptyStr)) then begin
 	CharToOemA(PAnsiChar(str), PAnsiChar(str));
 	/// OemToAnsi(PAnsiChar(str), PAnsiChar(str));
@@ -491,6 +491,7 @@ begin
   end else begin
 	Result := AnsiString(EmptyStr);
   end;
+  {$WARN EXPLICIT_STRING_CAST_LOSS ON}
 end;
 
 initialization

@@ -4,9 +4,6 @@
 {$I XPLib.inc}
 unit Super;
 
-{ 1 }
-{ {
-}
 interface
 
 uses Windows, Messages;
@@ -254,7 +251,7 @@ begin
   end;
 end;
 
-function ReturnAddress: Pointer; {$MESSAGE WARN 'levar para plataforma windows apenas'}
+function ReturnAddress: Pointer; {$MESSAGE 'levar para plataforma windows apenas'}
 { {1 Retorna o endereco do metodo anterior da pilha }
 {$WARN UNSAFE_CODE OFF}
 asm
@@ -283,7 +280,7 @@ begin
 end;
 
 procedure MemMoveESBOffset(const Source; const Ofs1: Integer; var Dest; const Ofs2: Integer; const Size: Integer);
-{$MESSAGE WARN 'levar para plataforma windows apenas'}
+{$MESSAGE 'levar para plataforma windows apenas'}
 // ----------------------------------------------------------------------------------------------------------------------------------
 {$WARN UNSAFE_CODE OFF}
 asm
@@ -355,4 +352,5 @@ end;
   end.
 
 *)
+
 end.

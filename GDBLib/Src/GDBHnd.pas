@@ -430,11 +430,7 @@ begin
 		end;
 	  finally
 		if not Result and DataSet.BookmarkValid(Bookmark) then begin
-		  {$IF CompilerVersion > 15.00} // Delphi 2007+
 		  DataSet.Bookmark := Bookmark;
-		  {$ELSE}
-		  DataSet.Bookmark := PChar(Bookmark);
-		  {$IFEND}
 		end;
 	  end;
 	finally

@@ -1096,12 +1096,8 @@ begin
 
             {If function was successful, copy the filename back to a string.}
             if (Result <> 0) then begin
-                {$IF CompilerVersion> 15.00}//Delphi 2007+
-                Self.FileName := StrPas(PWideChar(FileNameBuffer));
-                {$ELSE} //Delphi 7 ou inferior
-				Self.FileName := StrPas(FileNameBuffer);
-				{$IFEND}
-            end; {if}
+				Self.FileName := StrPas(PWideChar(FileNameBuffer));
+			end; {if}
 
             {Ensure the buffer is freed.}
         finally

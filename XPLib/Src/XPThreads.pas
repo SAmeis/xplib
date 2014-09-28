@@ -8,8 +8,9 @@ unit XPThreads;
 {{
 Classes and routines for thread and synchronization.
 
-
 Revision 19/5/2005
+ Modified by roger 28/09/2014 17:08:44 - Removido simbolo procedure SetThreadNamePreD2010(const AName : string); por não fazer mais
+ sentido com a atual implementação e uso apenas neste local
 }
 interface
 
@@ -120,30 +121,6 @@ uses
 var
     GlobalLockInstance : TCriticalSection;
 
-{$IF CompilerVersion < 21.00}
-{{Rotina existente apenas para Delphi pre 2010. Ver NameThreadForDebugging() para versões posteriores}
-procedure SetThreadNamePreD2010(const AName : string);
-{{
-Changes the name for the execution thread using ThreadName.
-}
-var
-    ThreadNameInfo : TThreadNameInfo;
-begin
- {$TYPEDADDRESS OFF}
-    ThreadNameInfo.FType     := $1000;
-    ThreadNameInfo.FName     := PAnsiChar(AName);
-    ThreadNameInfo.FThreadID := GetCurrentThreadId();
-    ThreadNameInfo.FFlags    := 0;
-    try
-        RaiseException($406D1388, 0, sizeof(ThreadNameInfo) div sizeof(longword), @ThreadNameInfo);
-    except
-        //Nada a ser feito segundo a documentacao da Borland
-    end;
- {$TYPEDADDRESS ON}
-end;
-
-{$IFEND}
-
 {-**********************************************************************
 ************************************************************************
 ******************
@@ -241,11 +218,7 @@ end;
 {--------------------------------------------------------------------------------------------------------------------------------}
 class procedure TXPNamedThread.SetCurrentThreadName(const ThreadName : string);
 begin
-     {$IF CompilerVersion >= 21.00}
-    NameThreadForDebugging(ansistring(ThreadName));
-     {$ELSE}
-    SetThreadNamePreD2010(ThreadName);
-     {$IFEND}
+	NameThreadForDebugging(ansistring(ThreadName));
 end;
 
 {-**********************************************************************
@@ -333,11 +306,7 @@ end;
 procedure TXPBaseThread.Start;
 begin
     Self.FIsAlive := True;
-    {$IF CompilerVersion >= 21.00}
-    inherited Start;
-    {$ELSE}
-    inherited Resume;
-    {$IFEND}
+	inherited Start;
 end;
 
 procedure TXPBaseThread.Resume; deprecated;

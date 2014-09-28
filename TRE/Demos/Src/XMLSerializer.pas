@@ -978,11 +978,7 @@ function TXMLSerializer.SaveObject(const aInstance : TObject; const aNodeName : 
                             end;
 
                             if Assigned(lPropInfo) then begin
-                               {$IF CompilerVersion >= 21 }
-                                lPropName := UnicodeString(lPropInfo^.Name);
-                               {$ELSE}
-                               lPropName := lPropInfo^.Name;
-                               {$IFEND}
+								lPropName := UnicodeString(lPropInfo^.Name);
 
                                 if IsStoredProp(aPropertyInstance, lPropName)
                                     and IsPublishedProp(aPropertyInstance, lPropName) then begin

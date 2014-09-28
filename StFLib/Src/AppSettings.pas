@@ -2084,16 +2084,10 @@ Portado para Unicode, ajustando de Self.FValue := 0; para Self.FValue := '';
 }
 begin
     //#if (not Variants.VarIsType(Self.FValue, varString  )) then begin
-     {$IF CompilerVersion >= 21.00}
-    if (not Variants.VarIsType(Self.FValue, [varString, varUString])) then begin
-        Self.FValue := '';
-    end;
-     {$ELSE}
-	 if (not Variants.VarIsType(Self.FValue, [varString])) then begin
-		 Self.FValue := '';
-	 end;
-	 {$IFEND}
-    Result := string(Self.FValue);
+	if (not Variants.VarIsType(Self.FValue, [varString, varUString])) then begin
+		Self.FValue := '';
+	end;
+	Result := string(Self.FValue);
     FUsed  := True;
 end;
 
@@ -2210,12 +2204,8 @@ begin
                         end;
                         //varWord64   = $0015; { vt_ui8         21 } {UNSUPPORTED as of v6.x code base}
                         {  if adding new items, update Variants' varLast, BaseTypeMap and OpTypeMap }
-                         {$IF CompilerVersion >= 21.00}
-                        varStrArg, varString, varUString : begin
-                         {$ELSE}
-						 varStrArg, varString : begin
-						 {$IFEND}
-                            DefVal.Value := EmptyStr;
+						varStrArg, varString, varUString : begin
+							DefVal.Value := EmptyStr;
                         end;
                         varAny : begin
                             DefVal.Value := Null;

@@ -182,12 +182,12 @@ var
 begin
 	 {$IF CompilerVersion = 21.00}
 	 if ( (Length mod 2048 ) <> 0 ) then begin
-	 	//Para a Indy presente no RAD 21(D2010) um bug impede qq tamanho de blovo
+		//Para a Indy presente no RAD 21(D2010) um bug impede qq tamanho de bloco
 		raise Exception.Create('Implementação de hash DEVE ser calculada em multiplos de 2048 para esta versão(ver notas de codificação)');
 	 end;
 	 {$ELSE}
 	  {$WARNING 'REVER BLOCO DE CÓDIGO PRÓXIMO'}
-	 {$IFEND}
+	 {$ENDIF}
 
 
 	 idmd5 := TIdHashMessageDigest5.Create;

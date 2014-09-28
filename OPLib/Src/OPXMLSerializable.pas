@@ -7,14 +7,8 @@ unit OPXMLSerializable;
 
 interface
 
-{$IF CompilerVersion >= 21.00}
 uses
 	 Classes, SysUtils, TypInfo, XMLIntf, Rtti, Generics.Collections;
-{$ELSE}
-uses
-	 Classes, SysUtils, TypInfo, XMLIntf;
-{$IFEND}
-
 
 type
 	 IXMLSerializable = interface(IUnknown)
@@ -24,7 +18,6 @@ type
 	 end;
 
 	 {TODO -oroger -clib : implementar classe para a lista  }
-	 {$IF CompilerVersion >= 21.00}
 	 TXMLSerializableList = class(TObjectList<TObject>, IXMLSerializable)
 	 private
 		 FRefCount : Integer;
@@ -36,7 +29,7 @@ type
 		 procedure SaveTo(Node : IXMLNode);
 		 procedure LoadFrom(Node : IXMLNode; CreateDefault : boolean);
 	 end;
-	 {$IFEND}
+
 
 	 TXMLSerializable = class(TPersistent, IXMLSerializable)
 	 private
@@ -274,21 +267,20 @@ var
     subProp :  IXMLSerializable;
 begin
     Instance := TypInfo.GetObjectProp(Self, PInfo);
-    if (Instance <> nil) then begin
-        if SysUtils.Supports(Instance, IXMLSerializable, subProp) then begin
-            subNode := ParentNode.ChildNodes.FindNode(String(PInfo.Name));
-            if (subNode = nil) then begin
-                subNode := ParentNode.AddChild(String(PInfo.Name));
-                subNode.Attributes['class'] := PInfo.PropType^.Name;
-            end;
-            subProp.SaveTo(subNode);
-        end else begin
-            {TODO -oroger -cdsglib : Como proceder}
-        end;
-    end;
+	if (Instance <> nil) then begin
+		if SysUtils.Supports(Instance, IXMLSerializable, subProp) then begin
+			subNode := ParentNode.ChildNodes.FindNode(String(PInfo.Name));
+			if (subNode = nil) then begin
+				subNode := ParentNode.AddChild(String(PInfo.Name));
+				subNode.Attributes['class'] := PInfo.PropType^.Name;
+			end;
+			subProp.SaveTo(subNode);
+		end else begin
+			{TODO -oroger -cdsglib : Como proceder}
+		end;
+	end;
 end;
 
-{$IF CompilerVersion >= 21.00}
 { TXMLSerializableList }
 procedure TXMLSerializableList.LoadFrom(Node : IXMLNode; CreateDefault : boolean);
 begin
@@ -344,7 +336,5 @@ begin
 		 Destroy;
 	 end;
 end;
-
-{$IFEND}
 
 end.
