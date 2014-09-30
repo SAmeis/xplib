@@ -77,7 +77,7 @@ function DataSetLocate(DataSet: TDataSet; const FieldsStrList: string; const Fie
 implementation
 
 uses
-  DBConsts, Math;
+  DBConsts, Math, Generics.Collections;
 
 procedure CloneFieldsValues(SrcDataSet, DestDataSet: TDataSet; PostRecord: boolean = False; NewRecord: boolean = False;
 	IgnoreMissing: boolean = True);
@@ -200,6 +200,7 @@ var
   i: Integer;
   PFP: PDBFieldPair;
 begin
+  {$WARN UNSAFE_CODE OFF}
   Self.Destination.Edit;
   for i := 0 to Self.Associations.Count - 1 do begin
 	PFP := Self.Associations.Items[i];
@@ -210,6 +211,7 @@ begin
   if CallPost then begin
 	Self.Destination.Post;
   end;
+  {$WARN UNSAFE_CODE ON}
 end;
 
 constructor TDataSetFieldMapping.Create(ASource, ADestination: TDataSet; Mapping: TStringList);
@@ -244,6 +246,7 @@ var
   Fld1, Fld2: TField;
   PFP: PDBFieldPair;
 begin
+  {$WARN UNSAFE_CODE OFF}
   if not(ASource.Active and ADestination.Active) then begin
 	raise Exception.Create('Datasets devem estar abertos para efetuar o mapeamento.');
   end;
@@ -281,6 +284,7 @@ begin
 	FreeAndNil(Self.Associations);
 	raise;
   end;
+  {$WARN UNSAFE_CODE ON}
 end;
 
 constructor TDataSetFieldMapping.Create(ASource, ADestination: TDataSet; Mapping: string);
@@ -354,7 +358,7 @@ class function TGDBHnd.DataSetLocateThrough(DataSet: TDataSet; const KeyFields: 
 }
 var
   FieldCount: Integer;
-  Fields: TList;
+  Fields: TList<TField>;
   Bookmark: TBookmark;
 
   function LSRCompareField(Field: TField; Value: variant): boolean;
@@ -384,6 +388,7 @@ var
   var
 	i: Integer;
   begin
+	{$WARN UNSAFE_CAST OFF}
 	if FieldCount = 1 then begin
 	  Result := LSRCompareField(TField(Fields.First), KeyValues);
 	end else begin
@@ -392,6 +397,7 @@ var
 		Result := Result and LSRCompareField(TField(Fields[i]), KeyValues[i]);
 	  end;
 	end;
+	{$WARN UNSAFE_CAST ON}
   end;
 
 begin
@@ -402,7 +408,7 @@ begin
 	  Exit;
 	end;
   end;
-  Fields := TList.Create;
+  Fields := TList<TField>.Create;
   try
 	DataSet.GetFieldList(Fields, KeyFields);
 	FieldCount := Fields.Count;
@@ -465,17 +471,20 @@ function TDataSetFieldMapping.GetPair(Index: Integer): TDBFieldPair;
   Revision: 8/9/2005 - Roger
 }
 begin
+  {$WARN UNSAFE_CODE OFF}
   Result := PDBFieldPair(Self.Associations.Items[index])^;
+  {$WARN UNSAFE_CODE ON}
 end;
 
 class procedure TGDBHnd.RefreshTables(DataSet: TDataSet; Recursive: boolean);
 // ----------------------------------------------------------------------------------------------------------------------
 var
-  List: TList;
+  List: TList<TDataSet>;
   i: Integer;
 begin
+  {$WARN UNSAFE_CAST OFF}
   DataSet.Refresh;
-  List := TList.Create;
+  List := TList<TDataSet>.Create;
   try
 	DataSet.GetDetailDataSets(List);
 	for i := 0 to List.Count - 1 do begin
@@ -488,6 +497,7 @@ begin
   finally
 	List.Free;
   end;
+  {$WARN UNSAFE_CAST ON}
 end;
 
 class procedure TGDBHnd.DBError(const Msg: string);

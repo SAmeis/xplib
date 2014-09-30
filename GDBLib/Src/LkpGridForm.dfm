@@ -1,11 +1,11 @@
 object LookupGridForm: TLookupGridForm
   Left = 289
   Top = 203
-  Width = 478
-  Height = 304
   ActiveControl = LkpEdit
   BorderIcons = [biSystemMenu]
   Caption = 'Busca por registro'
+  ClientHeight = 266
+  ClientWidth = 462
   Color = clBtnFace
   ParentFont = True
   OldCreateOrder = True
@@ -18,7 +18,7 @@ object LookupGridForm: TLookupGridForm
   object Label1: TLabel
     Left = 16
     Top = 13
-    Width = 66
+    Width = 69
     Height = 13
     Caption = '&Entrada direta'
     FocusControl = LkpEdit
@@ -36,7 +36,7 @@ object LookupGridForm: TLookupGridForm
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
     TitleFont.Height = -11
-    TitleFont.Name = 'MS Sans Serif'
+    TitleFont.Name = 'Tahoma'
     TitleFont.Style = []
     OnDblClick = DBGridDblClick
   end
