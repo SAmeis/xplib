@@ -12,6 +12,9 @@
         <Projects Include="GDBLib\Src\GDBLibD20.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="BDELib\Src\BDELibD20.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -47,14 +50,23 @@
     <Target Name="GDBLibD20:Make">
         <MSBuild Projects="GDBLib\Src\GDBLibD20.dproj" Targets="Make"/>
     </Target>
+    <Target Name="BDELibD20">
+        <MSBuild Projects="BDELib\Src\BDELibD20.dproj"/>
+    </Target>
+    <Target Name="BDELibD20:Clean">
+        <MSBuild Projects="BDELib\Src\BDELibD20.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="BDELibD20:Make">
+        <MSBuild Projects="BDELib\Src\BDELibD20.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="XPLibD20;OPLibD20;GDBLibD20"/>
+        <CallTarget Targets="XPLibD20;OPLibD20;GDBLibD20;BDELibD20"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="XPLibD20:Clean;OPLibD20:Clean;GDBLibD20:Clean"/>
+        <CallTarget Targets="XPLibD20:Clean;OPLibD20:Clean;GDBLibD20:Clean;BDELibD20:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="XPLibD20:Make;OPLibD20:Make;GDBLibD20:Make"/>
+        <CallTarget Targets="XPLibD20:Make;OPLibD20:Make;GDBLibD20:Make;BDELibD20:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

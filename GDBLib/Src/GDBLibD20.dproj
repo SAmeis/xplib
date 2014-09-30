@@ -63,11 +63,11 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
         <VerInfo_Locale>1046</VerInfo_Locale>
-        <VerInfo_Keys>CompanyName=3E;FileDescription=eXtreme Programming Library;FileVersion=16.0.2014.1;InternalName=;LegalCopyright=3E®;LegalTrademarks=3E®;OriginalFilename=;ProductName=;ProductVersion=7.2.2005.2;Comments=Rogerlais Andrade</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=3E;FileDescription=eXtreme Programming Library;FileVersion=16.0.2014.0;InternalName=;LegalCopyright=3E®;LegalTrademarks=3E®;OriginalFilename=;ProductName=;ProductVersion=16.2.2014.2;Comments=Rogerlais Andrade</VerInfo_Keys>
         <VerInfo_Release>2014</VerInfo_Release>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;System.Win;$(DCC_Namespace)</DCC_Namespace>
-        <VerInfo_MajorVer>17</VerInfo_MajorVer>
+        <VerInfo_MajorVer>16</VerInfo_MajorVer>
         <SanitizedProjectName>XPLibD20</SanitizedProjectName>
         <DCC_ImageBase>00400000</DCC_ImageBase>
         <DCC_DependencyCheckOutputName>..\..\..\Lib\BDS\Win32\Release\GDBLibD20.bpl</DCC_DependencyCheckOutputName>
