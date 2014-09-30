@@ -1,0 +1,45 @@
+{$I OPLib.inc}
+
+package OPLibD20;
+
+{$R *.res}
+{$R 'OPLib.dcr'}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS OFF}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS OFF}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST ON}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE RELEASE}
+{$DEFINE FULL_RTTI}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'AAA - Object Persistence Library - Delphi 2010'}
+{$IMPLICITBUILD OFF}
+
+requires
+  vcl,
+  xmlrtl;
+
+contains
+  IOObj in 'IOObj.pas',
+  TreeHnd in 'TreeHnd.pas',
+  ClassHnd in 'ClassHnd.pas',
+  OPXMLSerializable in 'OPXMLSerializable.pas';
+
+end.

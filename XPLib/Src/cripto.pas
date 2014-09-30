@@ -99,7 +99,7 @@ var
   CMask, C: Byte;
 begin
   Result := Str;
-  {$WARN UNSAFE_CODE OFF}
+  {$WARN UNSAFE_CODE OFF} {$WARN IMMUTABLE_STRINGS OFF}
   CMask := Lo(Length(Str));
   for CPos := 1 to Length(Str) do begin
 	C := Byte(Str[CPos]);
@@ -107,7 +107,7 @@ begin
 	Result[CPos] := Char(C);
 	CMask := C;
   end;
-  {$WARN UNSAFE_CODE ON}
+  {$WARN UNSAFE_CODE ON} {$WARN IMMUTABLE_STRINGS ON}
 end;
 
 { ------------------------------------------------------------------------------ }
@@ -117,7 +117,7 @@ var
   CMask, C: Byte;
 begin
   Result := Str;
-  {$WARN UNSAFE_CODE OFF}
+  {$WARN UNSAFE_CODE OFF} {$WARN IMMUTABLE_STRINGS OFF}
   CMask := Lo(Length(Str));
   for CPos := 1 to Length(Str) do begin
 	C := Byte(Str[CPos]);
@@ -125,7 +125,7 @@ begin
 	Result[CPos] := Char(C);
 	CMask := C;
   end;
-  {$WARN UNSAFE_CODE ON}
+  {$WARN UNSAFE_CODE ON} {$WARN IMMUTABLE_STRINGS ON}
 end;
 
 function CriptoFileByOffSet(const FileIn, FileOut: string; cripto: boolean): boolean;

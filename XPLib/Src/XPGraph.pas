@@ -7,7 +7,6 @@ unit XPGraph;
 { {
   XPLib based unit for basic graphical manipulation.
 }
---parada aqui
 
 interface
 
@@ -256,7 +255,9 @@ var
 begin
   Result := ABitmap.PixelFormat;
   if Result = pfCustom then begin
+	{$WARN UNSAFE_CODE OFF}
 	Ret := GetObject(ABitmap.Handle, SizeOf(DIB), @DIB);
+	{$WARN UNSAFE_CODE ON}
 	if (Ret = 0) then begin
 	  TAPIHnd.CheckAPI(GetLastError());
 	end;
@@ -421,9 +422,11 @@ begin
 	Self.FCollumn := 0;
 	while (Self.FCollumn <= ColLimit) do begin
 	  RGB := Self.FRow15Bits[Self.FCollumn];
+	  {$WARN UNSAFE_CODE OFF}
 	  Self.FPRGB^.rgbBlue := RGB and B15BITMASK;
 	  Self.FPRGB^.rgbGreen := RGB and G15BITMASK;
 	  Self.FPRGB^.rgbRed := RGB and R15BITMASK;
+	  {$WARN UNSAFE_CODE ON}
 	  Self.ProcessRGBPixel();
 	  Inc(Self.FCollumn);
 	end;
@@ -458,9 +461,11 @@ begin
 	Self.FCollumn := 0;
 	while (Self.FCollumn <= ColLimit) do begin
 	  RGB := Self.FRow16Bits[Self.FCollumn];
+	  {$WARN UNSAFE_CODE OFF}
 	  Self.FPRGB^.rgbBlue := RGB and B15BITMASK;
 	  Self.FPRGB^.rgbGreen := RGB and G15BITMASK;
 	  Self.FPRGB^.rgbRed := RGB and R15BITMASK;
+	  {$WARN UNSAFE_CODE ON}
 	  Self.ProcessRGBPixel();
 	  Inc(Self.FCollumn);
 	end;
@@ -485,9 +490,11 @@ begin
 	Self.FCollumn := 0;
 	while (Self.FCollumn <= ColLimit) do begin
 	  RGB := Self.FRow24Bits[Self.FCollumn];
+	  {$WARN UNSAFE_CODE OFF}
 	  Self.FPRGB^.rgbBlue := RGB.rgbtBlue;
 	  Self.FPRGB^.rgbGreen := RGB.rgbtGreen;
 	  Self.FPRGB^.rgbRed := RGB.rgbtRed;
+	  {$WARN UNSAFE_CODE ON}
 	  Self.ProcessRGBPixel();
 	  Inc(Self.FCollumn);
 	end;
@@ -634,7 +641,9 @@ function TShapePlane.GetShapes(index: integer): TXPShape;
   Revision:2/6/2005
 }
 begin
+  {$WARN UNSAFE_CAST OFF}
   Result := TXPShape(Self.FShapeList.Items[index]);
+  {$WARN UNSAFE_CAST ON}
 end;
 
 { -------------------------------------------------------------------------------------------------------------------------------- }
@@ -666,7 +675,9 @@ var
 begin
   // Destroi os elementos contidos
   for i := 0 to Self.FShapeList.Count - 1 do begin
+	{$WARN UNSAFE_CAST OFF}
 	TXPShape(Self.FShapeList.Items[i]).Free;
+	{$WARN UNSAFE_CAST ON}
   end;
   Self.FShapeList.Free;
   inherited;

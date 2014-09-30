@@ -9,6 +9,34 @@
 
 //************** START COMMON PART **************
 
+//****************************************************   RTTI  ********************************************************
+{$DEFINE RTTI_LEVEL2} //valores possiveis RTTI_LEVEL0, RTTI_LEVEL1 e RTTI_LEVEL2
+{$IFDEF RTTI_LEVEL2}
+{$DEFINE RTTI_LEVEL1} //Setando nivel 2 implica em setar nivel 1(mais restrito)
+{$ENDIF}
+{$IFNDEF RTTI_LEVEL1}
+{$DEFINE RTTI_LEVEL0} //Sem nível 1 implica sem RTTI alguma
+{$ENDIF}
+
+//Habilita total geração de RTTI para este código(habilitado apenas para casos necessários)
+{$IFDEF RTTI_LEVEL0}
+	//Desliga totalmente RTTI
+	{$TYPEINFO OFF}
+	{$METHODINFO OFF}
+{$ELSE}
+	//Habilita RTTI base
+	{$IFDEF RTTI_LEVEL1}
+		//={$M-}
+		{$TYPEINFO ON}
+	{$ENDIF}
+	//Habilita RTTI completa, tem como requisito o nivel 1(typeinfo on)
+	{$IFDEF RTTI_LEVEL2}
+		{$METHODINFO ON}
+	{$ENDIF}
+{$ENDIF}
+//****************************************************   RTTI  ********************************************************
+
+
 //Alinhamento de 64 bits ( para os novos processadores e os atuais )
 {$A8}
 
@@ -35,9 +63,6 @@
 {$WRITEABLECONST OFF}
 
 {$K+} // Smart callbacks ( Sem uso hoje )
-
- // == {$M-} Praticamente tudo deve ter acesso a RTTI no Delphi hoje
-{$TYPEINFO ON}
 
 {$N+} //N+ 80x87 instructions( obvio )
 

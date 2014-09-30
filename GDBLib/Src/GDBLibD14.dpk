@@ -4,6 +4,7 @@ package GDBLibD14;
 
 {$R *.res}
 {$R 'GDBLib.dcr'}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS OFF}
 {$BOOLEVAL OFF}
@@ -25,6 +26,8 @@ package GDBLibD14;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
+{$DEFINE RELEASE}
+{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'AAA - Generic Database Library - Delphi 2010'}
 {$IMPLICITBUILD OFF}
 

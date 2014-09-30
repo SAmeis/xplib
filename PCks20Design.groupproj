@@ -1,0 +1,60 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{833926FA-FEDD-4654-9C77-82CF4CAFF4E9}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="XPLib\Src\XPLibD20.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="OPLib\Src\OPLibD20.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="GDBLib\Src\GDBLibD20.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="XPLibD20">
+        <MSBuild Projects="XPLib\Src\XPLibD20.dproj"/>
+    </Target>
+    <Target Name="XPLibD20:Clean">
+        <MSBuild Projects="XPLib\Src\XPLibD20.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="XPLibD20:Make">
+        <MSBuild Projects="XPLib\Src\XPLibD20.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="OPLibD20">
+        <MSBuild Projects="OPLib\Src\OPLibD20.dproj"/>
+    </Target>
+    <Target Name="OPLibD20:Clean">
+        <MSBuild Projects="OPLib\Src\OPLibD20.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="OPLibD20:Make">
+        <MSBuild Projects="OPLib\Src\OPLibD20.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="GDBLibD20">
+        <MSBuild Projects="GDBLib\Src\GDBLibD20.dproj"/>
+    </Target>
+    <Target Name="GDBLibD20:Clean">
+        <MSBuild Projects="GDBLib\Src\GDBLibD20.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="GDBLibD20:Make">
+        <MSBuild Projects="GDBLib\Src\GDBLibD20.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="XPLibD20;OPLibD20;GDBLibD20"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="XPLibD20:Clean;OPLibD20:Clean;GDBLibD20:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="XPLibD20:Make;OPLibD20:Make;GDBLibD20:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
