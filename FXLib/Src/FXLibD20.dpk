@@ -1,0 +1,44 @@
+//Diretivas adcionais
+{$I FXLib.inc }
+
+package FXLibD20;
+
+{$R *.res}
+{$R 'FXLib.dcr'}
+{$ALIGN 8}
+{$ASSERTIONS OFF}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA OFF}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS OFF}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION '3E - FXLib - RS-XE6'}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  vcl,
+  designide;
+
+contains
+  Blowpan in 'Blowpan.pas',
+  Ringauge in 'Ringauge.pas',
+  StarFld_ in 'StarFld_.pas',
+  PicShow in 'PicShow.pas',
+  Credits in 'Credits.pas';
+
+end.
