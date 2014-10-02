@@ -229,7 +229,7 @@ type
 	class function FileTimeProperties(FileHandle: THandle; var CreateDate, LastAccessDate, LastWriteDate: TDateTime)
 		: Integer; overload;
 	class function FileTimeProperties(const FileName: string; var CreateDate, LastAccessDate, LastWriteDate: TDateTime): Integer;
-		overload; platform;
+		overload;
 	class function FileTimeChangeTime(const FileName: string): TDateTime;
 
   end;
@@ -1447,1331 +1447,1335 @@ begin
   Sucess := False;
   Result := -1;
   try
-	{$I-}
 	repeat
+	begin
+	  {$IOCHECKS OFF}
 	  Reset(FHnd);
+	  {$IOCHECKS ON}
 	  if IOResult = 0 then begin
 		Sucess := True;
 	  end
-	  until (Sucess) or (Now > FTime);
-	  {$I+}
-	  if Sucess then begin
-		ReadLn(FHnd, Line);
-		try
-		  Value := StrToInt(Line);
-		except
-		  Value := 0;
-		  Result := ERROR_INVALID_PARAMETER;
-		end;
-	  end else begin
-		if IOResult <> 0 then begin
-		  Result := IOResult;
-		end else begin
-		  Result := ERROR_TIMEOUT;
-		end;
-	  end;
-	finally
-	  if Sucess then begin
-		CloseFile(FHnd);
-		Result := NO_ERROR;
-	  end;
 	end;
-  end;
+	until ((Sucess) or (Now > FTime));
 
-  function GetTempDir: string;
-  { {
-	Retorna o caminho do diretorio de arquivos temporarios
-  }
-  var
-	Path: array [0 .. MAX_PATH] of char;
-  begin
-	SetLastError(ERROR_SUCCESS);
-	GetTempPath(MAX_PATH, Path);
-	if GetLastError() = ERROR_SUCCESS then begin
-	  Result := Path;
-	end else begin
-	  Result := EmptyStr;
-	end;
-  end;
-
-  function IsUNCName(const UNC: string): boolean;
-  { {
-	Tests if the argument is a UNC compliant.
-  }
-  begin
-	Result := (Pos('\\', UNC) = 1);
-  end;
-
-  procedure ListDirFilesNames(Dir, Mask: string; Attr: Integer; IncSubDirs: boolean; List: TStrings);
-  { {
-	Lista todos os arquivos de uma pasta que obedeçam a máscara dada e aos atributos especificados.
-
-	Revision: 25/11/2005 - Roger
-
-	Corrigido bug que falha na enumeração das mascaras que continham "?', pois comparava o caminho completo do arquivo com a máscara.
-	em LocalListFiles()
-	PParam^.Mask.Matches(Filename) -> PParam^.Mask.Matches(ExtractFileName(Filename))
-
-	Revision: 2/5/2006 - Roger
-  }
-  type
-	PLocalDataParam = ^TLocalDataParam;
-
-	TLocalDataParam = record
-	  FList: TStrings;
-	  MatchAttribut: Integer;
-	  Mask: TMask;
-	end;
-  var
-	Param: TEnumFileParam;
-	DataParam: TLocalDataParam;
-	// .........................................................................................................
-	function LocalListFiles(const FileName: string; FileParam: TEnumFileParam): Integer;
-	var
-	  TargetAttr: Integer;
-	  PParam: PLocalDataParam;
-	begin
-	  {$WARN UNSAFE_CODE OFF}
+	if Sucess then begin
+	  ReadLn(FHnd, Line);
 	  try
-		PParam := FileParam.Data;
-		TargetAttr := PParam^.MatchAttribut;
-		if (((TargetAttr = faAnyFile) or ((TargetAttr and FileParam.SR^.Attr) = TargetAttr)) and
-			PParam^.Mask.Matches(ExtractFileName(FileName))) then begin
-		  PParam^.FList.Add(FileName);
-		end;
+		Value := StrToInt(Line);
 	  except
-		Result := GetLastError;
-		Exit;
-	  end;
-	  Result := 0;
-	  {$WARN UNSAFE_CODE ON}
-	end;
-
-  // .........................................................................................................
-  begin
-	{$TYPEDADDRESS OFF} {$WARN UNSAFE_CODE OFF}
-	Dir := TFileHnd.SlashRem(Dir);
-	if GetIChar(Dir, Length(Dir)) = ':' then begin // Checa por raiz de unidade
-	  Dir := Dir + PathDelim;
-	end;
-	Param := TEnumFileParam.Create;
-	List.Clear;
-	DataParam.FList := List;
-	DataParam.MatchAttribut := Attr;
-	DataParam.Mask := TMask.Create(Mask);
-	Param.Data := @DataParam;
-	try
-	  if IncSubDirs then begin
-		EnumFiles(Dir, Mask, Param, @LocalListFiles);
-	  end else begin
-		EnumFilesDir(Dir, Mask, Param, @LocalListFiles);
-	  end;
-	finally
-	  DataParam.Mask.Free; // Libera mascara vinculada acima
-	  Param.Free;
-	end;
-	{$TYPEDADDRESS ON} {$WARN UNSAFE_CODE ON}
-  end;
-
-  function LongToShortFileName(const LongName: string): string;
-  { {
-	Retorna nome do arquivo compativel com o formato 8.3 estilo DOS
-  }
-  var
-	SR: TSearchRec;
-  begin
-	if SysUtils.FindFirst(LongName, faAnyFile, SR) = 0 then begin
-	  Result := string(SR.FindData.cAlternateFileName);
-	  if Result = EmptyStr then begin
-		Result := string(SR.Name);
-	  end;
-	  SysUtils.FindClose(SR);
-	end else begin
-	  Result := EmptyStr;
-	end;
-  end;
-
-  function IsRootDir(const Name: string): boolean;
-  { {
-	Tests if the argument is a root of any disk volume
-  }
-  var
-	Rep: Integer;
-  begin
-	Result := False;
-	if IsUNCName(name) then begin
-	  Rep := StrCountCharRepet(PathDelim, name);
-	  if Rep <= 4 then begin
-		if Rep = 4 then begin
-		  Result := (name[Length(name)] = PathDelim); // o ultimo nao vale
-		end else begin
-		  Result := True;
-		end;
+		Value := 0;
+		Result := ERROR_INVALID_PARAMETER;
 	  end;
 	end else begin
-	  Rep := Length(name);
-	  case (Rep) of
-		2: begin
-			Result := CharInSet(UpCase(name[1]), ['A' .. 'Z']) and (name[2] = ':'); // Exemplo (L:\) or (C:)
-		  end;
-		3: begin
-			Result := CharInSet(UpCase(name[1]), ['A' .. 'Z']) and (name[2] = ':') and (name[3] = PathDelim);
-			// Exemplo (L:\) or (C:)
-		  end;
-	  else begin
-		  Result := False;
-		end;
-	  end;
-	end;
-  end;
-
-  function MkDirEx(Dir: string): boolean; deprecated;
-  { {
-	Revision - 20120524 - roger
-	Depreciado - Usar ForceDirectories
-
-	Cria arvore dada se esta nao existir ainda
-  }
-  var
-	_Sub: boolean;
-  begin
-	if (DirectoryExists(Dir)) then begin
-	  Result := True;
-	end else begin
-	  Result := False;
-	  if DirectoryExists(TFileHnd.ParentDir(Dir)) then begin
-		MkDir(Dir);
-		Result := (IOResult = 0);
+	  if IOResult <> 0 then begin
+		Result := IOResult;
 	  end else begin
-		{ Temos bronca quando o nível é no raiz devido ao dir pai retornado }
-		_Sub := MkDirEx(TFileHnd.ParentDir(Dir));
-		if _Sub then begin
-		  Result := MkDirEx(Dir);
-		end;
+		Result := ERROR_TIMEOUT;
 	  end;
 	end;
-  end;
-
-  function ParentDir(const Dir: string): string;
-  { {
-	Retorna o diretorio pai do caminho dado
-
-	Deprecated at 19/5/2005 use TFileHnd.ParentDir
-  }
-  var
-	Res: string;
-  begin
-	if IsUNCName(Dir) then begin { UNC }
-	  Res := ExtractUNCResource(Dir);
-	  Result := ReplaceSubString(Dir, Res, EmptyStr);
-	  Result := ParentDir(Result);
-	  if (Result = PathDelim) or (Result = EmptyStr) then begin
-		Result := Res;
-	  end;
-	end else begin { driver logico }
-	  { Precisa da funcao ExtractFilePath do SysUtils do Delphi }
-	  Result := ExtractFilePath(Dir);
-	  Result := Copy(Result, 1, Length(Result) - 1);
-	  if Result = '' then begin
-		Result := PathDelim;
-	  end else begin
-		if Result[Length(Result)] = ':' then begin
-		  Result := Result + PathDelim;
-		end;
-	  end;
+  finally
+	if Sucess then begin
+	  CloseFile(FHnd);
+	  Result := NO_ERROR;
 	end;
   end;
+end;
 
-  function PathNameLong(const ShortPathName: string): string;
-  { {
-	Converte nome do caminho para o formato longo
-  }
-  var
-	LastSlash, TempPathPtr: PChar;
-	PathBuffer: array [0 .. MAX_PATH] of char;
-  begin
+function GetTempDir: string;
+{ {
+  Retorna o caminho do diretorio de arquivos temporarios
+}
+var
+  Path: array [0 .. MAX_PATH] of char;
+begin
+  SetLastError(ERROR_SUCCESS);
+  GetTempPath(MAX_PATH, Path);
+  if GetLastError() = ERROR_SUCCESS then begin
+	Result := Path;
+  end else begin
 	Result := EmptyStr;
-	StrPCopy(PathBuffer, ShortPathName); // Salva copia em buffer para alocacao dos marcadores #0´s
-	TempPathPtr := PathBuffer;
-	LastSlash := StrRScan(TempPathPtr, PathDelim);
-	while LastSlash <> nil do begin
-	  Result := PathDelim + ShortToLongFileName(TempPathPtr) + Result;
-	  if LastSlash <> nil then begin
-		{$WARN UNSAFE_CODE OFF}
-		LastSlash^ := char(0);
-		{$WARN UNSAFE_CODE ON}
-		LastSlash := StrRScan(TempPathPtr, PathDelim);
-	  end;
-	end;
-	Result := TempPathPtr + Result;
   end;
+end;
 
-  function RemoveFileExtension(const FileName: string): string;
-  { {
-	Remove a extensao do nome do arquivo
-  }
+function IsUNCName(const UNC: string): boolean;
+{ {
+  Tests if the argument is a UNC compliant.
+}
+begin
+  Result := (Pos('\\', UNC) = 1);
+end;
+
+procedure ListDirFilesNames(Dir, Mask: string; Attr: Integer; IncSubDirs: boolean; List: TStrings);
+{ {
+  Lista todos os arquivos de uma pasta que obedeçam a máscara dada e aos atributos especificados.
+
+  Revision: 25/11/2005 - Roger
+
+  Corrigido bug que falha na enumeração das mascaras que continham "?', pois comparava o caminho completo do arquivo com a máscara.
+  em LocalListFiles()
+  PParam^.Mask.Matches(Filename) -> PParam^.Mask.Matches(ExtractFileName(Filename))
+
+  Revision: 2/5/2006 - Roger
+}
+type
+  PLocalDataParam = ^TLocalDataParam;
+
+  TLocalDataParam = record
+	FList: TStrings;
+	MatchAttribut: Integer;
+	Mask: TMask;
+  end;
+var
+  Param: TEnumFileParam;
+  DataParam: TLocalDataParam;
+  // .........................................................................................................
+  function LocalListFiles(const FileName: string; FileParam: TEnumFileParam): Integer;
   var
-	Pi, Pf: PChar;
+	TargetAttr: Integer;
+	PParam: PLocalDataParam;
   begin
 	{$WARN UNSAFE_CODE OFF}
-	Pi := PChar(FileName);
-	Pf := StrRScan(Pi, '.');
-	if Pf <> nil then begin
-	  Pf^ := #0;
-	  Result := string(Pi);
-	  Pf^ := '.';
+	try
+	  PParam := FileParam.Data;
+	  TargetAttr := PParam^.MatchAttribut;
+	  if (((TargetAttr = faAnyFile) or ((TargetAttr and FileParam.SR^.Attr) = TargetAttr)) and
+		  PParam^.Mask.Matches(ExtractFileName(FileName))) then begin
+		PParam^.FList.Add(FileName);
+	  end;
+	except
+	  Result := GetLastError;
+	  Exit;
+	end;
+	Result := 0;
+	{$WARN UNSAFE_CODE ON}
+  end;
+
+// .........................................................................................................
+begin
+  {$TYPEDADDRESS OFF} {$WARN UNSAFE_CODE OFF}
+  Dir := TFileHnd.SlashRem(Dir);
+  if GetIChar(Dir, Length(Dir)) = ':' then begin // Checa por raiz de unidade
+	Dir := Dir + PathDelim;
+  end;
+  Param := TEnumFileParam.Create;
+  List.Clear;
+  DataParam.FList := List;
+  DataParam.MatchAttribut := Attr;
+  DataParam.Mask := TMask.Create(Mask);
+  Param.Data := @DataParam;
+  try
+	if IncSubDirs then begin
+	  EnumFiles(Dir, Mask, Param, @LocalListFiles);
 	end else begin
-	  Result := FileName;
+	  EnumFilesDir(Dir, Mask, Param, @LocalListFiles);
 	end;
-	{$WARN UNSAFE_CODE ON}
+  finally
+	DataParam.Mask.Free; // Libera mascara vinculada acima
+	Param.Free;
   end;
+  {$TYPEDADDRESS ON} {$WARN UNSAFE_CODE ON}
+end;
 
-  function RmDirEx(const DirName: string): boolean;
-  { {
-	Rotina depreciada - Usar TFileHnd.RmDir()
+function LongToShortFileName(const LongName: string): string;
+{ {
+  Retorna nome do arquivo compativel com o formato 8.3 estilo DOS
+}
+var
+  SR: TSearchRec;
+begin
+  if SysUtils.FindFirst(LongName, faAnyFile, SR) = 0 then begin
+	Result := string(SR.FindData.cAlternateFileName);
+	if Result = EmptyStr then begin
+	  Result := string(SR.Name);
+	end;
+	SysUtils.FindClose(SR);
+  end else begin
+	Result := EmptyStr;
+  end;
+end;
 
-	Apaga um diretorio com seus subdiretoris junto
-  }
-  var
-	SR: TSearchRec;
-	NextProcDir: string;
-  begin
-	Result := False;
-	if not(DirectoryExists(DirName)) then begin
-	  Result := True;
-	  Exit;
-	end;
-	GetDir(0, NextProcDir);
-	if Pos(UpperCase(DirName), UpperCase(NextProcDir)) <> 0 then begin
-	  { Nao pode apagar caminho em uso = Diretorio atual }
-	  Exit;
-	end;
-	repeat
-	  NextProcDir := FindFirstChildDir(DirName);
-	  if NextProcDir <> EmptyStr then begin
-		if not RmDirEx(NextProcDir) then begin
-		  Exit;
-		end;
-	  end;
-	until NextProcDir = EmptyStr;
-	while FindFirst(DirName + PathDelim + '*.*', faAnyFile - faVolumeID - faDirectory, SR) = 0 do begin
-	  if FileSetAttr(DirName + PathDelim + SR.Name, faArchive) = 0 then begin
-		if not DeleteFile(DirName + PathDelim + SR.Name) then begin
-		  FindClose(SR);
-		  Exit;
-		end;
-	  end;
-	  FindClose(SR);
-	end;
-	if TFileHnd.ParentDir(DirName) <> DirName then begin { Eliminando raiz de recurso }
-	  try
-		FileSetAttr(DirName, faDirectory);
-		if not RemoveDir(DirName) then begin
-		  Result := False;
-		  Exit;
-		end;
-	  except
-		on Exception do begin
-		  Exit;
-		end;
+function IsRootDir(const Name: string): boolean;
+{ {
+  Tests if the argument is a root of any disk volume
+}
+var
+  Rep: Integer;
+begin
+  Result := False;
+  if IsUNCName(name) then begin
+	Rep := StrCountCharRepet(PathDelim, name);
+	if Rep <= 4 then begin
+	  if Rep = 4 then begin
+		Result := (name[Length(name)] = PathDelim); // o ultimo nao vale
+	  end else begin
+		Result := True;
 	  end;
 	end;
+  end else begin
+	Rep := Length(name);
+	case (Rep) of
+	  2: begin
+		  Result := CharInSet(UpCase(name[1]), ['A' .. 'Z']) and (name[2] = ':'); // Exemplo (L:\) or (C:)
+		end;
+	  3: begin
+		  Result := CharInSet(UpCase(name[1]), ['A' .. 'Z']) and (name[2] = ':') and (name[3] = PathDelim);
+		  // Exemplo (L:\) or (C:)
+		end;
+	else begin
+		Result := False;
+	  end;
+	end;
+  end;
+end;
+
+function MkDirEx(Dir: string): boolean; deprecated;
+{ {
+  Revision - 20120524 - roger
+  Depreciado - Usar ForceDirectories
+
+  Cria arvore dada se esta nao existir ainda
+}
+var
+  _Sub: boolean;
+begin
+  if (DirectoryExists(Dir)) then begin
 	Result := True;
-  end;
-
-  function SetFileTimeProperties(const FileName: string; var CreateDate, LastAccessDate, LastWriteDate: TDateTime): Integer;
-	  overload; platform;
-  { {
-	Ajusta as datas de criacao/acesso/escrita de um dado arquivo
-  }
-  var
-	Hnd: THandle;
-  begin
-	{ TODO -oroger -clib : Avaliar das chamadas abaixo qual a menos restritiva }
-	{
-	  Hnd := CreateFile(PChar(Filename), GENERIC_WRITE, 0, nil, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL or
-	  FILE_FLAG_SEQUENTIAL_SCAN, 0);
-	}
-	Hnd := CreateFile(PChar(FileName), GENERIC_WRITE, FILE_SHARE_WRITE, nil, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, 0);
-	try
-	  if Hnd <> INVALID_HANDLE_VALUE then begin
-		Result := SetFileTimeProperties(Hnd, CreateDate, LastAccessDate, LastWriteDate);
-	  end else begin
-		Result := GetLastError();
-	  end;
-	finally
-	  CloseHandle(Hnd);
-	end;
-  end;
-
-  function SetFileTimeProperties(FileHandle: THandle; var CreateDate, LastAccessDate, LastWriteDate: TDateTime): Integer; overload;
-  { {
-	Ajusta as datas de criacao/acesso/escrita de um dado arquivo
-
-	Notas : O arquivo deve ter acesso GENERIC_WRITE
-
-
-	Exemplo:
-	hf := CreateFile ( PChar(FFilename), GENERIC_WRITE, 0, nil, OPEN_EXISTING, 0, //FILE_ATTRIBUTE_NORMAL or FILE_FLAG_SEQUENTIAL_SCAN , 0);
-  }
-  var
-	DCreate, DAccess, DWrite: TFileTime;
-	ST: TSystemTime;
-  begin
-	Result := ERROR_SUCCESS;
-	SetLastError(Result);
-	DateTimeToSystemTime(CreateDate, ST);
-	SystemTimeToFileTime(ST, DCreate);
-	LocalFileTimeToFileTime(DCreate, DCreate);
-	DateTimeToSystemTime(LastAccessDate, ST);
-	SystemTimeToFileTime(ST, DAccess);
-	LocalFileTimeToFileTime(DAccess, DAccess);
-	DateTimeToSystemTime(LastWriteDate, ST);
-	SystemTimeToFileTime(ST, DWrite);
-	LocalFileTimeToFileTime(DWrite, DWrite);
-	{$WARN UNSAFE_CODE OFF}
-	if not SetFileTime(FileHandle, @DCreate, @DAccess, @DWrite) then begin
-	  Result := GetLastError();
-	end;
-	{$WARN UNSAFE_CODE ON}
-  end;
-
-  function SetKeyGenFileValue(const FileName: string; Value, TimeOut: Integer): Integer;
-  { {
-	Salva em arquivo de usos exclusivo valor limitado ao periodo de espera
-  }
-  var
-	FHnd: TextFile;
-	FTime: TDateTime;
-	Sucess: boolean;
-  begin
-	FTime := IncTime(Now, 0, 0, 0, TimeOut);
-	AssignFile(FHnd, FileName);
-	Sucess := False;
-	Result := ERROR_TIMEOUT;
-	try
-	  {$I-}
-	  repeat
-		ReWrite(FHnd);
-		if IOResult = 0 then begin
-		  Sucess := True;
-		end
-		until (Sucess) or (Now > FTime);
-		{$I+}
-		if Sucess then begin
-		  WriteLn(FHnd, IntToStr(Value));
-		end else begin
-		  if IOResult <> 0 then begin
-			Result := IOResult;
-		  end else begin
-			Result := ERROR_TIMEOUT;
-		  end;
-		end;
-	  finally
-		if Sucess then begin
-		  CloseFile(FHnd);
-		  Result := NO_ERROR;
-		end;
+  end else begin
+	Result := False;
+	if DirectoryExists(TFileHnd.ParentDir(Dir)) then begin
+	  MkDir(Dir);
+	  Result := (IOResult = 0);
+	end else begin
+	  { Temos bronca quando o nível é no raiz devido ao dir pai retornado }
+	  _Sub := MkDirEx(TFileHnd.ParentDir(Dir));
+	  if _Sub then begin
+		Result := MkDirEx(Dir);
 	  end;
 	end;
+  end;
+end;
 
-	function ShortToLongFileName(const ShortName: string): string;
-	{ {
-	  Retorna o nome longo de um arquivo passado como nome curto
-	}
-	var
-	  Temp: TWin32FindData;
-	  SearchHandle: THandle;
-	begin
-	  SearchHandle := FindFirstFile(PChar(ShortName), Temp);
-	  if SearchHandle <> INVALID_HANDLE_VALUE then begin
-		Result := string(Temp.cFileName);
-	  end else begin
-		Result := EmptyStr;
-	  end;
-	  Windows.FindClose(SearchHandle);
+function ParentDir(const Dir: string): string;
+{ {
+  Retorna o diretorio pai do caminho dado
+
+  Deprecated at 19/5/2005 use TFileHnd.ParentDir
+}
+var
+  Res: string;
+begin
+  if IsUNCName(Dir) then begin { UNC }
+	Res := ExtractUNCResource(Dir);
+	Result := ReplaceSubString(Dir, Res, EmptyStr);
+	Result := ParentDir(Result);
+	if (Result = PathDelim) or (Result = EmptyStr) then begin
+	  Result := Res;
 	end;
+  end else begin { driver logico }
+	{ Precisa da funcao ExtractFilePath do SysUtils do Delphi }
+	Result := ExtractFilePath(Dir);
+	Result := Copy(Result, 1, Length(Result) - 1);
+	if Result = '' then begin
+	  Result := PathDelim;
+	end else begin
+	  if Result[Length(Result)] = ':' then begin
+		Result := Result + PathDelim;
+	  end;
+	end;
+  end;
+end;
 
-	function SlashRem(const Path: string; PreserveRoot: boolean = False): string; deprecated;
-	{ {
-	  Remove barra do fim do caminho
-
-	  Deprecated : Use TFileHnd.SlashRem()
-	}
-	begin
+function PathNameLong(const ShortPathName: string): string;
+{ {
+  Converte nome do caminho para o formato longo
+}
+var
+  LastSlash, TempPathPtr: PChar;
+  PathBuffer: array [0 .. MAX_PATH] of char;
+begin
+  Result := EmptyStr;
+  StrPCopy(PathBuffer, ShortPathName); // Salva copia em buffer para alocacao dos marcadores #0´s
+  TempPathPtr := PathBuffer;
+  LastSlash := StrRScan(TempPathPtr, PathDelim);
+  while LastSlash <> nil do begin
+	Result := PathDelim + ShortToLongFileName(TempPathPtr) + Result;
+	if LastSlash <> nil then begin
 	  {$WARN UNSAFE_CODE OFF}
-	  if AnsiLastChar(Path)^ <> PathDelim then begin
-		Result := Path;
-	  end else begin
-		Result := Copy(Path, 1, Length(Path) - 1);
-		if PreserveRoot then begin
-		  if IsRootDir(Path) then begin
-			Result := Result + PathDelim;
-		  end;
-		end;
-	  end;
+	  LastSlash^ := char(0);
 	  {$WARN UNSAFE_CODE ON}
+	  LastSlash := StrRScan(TempPathPtr, PathDelim);
 	end;
+  end;
+  Result := TempPathPtr + Result;
+end;
 
-	function SlashSep(const Path, FileName: string): string;
-	{ {
-	  Returns a path tha forces PathDelim at your final
-	}
-	begin
-	  {$WARN UNSAFE_CODE OFF}
-	  if AnsiLastChar(Path)^ <> PathDelim then begin
-		Result := Path + PathDelim + FileName;
-	  end else begin
-		Result := Path + FileName;
-	  end;
-	  {$WARN UNSAFE_CODE ON}
-	end;
+function RemoveFileExtension(const FileName: string): string;
+{ {
+  Remove a extensao do nome do arquivo
+}
+var
+  Pi, Pf: PChar;
+begin
+  {$WARN UNSAFE_CODE OFF}
+  Pi := PChar(FileName);
+  Pf := StrRScan(Pi, '.');
+  if Pf <> nil then begin
+	Pf^ := #0;
+	Result := string(Pi);
+	Pf^ := '.';
+  end else begin
+	Result := FileName;
+  end;
+  {$WARN UNSAFE_CODE ON}
+end;
 
-	function SpaceFree(const PathName: string): int64;
-	{ {
-	  Retorna o espaco em bytes livres para determinado caminho
-	}
-	var
-	  Drive: byte;
-	  OS: OSVERSIONINFO;
-	  TotalFree, TotalExisting: int64;
-	  SectorsPerCluster, BytesPerSector, FreeClusters, TotalClusters: cardinal;
-	begin
-	  if Pos(':', PathName) <> 0 then begin // Unidade de disco
-		Drive := Ord((ExtractFileDrive(UpperCase(PathName))[1]));
-		Drive := Drive - Ord('A') + 1;
-		{$IFDEF WIN32}
-		Result := DiskFree(Drive);
-		{$ELSE}
-		Result := _DiskFree(Drive);
-		{$ENDIF}
-	  end else begin // Recurso via UNC
-		OS.dwOSVersionInfoSize := SizeOf(OSVERSIONINFO);
-		GetVersionEx(OS);
-		if (OS.dwMajorVersion = 4) and (OS.dwBuildNumber < 1000) and (OS.dwPlatformId = 1) then begin // Usar modo OSR1
-		  if GetDiskFreeSpace(PChar(PathName), SectorsPerCluster, BytesPerSector, FreeClusters, TotalClusters) then begin
-			Result := (SectorsPerCluster * BytesPerSector * FreeClusters);
-		  end else begin
-			Result := -1;
-		  end;
-		end else begin // Usar os servicos do NT ou Win95B ou superior
-		  {$WARN UNSAFE_CODE OFF}
-		  if not GetDiskFreeSpaceEx(PChar(PathName), Result, TotalExisting, @TotalFree) then begin
-			Result := -1;
-		  end;
-		  {$WARN UNSAFE_CODE ON}
-		end;
-	  end;
-	end;
+function RmDirEx(const DirName: string): boolean;
+{ {
+  Rotina depreciada - Usar TFileHnd.RmDir()
 
-	{ -**********************************************************************
-	  ************************************************************************
-	  ******************
-	  ******************  Class:    TFileHnd
-	  ******************  Category: No category
-	  ******************
-	  ************************************************************************
-	  ************************************************************************ }
-	{ -------------------------------------------------------------------------------------------------------------------------------- }
-	class procedure TFileHnd.BuildVersionInfo(const FileName: string; var V1, V2, V3, V4: Word);
-	{ {
-	  Repassa as componentes da versão do arquivo dado.
-
-	  Filename - Nome de arquivo de interesse. Caso string vazia seja passa o caminho de ParamStr(0) sera usado.
-
-	  V1 - 1 componente da versão
-
-	  V2 - 2 componente da versão
-
-	  V3 - 3 componente da versão
-
-	  V4 - 4 componente da versão
-
-	  Revision: 30/10/2006 - Roger
-
-	  Para o caso do arquivo passado não possuir informação de versão todos os elementos serão retornados como 0 (zero).
-
-	}
-	var
-	  VerInfoSize, VerValueSize, Dummy: DWORD;
-	  VerInfo: Pointer;
-	  VerValue: PVSFixedFileInfo;
-	  Path: string;
-	begin
-	  try
-		if (FileName = EmptyStr) then begin
-		  Path := ParamStr(0);
-		end else begin
-		  Path := FileName;
-		end;
-		VerInfoSize := GetFileVersionInfoSize(PChar(Path), Dummy);
-		if (VerInfoSize > 0) then begin
-		  VerInfo := GetMemory(VerInfoSize);
-		  try
-			GetFileVersionInfo(PChar(Path), 0, VerInfoSize, VerInfo);
-			VerQueryValue(VerInfo, '\' { dont localize } , Pointer(VerValue), VerValueSize);
-			{$WARN UNSAFE_CODE OFF}
-			V1 := VerValue^.dwFileVersionMS shr 16;
-			V2 := VerValue^.dwFileVersionMS and $FFFF;
-			V3 := VerValue^.dwFileVersionLS shr 16;
-			V4 := VerValue^.dwFileVersionLS and $FFFF;
-			{$WARN UNSAFE_CODE ON}
-		  finally
-			FreeMemory(VerInfo);
-		  end;
-		end else begin // informação de versão não encontrada neste arquivo
-		  V1 := 0;
-		  V2 := 0;
-		  V3 := 0;
-		  V4 := 0;
-		end;
-	  except
-		V1 := 0;
-		V2 := 0;
-		V3 := 0;
-		V4 := 0;
-	  end;
-	end;
-
-	class function TFileHnd.ChangeFileName(const OriginalFullPath, FileName: string): string;
-	{ {
-	  Retorna c caminho completo para o nome de arquivo baseado no nome original.
-	  Ex.: ChangeFileName( 'c:\teste.pqp', '\windows\temp\novo.txt' ) -> c:\windows\temp\novo.txt
-	}
-	begin
-	  Result := ExtractFilePath(OriginalFullPath);
-	  Result := TFileHnd.ConcatPath([Result, FileName]);
-	end;
-
-	class function TFileHnd.ConcatPath(Paths: array of string): string;
-	{ {
-	  Junta as parte da esquerda para a direita de um caminho. Esta rotina é útil para evitar as duplas \\ na composicao do nome do
-	  arquivo.
-
-	  Paths : array com os elementos que compoem o nome do arquivo.
-	}
-	var
-	  RPart: string;
-	  i: Integer;
-	begin
-	  if high(Paths) < 1 then begin
+  Apaga um diretorio com seus subdiretoris junto
+}
+var
+  SR: TSearchRec;
+  NextProcDir: string;
+begin
+  Result := False;
+  if not(DirectoryExists(DirName)) then begin
+	Result := True;
+	Exit;
+  end;
+  GetDir(0, NextProcDir);
+  if Pos(UpperCase(DirName), UpperCase(NextProcDir)) <> 0 then begin
+	{ Nao pode apagar caminho em uso = Diretorio atual }
+	Exit;
+  end;
+  repeat
+	NextProcDir := FindFirstChildDir(DirName);
+	if NextProcDir <> EmptyStr then begin
+	  if not RmDirEx(NextProcDir) then begin
 		Exit;
 	  end;
-	  Result := Paths[0];
-	  for i := 1 to high(Paths) do begin
-		if Result <> EmptyStr then begin
-		  while Result[Length(Result)] = PathDelim do begin
-			Delete(Result, Length(Result), 1);
-		  end;
-		end;
-		RPart := Paths[i];
-		if RPart <> EmptyStr then begin
-		  while RPart[1] = PathDelim do begin
-			Delete(RPart, 1, 1);
-		  end;
-		  Result := Result + PathDelim + RPart;
-		end;
-	  end;
 	end;
-
-	{ -------------------------------------------------------------------------------------------------------------------------------- }
-	class function TFileHnd.CopyDir(const SourceDir, DestDir: TFilename): Integer;
-	{ {
-	  Copia um diretório recursivamente para outro.
-
-	  Revision: 5/6/2008 - roger
-	}
-	var
-	  SearchRec: TSearchRec;
-	  DosError: Integer;
-	  Path, DestPath: TFilename;
-	begin
-	  if not ForceDirectories(DestDir) then begin
-		Result := GetLastError();
-	  end else begin
-		Result := ERROR_SUCCESS;
-		Path := SourceDir;
-		DestPath := TFileHnd.SlashAdd(DestDir);
-		Path := TFileHnd.SlashAdd(Path);
-		DosError := FindFirst(Path + '*.*', faAnyFile, SearchRec);
-		try
-		  while DosError = 0 do begin
-			if (SearchRec.Name <> '.') and (SearchRec.Name <> '..') then begin
-			  if (SearchRec.Attr and faDirectory) = faDirectory then begin
-				Result := CopyDir(Path + SearchRec.Name, TFileHnd.SlashAdd(DestDir) + SearchRec.Name);
-			  end else if (not CopyFile(PChar(Path + SearchRec.Name), PChar(DestPath + SearchRec.Name), True)) then begin
-				Result := GetLastError();
-				Exit;
-			  end;
-			end;
-			DosError := FindNext(SearchRec);
-		  end;
-		  FindClose(SearchRec);
-		except
-		  FindClose(SearchRec); // usado apenas para não omitir chamada
-		  raise;
-		end;
-	  end;
-	end;
-
-	class function TFileHnd.CreateTempFileName(const Prefix: PChar; const Number: byte; CreateFile: boolean): string;
-	{ {
-	  Gera nome de arquivo temporario pela Win32 API.
-
-	  Prefix :
-	  Parte inicial do nome do arquivo.
-
-	  Number :
-	  Indice preferencial ver Win32 API GetTempFileName().
-
-	  CreateFile :
-	  Indica se este arquivo sera automaticamente criado vazio.
-
-	  Returns:
-
-	  Nome do arquivo temporario para uso.
-	}
-	var
-	  Path, Name: PChar;
-	  f: file;
-	begin
-	  Result := '';
-	  Path := StrAlloc(256);
-	  name := StrAlloc(512);
-	  if GetTempPath(255, Path) <> 0 then begin
-		if GetTempFileName(Path, Prefix, Number, name) <> 0 then begin
-		  Result := StrPas(name);
-		end;
-	  end;
-	  StrDispose(Path);
-	  StrDispose(name);
-	  if (CreateFile) then begin // Se eh para criar
-		AssignFile(f, Result);
-		ReWrite(f); // Arquivo zerado
-		CloseFile(f);
-	  end;
-	end;
-
-	class function TFileHnd.DeepExistingPath(const Path: string): string;
-	/// <summary>
-	/// Retorna o caminho mais profundo válido. Caso não exista nem mesmo o raiz do caminho passado o home_dir é retornado.
-	/// </summary>
-	/// <remarks>
-	///
-	/// </remarks>
-	begin
-	  Result := Path;
-	  while ((not DirectoryExists(Result) and (not IsRootDir(Result)))) do begin
-		Result := ParentDir(Result);
-	  end;
-	  if (IsRootDir(Result)) then begin
-		Result := GetUserMyDocuments();
-		if Result = EmptyStr then begin
-		  Result := GetUserHomeDir();
-		end;
-	  end;
-	end;
-
-	{ -------------------------------------------------------------------------------------------------------------------------------- }
-	class function TFileHnd.ExpandFilename(const BasePath, Path: string): string;
-	{ {
-	  BasePath : Caminho base para o calculo do caminho expandido.
-
-	  path  : Caminho a ser expandido.
-
-	  return : Caminho expandido do path passado.
-	}
-
-	const
-	  PARENT_DIR_TOKEN = '..' + SysUtils.PathDelim;
-
-	  procedure LSRRemapPaths(var localBase, localPath: string);
-	  begin
-		while (TStrHnd.startsWith(localPath, PARENT_DIR_TOKEN)) do begin
-		  Delete(localPath, 1, Length(PARENT_DIR_TOKEN));
-		  localBase := TFileHnd.SlashRem(ExtractFilePath(SlashRem(localBase)));
-		end;
-	  end;
-
-	var
-	  c: char;
-	  rightPart, leftPart: string;
-	  posPDir: Integer;
-
-	begin
-	  if (Path <> EmptyStr) then begin
-		c := GetIChar(Path, 1); // Pega 1o caracter para testar se caminho base serah diretamente agregado
-		if ((c = SysUtils.PathDelim) or (c = '.')) then begin // Agrega ao final de BasePath diretamente
-		  Result := TFileHnd.ConcatPath([BasePath, Path]);
-		end else begin // Verifica se path inicia-se com ".."
-		  rightPart := Path;
-		  leftPart := BasePath;
-		  if (TStrHnd.startsWith(rightPart, PARENT_DIR_TOKEN)) then begin
-			// Retorna aos diretorios pais ate finalizar as recorrencias
-			LSRRemapPaths(leftPart, rightPart);
-			Result := TFileHnd.ConcatPath([leftPart, rightPart]);
-		  end else begin
-			// Checa se prefixo bate e remota caminhos
-			posPDir := Pos(PARENT_DIR_TOKEN, rightPart);
-			if (posPDir > 0) then begin
-			  if (Copy(leftPart, 1, posPDir - 1) = Copy(rightPart, 1, posPDir - 1)) then begin
-				// Iniciam com o mesmo valor -> chamada a remapeamento
-				leftPart := Copy(leftPart, 1, posPDir - 1);
-				Delete(rightPart, 1, posPDir - 1);
-				LSRRemapPaths(leftPart, rightPart);
-				Result := TFileHnd.ConcatPath([leftPart, rightPart]);
-			  end;
-			end;
-		  end;
-		end;
-	  end else begin
-		Result := SlashRem(BasePath);
-	  end;
-	end;
-
-	class function TFileHnd.ExtractFilenamePure(const FileName: string): string;
-	/// <summary>
-	/// Extrai apenas o nome do arquivo desconsiderando inclusive a extensão do mesmo
-	/// </summary>
-	var
-	  i: Integer;
-	begin
-	  Result := ExtractFileName(FileName);
-	  i := LastDelimiter('.', Result);
-	  if (i > 0) then begin
-		Result := Copy(Result, 1, i - 1);
-	  end;
-	end;
-
-	{ -------------------------------------------------------------------------------------------------------------------------------- }
-	class function TFileHnd.FileSize(const FileName: string): int64;
-	{ {
-	  Returns the size of file, or -1 if fail.
-	  Call GetLastError() to see extended error information.
-
-	  WARNING : Its a platform method.
-
-	  Para o caso de se calcular o tamanho usado por um diretório usar GetFileSizeEx()
-
-	  Revision: 3/6/2008 - roger
-	}
-	var
-	  SR: TSearchRec;
-	begin
-	  {$WARN SYMBOL_PLATFORM OFF}
-	  if FindFirst(FileName, faAnyFile, SR) = 0 then begin
-		Result := (SR.FindData.nFileSizeHigh shl 32) + SR.FindData.nFileSizeLow;
+  until NextProcDir = EmptyStr;
+  while FindFirst(DirName + PathDelim + '*.*', faAnyFile - faVolumeID - faDirectory, SR) = 0 do begin
+	if FileSetAttr(DirName + PathDelim + SR.Name, faArchive) = 0 then begin
+	  if not DeleteFile(DirName + PathDelim + SR.Name) then begin
 		FindClose(SR);
-	  end else begin
-		Result := -1;
-	  end;
-	  {$WARN SYMBOL_PLATFORM OFF}
-	end;
-
-	{ -------------------------------------------------------------------------------------------------------------------------------- }
-	class function TFileHnd.FileTimeProperties(FileHandle: THandle;
-		var CreateDate, LastAccessDate, LastWriteDate: TDateTime): Integer;
-	{ {
-	  Calcula as datas de criacao/acesso/escrita de um dado arquivo Notas : O arquivo deve ter a flag GENERIC_READ
-	  Exemplo :
-	  hf := CreateFile (PChar(FFilename), GENERIC_READ , 0, nil, OPEN_EXISTING, 0, //FILE_ATTRIBUTE_NORMAL or FILE_FLAG_SEQUENTIAL_SCAN 0);
-	}
-	var
-	  DCreate, DAccess, DWrite: TFileTime;
-	begin
-	  {$WARN UNSAFE_CODE OFF}
-	  if GetFileTime(FileHandle, @DCreate, @DAccess, @DWrite) then begin
-		Result := 0;
-		FileTimeToLocalFileTime(DCreate, DCreate); // Criacao
-		CreateDate := TFileHnd.FileTimeToDateTime(DCreate);
-		FileTimeToLocalFileTime(DAccess, DAccess); // Acesso
-		LastAccessDate := TFileHnd.FileTimeToDateTime(DAccess);
-		FileTimeToLocalFileTime(DWrite, DWrite); // Escrita
-		LastWriteDate := TFileHnd.FileTimeToDateTime(DWrite);
-	  end else begin
-		Result := GetLastError();
-	  end;
-	  {$WARN UNSAFE_CODE ON}
-	end;
-
-	class function TFileHnd.FileTimeChangeTime(const FileName: string): TDateTime;
-	var
-	  Dummy: TDateTime;
-	begin
-	  FileTimeProperties(FileName, Dummy, Dummy, Result);
-	end;
-
-	class function TFileHnd.FileTimeProperties(const FileName: string;
-		var CreateDate, LastAccessDate, LastWriteDate: TDateTime): Integer;
-	{ {
-	  Calcula as datas de criacao/acesso/escrita de um dado arquivo
-	}
-	var
-	  SR: TSearchRec;
-	  DCreate, DAccess, DWrite: TFileTime;
-	begin
-	  Result := FindFirst(FileName, faAnyFile, SR);
-	  if Result = 0 then begin
-		// Criacao
-		DCreate := SR.FindData.ftCreationTime;
-		FileTimeToLocalFileTime(DCreate, DCreate);
-		CreateDate := TFileHnd.FileTimeToDateTime(DCreate);
-		// Acesso
-		DAccess := SR.FindData.ftLastAccessTime;
-		FileTimeToLocalFileTime(DAccess, DAccess);
-		LastAccessDate := TFileHnd.FileTimeToDateTime(DAccess);
-		// escrita
-		DWrite := SR.FindData.ftLastWriteTime;
-		FileTimeToLocalFileTime(DWrite, DWrite);
-		LastWriteDate := TFileHnd.FileTimeToDateTime(DWrite);
-		FindClose(SR); { TODO -oroger -clib : Ajustar o retorno para caso de alteração de atributos falha }
+		Exit;
 	  end;
 	end;
-
-	class function TFileHnd.FileTimeToDateTime(FTime: TFileTime): TDateTime;
-	{ {
-	  Converte data/hora do windows para tipo TDateTime
-
-	  Revision: 10/8/2006 - Roger
-	}
-	var
-	  ST: TSystemTime;
-	begin
-	  FileTimeToSystemTime(FTime, ST);
-	  Result := EncodeDate(ST.wYear, ST.wMonth, ST.wDay) + EncodeTime(ST.wHour, ST.wMinute, ST.wSecond, ST.wMilliSeconds);
-	end;
-
-	class function TFileHnd.FirstOccurrence(const Path, Mask: string): string;
-	/// <summary>
-	/// Retorna caminho completo de arquivo obedecendo os criterios de path e mask, ou vazio se nada ocorrer
-	/// </summary>
-	/// <remarks>
-	///
-	/// </remarks>
-	var
-	  SR: TSearchRec;
-	begin
-	  try
-		if (FindFirst(TFileHnd.ConcatPath([Path, Mask]), faAllFiles, SR) = ERROR_SUCCESS) then begin
-		  Result := TFileHnd.ConcatPath([Path, SR.FindData.cFileName]);
-		end else begin
-		  Result := EmptyStr;
-		end;
-	  finally
-		FindClose(SR);
-	  end;
-	end;
-
-	class function TFileHnd.ForceFileExtension(const OriginalName, DesiredExtension: string): string;
-	{ {
-	  OriginalName : Nome original do arquivo.
-
-	  DesiredExtension : Extensao desejada
-
-	  Ver também:
-	  TFileHnd.MakeDefaultFileExtension
-	  SysUtils.ChangeFileExt()
-	}
-	var
-	  originalExt, ForceExt: string;
-	begin
-	  // Localiza qual a extensao e se for diferente da desejada adciona-a
-	  if DesiredExtension = EmptyStr then begin
-		Result := OriginalName;
-	  end else begin
-		if DesiredExtension[1] = '.' then begin
-		  ForceExt := DesiredExtension;
-		end else begin
-		  ForceExt := '.' + DesiredExtension;
-		end;
-		originalExt := ExtractFileExt(OriginalName); // Vem com o "."
-		if SameText(originalExt, ForceExt) then begin // Adiciona "." a comparacao
-		  Result := OriginalName;
-		end else begin
-		  Result := OriginalName + ForceExt;
-		end;
-	  end;
-	end;
-
-	{ -------------------------------------------------------------------------------------------------------------------------------- }
-	class procedure TFileHnd.ForceFilename(const FileName: string);
-	{ {
-	  Garante a existencia de um arquivo com o nome especificado.
-	  Para o caso do arquivo não exisitir ele se´ra criado vazio, bem como a árvore de diretorios necessarios.
-
-	  filename : nome do arquivo desejado.
-	}
-	var
-	  ST: TFileStream;
-	begin
-	  if (not FileExists(FileName)) then begin
-		if (not DirectoryExists(ParentDir(FileName))) then begin
-		  if (not ForceDirectories(ParentDir(FileName))) then begin
-			TAPIHnd.CheckAPI(GetLastError());
-		  end;
-		end;
-		ST := TFileStream.Create(FileName, fmCreate);
-		ST.Free;
-	  end;
-	end;
-
-	{ -------------------------------------------------------------------------------------------------------------------------------- }
-	class function TFileHnd.GetFileSizeEx(const FileName: string): int64;
-	{ {
-	  Calcula o tamanho do arquivo, caso o arquivo seja um diretório o cálculo será recursivo
-
-	  Revision: 3/6/2008 - roger
-	}
-	var
-	  SR: TSearchRec;
-	  List: TStringList;
-	  x: Integer;
-	begin
-	  {$WARN SYMBOL_PLATFORM OFF}
-	  if FindFirst(FileName, faAnyFile, SR) = 0 then begin
-		try
-		  if ((SR.Attr and faDirectory) = faDirectory) then begin // Necessita varrer os subdirs
-			List := TStringList.Create;
-			try
-			  FileHnd.ListDirFilesNames(FileName, '*.*', faAnyFile, True, List);
-			  Result := 0;
-			  for x := 0 to List.Count - 1 do begin
-				Inc(Result, TFileHnd.FileSize(List.Strings[x]));
-			  end;
-			finally
-			  List.Free;
-			end;
-		  end else begin
-			Result := (SR.FindData.nFileSizeHigh shl 32) + SR.FindData.nFileSizeLow;
-		  end;
-		finally
-		  SysUtils.FindClose(SR);
-		end;
-	  end else begin
-		Result := -1;
-	  end;
-	  {$WARN SYMBOL_PLATFORM ON}
-	end;
-
-	class function TFileHnd.GetUserHomeDir: string;
-	/// <summary>
-	/// Retorna o caminho do Homedir do usuário do processo.
-	/// </summary>
-	/// <remarks>
-	/// Este valor é lido inicialmente iniciamente pela variavel de embiente USERPROFILE,
-	/// Alternativamente por HOMEDRIVE + HOMEPATH
-	/// caso não exista usa-se o caminho apontado pelo shell
-	/// </remarks>
-
-	var
-	  envValue: string;
-	  Path: array [0 .. MAX_PATH] of char;
-	begin
-	  envValue := TAPIHnd.GetEnvironmentVar('USERPROFILE');
-	  if (envValue = EmptyStr) then begin
-		envValue := TFileHnd.ConcatPath([TAPIHnd.GetEnvironmentVar('HOMEDRIVE'), TAPIHnd.GetEnvironmentVar('HOMEPATH')]);
-		if DirectoryExists(envValue) then begin
-		  Result := envValue;
-		end else begin
-		  if SHGetSpecialFolderPathW(0, Path, CSIDL_PROFILE, False) then begin
-			Result := Path;
-		  end else begin
-			Result := EmptyStr;
-		  end;
-		end;
-	  end;
-	end;
-
-	/// <summary>
-	/// Retorna o caminho para a pasta "Meu documentos do usuário chamador
-	/// </summary>
-	/// <remarks>
-	/// Caso falhe retorna EmptytStr
-	/// </remarks>
-	class function TFileHnd.GetUserMyDocuments: string;
-	var
-	  Path: array [0 .. MAX_PATH] of char;
-	begin
-	  if SHGetSpecialFolderPathW(0, Path, CSIDL_MYDOCUMENTS, False) then begin
-		Result := Path;
-	  end else begin
-		Result := EmptyStr;
-	  end;
-	end;
-
-	class function TFileHnd.IsValidFilename(const FileName: string; ConstrainLevel: Integer): boolean;
-	{ {
-	  Valida se o conjunto de caracteres que compoe o nome do arquivo pode ser gerado, isto é não viola o conjunto de caracteres invalidos
-	  representados por ContrainLevel.
-
-	  ConstrainLevel = 1^, indica baixa critica, aceita espaco, acentos e ascii extendido
-	  ConstrainLevel = 2 , indica media critica, aceita espaco e o ascii baixo
-	  ConstrainLevel <> dos valores acima sera usado alta critica, invalidando todos os acima adcionados aos invalidos no linux
-
-	  Revision: 27/7/2005 - Roger
-	}
-	var
-	  CSet: TSysCharSet;
-	  LPart: string;
-	begin
-	  if (FileName = EmptyStr) then begin
+	FindClose(SR);
+  end;
+  if TFileHnd.ParentDir(DirName) <> DirName then begin { Eliminando raiz de recurso }
+	try
+	  FileSetAttr(DirName, faDirectory);
+	  if not RemoveDir(DirName) then begin
 		Result := False;
 		Exit;
 	  end;
-	  case (ConstrainLevel) of
-		1: begin
-			CSet := INVALID_FILENAME_CHARS_LOW_CRITIC;
+	except
+	  on Exception do begin
+		Exit;
+	  end;
+	end;
+  end;
+  Result := True;
+end;
+
+function SetFileTimeProperties(const FileName: string; var CreateDate, LastAccessDate, LastWriteDate: TDateTime): Integer;
+	overload; platform;
+{ {
+  Ajusta as datas de criacao/acesso/escrita de um dado arquivo
+}
+var
+  Hnd: THandle;
+begin
+  { TODO -oroger -clib : Avaliar das chamadas abaixo qual a menos restritiva }
+  {
+	Hnd := CreateFile(PChar(Filename), GENERIC_WRITE, 0, nil, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL or
+	FILE_FLAG_SEQUENTIAL_SCAN, 0);
+  }
+  Hnd := CreateFile(PChar(FileName), GENERIC_WRITE, FILE_SHARE_WRITE, nil, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, 0);
+  try
+	if Hnd <> INVALID_HANDLE_VALUE then begin
+	  Result := SetFileTimeProperties(Hnd, CreateDate, LastAccessDate, LastWriteDate);
+	end else begin
+	  Result := GetLastError();
+	end;
+  finally
+	CloseHandle(Hnd);
+  end;
+end;
+
+function SetFileTimeProperties(FileHandle: THandle; var CreateDate, LastAccessDate, LastWriteDate: TDateTime): Integer; overload;
+{ {
+  Ajusta as datas de criacao/acesso/escrita de um dado arquivo
+
+  Notas : O arquivo deve ter acesso GENERIC_WRITE
+
+
+  Exemplo:
+  hf := CreateFile ( PChar(FFilename), GENERIC_WRITE, 0, nil, OPEN_EXISTING, 0, //FILE_ATTRIBUTE_NORMAL or FILE_FLAG_SEQUENTIAL_SCAN , 0);
+}
+var
+  DCreate, DAccess, DWrite: TFileTime;
+  ST: TSystemTime;
+begin
+  Result := ERROR_SUCCESS;
+  SetLastError(Result);
+  DateTimeToSystemTime(CreateDate, ST);
+  SystemTimeToFileTime(ST, DCreate);
+  LocalFileTimeToFileTime(DCreate, DCreate);
+  DateTimeToSystemTime(LastAccessDate, ST);
+  SystemTimeToFileTime(ST, DAccess);
+  LocalFileTimeToFileTime(DAccess, DAccess);
+  DateTimeToSystemTime(LastWriteDate, ST);
+  SystemTimeToFileTime(ST, DWrite);
+  LocalFileTimeToFileTime(DWrite, DWrite);
+  {$WARN UNSAFE_CODE OFF}
+  if not SetFileTime(FileHandle, @DCreate, @DAccess, @DWrite) then begin
+	Result := GetLastError();
+  end;
+  {$WARN UNSAFE_CODE ON}
+end;
+
+function SetKeyGenFileValue(const FileName: string; Value, TimeOut: Integer): Integer;
+{ {
+  Salva em arquivo de usos exclusivo valor limitado ao periodo de espera
+}
+var
+  FHnd: TextFile;
+  FTime: TDateTime;
+  Sucess: boolean;
+begin
+  FTime := IncTime(Now, 0, 0, 0, TimeOut);
+  AssignFile(FHnd, FileName);
+  Sucess := False;
+  Result := ERROR_TIMEOUT;
+  try
+	{$IOCHECKS OFF}
+	repeat
+	begin
+	  ReWrite(FHnd);
+	  if IOResult = 0 then begin
+		Sucess := True;
+	  end
+	end;
+	until (Sucess) or (Now > FTime);
+	{$IOCHECKS OFF}
+	if Sucess then begin
+	  WriteLn(FHnd, IntToStr(Value));
+	end else begin
+	  if IOResult <> 0 then begin
+		Result := IOResult;
+	  end else begin
+		Result := ERROR_TIMEOUT;
+	  end;
+	end;
+  finally
+	if Sucess then begin
+	  CloseFile(FHnd);
+	  Result := NO_ERROR;
+	end;
+  end;
+end;
+
+function ShortToLongFileName(const ShortName: string): string;
+{ {
+  Retorna o nome longo de um arquivo passado como nome curto
+}
+var
+  Temp: TWin32FindData;
+  SearchHandle: THandle;
+begin
+  SearchHandle := FindFirstFile(PChar(ShortName), Temp);
+  if SearchHandle <> INVALID_HANDLE_VALUE then begin
+	Result := string(Temp.cFileName);
+  end else begin
+	Result := EmptyStr;
+  end;
+  Windows.FindClose(SearchHandle);
+end;
+
+function SlashRem(const Path: string; PreserveRoot: boolean = False): string; deprecated;
+{ {
+  Remove barra do fim do caminho
+
+  Deprecated : Use TFileHnd.SlashRem()
+}
+begin
+  {$WARN UNSAFE_CODE OFF}
+  if AnsiLastChar(Path)^ <> PathDelim then begin
+	Result := Path;
+  end else begin
+	Result := Copy(Path, 1, Length(Path) - 1);
+	if PreserveRoot then begin
+	  if IsRootDir(Path) then begin
+		Result := Result + PathDelim;
+	  end;
+	end;
+  end;
+  {$WARN UNSAFE_CODE ON}
+end;
+
+function SlashSep(const Path, FileName: string): string;
+{ {
+  Returns a path tha forces PathDelim at your final
+}
+begin
+  {$WARN UNSAFE_CODE OFF}
+  if AnsiLastChar(Path)^ <> PathDelim then begin
+	Result := Path + PathDelim + FileName;
+  end else begin
+	Result := Path + FileName;
+  end;
+  {$WARN UNSAFE_CODE ON}
+end;
+
+function SpaceFree(const PathName: string): int64;
+{ {
+  Retorna o espaco em bytes livres para determinado caminho
+}
+var
+  Drive: byte;
+  OS: OSVERSIONINFO;
+  TotalFree, TotalExisting: int64;
+  SectorsPerCluster, BytesPerSector, FreeClusters, TotalClusters: cardinal;
+begin
+  if Pos(':', PathName) <> 0 then begin // Unidade de disco
+	Drive := Ord((ExtractFileDrive(UpperCase(PathName))[1]));
+	Drive := Drive - Ord('A') + 1;
+	{$IFDEF WIN32}
+	Result := DiskFree(Drive);
+	{$ELSE}
+	Result := _DiskFree(Drive);
+	{$ENDIF}
+  end else begin // Recurso via UNC
+	OS.dwOSVersionInfoSize := SizeOf(OSVERSIONINFO);
+	GetVersionEx(OS);
+	if (OS.dwMajorVersion = 4) and (OS.dwBuildNumber < 1000) and (OS.dwPlatformId = 1) then begin // Usar modo OSR1
+	  if GetDiskFreeSpace(PChar(PathName), SectorsPerCluster, BytesPerSector, FreeClusters, TotalClusters) then begin
+		Result := (SectorsPerCluster * BytesPerSector * FreeClusters);
+	  end else begin
+		Result := -1;
+	  end;
+	end else begin // Usar os servicos do NT ou Win95B ou superior
+	  {$WARN UNSAFE_CODE OFF}
+	  if not GetDiskFreeSpaceEx(PChar(PathName), Result, TotalExisting, @TotalFree) then begin
+		Result := -1;
+	  end;
+	  {$WARN UNSAFE_CODE ON}
+	end;
+  end;
+end;
+
+{ -**********************************************************************
+  ************************************************************************
+  ******************
+  ******************  Class:    TFileHnd
+  ******************  Category: No category
+  ******************
+  ************************************************************************
+  ************************************************************************ }
+{ -------------------------------------------------------------------------------------------------------------------------------- }
+class procedure TFileHnd.BuildVersionInfo(const FileName: string; var V1, V2, V3, V4: Word);
+{ {
+  Repassa as componentes da versão do arquivo dado.
+
+  Filename - Nome de arquivo de interesse. Caso string vazia seja passa o caminho de ParamStr(0) sera usado.
+
+  V1 - 1 componente da versão
+
+  V2 - 2 componente da versão
+
+  V3 - 3 componente da versão
+
+  V4 - 4 componente da versão
+
+  Revision: 30/10/2006 - Roger
+
+  Para o caso do arquivo passado não possuir informação de versão todos os elementos serão retornados como 0 (zero).
+
+}
+var
+  VerInfoSize, VerValueSize, Dummy: DWORD;
+  VerInfo: Pointer;
+  VerValue: PVSFixedFileInfo;
+  Path: string;
+begin
+  try
+	if (FileName = EmptyStr) then begin
+	  Path := ParamStr(0);
+	end else begin
+	  Path := FileName;
+	end;
+	VerInfoSize := GetFileVersionInfoSize(PChar(Path), Dummy);
+	if (VerInfoSize > 0) then begin
+	  VerInfo := GetMemory(VerInfoSize);
+	  try
+		GetFileVersionInfo(PChar(Path), 0, VerInfoSize, VerInfo);
+		VerQueryValue(VerInfo, '\' { dont localize } , Pointer(VerValue), VerValueSize);
+		{$WARN UNSAFE_CODE OFF}
+		V1 := VerValue^.dwFileVersionMS shr 16;
+		V2 := VerValue^.dwFileVersionMS and $FFFF;
+		V3 := VerValue^.dwFileVersionLS shr 16;
+		V4 := VerValue^.dwFileVersionLS and $FFFF;
+		{$WARN UNSAFE_CODE ON}
+	  finally
+		FreeMemory(VerInfo);
+	  end;
+	end else begin // informação de versão não encontrada neste arquivo
+	  V1 := 0;
+	  V2 := 0;
+	  V3 := 0;
+	  V4 := 0;
+	end;
+  except
+	V1 := 0;
+	V2 := 0;
+	V3 := 0;
+	V4 := 0;
+  end;
+end;
+
+class function TFileHnd.ChangeFileName(const OriginalFullPath, FileName: string): string;
+{ {
+  Retorna c caminho completo para o nome de arquivo baseado no nome original.
+  Ex.: ChangeFileName( 'c:\teste.pqp', '\windows\temp\novo.txt' ) -> c:\windows\temp\novo.txt
+}
+begin
+  Result := ExtractFilePath(OriginalFullPath);
+  Result := TFileHnd.ConcatPath([Result, FileName]);
+end;
+
+class function TFileHnd.ConcatPath(Paths: array of string): string;
+{ {
+  Junta as parte da esquerda para a direita de um caminho. Esta rotina é útil para evitar as duplas \\ na composicao do nome do
+  arquivo.
+
+  Paths : array com os elementos que compoem o nome do arquivo.
+}
+var
+  RPart: string;
+  i: Integer;
+begin
+  if high(Paths) < 1 then begin
+	Exit;
+  end;
+  Result := Paths[0];
+  for i := 1 to high(Paths) do begin
+	if Result <> EmptyStr then begin
+	  while Result[Length(Result)] = PathDelim do begin
+		Delete(Result, Length(Result), 1);
+	  end;
+	end;
+	RPart := Paths[i];
+	if RPart <> EmptyStr then begin
+	  while RPart[1] = PathDelim do begin
+		Delete(RPart, 1, 1);
+	  end;
+	  Result := Result + PathDelim + RPart;
+	end;
+  end;
+end;
+
+{ -------------------------------------------------------------------------------------------------------------------------------- }
+class function TFileHnd.CopyDir(const SourceDir, DestDir: TFilename): Integer;
+{ {
+  Copia um diretório recursivamente para outro.
+
+  Revision: 5/6/2008 - roger
+}
+var
+  SearchRec: TSearchRec;
+  DosError: Integer;
+  Path, DestPath: TFilename;
+begin
+  if not ForceDirectories(DestDir) then begin
+	Result := GetLastError();
+  end else begin
+	Result := ERROR_SUCCESS;
+	Path := SourceDir;
+	DestPath := TFileHnd.SlashAdd(DestDir);
+	Path := TFileHnd.SlashAdd(Path);
+	DosError := FindFirst(Path + '*.*', faAnyFile, SearchRec);
+	try
+	  while DosError = 0 do begin
+		if (SearchRec.Name <> '.') and (SearchRec.Name <> '..') then begin
+		  if (SearchRec.Attr and faDirectory) = faDirectory then begin
+			Result := CopyDir(Path + SearchRec.Name, TFileHnd.SlashAdd(DestDir) + SearchRec.Name);
+		  end else if (not CopyFile(PChar(Path + SearchRec.Name), PChar(DestPath + SearchRec.Name), True)) then begin
+			Result := GetLastError();
+			Exit;
 		  end;
-		2: begin
-			CSet := INVALID_FILENAME_CHARS_MEDIUM_CRITIC;
+		end;
+		DosError := FindNext(SearchRec);
+	  end;
+	  FindClose(SearchRec);
+	except
+	  FindClose(SearchRec); // usado apenas para não omitir chamada
+	  raise;
+	end;
+  end;
+end;
+
+class function TFileHnd.CreateTempFileName(const Prefix: PChar; const Number: byte; CreateFile: boolean): string;
+{ {
+  Gera nome de arquivo temporario pela Win32 API.
+
+  Prefix :
+  Parte inicial do nome do arquivo.
+
+  Number :
+  Indice preferencial ver Win32 API GetTempFileName().
+
+  CreateFile :
+  Indica se este arquivo sera automaticamente criado vazio.
+
+  Returns:
+
+  Nome do arquivo temporario para uso.
+}
+var
+  Path, Name: PChar;
+  f: file;
+begin
+  Result := '';
+  Path := StrAlloc(256);
+  name := StrAlloc(512);
+  if GetTempPath(255, Path) <> 0 then begin
+	if GetTempFileName(Path, Prefix, Number, name) <> 0 then begin
+	  Result := StrPas(name);
+	end;
+  end;
+  StrDispose(Path);
+  StrDispose(name);
+  if (CreateFile) then begin // Se eh para criar
+	AssignFile(f, Result);
+	ReWrite(f); // Arquivo zerado
+	CloseFile(f);
+  end;
+end;
+
+class function TFileHnd.DeepExistingPath(const Path: string): string;
+/// <summary>
+/// Retorna o caminho mais profundo válido. Caso não exista nem mesmo o raiz do caminho passado o home_dir é retornado.
+/// </summary>
+/// <remarks>
+///
+/// </remarks>
+begin
+  Result := Path;
+  while ((not DirectoryExists(Result) and (not IsRootDir(Result)))) do begin
+	Result := ParentDir(Result);
+  end;
+  if (IsRootDir(Result)) then begin
+	Result := GetUserMyDocuments();
+	if Result = EmptyStr then begin
+	  Result := GetUserHomeDir();
+	end;
+  end;
+end;
+
+{ -------------------------------------------------------------------------------------------------------------------------------- }
+class function TFileHnd.ExpandFilename(const BasePath, Path: string): string;
+{ {
+  BasePath : Caminho base para o calculo do caminho expandido.
+
+  path  : Caminho a ser expandido.
+
+  return : Caminho expandido do path passado.
+}
+
+const
+  PARENT_DIR_TOKEN = '..' + SysUtils.PathDelim;
+
+  procedure LSRRemapPaths(var localBase, localPath: string);
+  begin
+	while (TStrHnd.startsWith(localPath, PARENT_DIR_TOKEN)) do begin
+	  Delete(localPath, 1, Length(PARENT_DIR_TOKEN));
+	  localBase := TFileHnd.SlashRem(ExtractFilePath(SlashRem(localBase)));
+	end;
+  end;
+
+var
+  c: char;
+  rightPart, leftPart: string;
+  posPDir: Integer;
+
+begin
+  if (Path <> EmptyStr) then begin
+	c := GetIChar(Path, 1); // Pega 1o caracter para testar se caminho base serah diretamente agregado
+	if ((c = SysUtils.PathDelim) or (c = '.')) then begin // Agrega ao final de BasePath diretamente
+	  Result := TFileHnd.ConcatPath([BasePath, Path]);
+	end else begin // Verifica se path inicia-se com ".."
+	  rightPart := Path;
+	  leftPart := BasePath;
+	  if (TStrHnd.startsWith(rightPart, PARENT_DIR_TOKEN)) then begin
+		// Retorna aos diretorios pais ate finalizar as recorrencias
+		LSRRemapPaths(leftPart, rightPart);
+		Result := TFileHnd.ConcatPath([leftPart, rightPart]);
+	  end else begin
+		// Checa se prefixo bate e remota caminhos
+		posPDir := Pos(PARENT_DIR_TOKEN, rightPart);
+		if (posPDir > 0) then begin
+		  if (Copy(leftPart, 1, posPDir - 1) = Copy(rightPart, 1, posPDir - 1)) then begin
+			// Iniciam com o mesmo valor -> chamada a remapeamento
+			leftPart := Copy(leftPart, 1, posPDir - 1);
+			Delete(rightPart, 1, posPDir - 1);
+			LSRRemapPaths(leftPart, rightPart);
+			Result := TFileHnd.ConcatPath([leftPart, rightPart]);
 		  end;
-	  else begin
-		  CSet := INVALID_FILENAME_CHARS_HIGH_CRITIC;
 		end;
 	  end;
-	  LPart := ExtractFilePath(FileName);
-	  if (LPart = FileName) then begin // raiz ou nome final da sequencia
-		Result := (Length(LPart) = 3) and CharInSet(GetIChar(LPart, 2), ['a' .. 'Z']) and (GetIChar(LPart, 3) = PathSep);
-		// algo do tipo c:\
-		Result := Result or (TStrHnd.StrPosChar(ExtractFileName(FileName), CSet) = 0);
+	end;
+  end else begin
+	Result := SlashRem(BasePath);
+  end;
+end;
+
+class function TFileHnd.ExtractFilenamePure(const FileName: string): string;
+/// <summary>
+/// Extrai apenas o nome do arquivo desconsiderando inclusive a extensão do mesmo
+/// </summary>
+var
+  i: Integer;
+begin
+  Result := ExtractFileName(FileName);
+  i := LastDelimiter('.', Result);
+  if (i > 0) then begin
+	Result := Copy(Result, 1, i - 1);
+  end;
+end;
+
+{ -------------------------------------------------------------------------------------------------------------------------------- }
+class function TFileHnd.FileSize(const FileName: string): int64;
+{ {
+  Returns the size of file, or -1 if fail.
+  Call GetLastError() to see extended error information.
+
+  WARNING : Its a platform method.
+
+  Para o caso de se calcular o tamanho usado por um diretório usar GetFileSizeEx()
+
+  Revision: 3/6/2008 - roger
+}
+var
+  SR: TSearchRec;
+begin
+  {$WARN SYMBOL_PLATFORM OFF}
+  if FindFirst(FileName, faAnyFile, SR) = 0 then begin
+	Result := (SR.FindData.nFileSizeHigh shl 32) + SR.FindData.nFileSizeLow;
+	FindClose(SR);
+  end else begin
+	Result := -1;
+  end;
+  {$WARN SYMBOL_PLATFORM OFF}
+end;
+
+{ -------------------------------------------------------------------------------------------------------------------------------- }
+class function TFileHnd.FileTimeProperties(FileHandle: THandle; var CreateDate, LastAccessDate, LastWriteDate: TDateTime): Integer;
+{ {
+  Calcula as datas de criacao/acesso/escrita de um dado arquivo Notas : O arquivo deve ter a flag GENERIC_READ
+  Exemplo :
+  hf := CreateFile (PChar(FFilename), GENERIC_READ , 0, nil, OPEN_EXISTING, 0, //FILE_ATTRIBUTE_NORMAL or FILE_FLAG_SEQUENTIAL_SCAN 0);
+}
+var
+  DCreate, DAccess, DWrite: TFileTime;
+begin
+  {$WARN UNSAFE_CODE OFF}
+  if GetFileTime(FileHandle, @DCreate, @DAccess, @DWrite) then begin
+	Result := 0;
+	FileTimeToLocalFileTime(DCreate, DCreate); // Criacao
+	CreateDate := TFileHnd.FileTimeToDateTime(DCreate);
+	FileTimeToLocalFileTime(DAccess, DAccess); // Acesso
+	LastAccessDate := TFileHnd.FileTimeToDateTime(DAccess);
+	FileTimeToLocalFileTime(DWrite, DWrite); // Escrita
+	LastWriteDate := TFileHnd.FileTimeToDateTime(DWrite);
+  end else begin
+	Result := GetLastError();
+  end;
+  {$WARN UNSAFE_CODE ON}
+end;
+
+class function TFileHnd.FileTimeChangeTime(const FileName: string): TDateTime;
+var
+  Dummy: TDateTime;
+begin
+  FileTimeProperties(FileName, Dummy, Dummy, Result);
+end;
+
+class function TFileHnd.FileTimeProperties(const FileName: string;
+	var CreateDate, LastAccessDate, LastWriteDate: TDateTime): Integer;
+{ {
+  Calcula as datas de criacao/acesso/escrita de um dado arquivo
+}
+var
+  SR: TSearchRec;
+  DCreate, DAccess, DWrite: TFileTime;
+begin
+  Result := FindFirst(FileName, faAnyFile, SR);
+  if Result = 0 then begin
+	// Criacao
+	DCreate := SR.FindData.ftCreationTime;
+	FileTimeToLocalFileTime(DCreate, DCreate);
+	CreateDate := TFileHnd.FileTimeToDateTime(DCreate);
+	// Acesso
+	DAccess := SR.FindData.ftLastAccessTime;
+	FileTimeToLocalFileTime(DAccess, DAccess);
+	LastAccessDate := TFileHnd.FileTimeToDateTime(DAccess);
+	// escrita
+	DWrite := SR.FindData.ftLastWriteTime;
+	FileTimeToLocalFileTime(DWrite, DWrite);
+	LastWriteDate := TFileHnd.FileTimeToDateTime(DWrite);
+	FindClose(SR); { TODO -oroger -clib : Ajustar o retorno para caso de alteração de atributos falha }
+  end;
+end;
+
+class function TFileHnd.FileTimeToDateTime(FTime: TFileTime): TDateTime;
+{ {
+  Converte data/hora do windows para tipo TDateTime
+
+  Revision: 10/8/2006 - Roger
+}
+var
+  ST: TSystemTime;
+begin
+  FileTimeToSystemTime(FTime, ST);
+  Result := EncodeDate(ST.wYear, ST.wMonth, ST.wDay) + EncodeTime(ST.wHour, ST.wMinute, ST.wSecond, ST.wMilliSeconds);
+end;
+
+class function TFileHnd.FirstOccurrence(const Path, Mask: string): string;
+/// <summary>
+/// Retorna caminho completo de arquivo obedecendo os criterios de path e mask, ou vazio se nada ocorrer
+/// </summary>
+/// <remarks>
+///
+/// </remarks>
+var
+  SR: TSearchRec;
+begin
+  try
+	if (FindFirst(TFileHnd.ConcatPath([Path, Mask]), faAllFiles, SR) = ERROR_SUCCESS) then begin
+	  Result := TFileHnd.ConcatPath([Path, SR.FindData.cFileName]);
+	end else begin
+	  Result := EmptyStr;
+	end;
+  finally
+	FindClose(SR);
+  end;
+end;
+
+class function TFileHnd.ForceFileExtension(const OriginalName, DesiredExtension: string): string;
+{ {
+  OriginalName : Nome original do arquivo.
+
+  DesiredExtension : Extensao desejada
+
+  Ver também:
+  TFileHnd.MakeDefaultFileExtension
+  SysUtils.ChangeFileExt()
+}
+var
+  originalExt, ForceExt: string;
+begin
+  // Localiza qual a extensao e se for diferente da desejada adciona-a
+  if DesiredExtension = EmptyStr then begin
+	Result := OriginalName;
+  end else begin
+	if DesiredExtension[1] = '.' then begin
+	  ForceExt := DesiredExtension;
+	end else begin
+	  ForceExt := '.' + DesiredExtension;
+	end;
+	originalExt := ExtractFileExt(OriginalName); // Vem com o "."
+	if SameText(originalExt, ForceExt) then begin // Adiciona "." a comparacao
+	  Result := OriginalName;
+	end else begin
+	  Result := OriginalName + ForceExt;
+	end;
+  end;
+end;
+
+{ -------------------------------------------------------------------------------------------------------------------------------- }
+class procedure TFileHnd.ForceFilename(const FileName: string);
+{ {
+  Garante a existencia de um arquivo com o nome especificado.
+  Para o caso do arquivo não exisitir ele se´ra criado vazio, bem como a árvore de diretorios necessarios.
+
+  filename : nome do arquivo desejado.
+}
+var
+  ST: TFileStream;
+begin
+  if (not FileExists(FileName)) then begin
+	if (not DirectoryExists(ParentDir(FileName))) then begin
+	  if (not ForceDirectories(ParentDir(FileName))) then begin
+		TAPIHnd.CheckAPI(GetLastError());
+	  end;
+	end;
+	ST := TFileStream.Create(FileName, fmCreate);
+	ST.Free;
+  end;
+end;
+
+{ -------------------------------------------------------------------------------------------------------------------------------- }
+class function TFileHnd.GetFileSizeEx(const FileName: string): int64;
+{ {
+  Calcula o tamanho do arquivo, caso o arquivo seja um diretório o cálculo será recursivo
+
+  Revision: 3/6/2008 - roger
+}
+var
+  SR: TSearchRec;
+  List: TStringList;
+  x: Integer;
+begin
+  {$WARN SYMBOL_PLATFORM OFF}
+  if FindFirst(FileName, faAnyFile, SR) = 0 then begin
+	try
+	  if ((SR.Attr and faDirectory) = faDirectory) then begin // Necessita varrer os subdirs
+		List := TStringList.Create;
+		try
+		  FileHnd.ListDirFilesNames(FileName, '*.*', faAnyFile, True, List);
+		  Result := 0;
+		  for x := 0 to List.Count - 1 do begin
+			Inc(Result, TFileHnd.FileSize(List.Strings[x]));
+		  end;
+		finally
+		  List.Free;
+		end;
 	  end else begin
-		if (LPart = EmptyStr) then begin
-		  Result := (TStrHnd.StrPosChar(ExtractFileName(FileName), CSet) = 0);
+		Result := (SR.FindData.nFileSizeHigh shl 32) + SR.FindData.nFileSizeLow;
+	  end;
+	finally
+	  SysUtils.FindClose(SR);
+	end;
+  end else begin
+	Result := -1;
+  end;
+  {$WARN SYMBOL_PLATFORM ON}
+end;
+
+class function TFileHnd.GetUserHomeDir: string;
+/// <summary>
+/// Retorna o caminho do Homedir do usuário do processo.
+/// </summary>
+/// <remarks>
+/// Este valor é lido inicialmente iniciamente pela variavel de embiente USERPROFILE,
+/// Alternativamente por HOMEDRIVE + HOMEPATH
+/// caso não exista usa-se o caminho apontado pelo shell
+/// </remarks>
+
+var
+  envValue: string;
+  Path: array [0 .. MAX_PATH] of char;
+begin
+  envValue := TAPIHnd.GetEnvironmentVar('USERPROFILE');
+  if (envValue = EmptyStr) then begin
+	envValue := TFileHnd.ConcatPath([TAPIHnd.GetEnvironmentVar('HOMEDRIVE'), TAPIHnd.GetEnvironmentVar('HOMEPATH')]);
+	if DirectoryExists(envValue) then begin
+	  Result := envValue;
+	end else begin
+	  if SHGetSpecialFolderPathW(0, Path, CSIDL_PROFILE, False) then begin
+		Result := Path;
+	  end else begin
+		Result := EmptyStr;
+	  end;
+	end;
+  end;
+end;
+
+/// <summary>
+/// Retorna o caminho para a pasta "Meu documentos do usuário chamador
+/// </summary>
+/// <remarks>
+/// Caso falhe retorna EmptytStr
+/// </remarks>
+class function TFileHnd.GetUserMyDocuments: string;
+var
+  Path: array [0 .. MAX_PATH] of char;
+begin
+  if SHGetSpecialFolderPathW(0, Path, CSIDL_MYDOCUMENTS, False) then begin
+	Result := Path;
+  end else begin
+	Result := EmptyStr;
+  end;
+end;
+
+class function TFileHnd.IsValidFilename(const FileName: string; ConstrainLevel: Integer): boolean;
+{ {
+  Valida se o conjunto de caracteres que compoe o nome do arquivo pode ser gerado, isto é não viola o conjunto de caracteres invalidos
+  representados por ContrainLevel.
+
+  ConstrainLevel = 1^, indica baixa critica, aceita espaco, acentos e ascii extendido
+  ConstrainLevel = 2 , indica media critica, aceita espaco e o ascii baixo
+  ConstrainLevel <> dos valores acima sera usado alta critica, invalidando todos os acima adcionados aos invalidos no linux
+
+  Revision: 27/7/2005 - Roger
+}
+var
+  CSet: TSysCharSet;
+  LPart: string;
+begin
+  if (FileName = EmptyStr) then begin
+	Result := False;
+	Exit;
+  end;
+  case (ConstrainLevel) of
+	1: begin
+		CSet := INVALID_FILENAME_CHARS_LOW_CRITIC;
+	  end;
+	2: begin
+		CSet := INVALID_FILENAME_CHARS_MEDIUM_CRITIC;
+	  end;
+  else begin
+	  CSet := INVALID_FILENAME_CHARS_HIGH_CRITIC;
+	end;
+  end;
+  LPart := ExtractFilePath(FileName);
+  if (LPart = FileName) then begin // raiz ou nome final da sequencia
+	Result := (Length(LPart) = 3) and CharInSet(GetIChar(LPart, 2), ['a' .. 'Z']) and (GetIChar(LPart, 3) = PathSep);
+	// algo do tipo c:\
+	Result := Result or (TStrHnd.StrPosChar(ExtractFileName(FileName), CSet) = 0);
+  end else begin
+	if (LPart = EmptyStr) then begin
+	  Result := (TStrHnd.StrPosChar(ExtractFileName(FileName), CSet) = 0);
+	end else begin
+	  Result := TFileHnd.IsValidFilename(LPart, ConstrainLevel);
+	  Result := Result and (TStrHnd.StrPosChar(ExtractFileName(FileName), CSet) = 0);
+	end;
+  end;
+end;
+
+class function TFileHnd.IsWritable(const FileName: string): boolean;
+{ {
+  Identifica se o arquivo passado pode ser escrito pelo thread em contexto
+
+}
+var
+  FS: TFileStream;
+begin
+  Result := False;
+  if FileExists(FileName) then begin
+	try
+	  FS := TFileStream.Create(FileName, fmOpenWrite);
+	  FS.Free;
+	  Result := True;
+	except
+	  Exit; // Apenas retorna false
+	end;
+  end else begin
+	try
+	  FS := TFileStream.Create(FileName, fmCreate);
+	  FS.Free;
+	  Result := True;
+	  DeleteFile(FileName); // ignora erros de deleção(objetivo apenas escrever)
+	except
+	  Exit; // Apenas retorna false
+	end;
+  end;
+end;
+
+class function TFileHnd.MakeDefaultFileExtension(const OriginalFileName, DefaultExtension: string): string;
+{ {
+  Retorna nome de arquivo com a extensao default se esta não tiver sido especificada no proprio nome do arquivo
+  Nenhuma critica é feita com o nome resultante.
+
+  Ver também:
+  TFileHnd.ForceFileExtension
+}
+var
+  Ext: string;
+begin
+  Ext := SysUtils.ExtractFileExt(OriginalFileName);
+  if (Ext = EmptyStr) then begin
+	Result := OriginalFileName + DefaultExtension;
+  end else begin
+	Result := OriginalFileName;
+  end;
+end;
+
+{ -------------------------------------------------------------------------------------------------------------------------------- }
+class function TFileHnd.NextFamilyFilename(const BaseFilename: string): string;
+{ {
+  Calcula o nome do arquivo seguinte para a sequência na pasta destino dada por BaseFilename.
+  Caso seja passsado BaseFilename já contendo um identificador de sequencia (n) este será desconsiderado, assim o nome
+  gerado não será sequência(n+1).
+
+  Revision - 11/3/2010 - roger
+
+  Passou a funcionar para diretorios da mesma forma que para arquivos
+
+  Revision: 5/12/2005 - Roger
+}
+var
+  TargetExt, Prefix: string;
+  TargetCount: Integer;
+begin
+  TargetCount := 0;
+  TargetExt := ExtractFileExt(BaseFilename);
+  Prefix := ChangeFileExt(BaseFilename, EmptyStr);
+  repeat
+	Inc(TargetCount);
+	Result := Prefix + '(' + IntToStr(TargetCount) + ')' + TargetExt;
+  until ((not FileExists(Result)) and (not DirectoryExists(Result)));
+end;
+
+class function TFileHnd.ParentDir(const FileName: string): string;
+{ {
+  Retorna o caminho do diretorio pai do arquivo sem a incoveniente "\" final.
+
+  filename : Nome do arquivo desejado.
+}
+begin
+  Result := SlashRem(ExtractFilePath(FileName));
+end;
+
+class function TFileHnd.ParentDir(const FileName: string; Existing: boolean): string;
+{ {
+  Retorna o diretorio pai de um arquivo passado.
+  Caso "Existing" o arquivo deve ser válido. Caso contrário o novo pai é calculado até que um válido seja encontrado, ou EmptyStr
+  será retornada.
+
+  Revision: 11/7/2006 - Roger
+}
+begin
+  Result := TFileHnd.ParentDir(FileName);
+  if (Existing) then begin
+	if (not DirectoryExists(Result)) then begin
+	  if (IsRootDir(Result)) then begin // tudo o possivel tentado
+		Result := EmptyStr;
+	  end else begin
+		if (Result <> EmptyStr) then begin
+		  Result := TFileHnd.ParentDir(Result, True);
+		end;
+	  end;
+	end;
+  end;
+end;
+
+class function TFileHnd.RmDir(const Path: string): Integer;
+{ {
+  Apaga o caminho passado e seus arquivos e sub-diretorios bem como.
+
+  returns: Valor do codigo de erro do sistema operacional ou 0 se sucesso.
+
+  Nota: Verifique se o diretorio corrente do aplicativo não pertence ao conjunto a ser apagado.
+
+  Revision: 26/9/2005 - Roger
+}
+  function LSRDeleteFile(const DirName: string; FileParam: TEnumFileParam): Integer;
+  { {
+	Apaga o arquivo dado se o mesmo for um sub-diretorio chama recursivamente a TFileHnd.RmDir()
+	Revision: 26/9/2005 - Roger
+  }
+  var
+	RemFilename: string;
+  begin
+	Result := ERROR_SUCCESS;
+	if (FileParam.SR.Name <> '..') and (FileParam.SR.Name <> '.') then begin
+	  RemFilename := DirName + PathDelim + FileParam.SR.Name;
+	  if (not DeleteFile(RemFilename)) then begin // tentar remover atributos impeditivos do arquivo
+		if (not SetFileAttributes(PChar(RemFilename), FILE_ATTRIBUTE_NORMAL)) then begin
+		  Result := GetLastError();
 		end else begin
-		  Result := TFileHnd.IsValidFilename(LPart, ConstrainLevel);
-		  Result := Result and (TStrHnd.StrPosChar(ExtractFileName(FileName), CSet) = 0);
-		end;
-	  end;
-	end;
-
-	class function TFileHnd.IsWritable(const FileName: string): boolean;
-	{ {
-	  Identifica se o arquivo passado pode ser escrito pelo thread em contexto
-
-	}
-	var
-	  FS: TFileStream;
-	begin
-	  Result := False;
-	  if FileExists(FileName) then begin
-		try
-		  FS := TFileStream.Create(FileName, fmOpenWrite);
-		  FS.Free;
-		  Result := True;
-		except
-		  Exit; // Apenas retorna false
-		end;
-	  end else begin
-		try
-		  FS := TFileStream.Create(FileName, fmCreate);
-		  FS.Free;
-		  Result := True;
-		  DeleteFile(FileName); // ignora erros de deleção(objetivo apenas escrever)
-		except
-		  Exit; // Apenas retorna false
-		end;
-	  end;
-	end;
-
-	class function TFileHnd.MakeDefaultFileExtension(const OriginalFileName, DefaultExtension: string): string;
-	{ {
-	  Retorna nome de arquivo com a extensao default se esta não tiver sido especificada no proprio nome do arquivo
-	  Nenhuma critica é feita com o nome resultante.
-
-	  Ver também:
-	  TFileHnd.ForceFileExtension
-	}
-	var
-	  Ext: string;
-	begin
-	  Ext := SysUtils.ExtractFileExt(OriginalFileName);
-	  if (Ext = EmptyStr) then begin
-		Result := OriginalFileName + DefaultExtension;
-	  end else begin
-		Result := OriginalFileName;
-	  end;
-	end;
-
-	{ -------------------------------------------------------------------------------------------------------------------------------- }
-	class function TFileHnd.NextFamilyFilename(const BaseFilename: string): string;
-	{ {
-	  Calcula o nome do arquivo seguinte para a sequência na pasta destino dada por BaseFilename.
-	  Caso seja passsado BaseFilename já contendo um identificador de sequencia (n) este será desconsiderado, assim o nome
-	  gerado não será sequência(n+1).
-
-	  Revision - 11/3/2010 - roger
-
-	  Passou a funcionar para diretorios da mesma forma que para arquivos
-
-	  Revision: 5/12/2005 - Roger
-	}
-	var
-	  TargetExt, Prefix: string;
-	  TargetCount: Integer;
-	begin
-	  TargetCount := 0;
-	  TargetExt := ExtractFileExt(BaseFilename);
-	  Prefix := ChangeFileExt(BaseFilename, EmptyStr);
-	  repeat
-		Inc(TargetCount);
-		Result := Prefix + '(' + IntToStr(TargetCount) + ')' + TargetExt;
-	  until ((not FileExists(Result)) and (not DirectoryExists(Result)));
-	end;
-
-	class function TFileHnd.ParentDir(const FileName: string): string;
-	{ {
-	  Retorna o caminho do diretorio pai do arquivo sem a incoveniente "\" final.
-
-	  filename : Nome do arquivo desejado.
-	}
-	begin
-	  Result := SlashRem(ExtractFilePath(FileName));
-	end;
-
-	class function TFileHnd.ParentDir(const FileName: string; Existing: boolean): string;
-	{ {
-	  Retorna o diretorio pai de um arquivo passado.
-	  Caso "Existing" o arquivo deve ser válido. Caso contrário o novo pai é calculado até que um válido seja encontrado, ou EmptyStr
-	  será retornada.
-
-	  Revision: 11/7/2006 - Roger
-	}
-	begin
-	  Result := TFileHnd.ParentDir(FileName);
-	  if (Existing) then begin
-		if (not DirectoryExists(Result)) then begin
-		  if (IsRootDir(Result)) then begin // tudo o possivel tentado
-			Result := EmptyStr;
-		  end else begin
-			if (Result <> EmptyStr) then begin
-			  Result := TFileHnd.ParentDir(Result, True);
-			end;
+		  if (not DeleteFile(RemFilename)) then begin // outro motivo de falha
+			Result := GetLastError();
 		  end;
 		end;
 	  end;
 	end;
+  end;
 
-	class function TFileHnd.RmDir(const Path: string): Integer;
-	{ {
-	  Apaga o caminho passado e seus arquivos e sub-diretorios bem como.
-
-	  returns: Valor do codigo de erro do sistema operacional ou 0 se sucesso.
-
-	  Nota: Verifique se o diretorio corrente do aplicativo não pertence ao conjunto a ser apagado.
-
-	  Revision: 26/9/2005 - Roger
-	}
-	  function LSRDeleteFile(const DirName: string; FileParam: TEnumFileParam): Integer;
-	  { {
-		Apaga o arquivo dado se o mesmo for um sub-diretorio chama recursivamente a TFileHnd.RmDir()
-		Revision: 26/9/2005 - Roger
-	  }
-	  var
-		RemFilename: string;
-	  begin
-		Result := ERROR_SUCCESS;
-		if (FileParam.SR.Name <> '..') and (FileParam.SR.Name <> '.') then begin
-		  RemFilename := DirName + PathDelim + FileParam.SR.Name;
-		  if (not DeleteFile(RemFilename)) then begin // tentar remover atributos impeditivos do arquivo
-			if (not SetFileAttributes(PChar(RemFilename), FILE_ATTRIBUTE_NORMAL)) then begin
-			  Result := GetLastError();
-			end else begin
-			  if (not DeleteFile(RemFilename)) then begin // outro motivo de falha
-				Result := GetLastError();
-			  end;
-			end;
+var
+  ChildDir: string;
+  FileParam: TEnumFileParam;
+begin
+  Result := ERROR_SUCCESS;
+  if (DirectoryExists(Path)) then begin
+	ChildDir := FindFirstChildDir(Path);
+	while ((Result = ERROR_SUCCESS) and (ChildDir <> EmptyStr)) do begin
+	  Result := TFileHnd.RmDir(ChildDir);
+	  ChildDir := FindFirstChildDir(Path);
+	end;
+	if (Result = ERROR_SUCCESS) then begin
+	  FileParam := TEnumFileParam.Create;
+	  try
+		Result := EnumFiles(Path, TList(nil), FileParam, TEnumFileProc(@LSRDeleteFile));
+		if (Result = ERROR_SUCCESS) then begin // Conseguiu limpar seus arquivos
+		  if (not RemoveDirectory(PChar(Path))) then begin
+			Result := GetLastError();
 		  end;
 		end;
-	  end;
-
-	var
-	  ChildDir: string;
-	  FileParam: TEnumFileParam;
-	begin
-	  Result := ERROR_SUCCESS;
-	  if (DirectoryExists(Path)) then begin
-		ChildDir := FindFirstChildDir(Path);
-		while ((Result = ERROR_SUCCESS) and (ChildDir <> EmptyStr)) do begin
-		  Result := TFileHnd.RmDir(ChildDir);
-		  ChildDir := FindFirstChildDir(Path);
-		end;
-		if (Result = ERROR_SUCCESS) then begin
-		  FileParam := TEnumFileParam.Create;
-		  try
-			Result := EnumFiles(Path, TList(nil), FileParam, TEnumFileProc(@LSRDeleteFile));
-			if (Result = ERROR_SUCCESS) then begin // Conseguiu limpar seus arquivos
-			  if (not RemoveDirectory(PChar(Path))) then begin
-				Result := GetLastError();
-			  end;
-			end;
-		  finally
-			FileParam.Free;
-		  end;
-		end;
+	  finally
+		FileParam.Free;
 	  end;
 	end;
+  end;
+end;
 
-	class function TFileHnd.SlashAdd(const Path: string): string;
-	{ {
-	  Ensure a PathDelim at final of Path
+class function TFileHnd.SlashAdd(const Path: string): string;
+{ {
+  Ensure a PathDelim at final of Path
 
-	  Revision: 5/6/2008 - roger
-	}
-	begin
-	  {$WARN UNSAFE_CODE OFF}
-	  if AnsiLastChar(Path)^ <> PathDelim then begin
-		Result := Path + PathDelim;
-	  end else begin
-		Result := Path;
+  Revision: 5/6/2008 - roger
+}
+begin
+  {$WARN UNSAFE_CODE OFF}
+  if AnsiLastChar(Path)^ <> PathDelim then begin
+	Result := Path + PathDelim;
+  end else begin
+	Result := Path;
+  end;
+  {$WARN UNSAFE_CODE ON}
+end;
+
+class function TFileHnd.SlashRem(const Path: string; PreserveRoot: boolean = False): string;
+{ {
+  Path : Caminho original.
+
+  PreserveRootPath : Se true mantem a barra final para caso de caminho raiz. Vale para unidade lógica e UNC's
+
+  Revision: 30/10/2006 - Roger
+
+  Valor do separador de caminho normalizado para a constante localizada em "SysUtils.PathDelim".
+
+}
+var
+  P: PChar;
+begin
+  {$WARN UNSAFE_CODE OFF}
+  P := AnsiLastChar(Path);
+  if (P = nil) or (P^ <> SysUtils.PathDelim) then begin
+	Result := Path;
+  end else begin
+	Result := Copy(Path, 1, Length(Path) - 1);
+	if PreserveRoot then begin
+	  if IsRootDir(Path) then begin
+		Result := Result + SysUtils.PathDelim;
 	  end;
-	  {$WARN UNSAFE_CODE ON}
 	end;
+  end;
+  {$WARN UNSAFE_CODE ON}
+end;
 
-	class function TFileHnd.SlashRem(const Path: string; PreserveRoot: boolean = False): string;
-	{ {
-	  Path : Caminho original.
+{ -------------------------------------------------------------------------------------------------------------------------------- }
+class function TFileHnd.VersionInfo(const FileName: string): string;
+{ {
+  Monta string com a versão do arquivo passado, para qq erro encontrado '0.0.0.0' será retornado
 
-	  PreserveRootPath : Se true mantem a barra final para caso de caminho raiz. Vale para unidade lógica e UNC's
+  Filename - Nome de arquivo de interesse. Caso string vazia seja passa o caminho de ParamStr(0) sera usado.
 
-	  Revision: 30/10/2006 - Roger
-
-	  Valor do separador de caminho normalizado para a constante localizada em "SysUtils.PathDelim".
-
-	}
-	var
-	  P: PChar;
-	begin
-	  {$WARN UNSAFE_CODE OFF}
-	  P := AnsiLastChar(Path);
-	  if (P = nil) or (P^ <> SysUtils.PathDelim) then begin
-		Result := Path;
-	  end else begin
-		Result := Copy(Path, 1, Length(Path) - 1);
-		if PreserveRoot then begin
-		  if IsRootDir(Path) then begin
-			Result := Result + SysUtils.PathDelim;
-		  end;
-		end;
-	  end;
-	  {$WARN UNSAFE_CODE ON}
-	end;
-
-	{ -------------------------------------------------------------------------------------------------------------------------------- }
-	class function TFileHnd.VersionInfo(const FileName: string): string;
-	{ {
-	  Monta string com a versão do arquivo passado, para qq erro encontrado '0.0.0.0' será retornado
-
-	  Filename - Nome de arquivo de interesse. Caso string vazia seja passa o caminho de ParamStr(0) sera usado.
-
-	  Returns: Versão do arquivo
-	}
-	const
-	  STR_DOT = '.';
-	var
-	  V1, V2, V3, V4: Word;
-	begin
-	  BuildVersionInfo(FileName, V1, V2, V3, V4);
-	  Result := IntToStr(V1) + STR_DOT + IntToStr(V2) + STR_DOT + IntToStr(V3) + STR_DOT + IntToStr(V4);
-	end;
+  Returns: Versão do arquivo
+}
+const
+  STR_DOT = '.';
+var
+  V1, V2, V3, V4: Word;
+begin
+  BuildVersionInfo(FileName, V1, V2, V3, V4);
+  Result := IntToStr(V1) + STR_DOT + IntToStr(V2) + STR_DOT + IntToStr(V3) + STR_DOT + IntToStr(V4);
+end;
 
 end.

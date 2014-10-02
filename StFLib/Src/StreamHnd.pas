@@ -96,7 +96,6 @@ var
   createDate2, acessDate2, modDate2: TDateTime;
   h1, h2: string;
   ret: Integer;
-
 begin
   Result := []; // nenhum atributo divergente
 
