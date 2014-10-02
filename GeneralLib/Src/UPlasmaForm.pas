@@ -112,10 +112,10 @@ type
         FRegion :   TPlasmaRegion;
         procedure RefreshForm;
         procedure PictureUpdate(Sender : TObject);
+	protected
         procedure MouseDown(Button : TMouseButton; Shift : TShiftState; X, Y : Integer); override;
         procedure MouseMove(Shift : TShiftState; X, Y : Integer); override;
-    protected
-        procedure SetRegion(Value : TPlasmaRegion);
+		procedure SetRegion(Value : TPlasmaRegion);
         function GetRegion : TPlasmaRegion;
         procedure SetParent(Value : TWinControl); override;
     public
@@ -224,17 +224,19 @@ var
     Reader : TFileStream;
     Data :   PRgnData;
 begin
-    try
-        Reader := TFileStream.Create(Value, fmOpenRead);
-        GetMem(Data, Reader.Size);
-        Reader.Read(Data^, Reader.Size);
-        FRegion.Region := ExtCreateRegion(nil, Reader.Size, Data^);
-        FreeMem(Data, Reader.Size);
-        Reader.Free;
-        RefreshForm;
-    except
-        raise Exception.Create('Error Loading Mask');
-    end;
+	{$WARN UNSAFE_CODE OFF}
+	try
+		Reader := TFileStream.Create(Value, fmOpenRead);
+		GetMem(Data, Reader.Size);
+		Reader.Read(Data^, Reader.Size);
+		FRegion.Region := ExtCreateRegion(nil, Reader.Size, Data^);
+		FreeMem(Data, Reader.Size);
+		Reader.Free;
+		RefreshForm;
+	except
+		raise Exception.Create('Error Loading Mask');
+	end;
+	{$WARN UNSAFE_CODE ON}
 end;
 
 
@@ -244,17 +246,19 @@ var
     Reader : TResourceStream;
     Data :   PRgnData;
 begin
-    try
-        Reader := TResourceStream.Create(Instance, ResName, RT_RCDATA);
-        GetMem(Data, Reader.Size);
-        Reader.Read(Data^, Reader.Size);
-        FRegion.Region := ExtCreateRegion(nil, Reader.Size, Data^);
-        FreeMem(Data, Reader.Size);
-        Reader.Free;
-        RefreshForm;
-    except
-        raise Exception.Create('Error Loading Mask form resource');
-    end;
+	{$WARN UNSAFE_CODE OFF}
+	try
+		Reader := TResourceStream.Create(Instance, ResName, RT_RCDATA);
+		GetMem(Data, Reader.Size);
+		Reader.Read(Data^, Reader.Size);
+		FRegion.Region := ExtCreateRegion(nil, Reader.Size, Data^);
+		FreeMem(Data, Reader.Size);
+		Reader.Free;
+		RefreshForm;
+	except
+		raise Exception.Create('Error Loading Mask form resource');
+	end;
+	{$WARN UNSAFE_CODE ON}
 end;
 
 {==============================================================================}

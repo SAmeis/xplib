@@ -18,6 +18,12 @@
         <Projects Include="FXLib\Src\FXLibD20.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="GeneralLib\Src\GeneralLibD20.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="StFLib\Src\StFLibD20.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -71,14 +77,32 @@
     <Target Name="FXLibD20:Make">
         <MSBuild Projects="FXLib\Src\FXLibD20.dproj" Targets="Make"/>
     </Target>
+    <Target Name="GeneralLibD20">
+        <MSBuild Projects="GeneralLib\Src\GeneralLibD20.dproj"/>
+    </Target>
+    <Target Name="GeneralLibD20:Clean">
+        <MSBuild Projects="GeneralLib\Src\GeneralLibD20.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="GeneralLibD20:Make">
+        <MSBuild Projects="GeneralLib\Src\GeneralLibD20.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="StFLibD20">
+        <MSBuild Projects="StFLib\Src\StFLibD20.dproj"/>
+    </Target>
+    <Target Name="StFLibD20:Clean">
+        <MSBuild Projects="StFLib\Src\StFLibD20.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="StFLibD20:Make">
+        <MSBuild Projects="StFLib\Src\StFLibD20.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="XPLibD20;OPLibD20;GDBLibD20;BDELibD20;FXLibD20"/>
+        <CallTarget Targets="XPLibD20;OPLibD20;GDBLibD20;BDELibD20;FXLibD20;GeneralLibD20;StFLibD20"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="XPLibD20:Clean;OPLibD20:Clean;GDBLibD20:Clean;BDELibD20:Clean;FXLibD20:Clean"/>
+        <CallTarget Targets="XPLibD20:Clean;OPLibD20:Clean;GDBLibD20:Clean;BDELibD20:Clean;FXLibD20:Clean;GeneralLibD20:Clean;StFLibD20:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="XPLibD20:Make;OPLibD20:Make;GDBLibD20:Make;BDELibD20:Make;FXLibD20:Make"/>
+        <CallTarget Targets="XPLibD20:Make;OPLibD20:Make;GDBLibD20:Make;BDELibD20:Make;FXLibD20:Make;GeneralLibD20:Make;StFLibD20:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

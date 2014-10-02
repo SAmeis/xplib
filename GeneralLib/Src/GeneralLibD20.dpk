@@ -1,0 +1,60 @@
+{$I GeneralLib.inc }
+
+package GeneralLibD20;
+
+{$R *.res}
+{$R 'GeneralLib.dcr'}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS OFF}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS OFF}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE RELEASE}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'AAA - General Imports - Delphi 2010'}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  vcl,
+  dbrtl,
+  DesignIDE,
+  bdertl,
+  vclx,
+  vclimg,
+  QR506RunDXE6W64;
+
+contains
+  Qraconst in 'Qraconst.pas',
+  QrAngLbl in 'QrAngLbl.pas',
+  Barcode in 'Barcode.pas',
+  qrBarcode in 'qrBarcode.pas',
+  UPlasmaEd in 'UPlasmaEd.pas' {MaskForm},
+  UPlasmaForm in 'UPlasmaForm.pas',
+  bcchksum in 'bcchksum.pas',
+  ujetanimbutton in 'ujetanimbutton.pas',
+  ujetbutton in 'ujetbutton.pas',
+  ujetcheckbox in 'ujetcheckbox.pas',
+  uJetButtonDesign in 'uJetButtonDesign.pas',
+  GeneralLibDsgSupport in 'GeneralLibDsgSupport.pas',
+  UPlasmaRegion in 'UPlasmaRegion.pas';
+
+end.
+

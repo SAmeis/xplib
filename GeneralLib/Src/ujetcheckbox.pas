@@ -496,8 +496,10 @@ var
 begin
     if (Visible or (csDesigning in ComponentState)) and
         (Parent <> nil) and Parent.HandleAllocated then begin
-        R := BoundsRect;
-        InvalidateRect(Parent.Handle, @R, True);
+		R := BoundsRect;
+		{$WARN UNSAFE_CODE OFF}
+		InvalidateRect(Parent.Handle, @R, True);
+		{$WARN UNSAFE_CODE ON}
     end;
 end;
 

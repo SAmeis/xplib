@@ -1,3 +1,12 @@
+{$IFDEF qrBarcode}
+{$DEFINE DEBUG_UNIT}
+{$ENDIF}
+{$I GeneralLib.inc}
+// alertas removidos por unit de baixo nível
+{$WARN UNSAFE_CODE OFF}
+{$WARN UNSAFE_CAST OFF}
+{$WARN IMPLICIT_STRING_CAST OFF}
+
 unit qrBarcode;
  //QMARK - Removed the QuestionMark copyright and added a comment
  //        like the one in barcode.pas. You can have this code
@@ -325,7 +334,9 @@ end;
 
 procedure TQRAsBarcode.SetText(const Value : string);
 begin
-    Barcode.Text := Value;
+	{$WARN IMPLICIT_STRING_CAST_LOSS OFF}
+	Barcode.Text := Value;
+	{$WARN IMPLICIT_STRING_CAST_LOSS ON}
 end;
 
 procedure TQRAsBarcode.SetTyp(const Value : TBarcodeType);

@@ -1,17 +1,16 @@
-//Diretivas adcionais
-{$I FXLib.inc }
+{$I StFLib.inc}
 
-package FXLibD20;
+package StFLibD20;
 
 {$R *.res}
-{$R 'FXLib.dcr'}
+{$R 'StFLib.dcr'}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS OFF}
 {$BOOLEVAL OFF}
 {$DEBUGINFO OFF}
 {$EXTENDEDSYNTAX ON}
-{$IMPORTEDDATA OFF}
+{$IMPORTEDDATA ON}
 {$IOCHECKS ON}
 {$LOCALSYMBOLS OFF}
 {$LONGSTRINGS ON}
@@ -29,19 +28,30 @@ package FXLibD20;
 {$IMAGEBASE $400000}
 {$DEFINE RELEASE}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION '3E- FXLib - RS-XE6'}
+{$DESCRIPTION '3E - Stream & Files - RS-XE6'}
 {$IMPLICITBUILD OFF}
 
 requires
   rtl,
   vcl,
-  designide;
+  XPLibD20,
+  xmlrtl,
+  inet,
+  vclx,
+  IndyCore,
+  IndySystem,
+  IndyProtocols;
 
 contains
-  Blowpan in 'Blowpan.pas',
-  Ringauge in 'Ringauge.pas',
-  StarFld_ in 'StarFld_.pas',
-  PicShow in 'PicShow.pas',
-  Credits in 'Credits.pas';
+  Modulo11 in 'Modulo11.PAS',
+  PasParser in 'PasParser.pas',
+  HKStreamRoutines in 'HKStreamRoutines.pas',
+  HKStreamCol in 'HKStreamCol.pas',
+  FileLogs in 'FileLogs.pas',
+  CryptIni in 'CryptIni.pas',
+  mp3Tag in 'mp3Tag.pas',
+  StreamHnd in 'StreamHnd.pas',
+  ConfigurationLayer in 'ConfigurationLayer.pas',
+  AppSettings in 'AppSettings.pas';
 
 end.

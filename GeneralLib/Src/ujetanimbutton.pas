@@ -54,29 +54,29 @@ type
         procedure BitmapDownChanged(Sender : TObject);
         procedure BitmapOverChanged(Sender : TObject);
         procedure BitmapDisabledChanged(Sender : TObject);
+		procedure SetBitmapDisabled(Value : TBitmap);
+		procedure SetImageListUp(Value : TImageList);
+		procedure SetImageListOver(Value : TImageList);
+		procedure SetImageListDown(Value : TImageList);
+		procedure SetInterval(Value : Integer);
+		procedure SetAnimated(Value : boolean);
+		procedure SetAnimStyle(Value : TJetAnimButtonAnimStyle);
+		procedure CMDialogChar(var Message : TCMDialogChar); message CM_DIALOGCHAR;
+		procedure CMFontChanged(var Message : TMessage); message CM_FONTCHANGED;
+		procedure CMTextChanged(var Message : TMessage); message CM_TEXTCHANGED;
+		procedure CMSysColorChange(var Message : TMessage); message CM_SYSCOLORCHANGE;
+		procedure CMMouseEnter(var Message : TMessage); message CM_MOUSEENTER;
+		procedure CMMouseLeave(var Message : TMessage); message CM_MOUSELEAVE;
+		procedure TimerEvent(Sender : TObject);
+		function PtInMask(const X, Y : Integer) : boolean;
+	protected
+		FState :   TButtonState;
+		FEnabled : boolean;
+		function GetPalette : HPALETTE; override;
         procedure SetBitmapDown(Value : TBitmap);
         procedure SetBitmapUp(Value : TBitmap);
         procedure SetBitmapOver(Value : TBitmap);
-        procedure SetBitmapDisabled(Value : TBitmap);
-        procedure SetImageListUp(Value : TImageList);
-        procedure SetImageListOver(Value : TImageList);
-        procedure SetImageListDown(Value : TImageList);
-        procedure SetInterval(Value : Integer);
-        procedure SetAnimated(Value : boolean);
-        procedure SetAnimStyle(Value : TJetAnimButtonAnimStyle);
-        procedure CMDialogChar(var Message : TCMDialogChar); message CM_DIALOGCHAR;
-        procedure CMFontChanged(var Message : TMessage); message CM_FONTCHANGED;
-        procedure CMTextChanged(var Message : TMessage); message CM_TEXTCHANGED;
-        procedure CMSysColorChange(var Message : TMessage); message CM_SYSCOLORCHANGE;
-        procedure CMMouseEnter(var Message : TMessage); message CM_MOUSEENTER;
-        procedure CMMouseLeave(var Message : TMessage); message CM_MOUSELEAVE;
-        procedure TimerEvent(Sender : TObject);
-        function PtInMask(const X, Y : Integer) : boolean;
-    protected
-        FState :   TButtonState;
-        FEnabled : boolean;
-        function GetPalette : HPALETTE; override;
-        procedure SetEnabled(Value : boolean); override;
+		procedure SetEnabled(Value : boolean); override;
         procedure DrawButtonText(Canvas : TCanvas; const Caption : string; TextBounds : TRect; State : TButtonState);
         procedure MouseDown(Button : TMouseButton; Shift : TShiftState; X, Y : Integer); override;
         procedure MouseMove(Shift : TShiftState; X, Y : Integer); override;
@@ -746,8 +746,10 @@ var
 begin
     if (Visible or (csDesigning in ComponentState)) and
         (Parent <> nil) and Parent.HandleAllocated then begin
-        R := BoundsRect;
-        InvalidateRect(Parent.Handle, @R, True);
+		R := BoundsRect;
+		{$WARN UNSAFE_CODE OFF}
+		InvalidateRect(Parent.Handle, PRect(@R), True);
+		{$WARN UNSAFE_CODE ON}
     end;
 end;
 
