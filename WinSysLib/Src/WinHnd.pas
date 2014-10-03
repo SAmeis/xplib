@@ -303,14 +303,16 @@ function CheckWinAPI(LastError : Integer) : boolean;
 var
     Error : EOSError;
 begin
-    if LastError <> 0 then begin
-        Error := SysUtils.EOSError.CreateResFmt(PResStringRec(@SysConst.SOSError),
-            [LastError, SysUtils.SysErrorMessage(LastError)]);
-        Error.ErrorCode := LastError;
-        raise Error;
-    end else begin
-        Result := True;
-    end;
+	{$WARN UNSAFE_CODE OFF}
+	if LastError <> 0 then begin
+		Error := SysUtils.EOSError.CreateResFmt(PResStringRec(@SysConst.SOSError),
+			[LastError, SysUtils.SysErrorMessage(LastError)]);
+		Error.ErrorCode := LastError;
+		raise Error;
+	end else begin
+		Result := True;
+	end;
+	{$WARN UNSAFE_CODE ON}
 end;
 
 function DebuggerLoaded() : boolean;

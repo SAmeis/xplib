@@ -109,7 +109,7 @@ function StrToCurrency(Str: string): Currency; deprecated;
 // Converte string em inteiro tentando removendo caracteres improvaveis
 function StrToIntFilter(const Str: string): integer;
 // Converte string para float
-function StrToFloat2(Str: string): Extended; deprecated;
+function StrToFloat2(Str: string): Extended; deprecated 'use TStrConv.StrToFloat2()';
 // Remoe caracteres invalidos antes dee converter para um float
 function StrToFloatFilter(const Str: string): double;
 // Aloca e copia a string para um PChar ( Usar TStrHnd )

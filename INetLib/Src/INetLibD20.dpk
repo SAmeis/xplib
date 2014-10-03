@@ -1,9 +1,8 @@
-{$I OPLib.inc}
-
-package OPLibD20;
+{$I INetLib.inc}
+package INetLibD20;
 
 {$R *.res}
-{$R 'OPLib.dcr'}
+{$R 'InetLib.DCR'}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS OFF}
@@ -27,19 +26,29 @@ package OPLibD20;
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
 {$DEFINE RELEASE}
-{$DEFINE RTTI_LEVEL2}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION '3E - Object Persistence Library - RS-XE6'}
+{$DESCRIPTION '3E - InetLib - RS-XE6'}
 {$IMPLICITBUILD OFF}
 
 requires
   vcl,
-  xmlrtl;
+  vcldb,
+  bdertl,
+  inet,
+  XPLibD20,
+  OPLibD20,
+  StFLibD20;
 
 contains
-  IOObj in 'IOObj.pas',
-  TreeHnd in 'TreeHnd.pas',
-  ClassHnd in 'ClassHnd.pas',
-  OPXMLSerializable in 'OPXMLSerializable.pas';
+  HTMLData in 'HTMLData.pas',
+  HTMLWRTR in 'HTMLWrtr.pas',
+  IHTML4 in 'IHTML4.pas',
+  IHTMLPas in 'IHTMLPas.pas',
+  IHTMLDir in 'IHTMLDir.pas',
+  IHTMLDB in 'IHTMLDB.pas',
+  WDBGrid in 'WDBGrid.pas',
+  WCtrls in 'WCtrls.pas',
+  WebHnd in 'WebHnd.pas',
+  WEntity in 'WEntity.pas';
 
 end.

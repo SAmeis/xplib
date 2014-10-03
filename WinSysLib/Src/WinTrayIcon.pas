@@ -215,7 +215,7 @@ end;
 procedure TWin32TrayIcon.FillDataStructure;
 begin
 	with IconData do begin
-		cbSize := sizeof(TNOTIFYICONDATA);
+		cbSize := TNOTIFYICONDATA.SizeOf; //record helper para ajustar versão do windows
 		wnd := FWindowHandle;
 		uID := 0; // is not passed in with message so make it 0
 		uFlags := NIF_MESSAGE + NIF_ICON + NIF_TIP;

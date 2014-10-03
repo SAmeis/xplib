@@ -68,10 +68,11 @@ var
 	strAttr : string;
 	fResult : BOOL;
 begin
+	{$TYPEDADDRESS OFF}
 	hLib := LoadLibraryA(PAnsiChar(DEFAULT_PATH)); // carregando para o diretório padrão
 	if (hLib <> 0) then begin
 		@pFn := GetProcAddress(hLib, PChar(CONFIG_SQL));
-		if (@pFn <> NIL) then	begin
+		if (@pFn <> nil) then	begin
 			strAttr := Format('DSN=%s' + #0 +
 				'Server=%s' + #0 +
 				'Description=%s' + #0 +
@@ -87,6 +88,7 @@ begin
 			raise exception.create('O Sistema não pode Carregar a Biblioteca ODBCCP32.DLL.' + #13 + 'Por favor Contacte o Desenvolvedor.');
 		end;
 	end;
+	{$TYPEDADDRESS ON}
 end;
 
 end.

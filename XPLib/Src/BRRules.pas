@@ -7,7 +7,6 @@ unit BRRules;
 { {
   Implementa rotinas, classes e constantes para a validação, formatação e captura de parametros vinculados as regras brasileiras.
 }
-{ 1 Implementa rotinas, classes e constantes para a validação, formatação e captura de parametros vinculados as regras brasileiras. }
 
 interface
 
@@ -472,6 +471,11 @@ begin
   PFS^.CurrencyString := BR_FORMAT_SETTINGS_CURRENCYSTRING;
   PFS^.CurrencyFormat := BR_FORMAT_SETTINGS_CURRENCYFORMAT;
   PFS^.CurrencyDecimals := BR_FORMAT_SETTINGS_CURRENCYDECIMALS;
+end;
+
+initialization
+begin
+	TBRRules.SetBRDefaultFormats;   //inicializa o registro de formatação nacional brasileira
 end;
 
 end.
