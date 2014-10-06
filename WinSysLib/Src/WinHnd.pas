@@ -335,49 +335,51 @@ begin
 end;
 
 function FindDOSWindowApp(ProcessId, AThread : DWORD; ExeName : string) : HWnd;
-    //----------------------------------------------------------------------------------------------------------------------------------
+	//----------------------------------------------------------------------------------------------------------------------------------
+	{$WARN UNSAFE_CODE OFF}
 type
-    TLocalParam = record
-        DosWin: THandle;
-        Proc:   longword;
-    end;
-    PLocalParam = ^TLocalParam;
+	TLocalParam = record
+		DosWin: THandle;
+		Proc:   longword;
+	end;
+	PLocalParam = ^TLocalParam;
 var
-    LocalParam : TLocalParam;
+	LocalParam : TLocalParam;
 
-    {.............................................................................................}
-    function CheckParent(HWND : hwnd; LPARAM : lParam) : BOOL; stdcall;
-    var
-        Local :    PLocalParam;
-        WinClass : array[0..64] of char;
-    begin
-        Local := Pointer(lParam);
-        //####Impedia a total execucaoWaitForInputIdle( Local^.Proc, _APP_TIME_RESPONSE_);
-        GetClassName(HWND, WinClass, SizeOf(WinClass));
-        //A unica janela de um process "DOS" com a classe "TTY"
-        if (StrPos(WinClass, 'tty') <> nil) then begin //Para NT tty equivale a 'ConsoleWindowClass' ver versao e mudar valor
-            Local^.DosWin := HWND;
-        end;
-        //####Impedia a total execucaoWaitForInputIdle( Local.Proc, _APP_TIME_RESPONSE_);
-        Result := (Local^.DosWin = 0);
-    end;
+	{.............................................................................................}
+	function CheckParent(HWND : hwnd; LPARAM : lParam) : BOOL; stdcall;
+	var
+		Local :    PLocalParam;
+		WinClass : array[0..64] of char;
+	begin
+		Local := Pointer(lParam);
+		//####Impedia a total execucaoWaitForInputIdle( Local^.Proc, _APP_TIME_RESPONSE_);
+		GetClassName(HWND, WinClass, SizeOf(WinClass));
+		//A unica janela de um process "DOS" com a classe "TTY"
+		if (StrPos(WinClass, 'tty') <> nil) then begin //Para NT tty equivale a 'ConsoleWindowClass' ver versao e mudar valor
+			Local^.DosWin := HWND;
+		end;
+		//####Impedia a total execucaoWaitForInputIdle( Local.Proc, _APP_TIME_RESPONSE_);
+		Result := (Local^.DosWin = 0);
+	end;
 
-    {.............................................................................................}
-    //************* Entrada de FindDOSWindowApp ************
+	{.............................................................................................}
+	//************* Entrada de FindDOSWindowApp ************
 begin
-    with LocalParam do begin
-        Proc   := ProcessId;
-        DosWin := 0;
-    end;
-    EnumThreadWindows(AThread, @CheckParent, longint(@LocalParam));
-    Result := LocalParam.DosWin;
+	with LocalParam do begin
+		Proc   := ProcessId;
+		DosWin := 0;
+	end;
+	EnumThreadWindows(AThread, @CheckParent, longint(@LocalParam));
+	Result := LocalParam.DosWin;
+	{$WARN UNSAFE_CODE ON}
 end;
 
 function FindWindowByTitle(const Title : string) : HWnd;
-    //------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------
 var
-    PrevWin, NextWin : HWnd;
-    WinName : array[0..256] of char;
+	PrevWin, NextWin : HWnd;
+	WinName : array[0..256] of char;
 begin
     NextWin := FindWindow(nil, nil);
     GetWindowText(NextWin, WinName, SizeOf(WinName));
@@ -546,17 +548,17 @@ function SetSystemIdle : boolean;
 begin
 (*
 How to change the cursor global?
-
-var
-fic,foic : HCursor;
-
-begin
-  fic:=LoadCursor(hinstance, makeIntResource(1)); // load any cursor
-  foic:=GetCursor; // save handle of old cursor
-  SetSystemCursor(fic, OCR_NORMAL); // use new cursor
-  { Restoring cursor can be done by:
-     SetSystemCursor(foic, OCR_NORMAL); }
-end;
+///
+///var
+///fic,foic : HCursor;
+///
+///begin
+///  fic:=LoadCursor(hinstance, makeIntResource(1)); // load any cursor
+///  foic:=GetCursor; // save handle of old cursor
+///  SetSystemCursor(fic, OCR_NORMAL); // use new cursor
+///  { Restoring cursor can be done by:
+///     SetSystemCursor(foic, OCR_NORMAL); }
+///end;
 *)
     Dec(BusyCountReference);
     if BusyCountReference <= 0 then begin
@@ -615,25 +617,25 @@ begin
                 Result := WaitforSingleObject(ProcessInfo.hProcess, 1000);
                 if Result = WAIT_FAILED then begin
                     RaiseLastOSError; //**
-                end;
-                Application.ProcessMessages;
-            end;
-        end else begin
+				end;
+				Application.ProcessMessages;
+			end;
+		end else begin
             WaitforSingleObject(ProcessInfo.hProcess, INFINITE);
-            GetExitCodeProcess(ProcessInfo.hProcess, Result);
-        end;
+			GetExitCodeProcess(ProcessInfo.hProcess, Result);
+		end;
     end;
 end;
 
 function WinSystemDir : string;
-    //----------------------------------------------------------------------------------------------------------------------
-    //Retorna o caminho da pasta do SYSTEM do Windows
+	//----------------------------------------------------------------------------------------------------------------------
+	//Retorna o caminho da pasta do SYSTEM do Windows
 var
-    L : Integer;
+	L : Integer;
 begin
-    SetLength(Result, MAX_PATH);
-    L := GetSystemDirectory(PChar(Result), MAX_PATH);
-    SetLength(Result, L);
+	SetLength(Result, MAX_PATH);
+	L := GetSystemDirectory(PChar(Result), MAX_PATH);
+	SetLength(Result, L);
 end;
 
 {-----------------------------------------------------------------------------}
@@ -641,185 +643,181 @@ end;
 
 
 (*
-
-    ROTINA EM VISUAL BOSTA PARA CAPTURA AS JANELAS DAS APLICAÇÕES QUE APARECEM NA BARRA DE TAREFAS
-
-
-Private Sub RefreshTopWinList()
-     Dim sTitle As String, hWnd As Long
-     SetRedraw lstTopWin, False
-     lstTopWin.Clear
-     ' Get first top-level window
-     hWnd = GetWindow(GetDesktopWindow(), GW_CHILD)
-     BugAssert hWnd <> hNull
-     ' Iterate through remaining windows
-     Do While hWnd <> hNull
-         sTitle = WindowTextLineFromWnd(hWnd)
-         ' Determine whether to display titled, visible, and unowned
-         If IsVisibleTopWnd(hWnd, chkBlank, _
-                            chkInvisible, chkOwned) Then
-             lstTopWin.AddItem sTitle
-             lstTopWin.ItemData(lstTopWin.NewIndex) = hWnd
-         End If
-         ' Get next child
-         hWnd = GetWindow(hWnd, GW_HWNDNEXT)
-     Loop
-     SetRedraw lstTopWin, True
-End Sub
-
-Function IsVisibleTopWnd(hWnd As Long, _
-                Optional IgnoreEmpty As Boolean = False, _
-                Optional IgnoreVisible As Boolean = False, _
-                Optional IgnoreOwned As Boolean = False) _
-                As Boolean
-    If IgnoreEmpty Or WindowTextFromWnd(hWnd) <> sEmpty Then
-         If IgnoreVisible Or IsWindowVisible(hWnd) Then
-            If IgnoreOwned Or GetWindow(hWnd, GW_OWNER) = hNull Then
-                IsVisibleTopWnd = True
-            End If
-        End If
-    End If
-End Function
-
-If IsVisibleTopWnd(hWnd, chkBlank, _
-                    chkInvisible, chkOwned) Then
-     lstTopWin.AddItem sTitle
-     lstTopWin.ItemData(lstTopWin.NewIndex) = hWnd
-End If
-
-
-
-***************** ROTINA EM C++ PARA CAPTURAR OS PROCESSOS ATIVOS
-
-#include <windows.h>
-#include <tlhelp32.h>
-#include <stdio.h>
-
-BOOL GetProcessList ()
-{
-     HANDLE         hProcessSnap = NULL;
-     BOOL           bRet      = FALSE;
-     PROCESSENTRY32 pe32      = {0};
-
-     //  Take a snapshot of all processes in the system.
-
-     hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
-
-     if (hProcessSnap == (HANDLE)-1)
-         return (FALSE);
-
-     //  Fill in the size of the structure before using it.
-
-     pe32.dwSize = sizeof(PROCESSENTRY32);
-
-     //  Walk the snapshot of the processes, and for each process,
-     //  display information.
-
-     if (Process32First(hProcessSnap, &pe32))
-     {
-         DWORD         dwPriorityClass;
-         BOOL          bGotModule = FALSE;
-         MODULEENTRY32 me32       = {0};
-
-         do
-         {
-             bGotModule = GetProcessModule(pe32.th32ProcessID,
-                 pe32.th32ModuleID, &me32, sizeof(MODULEENTRY32));
-
-             if (bGotModule)
-             {
-                 HANDLE hProcess;
-
-                 // Get the actual priority class.
-                 hProcess = OpenProcess (PROCESS_ALL_ACCESS,
-                     FALSE, pe32.th32ProcessID);
-                 dwPriorityClass = GetPriorityClass (hProcess);
-                 CloseHandle (hProcess);
-
-                 // Print the process's information.
-                 printf( "\nPriority Class Base\t%d\n",
-                     pe32.pcPriClassBase);
-                 printf( "PID\t\t\t%d\n", pe32.th32ProcessID);
-                 printf( "Thread Count\t\t%d\n", pe32.cntThreads);
-                 printf( "Module Name\t\t%s\n", me32.szModule);
-                 printf( "Full Path\t\t%s\n\n", me32.szExePath);
-             }
-         }
-         while (Process32Next(hProcessSnap, &pe32));
-        bRet = TRUE; 
-    } 
-    else 
-        bRet = FALSE;    // could not walk the list of processes 
- 
-    // Do not forget to clean up the snapshot object. 
-
-     CloseHandle (hProcessSnap);
-     return (bRet);
-}
-
-
-//#### A ser depurada #### function GetModuleNameByWinHnd( Hnd : HWND ) : string;
-function GetModuleNameByWinHnd( Hnd : HWND ) : string;
-{-------------------------------------------------------------------------------------------------------------}
-var
-    Instance : HMODULE;
-    Buf : PChar;
-    nSize : integer;
-begin
-    Instance:=Windows.GetWindowLong( Hnd, GWL_HINSTANCE);
-    nSize:=GetModuleFileName( Instance, Buf, 0);
-    nSize:=32400;
-    if nSize <> 0 then begin
-        Buf:=StrAlloc( nSize + 1 );
-        GetModuleFileName(Instance, Buf, nSize);
-        Result:=string( Buf );
-        StrDispose( Buf );
-    end else begin
-        Result:=SysErrorMessage( GetLastError );
-        //Result:=EmptyStr;
-    end;
-end;
-
-
-
-function WinExecAndWait32(Path: PChar; Visibility: Word): integer;
-var Msg: TMsg;
-     { Delphi 3:    lpExitCode: integer; }
-     { Delphi 4 information courtesy of Joel Milne }
-     { Delphi 4: }  lpExitCode: cardinal;
-     StartupInfo: TStartupInfo;
-     ProcessInfo: TProcessInformation;
-begin
-  FillChar(StartupInfo, SizeOf(TStartupInfo), 0);
-  with StartupInfo do
-  begin
-     cb := SizeOf(TStartupInfo);
-     dwFlags := STARTF_USESHOWWINDOW or STARTF_FORCEONFEEDBACK;
-     wShowWindow := visibility; {you could pass sw_show or sw_hide as parameter}
-  end;
-
-  if CreateProcess(nil, path, nil, nil, False, NORMAL_PRIORITY_CLASS, nil, nil, StartupInfo,
-                    ProcessInfo) then
-  begin
-     repeat
-       while PeekMessage(Msg, 0, 0, 0, pm_Remove) do
-       begin
-         if Msg.Message = wm_Quit then Halt(Msg.WParam);
-         TranslateMessage(Msg);
-        DispatchMessage(Msg); 
-      end; 
-      GetExitCodeProcess(ProcessInfo.hProcess,lpExitCode); 
-    until lpExitCode <> Still_Active; 
-
-    with ProcessInfo do {not sure this is necessary but seen in in some code elsewhere} 
-    begin 
-      CloseHandle(hThread); 
-      CloseHandle(hProcess); 
-    end; 
-    Result := 0; {success} 
-  end else Result := GetLastError; 
-end; 
-  
-
+///ROTINA EM VISUAL BOSTA PARA CAPTURA AS JANELAS DAS APLICAÇÕES QUE APARECEM NA BARRA DE TAREFAS
+///
+///Private Sub RefreshTopWinList()
+///     Dim sTitle As String, hWnd As Long
+///     SetRedraw lstTopWin, False
+///     lstTopWin.Clear
+///     ' Get first top-level window
+///     hWnd = GetWindow(GetDesktopWindow(), GW_CHILD)
+///     BugAssert hWnd <> hNull
+///     ' Iterate through remaining windows
+///     Do While hWnd <> hNull
+///         sTitle = WindowTextLineFromWnd(hWnd)
+///         ' Determine whether to display titled, visible, and unowned
+///         If IsVisibleTopWnd(hWnd, chkBlank, _
+///                            chkInvisible, chkOwned) Then
+///             lstTopWin.AddItem sTitle
+///             lstTopWin.ItemData(lstTopWin.NewIndex) = hWnd
+///         End If
+///         ' Get next child
+///         hWnd = GetWindow(hWnd, GW_HWNDNEXT)
+///     Loop
+///     SetRedraw lstTopWin, True
+///End Sub
+///
+///Function IsVisibleTopWnd(hWnd As Long, _
+///                Optional IgnoreEmpty As Boolean = False, _
+///                Optional IgnoreVisible As Boolean = False, _
+///                Optional IgnoreOwned As Boolean = False) _
+///                As Boolean
+///    If IgnoreEmpty Or WindowTextFromWnd(hWnd) <> sEmpty Then
+///         If IgnoreVisible Or IsWindowVisible(hWnd) Then
+///            If IgnoreOwned Or GetWindow(hWnd, GW_OWNER) = hNull Then
+///                IsVisibleTopWnd = True
+///            End If
+///        End If
+///    End If
+///End Function
+///
+///If IsVisibleTopWnd(hWnd, chkBlank, _
+///                    chkInvisible, chkOwned) Then
+///     lstTopWin.AddItem sTitle
+///     lstTopWin.ItemData(lstTopWin.NewIndex) = hWnd
+///End If
+///
+///
+///
+///***************** ROTINA EM C++ PARA CAPTURAR OS PROCESSOS ATIVOS
+///
+///#include <windows.h>
+///#include <tlhelp32.h>
+///#include <stdio.h>
+///
+///BOOL GetProcessList ()
+///{
+///     HANDLE         hProcessSnap = NULL;
+///     BOOL           bRet      = FALSE;
+///     PROCESSENTRY32 pe32      = {0};
+///
+///     //  Take a snapshot of all processes in the system.
+///
+///     hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+///
+///     if (hProcessSnap == (HANDLE)-1)
+///         return (FALSE);
+///
+///     //  Fill in the size of the structure before using it.
+///
+///     pe32.dwSize = sizeof(PROCESSENTRY32);
+///
+///     //  Walk the snapshot of the processes, and for each process,
+///     //  display information.
+///
+///     if (Process32First(hProcessSnap, &pe32))
+///     {
+///         DWORD         dwPriorityClass;
+///         BOOL          bGotModule = FALSE;
+///         MODULEENTRY32 me32       = {0};
+///
+///         do
+///         {
+///             bGotModule = GetProcessModule(pe32.th32ProcessID,
+///                 pe32.th32ModuleID, &me32, sizeof(MODULEENTRY32));
+///
+///             if (bGotModule)
+///             {
+///                 HANDLE hProcess;
+///
+///                 // Get the actual priority class.
+///                 hProcess = OpenProcess (PROCESS_ALL_ACCESS,
+///                     FALSE, pe32.th32ProcessID);
+///                 dwPriorityClass = GetPriorityClass (hProcess);
+///                 CloseHandle (hProcess);
+///
+///                 // Print the process's information.
+///                 printf( "\nPriority Class Base\t%d\n",
+///                     pe32.pcPriClassBase);
+///                 printf( "PID\t\t\t%d\n", pe32.th32ProcessID);
+///                 printf( "Thread Count\t\t%d\n", pe32.cntThreads);
+///                 printf( "Module Name\t\t%s\n", me32.szModule);
+///                 printf( "Full Path\t\t%s\n\n", me32.szExePath);
+///             }
+///         }
+///         while (Process32Next(hProcessSnap, &pe32));
+///        bRet = TRUE;
+///    }
+///    else
+///        bRet = FALSE;    // could not walk the list of processes
+///
+///    // Do not forget to clean up the snapshot object.
+///
+///     CloseHandle (hProcessSnap);
+///     return (bRet);
+///}
+///
+///
+/////#### A ser depurada #### function GetModuleNameByWinHnd( Hnd : HWND ) : string;
+///function GetModuleNameByWinHnd( Hnd : HWND ) : string;
+///{-------------------------------------------------------------------------------------------------------------}
+///var
+///    Instance : HMODULE;
+///    Buf : PChar;
+///    nSize : integer;
+///begin
+///    Instance:=Windows.GetWindowLong( Hnd, GWL_HINSTANCE);
+///    nSize:=GetModuleFileName( Instance, Buf, 0);
+///    nSize:=32400;
+///    if nSize <> 0 then begin
+///        Buf:=StrAlloc( nSize + 1 );
+///        GetModuleFileName(Instance, Buf, nSize);
+///        Result:=string( Buf );
+///        StrDispose( Buf );
+///    end else begin
+///        Result:=SysErrorMessage( GetLastError );
+///        //Result:=EmptyStr;
+///    end;
+///end;
+///
+///
+///
+///function WinExecAndWait32(Path: PChar; Visibility: Word): integer;
+///var Msg: TMsg;
+///     { Delphi 3:    lpExitCode: integer; }
+///     { Delphi 4 information courtesy of Joel Milne }
+///     { Delphi 4: }  lpExitCode: cardinal;
+///     StartupInfo: TStartupInfo;
+///     ProcessInfo: TProcessInformation;
+///begin
+///  FillChar(StartupInfo, SizeOf(TStartupInfo), 0);
+///  with StartupInfo do
+///  begin
+///     cb := SizeOf(TStartupInfo);
+///     dwFlags := STARTF_USESHOWWINDOW or STARTF_FORCEONFEEDBACK;
+///     wShowWindow := visibility; {you could pass sw_show or sw_hide as parameter}
+///  end;
+///
+///  if CreateProcess(nil, path, nil, nil, False, NORMAL_PRIORITY_CLASS, nil, nil, StartupInfo,
+///                    ProcessInfo) then
+///  begin
+///     repeat
+///       while PeekMessage(Msg, 0, 0, 0, pm_Remove) do
+///       begin
+///         if Msg.Message = wm_Quit then Halt(Msg.WParam);
+///         TranslateMessage(Msg);
+///        DispatchMessage(Msg);
+///      end;
+///      GetExitCodeProcess(ProcessInfo.hProcess,lpExitCode);
+///    until lpExitCode <> Still_Active;
+///
+///    with ProcessInfo do {not sure this is necessary but seen in in some code elsewhere}
+///    begin
+///      CloseHandle(hThread);
+///      CloseHandle(hProcess);
+///    end;
+///    Result := 0; {success}
+///  end else Result := GetLastError;
+///end;
 *)
 end.

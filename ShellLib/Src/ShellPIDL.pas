@@ -1,3 +1,8 @@
+{$IFDEF ShellPIDL}
+{$DEFINE DEBUG_UNIT}
+{$ENDIF}
+{$I ShellLib.inc}
+
 unit ShellPIDL;
 
 interface
@@ -105,17 +110,16 @@ function  GetPIDLFromPath(ThePath: String): PItemIDList; stdcall;
 var
   Buffer: Array[0..MAX_PATH] of WideChar;
 begin
+{$WARN UNSAFE_CODE OFF}
   {If NT, convert path to UNICODE.}
   if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
-    StringToWideChar(ThePath, Buffer, (High(Buffer) - Low(Buffer) + 1));
-  end   {if}
-  {If not NT, copy path as a standard ANSI null-term string.}
-  else begin
+	StringToWideChar(ThePath, Buffer, (High(Buffer) - Low(Buffer) + 1));
+  end else begin {If not NT, copy path as a standard ANSI null-term string.}
 	 StrPLCopy(PChar(@Buffer), ThePath, Length(Buffer)); //Roger: Trocado SizeOf por Length de modo a corrigir retorno
   end;
-
   {Convert Path into PIDL}
   Result := ILCreateFromPath(@Buffer);
+  {$WARN UNSAFE_CODE ON}
 end;
 
 

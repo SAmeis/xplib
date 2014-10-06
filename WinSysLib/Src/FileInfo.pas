@@ -18,6 +18,7 @@ type
 	end;
 
 	{$WARN UNSAFE_TYPE OFF}
+
 	TNumberVersion = record
 		case Tag: Integer of
 			0:
@@ -440,21 +441,20 @@ var
 	{$ELSE}
 	Handle: longint;
 	{$ENDIF}
-	Res:     boolean;
-	Size:    Integer;
-	Error:   longint;
-	Data:    Pointer;
-	Buffer:  Pointer;
-	ErrCode: Integer;
-	Bytes: Cardinal;
-	TempStr:  array [0 .. 259] of char;
-	LangBuff: array [0 .. 259] of char;
-	BaseStr:  string;
-	InfoStr:  string;
-	Trans:    PVerTranslation;
-	TrSize:   Integer;
+	Res:       boolean;
+	Size:      Integer;
+	Error:     longint;
+	Data:      Pointer;
+	Buffer:    Pointer;
+	ErrCode:   Integer;
+	Bytes:     Cardinal;
+	TempStr:   array [0 .. 259] of char;
+	LangBuff:  array [0 .. 259] of char;
+	BaseStr:   string;
+	InfoStr:   string;
+	Trans:     PVerTranslation;
+	TrSize:    Integer;
 	FixedInfo: TVSFixedFileInfo;
-
 
 	function MakeFloat(S: string): double;
 	var
@@ -475,7 +475,9 @@ var
 				{ Found the first period }
 				Inc(Count);
 				if Count = 2 then begin
+					{$WARN UNSAFE_CODE OFF}
 					Move(PChar(S)^, Buff, I - 1);
+					{$WARN UNSAFE_CODE ON}
 					Break;
 				end;
 			end;
@@ -498,7 +500,7 @@ begin
 		end;
 	end;
 	{ Allocate some memory and get version info block. }
-	Data :=GetMemory(Size);
+	Data := GetMemory(Size);
 	Res := GetFileVersionInfo(TempStr, Handle, Size, Data);
 	Trans := nil;
 	try
@@ -514,9 +516,11 @@ begin
 			//RaiseStError(EStVersionInfoError, stscVerInfoFail);
 		end;
 		TrSize := Bytes;
-		Trans:=GetMemory(TrSize);
+		Trans := GetMemory(TrSize);
 		Move(Buffer^, Trans^, TrSize);
+		{$WARN UNSAFE_CAST OFF}
 		FTranslationValue := longint(Trans^);
+		{$WARN UNSAFE_CAST ON}
 		FLanguageCount := Bytes div SizeOf(TVerTranslation);
 		VerLanguageName(Trans^.Language, LangBuff, SizeOf(LangBuff));
 		FLanguageName := StrPas(LangBuff);
@@ -708,7 +712,6 @@ begin
 	end;
 end;
 
-{ TCustomFileVersionInfo PUBLIC }
 constructor TCustomFileVersionInfo.Create(AOwner: TComponent);
 { ------------------------------------------------------------------------------------------------------------- }
 begin
@@ -911,7 +914,7 @@ begin
 	try
 		{$WARN EXPLICIT_STRING_CAST OFF}
 		fi.FileName := string(FileName);
-        {$WARN EXPLICIT_STRING_CAST ON}
+		{$WARN EXPLICIT_STRING_CAST ON}
 		inherited Create(fi.GetFileVersion);
 	finally
 		fi.Free;

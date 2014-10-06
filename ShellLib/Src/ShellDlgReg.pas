@@ -1,3 +1,8 @@
+{$IFDEF ShellDlgReg}
+{$DEFINE DEBUG_UNIT}
+{$ENDIF}
+{$I ShellLib.inc}
+
 unit ShellDlgReg;
 
 interface

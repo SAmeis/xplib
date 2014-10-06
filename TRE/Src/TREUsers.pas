@@ -87,8 +87,10 @@ begin
     end;
     userInfo.usri1003_password := StrNew(PWideChar(Self.TranslatedPwd(Zone)));
     try
-        Result := NetUserSetInfo(PDomain, PUserName, 1003, PByte(@userInfo), @PError);
-    finally
+		{$WARN UNSAFE_CODE OFF}
+		Result := NetUserSetInfo(PDomain, PUserName, 1003, PByte(@userInfo), PDWORD(@PError) );
+		{$WARN UNSAFE_CODE ON}
+	finally
         StrDispose(PUsername);
         StrDispose(PDomain);
         StrDispose(userInfo.usri1003_password);

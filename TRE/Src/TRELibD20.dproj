@@ -1,7 +1,7 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <ProjectGuid>{84772CDE-36C4-4AC2-BEDF-F518E773DA8E}</ProjectGuid>
-        <MainSource>WinSysLibD20.dpk</MainSource>
+        <ProjectGuid>{22280305-3162-4DE1-8301-23AE5C56426E}</ProjectGuid>
+        <MainSource>TRELibD20.dpk</MainSource>
         <Config Condition="'$(Config)'==''">Release</Config>
         <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
         <ProjectVersion>15.4</ProjectVersion>
@@ -19,23 +19,8 @@
         <CfgParent>Base</CfgParent>
         <Base>true</Base>
     </PropertyGroup>
-    <PropertyGroup Condition="('$(Platform)'=='iOSDevice' and '$(Base)'=='true') or '$(Base_iOSDevice)'!=''">
-        <Base_iOSDevice>true</Base_iOSDevice>
-        <CfgParent>Base</CfgParent>
-        <Base>true</Base>
-    </PropertyGroup>
-    <PropertyGroup Condition="('$(Platform)'=='iOSSimulator' and '$(Base)'=='true') or '$(Base_iOSSimulator)'!=''">
-        <Base_iOSSimulator>true</Base_iOSSimulator>
-        <CfgParent>Base</CfgParent>
-        <Base>true</Base>
-    </PropertyGroup>
     <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
         <Base_Win32>true</Base_Win32>
-        <CfgParent>Base</CfgParent>
-        <Base>true</Base>
-    </PropertyGroup>
-    <PropertyGroup Condition="('$(Platform)'=='Win64' and '$(Base)'=='true') or '$(Base_Win64)'!=''">
-        <Base_Win64>true</Base_Win64>
         <CfgParent>Base</CfgParent>
         <Base>true</Base>
     </PropertyGroup>
@@ -55,99 +40,89 @@
         <CfgParent>Base</CfgParent>
         <Base>true</Base>
     </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_2)'=='true') or '$(Cfg_2_Win32)'!=''">
+        <Cfg_2_Win32>true</Cfg_2_Win32>
+        <CfgParent>Cfg_2</CfgParent>
+        <Cfg_2>true</Cfg_2>
+        <Base>true</Base>
+    </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
-        <VerInfo_Release>2005</VerInfo_Release>
-        <VerInfo_MajorVer>7</VerInfo_MajorVer>
-        <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;$(DCC_Namespace)</DCC_Namespace>
+        <SanitizedProjectName>TRELibD20</SanitizedProjectName>
         <VerInfo_Locale>1046</VerInfo_Locale>
-        <SanitizedProjectName>WinSysLibD20</SanitizedProjectName>
+        <VerInfo_Keys>CompanyName=TRE-PB®;FileDescription=;FileVersion=7.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=TRE-PB®;OriginalFilename=;ProductName=;ProductVersion=7.0.0.0;Comments=Rogerlais Andrade</VerInfo_Keys>
+        <VerInfo_MajorVer>7</VerInfo_MajorVer>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Keys>CompanyName=Speechway;FileDescription=Windows System Helper Library;FileVersion=7.0.2005.4;InternalName=;LegalCopyright=Speechway®;LegalTrademarks=Speechway®;OriginalFilename=;ProductName=Super Library;ProductVersion=7.0.2005.4;Comments=Rogerlais Andrade</VerInfo_Keys>
-        <VerInfo_Build>4</VerInfo_Build>
-        <DCC_DependencyCheckOutputName>..\..\..\Lib\D2010\WinSysLibD20.bpl</DCC_DependencyCheckOutputName>
+        <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;$(DCC_Namespace)</DCC_Namespace>
+        <DCC_UNSAFE_TYPE>true</DCC_UNSAFE_TYPE>
         <DCC_ImageBase>00400000</DCC_ImageBase>
-        <DCC_Description>3E - Windows Systems Library - RS-XE6</DCC_Description>
-        <DCC_BplOutput>$(DLib)\$(Platform)\$(Config)</DCC_BplOutput>
+        <DCC_DependencyCheckOutputName>..\..\..\Lib\D2010\TRELibD20.bpl</DCC_DependencyCheckOutputName>
+        <DCC_UNSAFE_CAST>true</DCC_UNSAFE_CAST>
+        <DCC_UNSAFE_CODE>true</DCC_UNSAFE_CODE>
         <DCC_Platform>x86</DCC_Platform>
-        <DCC_Define>WINNT;$(DCC_Define)</DCC_Define>
-        <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
-        <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+        <DCC_BplOutput>$(DLib)\$(Platform)\$(Config)</DCC_BplOutput>
+        <DCC_Description>3E - TRE-Lib - RS-XE6</DCC_Description>
         <DCC_S>false</DCC_S>
         <DCC_N>true</DCC_N>
-        <DCC_DcpOutput>$(DLib)\$(Platform)\DCP</DCC_DcpOutput>
+        <DCC_K>false</DCC_K>
         <GenDll>true</GenDll>
         <DCC_OutputNeverBuildDcps>true</DCC_OutputNeverBuildDcps>
-        <DCC_K>false</DCC_K>
-        <DCC_DcuOutput>$(DLib)\$(Platform)\$(Config)</DCC_DcuOutput>
-        <GenPackage>true</GenPackage>
-        <DCC_AssertionsAtRuntime>false</DCC_AssertionsAtRuntime>
+        <DCC_DcpOutput>$(DLib)\$(Platform)\DCP</DCC_DcpOutput>
         <DCC_F>false</DCC_F>
+        <GenPackage>true</GenPackage>
+        <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+        <DCC_DebugInformation>0</DCC_DebugInformation>
         <DCC_E>false</DCC_E>
+        <DCC_AssertionsAtRuntime>false</DCC_AssertionsAtRuntime>
+        <DCC_DcuOutput>$(DLib)\$(Platform)\$(Config)</DCC_DcuOutput>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Android)'!=''">
-        <DCC_UsePackage>rtl;$(DCC_UsePackage)</DCC_UsePackage>
         <VerInfo_IncludeVerInfo>false</VerInfo_IncludeVerInfo>
-        <BT_BuildType>Debug</BT_BuildType>
         <VerInfo_Keys>package=com.embarcadero.$(MSBuildProjectName);label=$(MSBuildProjectName);versionCode=1;versionName=1.0.0;persistent=False;restoreAnyVersion=False;installLocation=preferExternal;largeHeap=False;theme=TitleBar;hardwareAccelerated=true</VerInfo_Keys>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Base_iOSDevice)'!=''">
-        <DCC_UsePackage>rtl;$(DCC_UsePackage)</DCC_UsePackage>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Base_iOSSimulator)'!=''">
-        <DCC_UsePackage>rtl;$(DCC_UsePackage)</DCC_UsePackage>
+        <BT_BuildType>Debug</BT_BuildType>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
-        <DCC_UsePackage>rtl;vclactnband;vclx;vcl;vclimg;XPLibD20;StFLibD20;$(DCC_UsePackage)</DCC_UsePackage>
-        <VerInfo_Locale>1033</VerInfo_Locale>
-        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
+        <VerInfo_MajorVer>1</VerInfo_MajorVer>
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-        <DCC_Namespace>System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Base_Win64)'!=''">
-        <DCC_UsePackage>rtl;vclactnband;vclx;vcl;vclimg;$(DCC_UsePackage)</DCC_UsePackage>
+        <VerInfo_Locale>1033</VerInfo_Locale>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1)'!=''">
         <DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <DCC_Description>3E - Windows Systems Lib - RS-XE6</DCC_Description>
         <VerInfo_MajorVer>1</VerInfo_MajorVer>
-        <VerInfo_Build>0</VerInfo_Build>
-        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-        <VerInfo_Release>0</VerInfo_Release>
         <VerInfo_Locale>1033</VerInfo_Locale>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
+        <DCC_DebugInformation>0</DCC_DebugInformation>
+        <DCC_DependencyCheckOutputName>..\..\..\Lib\D2010\Debug\TRELibD20.bpl</DCC_DependencyCheckOutputName>
         <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
+        <VerInfo_MajorVer>1</VerInfo_MajorVer>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="WinSysLib.dcr"/>
+        <DCCReference Include="TRELib.dcr"/>
         <DCCReference Include="rtl.dcp"/>
-        <DCCReference Include="vcl.dcp"/>
-        <DCCReference Include="vclx.dcp"/>
         <DCCReference Include="XPLibD20.dcp"/>
-        <DCCReference Include="StFLibD20.dcp"/>
-        <DCCReference Include="vclimg.dcp"/>
         <DCCReference Include="vclactnband.dcp"/>
+        <DCCReference Include="vclx.dcp"/>
+        <DCCReference Include="vcl.dcp"/>
         <DCCReference Include="designide.dcp"/>
-        <DCCReference Include="WinDisks.pas"/>
-        <DCCReference Include="WinFilesHnd.pas"/>
-        <DCCReference Include="WinHnd.pas"/>
-        <DCCReference Include="Win_DOS.pas"/>
-        <DCCReference Include="WinSaver.pas"/>
-        <DCCReference Include="WinStealth.pas"/>
-        <DCCReference Include="WinTrayIcon.pas"/>
-        <DCCReference Include="FileInfo.pas"/>
-        <DCCReference Include="WinMMedia.PAS"/>
-        <DCCReference Include="WinNetHnd.pas"/>
-        <DCCReference Include="WinProcess.pas"/>
-        <DCCReference Include="WinODBC.pas"/>
-        <DCCReference Include="InstanceMonitor.pas"/>
-        <DCCReference Include="WinHotKey.pas"/>
-        <DCCReference Include="WinFileNotification.pas"/>
+        <DCCReference Include="StFLibD20.dcp"/>
+        <DCCReference Include="OPLibD20.dcp"/>
+        <DCCReference Include="WinSysLibD20.dcp"/>
+        <DCCReference Include="TREConsts.pas"/>
+        <DCCReference Include="TREZones.pas"/>
+        <DCCReference Include="TREConfig.pas"/>
+        <DCCReference Include="TREUtils.pas"/>
+        <DCCReference Include="TREUsers.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -167,7 +142,7 @@
         <BorlandProject>
             <Delphi.Personality>
                 <Source>
-                    <Source Name="MainSource">WinSysLibD20.dpk</Source>
+                    <Source Name="MainSource">TRELibD20.dpk</Source>
                 </Source>
                 <Parameters>
                     <Parameters Name="UseLauncher">False</Parameters>
@@ -179,8 +154,8 @@
                     <VersionInfo Name="AutoIncBuild">False</VersionInfo>
                     <VersionInfo Name="MajorVer">7</VersionInfo>
                     <VersionInfo Name="MinorVer">0</VersionInfo>
-                    <VersionInfo Name="Release">2005</VersionInfo>
-                    <VersionInfo Name="Build">4</VersionInfo>
+                    <VersionInfo Name="Release">0</VersionInfo>
+                    <VersionInfo Name="Build">0</VersionInfo>
                     <VersionInfo Name="Debug">False</VersionInfo>
                     <VersionInfo Name="PreRelease">False</VersionInfo>
                     <VersionInfo Name="Special">False</VersionInfo>
@@ -190,15 +165,15 @@
                     <VersionInfo Name="CodePage">1252</VersionInfo>
                 </VersionInfo>
                 <VersionInfoKeys>
-                    <VersionInfoKeys Name="CompanyName">Speechway</VersionInfoKeys>
-                    <VersionInfoKeys Name="FileDescription">Windows System Helper Library</VersionInfoKeys>
-                    <VersionInfoKeys Name="FileVersion">7.0.2005.4</VersionInfoKeys>
+                    <VersionInfoKeys Name="CompanyName">TRE-PB®</VersionInfoKeys>
+                    <VersionInfoKeys Name="FileDescription"/>
+                    <VersionInfoKeys Name="FileVersion">7.0.0.0</VersionInfoKeys>
                     <VersionInfoKeys Name="InternalName"/>
-                    <VersionInfoKeys Name="LegalCopyright">Speechway®</VersionInfoKeys>
-                    <VersionInfoKeys Name="LegalTrademarks">Speechway®</VersionInfoKeys>
+                    <VersionInfoKeys Name="LegalCopyright"/>
+                    <VersionInfoKeys Name="LegalTrademarks">TRE-PB®</VersionInfoKeys>
                     <VersionInfoKeys Name="OriginalFilename"/>
-                    <VersionInfoKeys Name="ProductName">Super Library</VersionInfoKeys>
-                    <VersionInfoKeys Name="ProductVersion">7.0.2005.4</VersionInfoKeys>
+                    <VersionInfoKeys Name="ProductName"/>
+                    <VersionInfoKeys Name="ProductVersion">7.0.0.0</VersionInfoKeys>
                     <VersionInfoKeys Name="Comments">Rogerlais Andrade</VersionInfoKeys>
                 </VersionInfoKeys>
                 <Excluded_Packages>
@@ -208,6 +183,7 @@
                     <Excluded_Packages Name="$(BDSBIN)\dclofficexp200.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
                 </Excluded_Packages>
             </Delphi.Personality>
+            <ModelSupport>False</ModelSupport>
             <Platforms>
                 <Platform value="Android">False</Platform>
                 <Platform value="iOSDevice">False</Platform>

@@ -1,3 +1,8 @@
+{$IFDEF ShellFilesHnd}
+{$DEFINE DEBUG_UNIT}
+{$ENDIF}
+{$I ShellLib.inc}
+
 unit ShellFilesHnd;
 
 interface
@@ -330,8 +335,10 @@ begin
         hWnd := GetDeskTopWindow;
     end;
     FillChar(BrowseInfo, sizeof(TBrowseInfo), #0);
-    BrowseInfo.hwndOwner      := hWnd;
-    BrowseInfo.pszDisplayName := @DisplayName;
+	BrowseInfo.hwndOwner      := hWnd;
+	{$WARN UNSAFE_CODE OFF}
+	BrowseInfo.pszDisplayName := PWideChar(@DisplayName);
+	{$WARN UNSAFE_CODE ON}
     if UserMessage = nil then begin
         BrowseInfo.lpszTitle := PChar('Favor selecione um diretório');
     end else begin

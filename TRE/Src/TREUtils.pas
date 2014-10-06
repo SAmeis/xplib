@@ -199,9 +199,8 @@ class function TTREUtils.GetComputerTypeByName(const Name : string) : TTREComput
     ///
 var
     PrefixLocal : char;
-    PrefixUF :    string[2];
-    PrefixOS :    char;
-    ZoneID, StationID : Integer;
+    PrefixUF :    string;
+	ZoneID : Integer;
     NormName :    string;
     NumberChain : string;
     NetType :     string;
@@ -222,9 +221,9 @@ begin
             end else begin
                 //Identifica se pc virtual
                 if (NormName[4] = 'W') then begin
-                    StationID   := TStrHnd.GetInteger(NormName, 5, 0);
                     NumberChain := Copy(NormName, 4, Length(NormName));
-                    Result      := ctTREWKS;
+					Result      := ctTREWKS;
+					Exit;
                 end;
                 ZoneID  := TStrHnd.GetInteger(NormName, 4, 0);
                 NetType := TStrHnd.GetAlphaText(NormName, 7, EmptyStr);

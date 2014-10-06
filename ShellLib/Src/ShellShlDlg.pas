@@ -1,9 +1,16 @@
 {$IFDEF ShellShlDlg}
-{$A+,B-,C-,D+,E-,F-,G+,H+,I+,J+,K-,L+,M-,N+,O-,P+,Q-,R+,S-,T-,U-,V+,W-,X+,Y+,Z1}
-{$DEBUGINFO ON}
-{$ELSE}
-{$A+,B-,C-,D-,E-,F-,G+,H+,I+,J+,K-,L-,M-,N+,O+,P+,Q+,R+,S-,T-,U-,V+,W-,X+,Y-,Z4}
+{$DEFINE DEBUG_UNIT}
 {$ENDIF}
+{$I ShellLib.inc}
+
+
+//diretivas originais abaixo
+{-$IFDEF ShellShlDlg}
+{-$A+,B-,C-,D+,E-,F-,G+,H+,I+,J+,K-,L+,M-,N+,O-,P+,Q-,R+,S-,T-,U-,V+,W-,X+,Y+,Z1}
+{-$DEBUGINFO ON}
+{-$ELSE}
+{-$A+,B-,C-,D-,E-,F-,G+,H+,I+,J+,K-,L-,M-,N+,O+,P+,Q+,R+,S-,T-,U-,V+,W-,X+,Y-,Z4}
+{-$ENDIF}
 
 unit ShellShlDlg;
 
@@ -37,7 +44,7 @@ const {RunFileDlg Flags}
 
 type {RunFileDlg record type}
     TNM_RunFileDlg = packed record
-        hdr:         TNMHdr;
+		hdr:         TNMHdr;
         lpFile:      Pointer;
         lpDirectory: Pointer;
         nShow:       longbool;
@@ -115,7 +122,7 @@ type
         kbsdDriveO, kbsdDriveP, kbsdDriveQ, kbsdDriveR, kbsdDriveS, kbsdDriveT, kbsdDriveU,
         kbsdDriveV, kbsdDriveW, kbsdDriveX, kbsdDriveY, kbsdDriveZ);
 
-    TkbFormatResult = (kbsdFormatSucceeded, kbsdFormatCancelled, kbsdDriveNotFormattable, kbsdFormatError);
+	TkbFormatResult = (kbsdFormatSucceeded, kbsdFormatCancelled, kbsdDriveNotFormattable, kbsdFormatError);
 
     TkbRestartOption = (kbsdLogoff, kbsdShutdown, kbsdReboot, kbsdRestartWindows, kbsdRebootSystem, kbsdExitAndExecApp);
 
@@ -154,7 +161,7 @@ type
         var OKState : TkbOKState) of object;
     TkbBrowseInitEvent = procedure(Sender : TObject; DialogHandle : HWND) of object;
     TkbRunFileValidateEvent = procedure(Sender : TObject; TheFile : TFileName; TheWorkPath : TFileName;
-        Visible : boolean; var Action : TkbRunFileAction) of object;
+		Visible : boolean; var Action : TkbRunFileAction) of object;
 
 {***********************************************************
               TkbShellAboutDialog class interface
@@ -193,7 +200,7 @@ type
         constructor Create(TheOwner : TComponent); override;
     private   {Private data members}
         FCanExpandDomains : boolean;
-        FCaption :          string;
+		FCaption :          string;
         FDescription :      string;
         FDialogHandle :     HWND;
         FDisplayName :      string;
@@ -220,7 +227,7 @@ type
     public    {Public methods}
         function Execute : boolean;
     public    {Public read-only properties}
-        property Description : string read FDescription;
+		property Description : string read FDescription;
         property DisplayName : string read FDisplayName;
         property ImageIndex : DWORD read FImageIndex;
         property ImageLarge : TBitmap index 1 read GetImage;
@@ -232,7 +239,7 @@ type
             kbsdBrowseForAnything;
         property InstructionText : string read FInstructionText write FInstructionText;
         property RootFolder : TkbsdSpecialLocation read FRootFolder write FRootFolder default rfDesktop;
-        property RootPath : TFileName read FRootPath write SetRootPath;
+		property RootPath : TFileName read FRootPath write SetRootPath;
         property ShowStatusText : boolean read FShowStatusText write FShowStatusText default False;
         property StatusText : string read FStatusText write SetStatusText;
     published
@@ -257,7 +264,7 @@ type
         FSuppressARI :        boolean;
     public    {Public methods}
         function Execute : TkbFormatResult;
-    public
+	public
         property LastFormatID : UINT read FLastFormatID;
     published
         property DefaultQuickFormat : boolean read FDefaultQuickFormat write FDefaultQuickFormat default False;
@@ -294,7 +301,7 @@ type
     public    {Constructors/Destructors}
         constructor Create(TheOwner : TComponent); override;
         destructor Destroy; override;
-    private
+	private
         FCaption :       string;
         FDescription :   string;
         FIcon :          TIcon;
@@ -310,7 +317,7 @@ type
     private
         procedure HandleMessage(var TheMessage : TMessage);
         procedure Validate(TheFile : TFileName; TheWorkPath : TFileName; Visible : boolean; var Action : TkbRunFileAction);
-    public    {Public methods}
+	public    {Public methods}
         procedure Execute;
     published
         property Caption : string read FCaption write FCaption;
@@ -331,7 +338,7 @@ type
     TkbFindFilesDialog = class(TComponent)
     public    {Constructors/Destructors}
         constructor Create(TheOwner : TComponent); override;
-    private
+	private
         FSearchFileName : TFileName;
         FRootFolder :     TkbsdSpecialLocation;
         FRootPath :       TFileName;
@@ -368,7 +375,7 @@ type
          TkbObjectPropertiesDialog class interface
  ***********************************************************}
 
-    TkbObjectPropertiesDialog = class(TComponent)
+	TkbObjectPropertiesDialog = class(TComponent)
     public    {Constructors/Destructors}
         constructor Create(TheOwner : TComponent); override;
     private
@@ -427,7 +434,7 @@ const
     SHFindFiles_Index    = 90;
     //SHFindComputer_Index = 91; //removida para carga dinamica por nome
     ExitWindowsDialog_Index = 60;
-    RestartDialog_Index  = 59;
+	RestartDialog_Index  = 59;
     GetFileNameFromBrowse_Index = 63;
     SHObjectProperties_Index = 178;
     SHNetConnectionDialog_Index = 160;
@@ -466,7 +473,7 @@ type
 var
     TheFunction : TheFunctionType;
 begin
-    if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
+	if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
         TheFunction := GetProcAddress(ShellDLL, PChar(SHStartNetConnectionDialog_Index));
         if (Assigned(TheFunction)) then begin
             Result := TheFunction(Owner, ResourceName, ResourceType);
@@ -487,107 +494,101 @@ Integer;
 type
     PPointer = ^Pointer;
 var
-    ParamCount :  Integer;
-    ParamBuffer : PChar;
-    BufferIndex : Integer;
+	ParamCount :  Integer;
+	ParamBuffer : PChar;
+	BufferIndex : Integer;
 begin
-    {Determine how many bytes of extra arguments there are.}
-    ParamCount := (High(Parameters) + 1);
-    GetMem(ParamBuffer, ParamCount * SizeOf(Pointer));
-    try {..finally}
+	{$WARN UNSAFE_CODE OFF}
+	{Determine how many bytes of extra arguments there are.}
+	ParamCount := (High(Parameters) + 1);
+	ParamBuffer := GetMemory( ParamCount * SizeOf(Pointer));
+	try
 
-        {Stuff the extra arguments into a buffer in cdecl (right-to-left) order.}
-        for BufferIndex := 0 to High(Parameters) do begin
-            PPointer(@ParamBuffer[BufferIndex * SizeOf(Pointer)])^ := Parameters[High(Parameters) - BufferIndex];
-        end; {for}
+		{Stuff the extra arguments into a buffer in cdecl (right-to-left) order.}
+		for BufferIndex := 0 to High(Parameters) do begin
+			PPointer(@ParamBuffer[BufferIndex * SizeOf(Pointer)])^ := Parameters[High(Parameters) - BufferIndex];
+		end;
 
-        {Use assembler to push arguments onto the stack, call the DLL function, and store the function's result.}
-        asm
-                   mov     ECX, ParamCount  // Initialize loop counter with ParamCount in DWORDs
-                   cmp     ECX, 0           // Check to see if loop counter in ECX is equal to 0
-                   je      @MethodCall      // If ECX counter is indeed 0, jump to the method call label
-                   mov EDX, ParamBuffer     // Load ParamBuffer pointer into EBX register
+		{Use assembler to push arguments onto the stack, call the DLL function, and store the function's result.}
+		asm
+				   mov     ECX, ParamCount  // Initialize loop counter with ParamCount in DWORDs
+				   cmp     ECX, 0           // Check to see if loop counter in ECX is equal to 0
+				   je      @MethodCall      // If ECX counter is indeed 0, jump to the method call label
+				   mov EDX, ParamBuffer     // Load ParamBuffer pointer into EBX register
 
-                   @StartLoop:          // Label where the push loop starts
+				   @StartLoop:          // Label where the push loop starts
 
-                   push    DWORD PTR[EDX]  // Push the DWORD value indexed by EDX onto the stack
-                   add     EDX, 4          // Increment EDX by size of DWORD to point to the next DWORD in the buffer
-                   loop    @StartLoop      // Decrement ECX, and loop back to the StartLoop label while ECX <> 0
+				   push    DWORD PTR[EDX]  // Push the DWORD value indexed by EDX onto the stack
+				   add     EDX, 4          // Increment EDX by size of DWORD to point to the next DWORD in the buffer
+				   loop    @StartLoop      // Decrement ECX, and loop back to the StartLoop label while ECX <> 0
 
-                   @MethodCall:         // Label to start the call to the DLL method
+				   @MethodCall:         // Label to start the call to the DLL method
 
-                   push    Style           // Push the Style argument onto the stack
-                   push    Caption         // Push the Caption argument onto the stack
-                   push    Text            // Push the Text argument onto the stack
-                   push    Owner           // Push the Owner argument onto the stack
-                   push    Instance        // Push the Instance argument onto the stack
+				   push    Style           // Push the Style argument onto the stack
+				   push    Caption         // Push the Caption argument onto the stack
+				   push    Text            // Push the Text argument onto the stack
+				   push    Owner           // Push the Owner argument onto the stack
+				   push    Instance        // Push the Instance argument onto the stack
 
-                   call    MethodPtr       // Call the DLL procedure
-                   mov     Result, EAX     // Save the result from the method call into the Result variable
-        end; {asm}
-
-        {Ensure extra argument buffer is freed.}
-    finally
-        FreeMem(ParamBuffer);
-    end; {try..finally}
+				   call    MethodPtr       // Call the DLL procedure
+				   mov     Result, EAX     // Save the result from the method call into the Result variable
+		end; {asm}
+	finally
+		FreeMemory(ParamBuffer);
+	end;
+	{$WARN UNSAFE_CODE ON}
 end;
 
 function ShellMessageBox(Instance : THandle; Owner : HWND; Text : PChar; Caption : PChar;
-    Style : UINT; Parameters : array of Pointer) :
+	Style : UINT; Parameters : array of Pointer) :
 Integer; cdecl;
 begin
-    {Call ShellMessageBoxA.}
-    Result := ShellMessageBoxA(Instance, Owner, Text, Caption, Style, Parameters);
+	{Call ShellMessageBoxA.}
+	Result := ShellMessageBoxA(Instance, Owner, Text, Caption, Style, Parameters);
 end;
 
-{This function takes a cdecl-style variable parameter list, which is implemented using
- an open-array parameter and which requires assembler to fully implement. See the
- CallShellMessageBox function for this implementation.}
+{This function takes a cdecl-style variable parameter list, which is implemented using an open-array parameter and which requires assembler to fully implement. See the CallShellMessageBox function for this implementation.}
 function ShellMessageBoxA(Instance : THandle; Owner : HWND; Text : PChar; Caption : PChar;
-    Style : UINT; Parameters : array of Pointer) :
+	Style : UINT; Parameters : array of Pointer) :
 Integer; cdecl;
 var
-    MethodPtr : Pointer;
+	MethodPtr : Pointer;
 begin
-    {Try to load the function address from SHELL32.DLL}
-    MethodPtr := GetProcAddress(ShellDLL, PChar(ShellMessageBoxA_Index));
+	{Try to load the function address from SHELL32.DLL}
+	MethodPtr := GetProcAddress(ShellDLL, PChar(ShellMessageBoxA_Index));
 
-    {If function load was good, call the function.  If not, return cancel result.}
-    if (MethodPtr <> nil) then begin
-        Result := CallShellMessageBox(MethodPtr, Instance, Owner, Text, Caption, Style, Parameters);
-    end  {if}  else begin
-        Result := ID_CANCEL;
-    end; {if}
+	{If function load was good, call the function.  If not, return cancel result.}
+	if (MethodPtr <> nil) then begin
+		Result := CallShellMessageBox(MethodPtr, Instance, Owner, Text, Caption, Style, Parameters);
+	end    else begin
+		Result := ID_CANCEL;
+	end;
 end;
 
-{This function takes a cdecl-style variable parameter list, which is implemented using
- an open-array parameter and which requires assembler to fully implement. See the
- CallShellMessageBox function for this implementation. In addition, this function is
- only supported on NT, and so must be dynamically loaded.}
+{This function takes a cdecl-style variable parameter list, which is implemented using an open-array parameter and which requires assembler to fully implement. See the CallShellMessageBox function for this implementation. In addition, this function is only supported on NT, and so must be dynamically loaded.}
 function ShellMessageBoxW(Instance : THandle; Owner : HWND; Text : PWideChar; Caption : PWideChar;
-    Style : UINT; Parameters : array of Pointer) :
+	Style : UINT; Parameters : array of Pointer) :
 Integer; cdecl;
 var
-    MethodPtr : Pointer;
+	MethodPtr : Pointer;
 begin
-    {If this OS is NT...}
-    if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
+	{If this OS is NT...}
+	if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
 
-        {Try to load the function address from SHELL32.DLL}
-        MethodPtr := GetProcAddress(ShellDLL, PChar(ShellMessageBoxW_Index));
+		{Try to load the function address from SHELL32.DLL}
+		MethodPtr := GetProcAddress(ShellDLL, PChar(ShellMessageBoxW_Index));
 
-        {If function load was good, call the function.  If not, return cancel result.}
-        if (MethodPtr <> nil) then begin
-            Result := CallShellMessageBox(MethodPtr, Instance, Owner, Text, Caption, Style, Parameters);
-            Exit;
-        end  {if}    else begin
-            Result := ID_CANCEL;
-        end; {else}
-    end {if} {If not NT, return a NOT IMPLEMENTED error.}
-    else begin
-        SetLastError(ERROR_CALL_NOT_IMPLEMENTED);
-        Result := ID_CANCEL;
-    end; {else}
+		{If function load was good, call the function.  If not, return cancel result.}
+		if (MethodPtr <> nil) then begin
+			Result := CallShellMessageBox(MethodPtr, Instance, Owner, Text, Caption, Style, Parameters);
+			Exit;
+		end      else begin
+			Result := ID_CANCEL;
+		end;
+	end else begin {If not NT, return a NOT IMPLEMENTED error.}
+		SetLastError(ERROR_CALL_NOT_IMPLEMENTED);
+		Result := ID_CANCEL;
+	end;
 end;
 
 
@@ -627,83 +628,78 @@ end;
 
 function TkbShellAboutDialog.StoreIcon : boolean;
 begin
-  {Store the TIcon's data in the *.frm file only
-   if icon data has actually been loaded into it.}
-    Result := (not Self.FIcon.Empty);
+  {Store the TIcon's data in the *.frm file only if icon data has actually been loaded into it.}
+	Result := (not Self.FIcon.Empty);
 end;
 
 function TkbShellAboutDialog.Execute : boolean;
 const
-    AboutText   = 'About ';
-    WindowsText = 'Windows';
-    WinNTText   = WindowsText + ' NT';
-    CaptionSeparator = '#';
+	AboutText   = 'About ';
+	WindowsText = 'Windows';
+	WinNTText   = WindowsText + ' NT';
+	CaptionSeparator = '#';
 var
-    CaptionText : string;
+	CaptionText : string;
 begin
-  {Assemble the CaptionText string based on the property values and
-   whether the defaults are set.}
+  {Assemble the CaptionText string based on the property values and whether the defaults are set.}
 
-  {If Caption is empty, use the default caption constants.
-   Otherwise, use the Caption property text.}
-    if (Self.Caption = EmptyStr) then begin
-        CaptionText := AboutText + WindowsText;
-    end  {if}  else begin
-        CaptionText := Self.Caption;
-    end; {else}
+  {If Caption is empty, use the default caption constants. Otherwise, use the Caption property text.}
+	if (Self.Caption = EmptyStr) then begin
+		CaptionText := AboutText + WindowsText;
+	end    else begin
+		CaptionText := Self.Caption;
+	end;
 
-    {Insert the separator between the caption and the first line strings.}
-    CaptionText := CaptionText + CaptionSeparator;
+	{Insert the separator between the caption and the first line strings.}
+	CaptionText := CaptionText + CaptionSeparator;
 
-  {If Product is empty, use the default product constants based
-   on what OS is running. Otherwise, use the Product property text.}
-    if (Self.Product = EmptyStr) then begin
-        if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
-            CaptionText := CaptionText + WinNTText;
-        end  {if}    else begin
-            CaptionText := CaptionText + WindowsText;
-        end;
-    end  {if}  else begin
-        CaptionText := CaptionText + Self.Product;
-    end; {else}
+  {If Product is empty, use the default product constants based on what OS is running. Otherwise, use the Product property text.}
+	if (Self.Product = EmptyStr) then begin
+		if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
+			CaptionText := CaptionText + WinNTText;
+		end      else begin
+			CaptionText := CaptionText + WindowsText;
+		end;
+	end    else begin
+		CaptionText := CaptionText + Self.Product;
+	end;
 
-  {Show the dialog. Raise an exception if the function failed.
-    Always return True for this dialog.}
-    Win32Check(longbool(ShellAbout(Application.MainForm.Handle, PChar(CaptionText), PChar(Self.OtherText), Self.Icon.Handle)));
-    Result := True;
+  {Show the dialog. Raise an exception if the function failed. Always return True for this dialog.}
+	Win32Check(longbool(ShellAbout(Application.MainForm.Handle, PChar(CaptionText), PChar(Self.OtherText), Self.Icon.Handle)));
+	Result := True;
 end;
 
 
 {***********************************************************
-        TkbBrowseForFolderDialog class implementation
+		TkbBrowseForFolderDialog class implementation
  ***********************************************************}
 
 
 function BrowseForFolderCallback(DialogHandle : HWND;
-    MessageID : UINT;
-    PIDL : LPARAM;
-    ComponentPointer : LPARAM) :
+	MessageID : UINT;
+	PIDL : LPARAM;
+	ComponentPointer : LPARAM) :
 Integer; stdcall; forward;
 
 constructor TkbBrowseForFolderDialog.Create(TheOwner : TComponent);
 begin
-    {Call ancestor constructor.}
-    inherited Create(TheOwner);
+	{Call ancestor constructor.}
+	inherited Create(TheOwner);
 
-    {Initialize simple-type data members.}
-    Self.FCaption    := EmptyStr;
-    Self.FCanExpandDomains := False;
-    Self.FDialogHandle := 0;
-    Self.FDisplayName := EmptyStr;
-    Self.FFilter     := kbsdBrowseForAnything;
-    Self.FImageIndex := 0;
-    Self.FRootPath   := EmptyStr;
-    Self.FRootFolder := rfDesktop;
-    Self.FShowStatusText := False;
-    Self.FStatusText := EmptyStr;
+	{Initialize simple-type data members.}
+	Self.FCaption    := EmptyStr;
+	Self.FCanExpandDomains := False;
+	Self.FDialogHandle := 0;
+	Self.FDisplayName := EmptyStr;
+	Self.FFilter     := kbsdBrowseForAnything;
+	Self.FImageIndex := 0;
+	Self.FRootPath   := EmptyStr;
+	Self.FRootFolder := rfDesktop;
+	Self.FShowStatusText := False;
+	Self.FStatusText := EmptyStr;
 
-    Self.FImageLarge := TBitmap.Create;
-    Self.FImageSmall := TBitmap.Create;
+	Self.FImageLarge := TBitmap.Create;
+	Self.FImageSmall := TBitmap.Create;
 end;
 
 function TkbBrowseForFolderDialog.GetImage(Index : Integer) : TBitmap;
@@ -714,37 +710,33 @@ var
 begin
     {Create an object to refer to one of the system image lists.}
     SystemImages := TImageList.Create(Self);
-    try {..finally}
+    try
 
-    {Set the bitmap to return and the flags for retrieving image info
-     based on the property index.}
-        case (Index) of
-            1 : begin
-                Result := Self.FImageLarge;
-                Flags  := SHGFI_SYSICONINDEX or SHGFI_LARGEICON;
-            end; {case 1}
-            2 : begin
-                Result := Self.FImageSmall;
-                Flags  := SHGFI_SYSICONINDEX or SHGFI_SMALLICON;
-            end; {case 2}
-            else begin
-                Result := nil;
-                Exit;
-            end; {else}
-        end; {case}
+	{Set the bitmap to return and the flags for retrieving image info based on the property index.}
+		case (Index) of
+			1 : begin
+				Result := Self.FImageLarge;
+				Flags  := SHGFI_SYSICONINDEX or SHGFI_LARGEICON;
+			end; {case 1}
+			2 : begin
+				Result := Self.FImageSmall;
+				Flags  := SHGFI_SYSICONINDEX or SHGFI_SMALLICON;
+			end; {case 2}
+			else begin
+				Result := nil;
+				Exit;
+			end;
+		end;
 
-    {Point image list object at the appropriate system image list, make sure it
-     will not free that list when it is freed, and load the indexed bitmap into
-     the returned object.}
-        SystemImages.Handle      := SHGetFileInfo(PChar(EmptyStr), 0, Unused, SizeOf(Unused), Flags);
-        SystemImages.ShareImages := True;
-        SystemImages.GetBitmap(Self.ImageIndex, Result);
+	{Point image list object at the appropriate system image list, make sure it will not free that list when it is freed, and load the indexed bitmap into the returned object.}
+		SystemImages.Handle      := SHGetFileInfo(PChar(EmptyStr), 0, Unused, SizeOf(Unused), Flags);
+		SystemImages.ShareImages := True;
+		SystemImages.GetBitmap(Self.ImageIndex, Result);
 
-  {Ensure the allocated system list object is freed. Actual system image
-   list will not be freed, because ShareImages is set True.}
-    finally
-        SystemImages.Free;
-    end; {try..finally}
+  {Ensure the allocated system list object is freed. Actual system image list will not be freed, because ShareImages is set True.}
+	finally
+		SystemImages.Free;
+	end;
 end;
 
 procedure TkbBrowseForFolderDialog.SetCaption(NewValue : string);
@@ -764,61 +756,54 @@ begin
     {If we're setting a new Root Path, ensure the Root Folder is set to Path.}
     if (NewValue <> EmptyStr) then begin
         Self.RootFolder := kbsdPath;
-    end; {if}
+    end;
     Self.FRootPath := NewValue;
 end;
 
 procedure TkbBrowseForFolderDialog.SetStatusText(NewValue : string);
 begin
-  {If the Dialog window handle is valid, send it a message to
-   change its status text. Has no effect if ShowStatusText
-   is not True.}
-    if (Self.FDialogHandle <> 0) then begin
-        PostMessage(Self.FDialogHandle, BFFM_SETSTATUSTEXT, 0, DWORD(PChar(NewValue)));
-    end;
-
-    {Update the data member.}
-    Self.FStatusText := NewValue;
+  {If the Dialog window handle is valid, send it a message to change its status text. Has no effect if ShowStatusText is not True.}
+	if (Self.FDialogHandle <> 0) then begin
+		PostMessage(Self.FDialogHandle, BFFM_SETSTATUSTEXT, 0, DWORD(PChar(NewValue)));
+	end;
+	{Update the data member.}
+	Self.FStatusText := NewValue;
 end;
 
 procedure TkbBrowseForFolderDialog.Change(DialogHandle : HWND; PIDL : Pointer);
 var
-    FileInfo :   TSHFileInfo;
-    NewPath :    string;
-    OldPath :    string;
-    NewStatusText : string;
-    NewOKState : TkbOKState;
+	FileInfo :   TSHFileInfo;
+	NewPath :    string;
+	OldPath :    string;
+	NewStatusText : string;
+	NewOKState : TkbOKState;
 begin
-    {If a handler is assigned for the OnChange event...}
-    if (Assigned(Self.OnChange)) then begin
-    {Fetch the System Image Index, Display Name, and the Folder Description from
-     the PIDL, and load them into the corresponding internal data members.}
-        SHGetFileInfo(PIDL, 0, FileInfo, SizeOf(FileInfo), SHGFI_PIDL or SHGFI_DISPLAYNAME or SHGFI_TYPENAME or SHGFI_ICON);
-        Self.FDescription := StrPas(FileInfo.szTypeName);
-        Self.FDisplayName := StrPas(FileInfo.szDisplayName);
-        Self.FImageIndex  := FileInfo.iIcon;
+	{If a handler is assigned for the OnChange event...}
+	if (Assigned(Self.OnChange)) then begin
+	{Fetch the System Image Index, Display Name, and the Folder Description from the PIDL, and load them into the corresponding internal data members.}
+		SHGetFileInfo(PIDL, 0, FileInfo, SizeOf(FileInfo), SHGFI_PIDL or SHGFI_DISPLAYNAME or SHGFI_TYPENAME or SHGFI_ICON);
+		Self.FDescription := StrPas(FileInfo.szTypeName);
+		Self.FDisplayName := StrPas(FileInfo.szDisplayName);
+		Self.FImageIndex  := FileInfo.iIcon;
 
-        {Initialize the event's var parameters to their default values.}
-        OldPath    := GetPathFromPIDL(PIDL);
-        NewPath    := OldPath;
-        NewStatusText := Self.StatusText;
-        NewOKState := kbsdDefaultState;
+		{Initialize the event's var parameters to their default values.}
+		OldPath    := GetPathFromPIDL(PIDL);
+		NewPath    := OldPath;
+		NewStatusText := Self.StatusText;
+		NewOKState := kbsdDefaultState;
 
-        {Call the event handler.}
-        Self.OnChange(Self, NewPath, NewStatusText, NewOKState);
+		{Call the event handler.}
+		Self.OnChange(Self, NewPath, NewStatusText, NewOKState);
 
-    {Update the dialog's path based on the value that emerged from
-     the handler.}
-        if ((NewPath <> EmptyStr) and (NewPath <> OldPath)) then begin
-            PostMessage(DialogHandle, BFFM_SETSELECTION, LPARAM(True), LPARAM(PChar(NewPath)));
-        end; {if}
+	{Update the dialog's path based on the value that emerged from the handler.}
+		if ((NewPath <> EmptyStr) and (NewPath <> OldPath)) then begin
+			PostMessage(DialogHandle, BFFM_SETSELECTION, LPARAM(True), LPARAM(PChar(NewPath)));
+		end;
 
-    {Update the status text based on the value that emerged from
-     the handler.}
-        Self.StatusText := NewStatusText;
+	{Update the status text based on the value that emerged from the handler.}
+		Self.StatusText := NewStatusText;
 
-    {If the event handler overrode the OK status, send the dialog
-     a message to enact the override.}
+	{If the event handler overrode the OK status, send the dialog a message to enact the override.}
         case (NewOKState) of
             kbsdEnableOK : begin
                 PostMessage(Self.FDialogHandle, BFFM_ENABLEOK, 0, LPARAM(True));
@@ -826,8 +811,8 @@ begin
             kbsdDisableOK : begin
                 PostMessage(Self.FDialogHandle, BFFM_ENABLEOK, 0, LPARAM(False));
             end;
-        end; {case}
-    end; {if}
+        end;
+    end;
 end;
 
 procedure TkbBrowseForFolderDialog.Initialize(DialogHandle : HWND);
@@ -840,7 +825,7 @@ begin
    caption with the user-specified one.}
     if (Self.Caption <> EmptyStr) then begin
         Self.SetCaption(Self.Caption);
-    end; {if}
+    end;
 
     {Set the status text in the dialog.}
     Self.SetStatusText(Self.StatusText);
@@ -848,7 +833,7 @@ begin
     {If the OnInitialize event handler is assigned, call it.}
     if (Assigned(Self.OnInitialize)) then begin
         Self.OnInitialize(Self, DialogHandle);
-    end; {if}
+    end;
 end;
 
 function TkbBrowseForFolderDialog.Execute : boolean;
@@ -863,8 +848,10 @@ begin
     BrowseInfo.pszDisplayName := NameBuffer;
     BrowseInfo.lpszTitle := PChar(Self.InstructionText);
     BrowseInfo.ulFlags   := 0;
-    BrowseInfo.lpfn      := BrowseForFolderCallback;
-    BrowseInfo.lParam    := DWORD(Self);
+	BrowseInfo.lpfn      := BrowseForFolderCallback;
+	{$WARN UNSAFE_CAST OFF}
+	BrowseInfo.lParam    := LPARAM(Self);
+	{$WARN UNSAFE_CODE ON}
     BrowseInfo.iImage    := 0;
 
   {Ensure the NameBuffer starts with a null-terminator to signal
@@ -876,7 +863,7 @@ begin
    the pidlRoot member of BrowseInfo.}
     if (Self.RootFolder = kbsdPath) then begin
         BrowseInfo.pidlRoot := GetPIDLFromPath(Self.RootPath);
-    end  {if} else
+    end   else
     if (Self.RootFolder = rfDesktop) then begin
         BrowseInfo.pidlRoot := nil;
     end  {else if} {If RootFolder is not specifying a path for the root, try to
@@ -884,7 +871,7 @@ begin
    recognized, just leave the root PIDL nil to get a default tree.}
     else begin
         BrowseInfo.pidlRoot := GetSpecialLocationPIDL(Self.RootFolder);
-    end; {else}
+    end;
 
     {Set the Flags member of BrowseInfo if we are filtering for some particular type of folder.}
     case (Self.Filter) of
@@ -900,17 +887,17 @@ begin
         kbsdBrowseForPrinters : begin
             BrowseInfo.ulFlags := BrowseInfo.ulFlags or BIF_BROWSEFORPRINTER;
         end;
-    end; {case}
+    end;
 
     {Set the Flags member of BrowseInfo if we want to restrict access to network neighborhood.}
     if (not (Self.CanExpandDomains)) then begin
         BrowseInfo.ulFlags := BrowseInfo.ulFlags or BIF_DONTGOBELOWDOMAIN;
-    end; {if}
+    end;
 
     {Set the Flags member of BrowseInfo if we want to show status text in the dialog.}
     if (Self.ShowStatusText) then begin
         BrowseInfo.ulFlags := BrowseInfo.ulFlags or BIF_STATUSTEXT;
-    end; {if}
+    end;
 
     {Show the dialog and save the PIDL reflecting the user's final selection, if any.}
     FinalPIDL := SHBrowseForFolder(BrowseInfo);
@@ -959,8 +946,8 @@ begin
             BFFM_SELCHANGED : begin
                 TkbBrowseForFolderDialog(DialogComponent).Change(DialogHandle, PItemIDList(PIDL));
             end; {case BFFM_SELCHANGED}
-        end; {case}
-    end; {if}
+        end;
+    end;
 
     {Always return 0.}
     Result := 0;
@@ -996,9 +983,9 @@ begin
     {Set whether to remember the last format ID.}
     if (Self.RememberLastFormat) then begin
         LocalLastFormatID := LOWORD(Self.LastFormatID);
-    end  {if}  else begin
+    end    else begin
         LocalLastFormatID := SHFMT_ID_DEFAULT;
-    end; {else}
+    end;
 
   {Set checkbox option flags. Note that NT has SHFMT_OPT_FULL backwards and
    screws up SHFMT_OPT_SYSONLY.}
@@ -1006,26 +993,26 @@ begin
     if (Self.DefaultQuickFormat) then begin
         if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
             LocalOptionFlags := LocalOptionFlags or SHFMT_OPT_FULL;
-        end;  {if}
-    end  {if}  else begin
+        end;
+    end    else begin
         if (SysUtils.Win32Platform <> VER_PLATFORM_WIN32_NT) then begin
             LocalOptionFlags := LocalOptionFlags or SHFMT_OPT_FULL;
-        end;  {if}
-    end; {else}
+        end;
+    end;
     if ((Self.DefaultSysOnly) and (SysUtils.Win32Platform <> VER_PLATFORM_WIN32_NT)) then begin
         LocalOptionFlags := LocalOptionFlags or SHFMT_OPT_SYSONLY;
-    end; {if}
+    end;
 
     {Save the current process error mode.}
     OldErrorMode := SetErrorMode(0);
-    try {..finally}
+    try
 
         {If supress AbortRetryIgnore is on, set the error mode accordingly. }
         if (Self.SuppressARI) then begin
             SetErrorMode(OldErrorMode or SEM_FAILCRITICALERRORS);
-        end  {if}    else begin
+        end      else begin
             SetErrorMode(OldErrorMode and not SEM_FAILCRITICALERRORS);
-        end; {else}
+        end;
 
         {Invoke dialog and save result.}
         FormatResult := SHFormatDrive(Application.Handle, UINT(Self.DriveToFormat), LocalLastFormatID, LocalOptionFlags);
@@ -1033,7 +1020,7 @@ begin
         {Ensure old error mode is restored.}
     finally
         SetErrorMode(OldErrorMode);
-    end; {try..finally}
+    end;
 
     {Translate format result into function result.}
     Result := FormatResultConstToEnum(FormatResult);
@@ -1041,7 +1028,7 @@ begin
     {If the format was successful, remember the format ID.}
     if (Result = kbsdFormatSucceeded) then begin
         Self.FLastFormatID := FormatResult;
-    end; {if}
+    end;
 end;
 
 
@@ -1065,45 +1052,37 @@ var
 begin
     {The Win NT UNICODE version.}
     if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
-    {Allocate a suitably sized PWideChar buffer and transliterate the
-     initial filename into the buffer.}
-        GetMem(FileNameBuffer, MAX_PATH * SizeOf(widechar));
-        try {..finally}
-            StringToWideChar(Self.FileName, FileNameBuffer, MAX_PATH + 1);
+	{Allocate a suitably sized PWideChar buffer and transliterate the initial filename into the buffer.}
+		FileNameBuffer:= GetMemory( MAX_PATH * SizeOf(widechar));
+		try
+			StringToWideChar(Self.FileName, FileNameBuffer, MAX_PATH + 1);
 
-            {Call the dialog and use the return value as the function result.}
-            Result := PickIconDlg(Application.Handle, PWideChar(FileNameBuffer), UINT(MAX_PATH), Self.FIconIndex);
+			{Call the dialog and use the return value as the function result.}
+			Result := PickIconDlg(Application.Handle, PWideChar(FileNameBuffer), UINT(MAX_PATH), Self.FIconIndex);
 
-            {If function was successful, transliterate the returned filename back to a string.}
-            if (Result <> 0) then begin
-                Self.FileName := WideCharToString(FileNameBuffer);
-            end; {if}
+			{If function was successful, transliterate the returned filename back to a string.}
+			if (Result <> 0) then begin
+				Self.FileName := WideCharToString(FileNameBuffer);
+			end;
+		finally
+			FreeMemory(FileNameBuffer);
+		end;
+	end else begin  {The Win 95 ANSI version.}
+		{Allocate a suitably sized PChar buffer and copy the initial filename into the buffer.}
+		FileNameBuffer := GetMemory(MAX_PATH * SizeOf(AnsiChar));
+		try
+			StrPCopy(FileNameBuffer, Self.FileName);
 
-            {Ensure the buffer is freed.}
-        finally
-            FreeMem(FileNameBuffer);
-        end; {try..finally}
-    end  {if} {The Win 95 ANSI version.}
-    else begin
-    {Allocate a suitably sized PChar buffer and copy the
-     initial filename into the buffer.}
-        GetMem(FileNameBuffer, MAX_PATH * SizeOf(AnsiChar));
-        try {..finally}
-            StrPCopy(FileNameBuffer, Self.FileName);
+			{Call the dialog and use the return value as the function result.}
+			Result := PickIconDlg(Application.Handle, FileNameBuffer, MAX_PATH, Self.FIconIndex);
 
-            {Call the dialog and use the return value as the function result.}
-            Result := PickIconDlg(Application.Handle, FileNameBuffer, MAX_PATH, Self.FIconIndex);
-
-            {If function was successful, copy the filename back to a string.}
-            if (Result <> 0) then begin
+			if (Result <> 0) then begin {If function was successful, copy the filename back to a string.}
 				Self.FileName := StrPas(PWideChar(FileNameBuffer));
-			end; {if}
-
-            {Ensure the buffer is freed.}
-        finally
-            FreeMem(FileNameBuffer);
-        end; {try..finally}
-    end; {else}
+			end;
+		finally
+			FreeMemory(FileNameBuffer);
+		end;
+	end;
 
 end;
 
@@ -1175,18 +1154,18 @@ begin
             if (PNM_RunFileDlg(TheMessage.LParam).lpFile <> nil) then begin
                 if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
                     WideCharToStrVar(PWideChar(PNM_RunFileDlg(TheMessage.LParam).lpFile), FileToRun);
-                end  {if}    else begin
+                end      else begin
                     FileToRun := StrPas(PChar(PNM_RunFileDlg(TheMessage.LParam).lpFile));
-                end; {else}
-            end; {if}
+                end;
+            end;
             WorkPath := EmptyStr;
             if (PNM_RunFileDlg(TheMessage.LParam).lpDirectory <> nil) then begin
                 if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
                     WideCharToStrVar(PWideChar(PNM_RunFileDlg(TheMessage.LParam).lpDirectory), WorkPath);
-                end  {if}    else begin
+                end      else begin
                     FileToRun := StrPas(PChar(PNM_RunFileDlg(TheMessage.LParam).lpDirectory));
-                end; {else}
-            end; {if}
+                end;
+            end;
 
       {Set up and invoke event handler. Return the result from event handler to
        the message and exit this method.}
@@ -1194,8 +1173,8 @@ begin
             Self.Validate(FileToRun, WorkPath, PNM_RunFileDlg(TheMessage.LParam).nShow, RunAction);
             TheMessage.Result := RunFileActionEnumToConst(RunAction);
             Exit;
-        end; {if}
-    end; {if}
+        end;
+    end;
 
     {If message was not handled above, send it to the default window procedure.}
     TheMessage.Result := DefWindowProc(Self.FMessageWindow, TheMessage.Msg, TheMessage.wParam, TheMessage.lParam);
@@ -1207,7 +1186,7 @@ begin
     {If event handler is assigned, call it.}
     if Assigned(Self.OnValidate) then begin
         Self.OnValidate(Self, TheFile, TheWorkPath, Visible, Action);
-    end; {if}
+    end;
 end;
 
 procedure TkbRunFileDialog.Execute;
@@ -1225,70 +1204,61 @@ begin
 
     {Allocate a buffer to hold the caption, long enough for UNICODE if need be.}
     if (Self.Caption <> EmptyStr) then begin
-        GetMem(CaptionBuffer, (Length(Self.Caption) + 1) * SizeOf(widechar));
-    end; {if}
-    try {..finally}
+		CaptionBuffer := GetMemory((Length(Self.Caption) + 1) * SizeOf(widechar));
+	end;
+	try
 
-        {Allocate a buffer to hold the description, long enough for UNICODE if need be.}
-        if (Self.Description <> EmptyStr) then begin
-            GetMem(DescriptionBuffer, (Length(Self.Description) + 1) * SizeOf(widechar));
-        end; {if}
-        try {..finally}
+		{Allocate a buffer to hold the description, long enough for UNICODE if need be.}
+		if (Self.Description <> EmptyStr) then begin
+			DescriptionBuffer := GetMemory( (Length(Self.Description) + 1) * SizeOf(widechar));
+		end;
+		try
 
-            {Allocate a buffer to hold the work path, long enough for UNICODE if need be.}
-            if (Self.WorkingPath <> EmptyStr) then begin
-                GetMem(WorkPathBuffer, (Length(Self.WorkingPath) + 1) * SizeOf(widechar));
-            end; {if}
-            try {..finally}
+			{Allocate a buffer to hold the work path, long enough for UNICODE if need be.}
+			if (Self.WorkingPath <> EmptyStr) then begin
+				WorkPathBuffer := GetMemory( (Length(Self.WorkingPath) + 1) * SizeOf(widechar));
+			end;
+			try
 
-                {If WinNT, convert strings to UNICODE.  Otherwise, just copy to buffer. Test for nil buffers.}
-                if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
-                    if (CaptionBuffer <> nil) then begin
-                        StringToWideChar(Self.Caption, PWideChar(CaptionBuffer), (Length(Self.Caption) + 1));
-                    end; {if}
-                    if (DescriptionBuffer <> nil) then begin
-                        StringToWideChar(Self.Description, PWideChar(DescriptionBuffer), (Length(Self.Description) + 1));
-                    end; {if}
-                    if (WorkPathBuffer <> nil) then begin
-                        StringToWideChar(Self.WorkingPath, PWideChar(WorkPathBuffer), (Length(Self.WorkingPath) + 1));
-                    end; {if}
-                end  {if}    else begin
-                    if (CaptionBuffer <> nil) then begin
-                        StrPCopy(PChar(CaptionBuffer), Self.Caption);
-                    end; {if}
-                    if (DescriptionBuffer <> nil) then begin
-                        StrPCopy(PChar(DescriptionBuffer), Self.Description);
-                    end; {if}
-                    if (WorkPathBuffer <> nil) then begin
-                        StrPCopy(PChar(WorkPathBuffer), Self.WorkingPath);
-                    end; {if}
-                end; {else}
-
-                {Set up option flags.}
-                OptionFlags := 0;
-                for Option := Low(TkbRunFileOption) to High(TkbRunFileOption) do begin
-                    if (Option in Self.Options) then begin
-                        OptionFlags := OptionFlags or RunFileOptionEnumToConst(Option);
-                    end; {if}
-                end; {for}
-
-                {Execute the dialog.}
-                RunFileDlg(Self.FMessageWindow, Self.Icon.Handle, WorkPathBuffer, CaptionBuffer, DescriptionBuffer, OptionFlags);
-
-                {Ensure the work path buffer is freed.}
-            finally
-                FreeMem(WorkPathBuffer);
-            end; {try..finally}
-
-            {Ensure the description buffer is freed.}
-        finally
-            FreeMem(DescriptionBuffer);
-        end; {try..finally}
-
-        {Ensure the caption buffer is freed.}
-    finally
-        FreeMem(CaptionBuffer);
-    end; {try..finally}
+				{If WinNT, convert strings to UNICODE.  Otherwise, just copy to buffer. Test for nil buffers.}
+				if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
+					if (CaptionBuffer <> nil) then begin
+						StringToWideChar(Self.Caption, PWideChar(CaptionBuffer), (Length(Self.Caption) + 1));
+					end;
+					if (DescriptionBuffer <> nil) then begin
+						StringToWideChar(Self.Description, PWideChar(DescriptionBuffer), (Length(Self.Description) + 1));
+					end;
+					if (WorkPathBuffer <> nil) then begin
+						StringToWideChar(Self.WorkingPath, PWideChar(WorkPathBuffer), (Length(Self.WorkingPath) + 1));
+					end;
+				end else begin
+					if (CaptionBuffer <> nil) then begin
+						StrPCopy(PChar(CaptionBuffer), Self.Caption);
+					end;
+					if (DescriptionBuffer <> nil) then begin
+						StrPCopy(PChar(DescriptionBuffer), Self.Description);
+					end;
+					if (WorkPathBuffer <> nil) then begin
+						StrPCopy(PChar(WorkPathBuffer), Self.WorkingPath);
+					end;
+				end;
+				{Set up option flags.}
+				OptionFlags := 0;
+				for Option := Low(TkbRunFileOption) to High(TkbRunFileOption) do begin
+					if (Option in Self.Options) then begin
+						OptionFlags := OptionFlags or RunFileOptionEnumToConst(Option);
+					end;
+				end;
+				RunFileDlg(Self.FMessageWindow, Self.Icon.Handle, WorkPathBuffer, CaptionBuffer, DescriptionBuffer, OptionFlags);
+			finally
+				FreeMemory(WorkPathBuffer);
+			end;
+		finally
+			FreeMemory(DescriptionBuffer);
+		end;
+	finally
+        FreeMemory(CaptionBuffer);
+    end;
 end;
 
 
@@ -1313,7 +1283,7 @@ begin
     {If we're setting a new Root Path, ensure the Root Folder is set to Path.}
     if (NewValue <> EmptyStr) then begin
         Self.RootFolder := kbsdPath;
-    end; {if}
+    end;
     Self.FRootPath := NewValue;
 end;
 
@@ -1325,7 +1295,7 @@ begin
     {Initialize Root PIDL to nil by default.}
     RootPIDL := nil;
 
-    try {..finally}
+    try
 
         {Try to set the search file PIDL.}
         SearchFile := GetPIDLFromPath(Self.SearchFileName);
@@ -1333,9 +1303,9 @@ begin
         {Set the Root PIDL.}
         if (Self.RootFolder = kbsdPath) then begin
             RootPIDL := GetPIDLFromPath(Self.RootPath);
-        end  {if}    else begin
+        end      else begin
             RootPIDL := GetSpecialLocationPIDL(Self.RootFolder);
-        end; {else}
+        end;
 
         {Show the dialog and return the result.}
         Result := SHFindFiles(RootPIDL, SearchFile);
@@ -1343,7 +1313,7 @@ begin
         {Free the Root PIDL.}
     finally
         FreePIDL(RootPIDL);
-    end; {try..finally}
+    end;
 end;
 
 
@@ -1364,31 +1334,26 @@ end;
 
 function TkbRestartWindowsDialog.Execute : boolean;
 const
-    Space: ansistring = ' ';
+    Space: String = ' ';
 var
-    ReasonString : ansistring;
+	ReasonString : String;
     ReasonBuffer : Pointer;
 begin
-    {Allocate a buffer to hold the reason, long enough for UNICODE if need be.}
-    ReasonString := Self.Reason + Space;
-    GetMem(ReasonBuffer, (Length(ReasonString) + 1) * SizeOf(widechar));
-    try
-
-        {If WinNT, convert reason string to UNICODE.  Otherwise, just copy to buffer.}
-        if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
-            StringToWideChar(ReasonString, PWideChar(ReasonBuffer), (Length(ReasonString) + 1));
-        end else begin
-            StrPCopy(PChar(ReasonBuffer), ReasonString);
-        end;
-
-        {Execute the dialog and convert the result to the return value.}
-        Result := (RestartDialog(Application.Handle, PWideChar(ReasonBuffer),
-            RestartOptionEnumToConst(Self.RestartOption)) = idYes);
-
-        {Ensure reason buffer is freed.}
-    finally
-        FreeMem(ReasonBuffer);
-    end;
+	{Allocate a buffer to hold the reason, long enough for UNICODE if need be.}
+	ReasonString := Self.Reason + Space;
+	ReasonBuffer := GetMemory((Length(ReasonString) + 1) * SizeOf(widechar));
+	try
+		{If WinNT, convert reason string to UNICODE.  Otherwise, just copy to buffer.}
+		if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
+			StringToWideChar(ReasonString, PWideChar(ReasonBuffer), (Length(ReasonString) + 1));
+		end else begin
+			StrPCopy(PChar(ReasonBuffer), ReasonString);
+		end;
+		{Execute the dialog and convert the result to the return value.}
+		Result := (RestartDialog(Application.Handle, PWideChar(ReasonBuffer), RestartOptionEnumToConst(Self.RestartOption)) = idYes);
+	finally
+		FreeMemory(ReasonBuffer);
+	end;
 end;
 
 
@@ -1414,7 +1379,7 @@ var
     TabNameBuffer :    Pointer;
 begin
     {Allocate a buffer to hold the object name, long enough for UNICODE if need be.}
-    GetMem(ObjectNameBuffer, (Length(Self.ObjectName) + 1) * SizeOf(widechar));
+	ObjectNameBuffer:=GetMemory((Length(Self.ObjectName) + 1) * SizeOf(widechar));
     try
 
         {If WinNT, convert object name string to UNICODE.  Otherwise, just copy to buffer.}
@@ -1425,7 +1390,7 @@ begin
         end;
 
         {Allocate a buffer to hold the initial tab name, long enough for UNICODE if need be.}
-        GetMem(TabNameBuffer, (Length(Self.InitialTab) + 1) * SizeOf(widechar));
+		TabNameBuffer := GetMemory((Length(Self.InitialTab) + 1) * SizeOf(widechar));
         try
 
             {If WinNT, convert initial tab name string to UNICODE.  Otherwise, just copy to buffer.}
@@ -1438,14 +1403,12 @@ begin
             {Execute the dialog and translate the result to the return value.}
             Result := SHObjectProperties(Application.Handle, ShellObjectTypeEnumToConst(Self.ObjectType), ObjectNameBuffer, TabNameBuffer);
 
-            {Ensure tab name buffer is freed.}
-        finally
-            FreeMem(TabNameBuffer);
-        end;
+		finally
+			FreeMemory(TabNameBuffer);
+		end;
 
-        {Ensure object name buffer is freed.}
-    finally
-        FreeMem(ObjectNameBuffer);
+	finally
+		FreeMemory(ObjectNameBuffer);
     end;
 end;
 
@@ -1460,11 +1423,11 @@ var
     Dialog : TkbShellAboutDialog;
 begin
     Dialog := TkbShellAboutDialog.Create(Application);
-    try {..finally}
+    try
         Result := Dialog.Execute;
     finally
         Dialog.Free;
-    end; {try..finally}
+    end;
 end;
 
 function ShowFindFilesDialog : longbool;
@@ -1487,51 +1450,52 @@ var
     Dialog : TkbRestartWindowsDialog;
 begin
     Dialog := TkbRestartWindowsDialog.Create(Application);
-    try {..finally}
-        Dialog.Reason := Reason;
+	try
+		Dialog.Reason := Reason;
 
-        Result := Dialog.Execute;
-    finally
-        Dialog.Free;
-    end; {try..finally}
+		Result := Dialog.Execute;
+	finally
+		Dialog.Free;
+	end;
 end;
 
 function ShowObjectPropertiesDialog(ObjectName : TFileName; ObjectType : TkbShellObjectType; InitialTab : string) : boolean;
 var
-    Dialog : TkbObjectPropertiesDialog;
+	Dialog : TkbObjectPropertiesDialog;
 begin
-    Dialog := TkbObjectPropertiesDialog.Create(Application);
-    try {..finally}
-        Dialog.ObjectName := ObjectName;
-        Dialog.ObjectType := ObjectType;
-        Dialog.InitialTab := InitialTab;
+	Dialog := TkbObjectPropertiesDialog.Create(Application);
+	try
+		Dialog.ObjectName := ObjectName;
+		Dialog.ObjectType := ObjectType;
+		Dialog.InitialTab := InitialTab;
 
-        Result := Dialog.Execute;
-    finally
-        Dialog.Free;
-    end; {try..finally}
+		Result := Dialog.Execute;
+	finally
+		Dialog.Free;
+	end;
 end;
 
 function ShowNetConnectionDialog(Resource : string; ResourceType : TkbNetResourceType) : DWORD;
 var
-    ResourceBuffer : array[0..(MAX_PATH * SizeOf(widechar))] of char;
-    BufferAddress :  Pointer;
+	ResourceBuffer : array[0..(MAX_PATH * SizeOf(widechar))] of char;
+	BufferAddress :  Pointer;
 begin
-  {We must pass ANSI for Win95 and UNICODE for NT, or nil if the
-   Resource string is empty.}
-    if (Resource <> EmptyStr) then begin
-        if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
-            StringToWideChar(Resource, PWideChar(@ResourceBuffer), MAX_PATH);
-        end  {if}    else begin
-            StrPCopy(ResourceBuffer, Resource);
-        end; {else}
-        BufferAddress := @ResourceBuffer;
-    end  {if}  else begin
-        BufferAddress := nil;
-    end; {if}
+  {We must pass ANSI for Win95 and UNICODE for NT, or nil if the Resource string is empty.}
+  {$WARN UNSAFE_CODE OFF}
+	if (Resource <> EmptyStr) then begin
+		if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
+			StringToWideChar(Resource, PWideChar(@ResourceBuffer), MAX_PATH);
+		end      else begin
+			StrPCopy(ResourceBuffer, Resource);
+		end;
+		BufferAddress := @ResourceBuffer;
+	end    else begin
+		BufferAddress := nil;
+	end;
 
-    {Call API function and return result.}
-    Result := SHNetConnectionDialog(Application.Handle, BufferAddress, NetResourceTypeEnumToConst(ResourceType));
+	{Call API function and return result.}
+	Result := SHNetConnectionDialog(Application.Handle, BufferAddress, NetResourceTypeEnumToConst(ResourceType));
+	{$WARN UNSAFE_CODE OFF}
 end;
 
 function ShowOutOfMemoryDialog : Integer;
@@ -1568,7 +1532,7 @@ begin
         else begin
             Result := SHFMT_ERROR;
         end;
-    end; {case}
+    end;
 end;
 
 function FormatResultConstToEnum(FormatResult : UINT) : TkbFormatResult;
@@ -1586,7 +1550,7 @@ begin
         else begin
             Result := kbsdFormatSucceeded;
         end;
-    end; {case}
+    end;
 end;
 
 function RestartOptionEnumToConst(RestartOption : TkbRestartOption) : UINT;
@@ -1613,7 +1577,7 @@ begin
         else begin
             Result := 0;
         end;
-    end; {case}
+    end;
 end;
 
 function RestartOptionConstToEnum(RestartOption : UINT) : TkbRestartOption;
@@ -1640,7 +1604,7 @@ begin
         else begin
             Result := kbsdRestartWindows;
         end;
-    end; {case}
+    end;
 end;
 
 function ShellObjectTypeEnumToConst(ShellObjectType : TkbShellObjectType) : UINT;
@@ -1655,7 +1619,7 @@ begin
         else begin
             Result := 0;
         end;
-    end; {case}
+    end;
 end;
 
 function ShellObjectTypeConstToEnum(ShellObjectType : UINT) : TkbShellObjectType;
@@ -1670,7 +1634,7 @@ begin
         else begin
             Result := kbsdPathObject;
         end;
-    end; {case}
+    end;
 end;
 
 function RunFileOptionEnumToConst(RunFileOption : TkbRunFileOption) : UINT;
@@ -1694,7 +1658,7 @@ begin
         else begin
             Result := 0;
         end;
-    end; {case}
+    end;
 end;
 
 function RunFileOptionConstToEnum(RunFileOption : UINT) : TkbRunFileOption;
@@ -1718,7 +1682,7 @@ begin
         else begin
             Result := kbsdNoSeparateMemory;
         end;
-    end; {case}
+    end;
 end;
 
 function RunFileActionEnumToConst(RunFileAction : TkbRunFileAction) : UINT;
@@ -1736,7 +1700,7 @@ begin
         else begin
             Result := RF_OK;
         end;
-    end; {case}
+    end;
 end;
 
 function RunFileActionConstToEnum(RunFileAction : UINT) : TkbRunFileAction;
@@ -1754,7 +1718,7 @@ begin
         else begin
             Result := kbsdRun;
         end;
-    end; {case}
+    end;
 end;
 
 function NetResourceTypeEnumToConst(NetResourceType : TkbNetResourceType) : DWORD;
@@ -1769,7 +1733,7 @@ begin
         else begin
             Result := RESOURCETYPE_DISK;
         end;
-    end; {case}
+    end;
 end;
 
 function NetResourceTypeConstToEnum(NetResourceType : DWORD) : TkbNetResourceType;
@@ -1784,7 +1748,7 @@ begin
         else begin
             Result := kbsdDiskResource;
         end;
-    end; {case}
+	end;
 end;
 
 {TODO -oroger -croger : inicio da area a ser testada pela carga dinamica }
@@ -1815,7 +1779,8 @@ begin
     if (Assigned(TheFunction)) then begin
         Result := TheFunction(Reserved1, Reserved2);
     end else begin
-        SetLastError(ERROR_CALL_NOT_IMPLEMENTED);
+		SetLastError(ERROR_CALL_NOT_IMPLEMENTED);
+		Result := False;
     end;
 end;
 

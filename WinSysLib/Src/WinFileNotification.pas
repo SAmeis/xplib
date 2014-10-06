@@ -240,8 +240,9 @@ var
 	vOffset:   DWORD;
 	vFileInfo: PFILE_NOTIFY_INFORMATION;
 begin
+	{$WARN UNSAFE_CODE OFF}
 	inherited;
-	GetMem(B, cBufSize);
+	B := GetMemory(cBufSize);
 	try
 		while not Terminated do begin
 			if Owner = nil then begin
@@ -284,8 +285,9 @@ begin
 		end;
 	finally
 		TearDown;
-		FreeMem(B, cBufSize);
+		FreeMemory(B);
 	end;
+	{$WARN UNSAFE_CODE ON}
 end;
 
 procedure TFolderMonWorker.SetUp;

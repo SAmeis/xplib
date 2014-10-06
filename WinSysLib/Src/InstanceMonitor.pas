@@ -81,9 +81,9 @@ function EnumWindowsFunc(Handle: HWND; Param: LParam): boolean; stdcall;
 var
 	ClassName: array[0 .. 32] of char;
 
-	iAppID:    Integer;
-	Master:    TInstanceMonitor;
-	ChildWnd:  THandle;
+	iAppID:   Integer;
+	Master:   TInstanceMonitor;
+	ChildWnd: THandle;
 begin
 	Result := True;
 	{$WARN UNSAFE_CAST OFF}
@@ -196,7 +196,7 @@ begin
 			Self.DestroyMutex(); //Coloca-se como nao sendo a instancia principal
 			{ TODO -oRoger -cDSG : Iniciar busca por class da janela e/ou titulo }
 			{$WARN UNSAFE_CAST OFF}
-			EnumWindows(@EnumWindowsFunc, LPARAM(Self));
+			EnumWindows(@EnumWindowsFunc, LParam(Self));
 			{$WARN UNSAFE_CAST ON}
 		end;
 	end else begin //Neste caso deixa o mutex aberto para avisar a outras intancias

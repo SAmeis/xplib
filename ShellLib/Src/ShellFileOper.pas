@@ -1,3 +1,8 @@
+{$IFDEF ShellFileOper}
+{$DEFINE DEBUG_UNIT}
+{$ENDIF}
+{$I ShellLib.inc}
+
 unit ShellFileOper;
 
 interface
@@ -86,6 +91,7 @@ var
   var
 	 P: PChar;
   begin
+	 {$WARN UNSAFE_CODE OFF}
 	 Result := nil;
 	 if S <> '' then begin
 	   Result := StrCopy(StrAlloc(Length(S) + 2), PChar(S));
@@ -97,6 +103,7 @@ var
 	   Inc(P);
 	   P^ := #0;
 	 end;
+	 {$WARN UNSAFE_CODE ON}
   end;
 //................................................................................................................................
 begin
