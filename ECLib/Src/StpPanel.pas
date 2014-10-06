@@ -1,8 +1,7 @@
 {$IFDEF StpPanel }
-	{$DEFINE DEBUG_UNIT}
+{$DEFINE DEBUG_UNIT}
 {$ENDIF}
 {$I ECLib.inc}
-
 unit StpPanel;
 
 interface
@@ -12,106 +11,105 @@ uses
 
 type
 
-	TOnChanging = procedure(Sender : TObject; NewItemIndex : Integer; var AllowChange : Boolean) of object;
+	TOnChanging = procedure(Sender: TObject; NewItemIndex: Integer; var AllowChange: Boolean) of object;
 
-	TStepPanel = Class (TPanel)
+	TStepPanel = class(TPanel)
 	private
-		FItems : TStrings;
-		procedure SetItems(NewItems : TStrings);
+		FItems: TStrings;
+		procedure SetItems(NewItems: TStrings);
 	private
-		FItemIndex : Integer;
-		procedure SetItemIndex(Value : Integer);
+		FItemIndex: Integer;
+		procedure SetItemIndex(Value: Integer);
 	private
-		FLineColor : TColor;
-		FSelectedBoxColor : TColor;
-		FBoxColor : TColor;
-		FBoxHeight : Integer;
-		FBoxWidth : Integer;
+		FLineColor       : TColor;
+		FSelectedBoxColor: TColor;
+		FBoxColor        : TColor;
+		FBoxHeight       : Integer;
+		FBoxWidth        : Integer;
 		FHorizontalSpace : Integer;
-		FVerticalSpace : Integer;
-		FTopMargin : Integer;
-		FLeftMargin : Integer;
-		FVersion : string;
-		procedure SetLineColor(Value : TColor);
-		procedure SetSelectedBoxColor(Value : TColor);
-		procedure SetBoxColor(Value : TColor);
-		procedure SetBoxHeight(Value : Integer);
-		procedure SetBoxWidth(Value : Integer);
-		procedure SetHorizontalSpace(Value : Integer);
-		procedure SetVerticalSpace(Value : Integer);
-		procedure SetLeftMargin(Value : Integer);
-		procedure SetTopMargin(Value : Integer);
+		FVerticalSpace   : Integer;
+		FTopMargin       : Integer;
+		FLeftMargin      : Integer;
+		FVersion         : string;
+		procedure SetLineColor(Value: TColor);
+		procedure SetSelectedBoxColor(Value: TColor);
+		procedure SetBoxColor(Value: TColor);
+		procedure SetBoxHeight(Value: Integer);
+		procedure SetBoxWidth(Value: Integer);
+		procedure SetHorizontalSpace(Value: Integer);
+		procedure SetVerticalSpace(Value: Integer);
+		procedure SetLeftMargin(Value: Integer);
+		procedure SetTopMargin(Value: Integer);
 	private
-		FOnChanging : TOnChanging;
-		FOnChange : TNotifyEvent;
+		FOnChanging: TOnChanging;
+		FOnChange  : TNotifyEvent;
 	private
-		FRects : TList;
+		FRects: TList;
 		procedure AllocateRects;
-		procedure FillBox(Index : Integer; Live : Boolean);
+		procedure FillBox(Index: Integer; Live: Boolean);
 	protected
 		procedure Paint; override;
 		procedure Click; override;
 	public
-		constructor Create(AOwner : TComponent); override;
+		constructor Create(AOwner: TComponent); override;
 		destructor Destroy; override;
 	published
-		property Items : TStrings read FItems write SetItems;
-		property ItemIndex : Integer read FItemIndex write SetItemIndex;
-		property LineColor : TColor read FLineColor write SetLineColor;
-		property SelectedBoxColor : TColor read FSelectedBoxColor write SetSelectedBoxColor;
-		property BoxColor : TColor read FBoxColor write SetBoxColor;
+		property Items           : TStrings read FItems write SetItems;
+		property ItemIndex       : Integer read FItemIndex write SetItemIndex;
+		property LineColor       : TColor read FLineColor write SetLineColor;
+		property SelectedBoxColor: TColor read FSelectedBoxColor write SetSelectedBoxColor;
+		property BoxColor        : TColor read FBoxColor write SetBoxColor;
 		property HorizontalSpace : Integer read FHorizontalSpace write SetHorizontalSpace;
-		property VerticalSpace : Integer read FVerticalSpace write SetVerticalSpace;
-		property BoxHeight : Integer read FBoxHeight write SetBoxHeight;
-		property BoxWidth : Integer read FBoxWidth write SetBoxWidth;
-		property LeftMargin : Integer read FLeftMargin write SetLeftMargin;
-		property TopMargin : Integer read FTopMargin write SetTopMargin;
-		property OnChanging : TOnChanging read FOnChanging write FOnChanging;
-		property OnChange : TNotifyEvent read FOnChange write FOnChange;
+		property VerticalSpace   : Integer read FVerticalSpace write SetVerticalSpace;
+		property BoxHeight       : Integer read FBoxHeight write SetBoxHeight;
+		property BoxWidth        : Integer read FBoxWidth write SetBoxWidth;
+		property LeftMargin      : Integer read FLeftMargin write SetLeftMargin;
+		property TopMargin       : Integer read FTopMargin write SetTopMargin;
+		property OnChanging      : TOnChanging read FOnChanging write FOnChanging;
+		property OnChange        : TNotifyEvent read FOnChange write FOnChange;
 	end;
 
 implementation
 
 const
-	DefaultHorizontalSpace = 4;
-	DefaultVerticalSpace = 8;
-	DefaultBoxHeight = 17;
-	DefaultBoxWidth = 16;
-	DefaultBoxColor = clGray;
+	DefaultHorizontalSpace  = 4;
+	DefaultVerticalSpace    = 8;
+	DefaultBoxHeight        = 17;
+	DefaultBoxWidth         = 16;
+	DefaultBoxColor         = clGray;
 	DefaultSelectedBoxColor = clLime;
-	DefaultLineColor = clWhite;
-	DefaultFontColor = clWhite;
-	DefaultColor = clBlack;
-	DefaultTopMargin = 4;
-	DefaultLeftMargin = 4;
-	DefaultHeight = 140;
-	DefaultWidth = 133;
-	VersionString = '1.0';
+	DefaultLineColor        = clWhite;
+	DefaultFontColor        = clWhite;
+	DefaultColor            = clBlack;
+	DefaultTopMargin        = 4;
+	DefaultLeftMargin       = 4;
+	DefaultHeight           = 140;
+	DefaultWidth            = 133;
+	VersionString           = '1.0';
 
-
-constructor TStepPanel.Create(AOwner : TComponent);
-	//----------------------------------------------------------------------------------------------------------------------
+constructor TStepPanel.Create(AOwner: TComponent);
+//----------------------------------------------------------------------------------------------------------------------
 begin
 	inherited Create(AOwner);
-	FItems := TStringList.Create;
-	FRects := TList.Create;
-	Caption := EmptyStr;
-	BevelOuter := bvNone;
-	FItemIndex := 0;
-	HorizontalSpace := DefaultHorizontalSpace;
-	VerticalSpace := DefaultVerticalSpace;
-	BoxHeight := DefaultBoxHeight;
-	BoxWidth := DefaultBoxWidth;
-	BoxColor := DefaultBoxColor;
+	FItems           := TStringList.Create;
+	FRects           := TList.Create;
+	Caption          := EmptyStr;
+	BevelOuter       := bvNone;
+	FItemIndex       := 0;
+	HorizontalSpace  := DefaultHorizontalSpace;
+	VerticalSpace    := DefaultVerticalSpace;
+	BoxHeight        := DefaultBoxHeight;
+	BoxWidth         := DefaultBoxWidth;
+	BoxColor         := DefaultBoxColor;
 	SelectedBoxColor := DefaultSelectedBoxColor;
-	LineColor := DefaultLineColor;
-	Font.Color := DefaultFontColor;
-	Color  := DefaultColor;
-	Width  := DefaultWidth;
-	Height := DefaultHeight;
-	FTopMargin := DefaultTopMargin;
-	FLeftMargin := DefaultLeftMargin;
-	FVersion := VersionString;
+	LineColor        := DefaultLineColor;
+	Font.Color       := DefaultFontColor;
+	Color            := DefaultColor;
+	Width            := DefaultWidth;
+	Height           := DefaultHeight;
+	FTopMargin       := DefaultTopMargin;
+	FLeftMargin      := DefaultLeftMargin;
+	FVersion         := VersionString;
 	FItems.Add('Início');
 	FItems.Add('Primeira página');
 	FItems.Add('Segunda Página');
@@ -119,7 +117,7 @@ begin
 end;
 
 destructor TStepPanel.Destroy;
-	//----------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------
 begin
 	FItems.Clear;
 	AllocateRects;
@@ -128,14 +126,14 @@ begin
 	inherited;
 end;
 
-procedure TStepPanel.SetItems(NewItems : TStrings);
+procedure TStepPanel.SetItems(NewItems: TStrings);
 //----------------------------------------------------------------------------------------------------------------------
 begin
 	FItems.Assign(NewItems);
 	Refresh;
 end;
 
-procedure TStepPanel.SetItemIndex(Value : Integer);
+procedure TStepPanel.SetItemIndex(Value: Integer);
 //----------------------------------------------------------------------------------------------------------------------
 begin
 	if (Value >= -1) and (Value < FItems.Count) then begin
@@ -149,19 +147,19 @@ end;
 procedure TStepPanel.AllocateRects;
 //----------------------------------------------------------------------------------------------------------------------
 var
-	Index : Integer;
-	P : Pointer;
+	Index: Integer;
+	P    : Pointer;
 begin
 	if FRects.Count < FItems.Count then begin
-		for Index := FRects.Count to Pred(FItems.Count) do begin
-			GetMem(P, SizeOf(TRect));
+		for index := FRects.Count to Pred(FItems.Count) do begin
+			P     := GetMemory(SizeOf(TRect));
 			FRects.Add(P);
 		end;
 	end else begin
 		if FRects.Count > FItems.Count then begin
-			for Index := Pred(FRects.Count) downto FItems.Count do begin
-				FreeMem(FRects[Index]);
-				FRects.Delete(Index);
+			for index := Pred(FRects.Count) downto FItems.Count do begin
+				FreeMemory(FRects[index]);
+				FRects.Delete(index);
 			end;
 		end;
 	end;
@@ -170,35 +168,36 @@ end;
 procedure TStepPanel.Paint;
 //----------------------------------------------------------------------------------------------------------------------
 var
-	Index : Integer;
-	X, Y :  Integer;
+	Index: Integer;
+	X, Y : Integer;
 begin
 	AllocateRects;
 	Canvas.Brush.Color := Color;
 	Canvas.FillRect(Rect(0, 0, Width, Height));
-	Y := TopMargin + VerticalSpace;
-	for Index := 0 to Pred(FItems.Count) do begin
-		if (Index > 0) and (Index < Pred(FItems.Count)) then begin
+	Y         := TopMargin + VerticalSpace;
+	for index := 0 to Pred(FItems.Count) do begin
+		if (index > 0) and (index < Pred(FItems.Count)) then begin
 			X := LeftMargin + HorizontalSpace + BoxWidth + HorizontalSpace;
 		end else begin
 			X := LeftMargin + HorizontalSpace;
 		end;
-		TRect(FRects[Index]^) := Rect(X, Y, X + BoxWidth + HorizontalSpace + Canvas.TextWidth(FItems[Index]),
-			Y + BoxHeight);
-		FillBox(Index, ItemIndex = Index);
+		{$WARN UNSAFE_CODE OFF} {$WARN UNSAFE_CAST OFF}
+		TRect(FRects[index]^) := Rect(X, Y, X + BoxWidth + HorizontalSpace + Canvas.TextWidth(FItems[index]), Y + BoxHeight);
+		{$WARN UNSAFE_CODE ON}  {$WARN UNSAFE_CAST ON}
+		FillBox(index, ItemIndex = index);
 		Inc(Y, BoxHeight + VerticalSpace * 2);
 		Canvas.Pen.Color := LineColor;
-		if (Index = 0) then begin
+		if (index = 0) then begin
 			Canvas.MoveTo(X + BoxWidth, Y - VerticalSpace - BoxHeight);
 			Canvas.LineTo(X + HorizontalSpace + BoxWidth + BoxWidth div 2, Y - VerticalSpace - BoxHeight);
 			Canvas.LineTo(X + HorizontalSpace + BoxWidth + BoxWidth div 2, Y + VerticalSpace);
 		end else begin
-			if (Index = Pred(FItems.Count) - 1) then begin
+			if (index = Pred(FItems.Count) - 1) then begin
 				Canvas.MoveTo(X + BoxWidth div 2, Y - VerticalSpace * 2);
 				Canvas.LineTo(X + BoxWidth div 2, Y + VerticalSpace);
 				Canvas.LineTo(X - BoxWidth - 1, Y + VerticalSpace);
 			end else begin
-				if (Index < Pred(FItems.Count)) then begin
+				if (index < Pred(FItems.Count)) then begin
 					Canvas.MoveTo(X + BoxWidth div 2, Y - VerticalSpace * 2);
 					Canvas.LineTo(X + BoxWidth div 2, Y);
 				end;
@@ -216,24 +215,25 @@ end;
 procedure TStepPanel.Click;
 //----------------------------------------------------------------------------------------------------------------------
 var
-	Index : Integer;
-	P : TPoint;
-	AllowChange : Boolean;
+	Index      : Integer;
+	P          : TPoint;
+	AllowChange: Boolean;
 begin
 	inherited;
 	GetCursorPos(P);
-	P := ScreenToClient(P);
-	for Index := 0 to Pred(FRects.Count) do begin
-		if PtInRect(TRect(FRects[Index]^), P) then begin
-			if ItemIndex <> Index then begin
+	P         := ScreenToClient(P);
+	for index := 0 to Pred(FRects.Count) do begin
+		{$WARN UNSAFE_CODE OFF}   {$WARN UNSAFE_CAST OFF}
+		if PtInRect(TRect(FRects[index]^), P) then begin
+			if ItemIndex <> index then begin
 				AllowChange := TRUE;
 				if Assigned(FOnChanging) then begin
-					FOnChanging(Self, Index, AllowChange);
+					FOnChanging(Self, index, AllowChange);
 				end;
 				if AllowChange then begin
 					FillBox(ItemIndex, FALSE);
-					FillBox(Index, TRUE);
-					ItemIndex := Index;
+					FillBox(index, TRUE);
+					ItemIndex := index;
 					if Assigned(FOnChange) then begin
 						FOnChange(Self);
 					end;
@@ -241,16 +241,17 @@ begin
 			end;
 			Break;
 		end;
+		{$WARN UNSAFE_CODE ON} {$WARN UNSAFE_CODE ON}
 	end;
 end;
 
-procedure TStepPanel.FillBox(Index : Integer; Live : Boolean);
+procedure TStepPanel.FillBox(Index: Integer; Live: Boolean);
 //----------------------------------------------------------------------------------------------------------------------
 var
 	BoxRect : TRect;
-	TextRect : TRect;
+	TextRect: TRect;
 begin
-	if (Index < 0) or (Index >= FItems.Count) then begin
+	if (index < 0) or (index >= FItems.Count) then begin
 		Exit;
 	end;
 	Canvas.Brush.Style := bsSolid;
@@ -259,11 +260,13 @@ begin
 	end else begin
 		Canvas.Brush.Color := BoxColor;
 	end;
-	BoxRect := TRect(FRects[Index]^);
-	TextRect := BoxRect;
+	{$WARN UNSAFE_CODE OFF}
+	BoxRect := TRect(FRects[index]^);
+	{$WARN UNSAFE_CODE ON}
+	TextRect      := BoxRect;
 	BoxRect.Right := BoxRect.Left + BoxWidth;
 	TextRect.Left := BoxRect.Right + HorizontalSpace;
-	if (Index = 0) or (Index = Pred(FItems.Count)) then begin
+	if (index = 0) or (index = Pred(FItems.Count)) then begin
 		Inc(TextRect.Left, HorizontalSpace + BoxWidth div 2);
 	end;
 	Canvas.FillRect(BoxRect);
@@ -274,13 +277,14 @@ begin
 	Canvas.Brush.Color := Color;
 	Canvas.FillRect(TextRect);
 	Canvas.Brush.Style := bsClear;
-	Canvas.TextOut(TextRect.Left, TextRect.Top + ((BoxHeight - Canvas.TextHeight(FItems[Index])) div 2), FItems[Index]);
-	TRect(FRects[Index]^) := Rect(BoxRect.Left, BoxRect.Top,
-		BoxRect.Left + BoxWidth + HorizontalSpace + Canvas.TextWidth(FItems[Index]),
-		BoxRect.Top + BoxHeight);
+	Canvas.TextOut(TextRect.Left, TextRect.Top + ((BoxHeight - Canvas.TextHeight(FItems[index])) div 2), FItems[index]);
+	{$WARN UNSAFE_CODE OFF}
+	TRect(FRects[index]^) := Rect(BoxRect.Left, BoxRect.Top, BoxRect.Left + BoxWidth + HorizontalSpace +
+		Canvas.TextWidth(FItems[index]), BoxRect.Top + BoxHeight);
+	{$WARN UNSAFE_CODE ON}
 end;
 
-procedure TStepPanel.SetLineColor(Value : TColor);
+procedure TStepPanel.SetLineColor(Value: TColor);
 //----------------------------------------------------------------------------------------------------------------------
 begin
 	if FLineColor <> Value then begin
@@ -289,7 +293,7 @@ begin
 	end;
 end;
 
-procedure TStepPanel.SetSelectedBoxColor(Value : TColor);
+procedure TStepPanel.SetSelectedBoxColor(Value: TColor);
 //----------------------------------------------------------------------------------------------------------------------
 begin
 	if FSelectedBoxColor <> Value then begin
@@ -298,7 +302,7 @@ begin
 	end;
 end;
 
-procedure TStepPanel.SetBoxColor(Value : TColor);
+procedure TStepPanel.SetBoxColor(Value: TColor);
 //----------------------------------------------------------------------------------------------------------------------
 begin
 	if FBoxColor <> Value then begin
@@ -307,7 +311,7 @@ begin
 	end;
 end;
 
-procedure TStepPanel.SetBoxHeight(Value : Integer);
+procedure TStepPanel.SetBoxHeight(Value: Integer);
 //----------------------------------------------------------------------------------------------------------------------
 begin
 	if FBoxHeight <> Value then begin
@@ -316,7 +320,7 @@ begin
 	end;
 end;
 
-procedure TStepPanel.SetBoxWidth(Value : Integer);
+procedure TStepPanel.SetBoxWidth(Value: Integer);
 //----------------------------------------------------------------------------------------------------------------------
 begin
 	if FBoxWidth <> Value then begin
@@ -325,7 +329,7 @@ begin
 	end;
 end;
 
-procedure TStepPanel.SetHorizontalSpace(Value : Integer);
+procedure TStepPanel.SetHorizontalSpace(Value: Integer);
 //----------------------------------------------------------------------------------------------------------------------
 begin
 	if FHorizontalSpace <> Value then begin
@@ -334,7 +338,7 @@ begin
 	end;
 end;
 
-procedure TStepPanel.SetVerticalSpace(Value : Integer);
+procedure TStepPanel.SetVerticalSpace(Value: Integer);
 //----------------------------------------------------------------------------------------------------------------------
 begin
 	if FVerticalSpace <> Value then begin
@@ -343,7 +347,7 @@ begin
 	end;
 end;
 
-procedure TStepPanel.SetTopmargin(Value : Integer);
+procedure TStepPanel.SetTopMargin(Value: Integer);
 //----------------------------------------------------------------------------------------------------------------------
 begin
 	if Value <> FTopMargin then begin
@@ -352,7 +356,7 @@ begin
 	end;
 end;
 
-procedure TStepPanel.SetLeftMargin(Value : Integer);
+procedure TStepPanel.SetLeftMargin(Value: Integer);
 //----------------------------------------------------------------------------------------------------------------------
 begin
 	if Value <> FLeftMargin then begin
@@ -362,5 +366,3 @@ begin
 end;
 
 end.
-
-

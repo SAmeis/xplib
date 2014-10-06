@@ -2,7 +2,6 @@
 	{$DEFINE DEBUG_UNIT}
 {$ENDIF}
 {$I ECLib.inc}
-
 unit Wrapgrid;
 
 interface
@@ -11,23 +10,23 @@ uses
 	SysUtils, WinTypes, WinProcs, Messages, Classes, Graphics, Controls, Forms, Grids;
 
 type
-	TWrapGrid = Class (TStringGrid)
+	TWrapGrid = class(TStringGrid)
 	private
 	protected
-		procedure DrawCell(ACol, ARow : Longint; ARect : TRect; AState : TGridDrawState); override;
+		procedure DrawCell(ACol, ARow: Longint; ARect: TRect; AState: TGridDrawState); override;
 	public
-		constructor Create(AOwner : TComponent); override;
+		constructor Create(AOwner: TComponent); override;
 	published
 		{ Published declarations }
 	end;
 
 implementation
 
-constructor TWrapGrid.Create(AOwner : TComponent);
-{{
-The Create procedure is overriden to use the DrawCell procedure by default
+constructor TWrapGrid.Create(AOwner: TComponent);
+{ {
+  The Create procedure is overriden to use the DrawCell procedure by default
 
-Revision:6/6/2005
+  Revision:6/6/2005
 }
 begin
 	//Create a TStringGrid
@@ -36,17 +35,17 @@ begin
 	DefaultDrawing := FALSE;
 end;
 
-procedure TWrapGrid.DrawCell(ACol, ARow : Longint; ARect : TRect; AState : TGridDrawState);
-{{
-This DrawCell procedure wraps text in the grid cell
+procedure TWrapGrid.DrawCell(ACol, ARow: Longint; ARect: TRect; AState: TGridDrawState);
+{ {
+  This DrawCell procedure wraps text in the grid cell
 }
 var
-	Sentence,				  // What is left in the cell to output
-	CurWord : string;		  // The word we are currently outputting
-	SpacePos,				  // The position of the first space
-	CurX,					  // The x position of the 'cursor'
-	CurY : Integer;			// The y position of the 'cursor
-	EndOfSentence : Boolean;   // Whether or not we are done outputting the cell
+	Sentence,               //What is left in the cell to output
+	CurWord: string;        //The word we are currently outputting
+	SpacePos,               //The position of the first space
+	CurX,                   //The x position of the 'cursor'
+	CurY         : Integer; //The y position of the 'cursor
+	EndOfSentence: Boolean; //Whether or not we are done outputting the cell
 begin
 	//Initialize the font to be the control's font
 	Canvas.Font := Font;
@@ -54,10 +53,10 @@ begin
 	with Canvas do begin
 
 		if gdFixed in AState then begin //If this is a fixed cell, then use the fixed color
-			Pen.Color := FixedColor;
+			Pen.Color   := FixedColor;
 			Brush.Color := FixedColor;
 		end else begin //else, use the normal color
-			Pen.Color := Color;
+			Pen.Color   := Color;
 			Brush.Color := Color;
 		end;
 		Rectangle(ARect.Left, ARect.Top, ARect.Right, ARect.Bottom); //Prepaint cell in cell color
@@ -75,11 +74,11 @@ begin
 	while (not EndOfSentence) do begin
 		SpacePos := Pos(' ', Sentence); //to get the next word, we search for a space
 		if SpacePos > 0 then begin
-			CurWord := Copy(Sentence, 0, SpacePos); //get the current word plus the space
-			Sentence := Copy(Sentence, SpacePos + 1, Length(Sentence) - SpacePos);  //get the rest of the sentence
-		end else begin //this is the last word in the sentence
+			CurWord  := Copy(Sentence, 0, SpacePos);                               //get the current word plus the space
+			Sentence := Copy(Sentence, SpacePos + 1, Length(Sentence) - SpacePos); //get the rest of the sentence
+		end else begin                                                             //this is the last word in the sentence
 			EndOfSentence := TRUE;
-			CurWord := Sentence;
+			CurWord       := Sentence;
 		end;
 
 		with Canvas do begin
@@ -88,12 +87,10 @@ begin
 				CurY := CurY + TextHeight(CurWord);
 				CurX := ARect.Left;
 			end;
-			TextOut(CurX, CurY, CurWord); //write out the word
+			TextOut(CurX, CurY, CurWord);      //write out the word
 			CurX := CurX + TextWidth(CurWord); //increment the x position of the cursor
 		end;
 	end;
 end;
 
 end.
-
-
