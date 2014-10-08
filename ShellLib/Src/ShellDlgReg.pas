@@ -3,11 +3,12 @@
 {$ENDIF}
 {$I ShellLib.inc}
 
-unit ShellDlgReg;
+unit ShellDlgReg deprecated;
 
 interface
 
-uses DesignEditors, DesignIntf, ShellShlDlg;
+uses
+DesignEditors, DesignIntf, ShellShlDlg;
 
 {Property editor interfaces}
 type

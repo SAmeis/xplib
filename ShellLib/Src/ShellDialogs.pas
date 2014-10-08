@@ -3,7 +3,7 @@
 {$ENDIF}
 {$I ShellLib.inc}
 
-unit ShellDialogs;
+unit ShellDialogs deprecated;
 
 interface
 
@@ -495,9 +495,10 @@ var
 	ParamBuffer : PChar;
 	BufferIndex : Integer;
 begin
+	{$WARN UNSAFE_CODE OFF}
 	{Determine how many bytes of extra arguments there are.}
 	ParamCount := (High(Parameters) + 1);
-	GetMem(ParamBuffer, ParamCount * SizeOf(Pointer));
+	ParamBuffer:= GetMemory( ParamCount * SizeOf(Pointer));
 	try
 
 		{Stuff the extra arguments into a buffer in cdecl (right-to-left) order.}
@@ -520,20 +521,21 @@ begin
 
                    @MethodCall:         // Label to start the call to the DLL method
 
-                   push    Style           // Push the Style argument onto the stack
-                   push    Caption         // Push the Caption argument onto the stack
-                   push    Text            // Push the Text argument onto the stack
-                   push    Owner           // Push the Owner argument onto the stack
-                   push    Instance        // Push the Instance argument onto the stack
+				   push    Style           // Push the Style argument onto the stack
+				   push    Caption         // Push the Caption argument onto the stack
+				   push    Text            // Push the Text argument onto the stack
+				   push    Owner           // Push the Owner argument onto the stack
+				   push    Instance        // Push the Instance argument onto the stack
 
-                   call    MethodPtr       // Call the DLL procedure
-                   mov     Result, EAX     // Save the result from the method call into the Result variable
-        end; {asm}
+				   call    MethodPtr       // Call the DLL procedure
+				   mov     Result, EAX     // Save the result from the method call into the Result variable
+		end; {asm}
 
-        {Ensure extra argument buffer is freed.}
-    finally
-        FreeMem(ParamBuffer);
-    end;
+		{Ensure extra argument buffer is freed.}
+	finally
+		FreeMemory(ParamBuffer);
+	end;
+	{$WARN UNSAFE_CODE ON}
 end;
 
 function ShellMessageBox(Instance : THandle; Owner : HWND; Text : PChar; Caption : PChar;
@@ -864,14 +866,16 @@ var
     FinalPIDL :  PItemIDList;
 begin
     {Initialize the BrowseInfo structure with default values.}
-    BrowseInfo.hwndOwner := Application.MainForm.Handle;
-    BrowseInfo.pidlRoot  := nil;
-    BrowseInfo.pszDisplayName := NameBuffer;
-    BrowseInfo.lpszTitle := PChar(Self.InstructionText);
-    BrowseInfo.ulFlags   := 0;
-    BrowseInfo.lpfn      := BrowseForFolderCallback;
-    BrowseInfo.lParam    := DWORD(Self);
-    BrowseInfo.iImage    := 0;
+	{$WARN UNSAFE_CAST OFF}
+	BrowseInfo.hwndOwner := Application.MainForm.Handle;
+	BrowseInfo.pidlRoot  := nil;
+	BrowseInfo.pszDisplayName := NameBuffer;
+	BrowseInfo.lpszTitle := PChar(Self.InstructionText);
+	BrowseInfo.ulFlags   := 0;
+	BrowseInfo.lpfn      := BrowseForFolderCallback;
+	BrowseInfo.lParam    := DWORD(Self);
+	BrowseInfo.iImage    := 0;
+	{$WARN UNSAFE_CAST ON}
 
   {Ensure the NameBuffer starts with a null-terminator to signal
    it is empty.}
@@ -952,26 +956,28 @@ Integer; stdcall;
 var
     DialogComponent : TkbBrowseForFolderDialog;
 begin
-    {If the value which we expect to point to the dialog component is not nil...}
-    if (ComponentPointer <> 0) then begin
-        DialogComponent := TkbBrowseForFolderDialog(ComponentPointer);
+	{$WARN UNSAFE_CAST OFF}
+	{If the value which we expect to point to the dialog component is not nil...}
+	if (ComponentPointer <> 0) then begin
+		DialogComponent := TkbBrowseForFolderDialog(ComponentPointer);
 
-    {Based on which message is invoking the callback, invoke the appropriate event
-     dispatch method for the referenced component. We are cheating a bit --- these
-     are actually protected methods, but we can access them from outside the class
-     because this is in the same unit.}
-        case (MessageID) of
-            BFFM_INITIALIZED : begin
-                DialogComponent.Initialize(DialogHandle);
-            end; {case BFFM_INITIALIZED}
-            BFFM_SELCHANGED : begin
-                TkbBrowseForFolderDialog(DialogComponent).Change(DialogHandle, PItemIDList(PIDL));
-            end; {case BFFM_SELCHANGED}
-        end; {case}
-    end;
+	{Based on which message is invoking the callback, invoke the appropriate event
+	 dispatch method for the referenced component. We are cheating a bit --- these
+	 are actually protected methods, but we can access them from outside the class
+	 because this is in the same unit.}
+		case (MessageID) of
+			BFFM_INITIALIZED : begin
+				DialogComponent.Initialize(DialogHandle);
+			end; {case BFFM_INITIALIZED}
+			BFFM_SELCHANGED : begin
+				TkbBrowseForFolderDialog(DialogComponent).Change(DialogHandle, PItemIDList(PIDL));
+			end; {case BFFM_SELCHANGED}
+		end; {case}
+	end;
 
-    {Always return 0.}
-    Result := 0;
+	{Always return 0.}
+	Result := 0;
+	{$WARN UNSAFE_CAST ON}
 end;
 
 
@@ -1075,7 +1081,7 @@ begin
     if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
     {Allocate a suitably sized PWideChar buffer and transliterate the
      initial filename into the buffer.}
-        GetMem(FileNameBuffer, MAX_PATH * SizeOf(widechar));
+		FileNameBuffer:=GetMemory( MAX_PATH * SizeOf(widechar));
         try
             StringToWideChar(Self.FileName, FileNameBuffer, MAX_PATH + 1);
 
@@ -1089,14 +1095,14 @@ begin
 
             {Ensure the buffer is freed.}
         finally
-            FreeMem(FileNameBuffer);
+			FreeMemory(FileNameBuffer);
         end;
     end
     {The Win 95 ANSI version.}
     else begin
     {Allocate a suitably sized PChar buffer and copy the
      initial filename into the buffer.}
-        GetMem(FileNameBuffer, MAX_PATH * SizeOf(AnsiChar));
+		FileNameBuffer:=GetMemory( MAX_PATH * SizeOf(AnsiChar));
         try
             StrPCopy(FileNameBuffer, Self.FileName);
 
@@ -1110,7 +1116,7 @@ begin
 
             {Ensure the buffer is freed.}
         finally
-            FreeMem(FileNameBuffer);
+			FreeMemory(FileNameBuffer);
         end;
     end;
 
@@ -1233,19 +1239,19 @@ begin
 
     {Allocate a buffer to hold the caption, long enough for UNICODE if need be.}
     if (Self.Caption <> EmptyStr) then begin
-        GetMem(CaptionBuffer, (Length(Self.Caption) + 1) * SizeOf(widechar));
+		CaptionBuffer:=GetMemory( (Length(Self.Caption) + 1) * SizeOf(widechar));
     end;
     try
 
         {Allocate a buffer to hold the description, long enough for UNICODE if need be.}
         if (Self.Description <> EmptyStr) then begin
-            GetMem(DescriptionBuffer, (Length(Self.Description) + 1) * SizeOf(widechar));
+			DescriptionBuffer:=GetMemory( (Length(Self.Description) + 1) * SizeOf(widechar));
         end;
         try
 
             {Allocate a buffer to hold the work path, long enough for UNICODE if need be.}
             if (Self.WorkingPath <> EmptyStr) then begin
-                GetMem(WorkPathBuffer, (Length(Self.WorkingPath) + 1) * SizeOf(widechar));
+				WorkPathBuffer:=GetMemory( (Length(Self.WorkingPath) + 1) * SizeOf(widechar));
             end;
             try
 
@@ -1285,17 +1291,17 @@ begin
 
                 {Ensure the work path buffer is freed.}
             finally
-                FreeMem(WorkPathBuffer);
+				FreeMemory(WorkPathBuffer);
             end;
 
             {Ensure the description buffer is freed.}
         finally
-            FreeMem(DescriptionBuffer);
+			FreeMemory(DescriptionBuffer);
         end;
 
         {Ensure the caption buffer is freed.}
     finally
-        FreeMem(CaptionBuffer);
+		FreeMemory(CaptionBuffer);
     end;
 end;
 
@@ -1374,31 +1380,20 @@ function TkbRestartWindowsDialog.Execute : boolean;
 const
     Space = ' ';
 var
-    ReasonString : AnsiString;
-    ReasonBuffer : Pointer;
+    ReasonString : String;
+    ReasonBuffer : PWideChar;
 begin
     {Allocate a buffer to hold the reason, long enough for UNICODE if need be.}
     ReasonString := Self.Reason + Space;
-    GetMem(ReasonBuffer, (Length(ReasonString) + 1) * SizeOf(widechar));
-    try
-
-        {If WinNT, convert reason string to UNICODE.  Otherwise, just copy to buffer.}
-        if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
-            StringToWideChar(ReasonString, PWideChar(ReasonBuffer), (Length(ReasonString) + 1));
-        end else begin
-            StrPCopy(PAnsiChar(ReasonBuffer), ReasonString);
-        end;
-
-        {Execute the dialog and convert the result to the return value.}
-        Result := (RestartDialog(Application.Handle, PWideChar(ReasonBuffer), RestartOptionEnumToConst(Self.RestartOption)) = idYes);
-
-        {Ensure reason buffer is freed.}
-    finally
-        FreeMem(ReasonBuffer);
-    end;
+	ReasonBuffer:=GetMemory( (Length(ReasonString) + 1) * SizeOf(widechar));
+	try
+	   StringToWideChar(ReasonString, PWideChar(ReasonBuffer), (Length(ReasonString) + 1));
+		{Execute the dialog and convert the result to the return value.}
+		Result := (RestartDialog(Application.Handle, ReasonBuffer, RestartOptionEnumToConst(Self.RestartOption)) = idYes);
+	finally
+		FreeMemory(ReasonBuffer);
+	end;
 end;
-
-
 
 {***********************************************************
         TkbObjectPropertiesDialog class implementation
@@ -1421,7 +1416,7 @@ var
     TabNameBuffer :    Pointer;
 begin
     {Allocate a buffer to hold the object name, long enough for UNICODE if need be.}
-    GetMem(ObjectNameBuffer, (Length(Self.ObjectName) + 1) * SizeOf(widechar));
+	ObjectNameBuffer:=GetMemory( (Length(Self.ObjectName) + 1) * SizeOf(widechar));
     try
 
         {If WinNT, convert object name string to UNICODE.  Otherwise, just copy to buffer.}
@@ -1432,7 +1427,7 @@ begin
         end;
 
         {Allocate a buffer to hold the initial tab name, long enough for UNICODE if need be.}
-        GetMem(TabNameBuffer, (Length(Self.InitialTab) + 1) * SizeOf(widechar));
+        TabNameBuffer:=GetMemory( (Length(Self.InitialTab) + 1) * SizeOf(widechar));
         try
 
             {If WinNT, convert initial tab name string to UNICODE.  Otherwise, just copy to buffer.}
@@ -1447,13 +1442,13 @@ begin
                 ObjectNameBuffer, TabNameBuffer);
 
             {Ensure tab name buffer is freed.}
-        finally
-            FreeMem(TabNameBuffer);
+		finally
+			FreeMemory(TabNameBuffer);
         end;
 
         {Ensure object name buffer is freed.}
     finally
-        FreeMem(ObjectNameBuffer);
+		FreeMemory(ObjectNameBuffer);
 	end;
 end;
 

@@ -3,7 +3,7 @@ object fmShellDialogTest: TfmShellDialogTest
   Top = 208
   BorderStyle = bsDialog
   Caption = 'Shell Dialog Test'
-  ClientHeight = 328
+  ClientHeight = 431
   ClientWidth = 387
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -22,8 +22,6 @@ object fmShellDialogTest: TfmShellDialogTest
     Width = 150
     Height = 25
     Caption = 'Display Shell About Dialog'
-    DoubleBuffered = True
-    ParentDoubleBuffered = False
     TabOrder = 0
     OnClick = btnShellAboutClick
   end
@@ -33,8 +31,6 @@ object fmShellDialogTest: TfmShellDialogTest
     Width = 150
     Height = 25
     Caption = 'Display Folder Browse Dialog'
-    DoubleBuffered = True
-    ParentDoubleBuffered = False
     TabOrder = 1
     OnClick = btnBrowseFoldersClick
   end
@@ -44,8 +40,6 @@ object fmShellDialogTest: TfmShellDialogTest
     Width = 150
     Height = 25
     Caption = 'Display Pick Icon Dialog'
-    DoubleBuffered = True
-    ParentDoubleBuffered = False
     TabOrder = 2
     OnClick = btnPickIconClick
   end
@@ -55,8 +49,6 @@ object fmShellDialogTest: TfmShellDialogTest
     Width = 150
     Height = 25
     Caption = 'Display Find Files Dialog'
-    DoubleBuffered = True
-    ParentDoubleBuffered = False
     TabOrder = 3
     OnClick = btnFindFilesClick
   end
@@ -66,8 +58,6 @@ object fmShellDialogTest: TfmShellDialogTest
     Width = 150
     Height = 25
     Caption = 'Display Exit Windows Dialog'
-    DoubleBuffered = True
-    ParentDoubleBuffered = False
     TabOrder = 4
     OnClick = btnExitWindowsClick
   end
@@ -77,8 +67,6 @@ object fmShellDialogTest: TfmShellDialogTest
     Width = 150
     Height = 25
     Caption = 'Display Format Drive Dialog'
-    DoubleBuffered = True
-    ParentDoubleBuffered = False
     TabOrder = 5
     OnClick = btnFormatDriveClick
   end
@@ -88,8 +76,6 @@ object fmShellDialogTest: TfmShellDialogTest
     Width = 150
     Height = 25
     Caption = 'Display Restart Dialog'
-    DoubleBuffered = True
-    ParentDoubleBuffered = False
     TabOrder = 6
     OnClick = btnRestartClick
   end
@@ -99,8 +85,6 @@ object fmShellDialogTest: TfmShellDialogTest
     Width = 150
     Height = 25
     Caption = 'Display Properties Dialog'
-    DoubleBuffered = True
-    ParentDoubleBuffered = False
     TabOrder = 7
     OnClick = btnObjectPropertiesClick
   end
@@ -110,8 +94,6 @@ object fmShellDialogTest: TfmShellDialogTest
     Width = 150
     Height = 25
     Caption = 'Display Run File Dialog'
-    DoubleBuffered = True
-    ParentDoubleBuffered = False
     TabOrder = 8
     OnClick = btnRunFileClick
   end
@@ -121,8 +103,6 @@ object fmShellDialogTest: TfmShellDialogTest
     Width = 150
     Height = 25
     Caption = 'Display Find Computer Dialog'
-    DoubleBuffered = True
-    ParentDoubleBuffered = False
     TabOrder = 9
     OnClick = btnFindComputerClick
   end
@@ -132,8 +112,6 @@ object fmShellDialogTest: TfmShellDialogTest
     Width = 150
     Height = 25
     Caption = 'Display Shell Message Box'
-    DoubleBuffered = True
-    ParentDoubleBuffered = False
     TabOrder = 10
     OnClick = btnShellMessageBoxClick
   end
@@ -143,8 +121,6 @@ object fmShellDialogTest: TfmShellDialogTest
     Width = 150
     Height = 25
     Caption = 'Display Disk Full Dialog'
-    DoubleBuffered = True
-    ParentDoubleBuffered = False
     TabOrder = 11
     OnClick = btnHandleDiskFillClick
   end
@@ -154,8 +130,6 @@ object fmShellDialogTest: TfmShellDialogTest
     Width = 150
     Height = 25
     Caption = 'Display Net Connection Dialog'
-    DoubleBuffered = True
-    ParentDoubleBuffered = False
     TabOrder = 12
     OnClick = btnNetConnectionClick
   end
@@ -165,9 +139,22 @@ object fmShellDialogTest: TfmShellDialogTest
     Width = 150
     Height = 25
     Caption = 'Show Out of Memory Box'
-    DoubleBuffered = True
-    ParentDoubleBuffered = False
     TabOrder = 13
     OnClick = btnOutOfMemoryClick
+  end
+  object btnShellFileProps: TBitBtn
+    Left = 27
+    Top = 304
+    Width = 150
+    Height = 25
+    Caption = 'Display Shell File Props'
+    TabOrder = 14
+    OnClick = btnShellFilePropsClick
+  end
+  object flpndlgSelFile: TFileOpenDialog
+    FavoriteLinks = <>
+    FileTypes = <>
+    Options = []
+    Left = 24
   end
 end
