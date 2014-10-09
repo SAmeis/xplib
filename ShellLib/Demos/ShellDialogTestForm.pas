@@ -83,7 +83,12 @@ end;
 
 procedure TfmShellDialogTest.btnBrowseFoldersClick(Sender: TObject);
 begin
-	Self.dlgBrowseFolders.Execute;
+	Self.dlgBrowseFolders.RootPath:='C:\';
+	if ( Self.dlgBrowseFolders.Execute ) then begin
+		MessageDlg( Self.dlgBrowseFolders.RootPath,  mtInformation, [mbOK], 0);
+	end else begin
+		MessageDlg('Cancelado?' + SysErrorMessage( GetLastError() ),  mtInformation, [mbOK], 0);
+	end;
 end;
 
 procedure TfmShellDialogTest.dlgBrowseFoldersChange(Sender: TObject; var Path, StatusText: string; var OKState: TkbOKState);

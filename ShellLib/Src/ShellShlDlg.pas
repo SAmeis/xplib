@@ -18,9 +18,7 @@ interface
 
 uses Windows, Messages, ShlObj, SysUtils, Classes, Forms, Graphics, ShellPIDL, ShellAPIFuncs;
 
-{ ***********************************************************
-  Undocumented Windows Shell Dialog API interface
-  *********************************************************** }
+{ ******************************* Undocumented Windows Shell Dialog API interface ****************************************** }
 
 const                         { SHFormatDrive FormatID parameter values }
 	SHFMT_ID_DEFAULT = $FFFF; { Use the default format scheme }
@@ -68,6 +66,11 @@ const { SHObjectProperties Flags }
 	OPF_PRINTERNAME = $01;
 	OPF_PATHNAME    = $02;
 
+	//Inicio das rotinas implementadas de forma mais segura
+function SHNetConnectionDialog(Owner: HWND; ResourceName: Pointer; ResourceType: DWORD): DWORD; stdcall;
+
+//fim das rotinas implementadas de forma mais segura
+
 procedure RunFileDlg(Owner: HWND; IconHandle: HICON; WorkPath: Pointer; Caption: Pointer; Description: Pointer;
 	Flags: UINT); stdcall;
 
@@ -83,8 +86,6 @@ function GetFileNameFromBrowse(Owner: HWND; FileName: Pointer; MaxFileNameChars:
 	DefaultExtension: Pointer; Filter: Pointer; Caption: Pointer): longbool; stdcall;
 
 function SHObjectProperties(Owner: HWND; Flags: UINT; ObjectName: Pointer; InitialTabName: Pointer): longbool; stdcall;
-
-function SHNetConnectionDialog(Owner: HWND; ResourceName: Pointer; ResourceType: DWORD): DWORD; stdcall;
 
 function SHStartNetConnectionDialog(Owner: HWND; ResourceName: PWideChar; ResourceType: DWORD): DWORD; stdcall;
 
@@ -373,7 +374,7 @@ function NetResourceTypeConstToEnum(NetResourceType: DWORD): TkbNetResourceType;
 
 implementation
 
-uses Controls, ShellAPI, ActiveX;
+uses Controls, ShellAPI, ActiveX, System.Win.ComObj;
 
 const
 
@@ -747,79 +748,157 @@ end;
 
 function TkbBrowseForFolderDialog.Execute: boolean;
 var
-	BrowseInfo: TBrowseInfo;
-	NameBuffer: array[0 .. MAX_PATH] of char;
-	FinalPIDL : PItemIDList;
+	browseinfo : TBrowseInfo;
+	itemidlist : PItemIDList;
+	image      : Integer;
+	DisplayName: PChar;
+	itaskalloc : IMalloc;
+	s          : PChar;
 begin
-	{ Initialize the BrowseInfo structure with default values. }
-	BrowseInfo.hwndOwner      := Application.MainForm.Handle;
-	BrowseInfo.pidlRoot       := nil;
-	BrowseInfo.pszDisplayName := NameBuffer;
-	BrowseInfo.lpszTitle      := PChar(Self.InstructionText);
-	BrowseInfo.ulFlags        := 0;
-	BrowseInfo.lpfn           := BrowseForFolderCallback;
-	{$WARN UNSAFE_CAST OFF}
-	BrowseInfo.LPARAM := LPARAM(Self);
-	{$WARN UNSAFE_CODE ON}
-	BrowseInfo.iImage := 0;
+	Result      := False;
+	image       := 0;
+	DisplayName := StrAlloc(MAX_PATH);
+	try
+		browseinfo.hwndOwner      := Application.MainForm.Handle;
+		browseinfo.pidlRoot       := nil;
+		browseinfo.pszDisplayName := DisplayName;
+		browseinfo.lpszTitle      := PChar(Self.FInstructionText);
+		browseinfo.ulFlags        := BIF_RETURNONLYFSDIRS;
+		browseinfo.lpfn           := nil;
+		{$WARN UNSAFE_CAST OFF}
+		browseinfo.LPARAM := LPARAM(Self);
+		{$WARN UNSAFE_CODE ON}
+		browseinfo.iImage := image;
+		if (Self.RootFolder = kbsdPath) then begin
+			browseinfo.pidlRoot := GetPIDLFromPath(Self.RootPath);
+		end else if (Self.RootFolder = rfDesktop) then begin
+			browseinfo.pidlRoot := nil;
+		end else begin
+			{ If RootFolder is not specifying a path for the root, try to fetch the PIDL for some special folder. If the folder is not
+			  recognized, just leave the root PIDL nil to get a default tree. }
+			browseinfo.pidlRoot := GetSpecialLocationPIDL(Self.RootFolder);
+		end;
+		{ Set the Flags member of BrowseInfo if we are filtering for some particular type of folder. }
+		case (Self.Filter) of
+			kbsdBrowseForComputers: begin
+					browseinfo.ulFlags := browseinfo.ulFlags or BIF_BROWSEFORCOMPUTER;
+				end;
+			kbsdBrowseForDirectories: begin
+					browseinfo.ulFlags := browseinfo.ulFlags or BIF_RETURNONLYFSDIRS;
+				end;
+			kbsdBrowseForFileAncestors: begin
+					browseinfo.ulFlags := browseinfo.ulFlags or BIF_RETURNFSANCESTORS;
+				end;
+			kbsdBrowseForPrinters: begin
+					browseinfo.ulFlags := browseinfo.ulFlags or BIF_BROWSEFORPRINTER;
+				end;
+		end;
 
-	{ Ensure the NameBuffer starts with a null-terminator to signal
-	  it is empty. }
-	NameBuffer[0] := #0;
+		{ Set the Flags member of BrowseInfo if we want to restrict access to network neighborhood. }
+		if (not(Self.CanExpandDomains)) then begin
+			browseinfo.ulFlags := browseinfo.ulFlags or BIF_DONTGOBELOWDOMAIN;
+		end;
 
-	{ If the RootFolder property specifies to use the Path property as the root, fetch the PIDL for that path and load it into
-	  the pidlRoot member of BrowseInfo. }
-	if (Self.RootFolder = kbsdPath) then begin
-		BrowseInfo.pidlRoot := GetPIDLFromPath(Self.RootPath);
-	end else if (Self.RootFolder = rfDesktop) then begin
-		BrowseInfo.pidlRoot := nil;
-	end else begin
-		{ If RootFolder is not specifying a path for the root, try to fetch the PIDL for some special folder. If the folder is not
-		  recognized, just leave the root PIDL nil to get a default tree. }
-		BrowseInfo.pidlRoot := GetSpecialLocationPIDL(Self.RootFolder);
-	end;
-	{ Set the Flags member of BrowseInfo if we are filtering for some particular type of folder. }
-	case (Self.Filter) of
-		kbsdBrowseForComputers: begin
-				BrowseInfo.ulFlags := BrowseInfo.ulFlags or BIF_BROWSEFORCOMPUTER;
+		{ Set the Flags member of BrowseInfo if we want to show status text in the dialog. }
+		if (Self.ShowStatusText) then begin
+			browseinfo.ulFlags := browseinfo.ulFlags or BIF_STATUSTEXT;
+		end;
+
+		itemidlist := SHBrowseForFolder(browseinfo);
+		if Assigned(itemidlist) then
+			try
+				s := StrAlloc(MAX_PATH);
+				try
+					if SHGetPathFromIDList(itemidlist, s) then begin
+						Result         := True;
+						Self.FRootPath := s;
+					end;
+				finally
+					StrDispose(s);
+				end;
+			finally
+				OleCheck(SHGetMalloc(itaskalloc));
+				try
+					assert(itaskalloc.DidAlloc(itemidlist) = 1, 'wrong allocator');
+					itaskalloc.Free(itemidlist);
+					itaskalloc.Free(browseinfo.pidlRoot); //libera id da pasta raiz
+				finally
+					itaskalloc := nil;
+				end;
 			end;
-		kbsdBrowseForDirectories: begin
-				BrowseInfo.ulFlags := BrowseInfo.ulFlags or BIF_RETURNONLYFSDIRS;
-			end;
-		kbsdBrowseForFileAncestors: begin
-				BrowseInfo.ulFlags := BrowseInfo.ulFlags or BIF_RETURNFSANCESTORS;
-			end;
-		kbsdBrowseForPrinters: begin
-				BrowseInfo.ulFlags := BrowseInfo.ulFlags or BIF_BROWSEFORPRINTER;
-			end;
+	finally
+		StrDispose(DisplayName);
 	end;
 
-	{ Set the Flags member of BrowseInfo if we want to restrict access to network neighborhood. }
-	if (not(Self.CanExpandDomains)) then begin
-		BrowseInfo.ulFlags := BrowseInfo.ulFlags or BIF_DONTGOBELOWDOMAIN;
-	end;
-
-	{ Set the Flags member of BrowseInfo if we want to show status text in the dialog. }
-	if (Self.ShowStatusText) then begin
-		BrowseInfo.ulFlags := BrowseInfo.ulFlags or BIF_STATUSTEXT;
-	end;
-
-	{ Show the dialog and save the PIDL reflecting the user's final selection, if any. }
-	FinalPIDL := SHBrowseForFolder(BrowseInfo);
-
-	{ If the final PIDL is not nil, return True. If it is nil, return False. }
-	Result := (FinalPIDL <> nil);
-
-	{ Reset the dialog window handle value to 0, since the dialog
-	  is no longer available. }
-	Self.FDialogHandle := 0;
-
-	{ Extract the file path, if any, from the final PIDL. }
-	Self.FRootPath := GetPathFromPIDL(FinalPIDL);
-
-	{ Free PIDLs allocated by the system. }
-	FreePIDL(FinalPIDL);
-	FreePIDL(BrowseInfo.pidlRoot);
+	(* rotina original
+	  ///    { Initialize the BrowseInfo structure with default values. }
+	  ///    browseinfo.hwndOwner      := Application.MainForm.Handle;
+	  ///    browseinfo.pidlRoot       := nil;
+	  ///    browseinfo.pszDisplayName := NameBuffer;
+	  ///    browseinfo.lpszTitle      := PChar(Self.InstructionText);
+	  ///    browseinfo.ulFlags        := 0;
+	  ///    browseinfo.lpfn           := BrowseForFolderCallback;
+	  ///    {$WARN UNSAFE_CAST OFF}
+	  ///    browseinfo.LPARAM := LPARAM(Self);
+	  ///    {$WARN UNSAFE_CODE ON}
+	  ///    browseinfo.iImage := 0;
+	  ///
+	  ///    { Ensure the NameBuffer starts with a null-terminator to signal it is empty. }
+	  ///    NameBuffer[0] := #0;
+	  ///
+	  ///    { If the RootFolder property specifies to use the Path property as the root, fetch the PIDL for that path and load it into
+	  ///      the pidlRoot member of BrowseInfo. }
+	  ///    if (Self.RootFolder = kbsdPath) then begin
+	  ///        browseinfo.pidlRoot := GetPIDLFromPath(Self.RootPath);
+	  ///    end else if (Self.RootFolder = rfDesktop) then begin
+	  ///        browseinfo.pidlRoot := nil;
+	  ///    end else begin
+	  ///        { If RootFolder is not specifying a path for the root, try to fetch the PIDL for some special folder. If the folder is not
+	  ///          recognized, just leave the root PIDL nil to get a default tree. }
+	  ///        browseinfo.pidlRoot := GetSpecialLocationPIDL(Self.RootFolder);
+	  ///    end;
+	  ///    { Set the Flags member of BrowseInfo if we are filtering for some particular type of folder. }
+	  ///    case (Self.Filter) of
+	  ///        kbsdBrowseForComputers: begin
+	  ///                browseinfo.ulFlags := browseinfo.ulFlags or BIF_BROWSEFORCOMPUTER;
+	  ///            end;
+	  ///        kbsdBrowseForDirectories: begin
+	  ///                browseinfo.ulFlags := browseinfo.ulFlags or BIF_RETURNONLYFSDIRS;
+	  ///            end;
+	  ///        kbsdBrowseForFileAncestors: begin
+	  ///                browseinfo.ulFlags := browseinfo.ulFlags or BIF_RETURNFSANCESTORS;
+	  ///            end;
+	  ///        kbsdBrowseForPrinters: begin
+	  ///                browseinfo.ulFlags := browseinfo.ulFlags or BIF_BROWSEFORPRINTER;
+	  ///            end;
+	  ///    end;
+	  ///
+	  ///    { Set the Flags member of BrowseInfo if we want to restrict access to network neighborhood. }
+	  ///    if (not(Self.CanExpandDomains)) then begin
+	  ///        browseinfo.ulFlags := browseinfo.ulFlags or BIF_DONTGOBELOWDOMAIN;
+	  ///    end;
+	  ///
+	  ///    { Set the Flags member of BrowseInfo if we want to show status text in the dialog. }
+	  ///    if (Self.ShowStatusText) then begin
+	  ///        browseinfo.ulFlags := browseinfo.ulFlags or BIF_STATUSTEXT;
+	  ///    end;
+	  ///
+	  ///    { Show the dialog and save the PIDL reflecting the user's final selection, if any. }
+	  ///    FinalPIDL := SHBrowseForFolder(browseinfo);
+	  ///
+	  ///    { If the final PIDL is not nil, return True. If it is nil, return False. }
+	  ///    Result := (FinalPIDL <> nil);
+	  ///
+	  ///    { Reset the dialog window handle value to 0, since the dialog is no longer available. }
+	  ///    Self.FDialogHandle := 0;
+	  ///
+	  ///    { Extract the file path, if any, from the final PIDL. }
+	  ///    Self.FRootPath := GetPathFromPIDL(FinalPIDL);
+	  ///
+	  ///    { Free PIDLs allocated by the system. }
+	  ///    FreePIDL(FinalPIDL);
+	  ///    FreePIDL(browseinfo.pidlRoot);
+	*)
 end;
 
 { ************************** Browse For Folder Callback function implementation ***************************************** }
@@ -843,7 +922,6 @@ begin
 				end;
 		end;
 	end;
-
 	{ Always return 0. }
 	Result := 0;
 end;
@@ -921,10 +999,7 @@ begin
 	end;
 end;
 
-{ ***********************************************************
-  TkbPickIconDialog class implementation
-  *********************************************************** }
-
+{ ********************************* TkbPickIconDialog class implementation ********************************************** }
 constructor TkbPickIconDialog.Create(TheOwner: TComponent);
 begin
 	{ Call the ancestor constructor. }
@@ -939,65 +1014,36 @@ function TkbPickIconDialog.Execute: Integer;
 var
 	FileNameBuffer: Pointer;
 begin
-	{ The Win NT UNICODE version. }
-	if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
-		{ Allocate a suitably sized PWideChar buffer and transliterate the initial filename into the buffer. }
-		FileNameBuffer := GetMemory(MAX_PATH * SizeOf(widechar));
-		try
-			StringToWideChar(Self.FileName, FileNameBuffer, MAX_PATH + 1);
-
-			{ Call the dialog and use the return value as the function result. }
-			Result := PickIconDlg(Application.Handle, PWideChar(FileNameBuffer), UINT(MAX_PATH), Self.FIconIndex);
-
-			{ If function was successful, transliterate the returned filename back to a string. }
-			if (Result <> 0) then begin
-				Self.FileName := WideCharToString(FileNameBuffer);
-			end;
-		finally
-			FreeMemory(FileNameBuffer);
+	{ Allocate a suitably sized PWideChar buffer and transliterate the initial filename into the buffer. }
+	FileNameBuffer := GetMemory(MAX_PATH * SizeOf(widechar));
+	try
+		StringToWideChar(Self.FileName, FileNameBuffer, MAX_PATH + 1);
+		{ Call the dialog and use the return value as the function result. }
+		Result := PickIconDlg(Application.Handle, PWideChar(FileNameBuffer), UINT(MAX_PATH), Self.FIconIndex);
+		{ If function was successful, transliterate the returned filename back to a string. }
+		if (Result <> 0) then begin
+			Self.FileName := WideCharToString(FileNameBuffer);
 		end;
-	end else begin { The Win 95 ANSI version. }
-		{ Allocate a suitably sized PChar buffer and copy the initial filename into the buffer. }
-		FileNameBuffer := GetMemory(MAX_PATH * SizeOf(AnsiChar));
-		try
-			StrPCopy(FileNameBuffer, Self.FileName);
-
-			{ Call the dialog and use the return value as the function result. }
-			Result := PickIconDlg(Application.Handle, FileNameBuffer, MAX_PATH, Self.FIconIndex);
-
-			if (Result <> 0) then begin { If function was successful, copy the filename back to a string. }
-				Self.FileName := StrPas(PWideChar(FileNameBuffer));
-			end;
-		finally
-			FreeMemory(FileNameBuffer);
-		end;
+	finally
+		FreeMemory(FileNameBuffer);
 	end;
-
 end;
 
-{ ***********************************************************
-  TkbRunFileDialog class implementation
-  *********************************************************** }
-
+{ ************************************ TkbRunFileDialog class implementation ************************************************** }
 constructor TkbRunFileDialog.Create(TheOwner: TComponent);
 begin
 	{ Call the ancestor constructor. }
 	inherited Create(TheOwner);
-
 	{ Initialize simple-type data members. }
 	Self.FCaption     := EmptyStr;
 	Self.FDescription := EmptyStr;
 	Self.FWorkingPath := EmptyStr;
-
 	{ Initialize event-type data members. }
 	Self.FOnValidate := nil;
-
 	{ Initialize set-type data members. }
 	Self.FOptions := [];
-
 	{ Allocate object-type data members. }
 	Self.FIcon := TIcon.Create;
-
 	{ Allocate a message-handling window. }
 	Self.FMessageWindow := Classes.AllocateHWnd(Self.HandleMessage);
 end;
@@ -1006,10 +1052,8 @@ destructor TkbRunFileDialog.Destroy;
 begin
 	{ Destroy the message-handling window }
 	Classes.DeallocateHWnd(Self.FMessageWindow);
-
 	{ Free object-type data members. }
 	Self.FIcon.Free;
-
 	{ Call the ancestor destructor. }
 	inherited Destroy;
 end;
@@ -1035,24 +1079,14 @@ begin
 	{ If we have a notify message with code run validate... }
 	if TheMessage.Msg = WM_NOTIFY then begin
 		if PNMHdr(TheMessage.LPARAM).code = RFN_VALIDATE then begin
-			{ Translate the file into a string.  Note that NT and 95 are UNICODE vs. ANSI, as usual. }
 			FileToRun := EmptyStr;
 			if (PNM_RunFileDlg(TheMessage.LPARAM).lpFile <> nil) then begin
-				if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
-					WideCharToStrVar(PWideChar(PNM_RunFileDlg(TheMessage.LPARAM).lpFile), FileToRun);
-				end else begin
-					FileToRun := StrPas(PChar(PNM_RunFileDlg(TheMessage.LPARAM).lpFile));
-				end;
+				WideCharToStrVar(PWideChar(PNM_RunFileDlg(TheMessage.LPARAM).lpFile), FileToRun);
 			end;
 			WorkPath := EmptyStr;
 			if (PNM_RunFileDlg(TheMessage.LPARAM).lpDirectory <> nil) then begin
-				if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
-					WideCharToStrVar(PWideChar(PNM_RunFileDlg(TheMessage.LPARAM).lpDirectory), WorkPath);
-				end else begin
-					FileToRun := StrPas(PChar(PNM_RunFileDlg(TheMessage.LPARAM).lpDirectory));
-				end;
+				WideCharToStrVar(PWideChar(PNM_RunFileDlg(TheMessage.LPARAM).lpDirectory), WorkPath);
 			end;
-
 			{ Set up and invoke event handler. Return the result from event handler to the message and exit this method. }
 			RunAction := kbsdRun;
 			Self.Validate(FileToRun, WorkPath, PNM_RunFileDlg(TheMessage.LPARAM).nShow, RunAction);
@@ -1060,7 +1094,6 @@ begin
 			Exit;
 		end;
 	end;
-
 	{ If message was not handled above, send it to the default window procedure. }
 	TheMessage.Result := DefWindowProc(Self.FMessageWindow, TheMessage.Msg, TheMessage.wParam, TheMessage.LPARAM);
 end;
@@ -1103,28 +1136,14 @@ begin
 				WorkPathBuffer := GetMemory((Length(Self.WorkingPath) + 1) * SizeOf(widechar));
 			end;
 			try
-
-				{ If WinNT, convert strings to UNICODE.  Otherwise, just copy to buffer. Test for nil buffers. }
-				if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
-					if (CaptionBuffer <> nil) then begin
-						StringToWideChar(Self.Caption, PWideChar(CaptionBuffer), (Length(Self.Caption) + 1));
-					end;
-					if (DescriptionBuffer <> nil) then begin
-						StringToWideChar(Self.Description, PWideChar(DescriptionBuffer), (Length(Self.Description) + 1));
-					end;
-					if (WorkPathBuffer <> nil) then begin
-						StringToWideChar(Self.WorkingPath, PWideChar(WorkPathBuffer), (Length(Self.WorkingPath) + 1));
-					end;
-				end else begin
-					if (CaptionBuffer <> nil) then begin
-						StrPCopy(PChar(CaptionBuffer), Self.Caption);
-					end;
-					if (DescriptionBuffer <> nil) then begin
-						StrPCopy(PChar(DescriptionBuffer), Self.Description);
-					end;
-					if (WorkPathBuffer <> nil) then begin
-						StrPCopy(PChar(WorkPathBuffer), Self.WorkingPath);
-					end;
+				if (CaptionBuffer <> nil) then begin
+					StringToWideChar(Self.Caption, PWideChar(CaptionBuffer), (Length(Self.Caption) + 1));
+				end;
+				if (DescriptionBuffer <> nil) then begin
+					StringToWideChar(Self.Description, PWideChar(DescriptionBuffer), (Length(Self.Description) + 1));
+				end;
+				if (WorkPathBuffer <> nil) then begin
+					StringToWideChar(Self.WorkingPath, PWideChar(WorkPathBuffer), (Length(Self.WorkingPath) + 1));
 				end;
 				{ Set up option flags. }
 				OptionFlags := 0;
@@ -1145,15 +1164,11 @@ begin
 	end;
 end;
 
-{ ***********************************************************
-  TkbFindFilesDialog class implementation
-  *********************************************************** }
-
+{ ******************************** TkbFindFilesDialog class implementation *************************************************** }
 constructor TkbFindFilesDialog.Create(TheOwner: TComponent);
 begin
 	{ Call the ancestor constructor. }
 	inherited Create(TheOwner);
-
 	{ Initialize simple-type properties. }
 	Self.FSearchFileName := EmptyStr;
 	Self.FRootPath       := EmptyStr;
@@ -1176,37 +1191,26 @@ var
 begin
 	{ Initialize Root PIDL to nil by default. }
 	RootPIDL := nil;
-
 	try
-
-		{ Try to set the search file PIDL. }
 		SearchFile := GetPIDLFromPath(Self.SearchFileName);
-
-		{ Set the Root PIDL. }
 		if (Self.RootFolder = kbsdPath) then begin
 			RootPIDL := GetPIDLFromPath(Self.RootPath);
 		end else begin
 			RootPIDL := GetSpecialLocationPIDL(Self.RootFolder);
 		end;
-
 		{ Show the dialog and return the result. }
 		Result := SHFindFiles(RootPIDL, SearchFile);
-
 		{ Free the Root PIDL. }
 	finally
-		FreePIDL(RootPIDL);
+		ILFree(RootPIDL);
 	end;
 end;
 
-{ ***********************************************************
-  TkbRestartWindowsDialog class implementation
-  *********************************************************** }
-
+{ ***************************** TkbRestartWindowsDialog class implementation ************************************************* }
 constructor TkbRestartWindowsDialog.Create(TheOwner: TComponent);
 begin
 	{ Call the ancestor constructor. }
 	inherited Create(TheOwner);
-
 	{ Initialize simple-type properties. }
 	Self.FReason        := EmptyStr;
 	Self.FRestartOption := kbsdRestartWindows;
@@ -1219,17 +1223,11 @@ var
 	ReasonString: string;
 	ReasonBuffer: Pointer;
 begin
-
 	{ Allocate a buffer to hold the reason, long enough for UNICODE if need be. }
 	ReasonString := Self.Reason + Space;
 	ReasonBuffer := GetMemory((Length(ReasonString) + 1) * SizeOf(widechar));
 	try
-		{ If WinNT, convert reason string to UNICODE.  Otherwise, just copy to buffer. }
-		if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
-			StringToWideChar(ReasonString, PWideChar(ReasonBuffer), (Length(ReasonString) + 1));
-		end else begin
-			StrPCopy(PChar(ReasonBuffer), ReasonString);
-		end;
+		StringToWideChar(ReasonString, PWideChar(ReasonBuffer), (Length(ReasonString) + 1));
 		{ Execute the dialog and convert the result to the return value. }
 		Result := (RestartDialog(Application.Handle, PWideChar(ReasonBuffer), RestartOptionEnumToConst(Self.RestartOption))
 			= idYes);
@@ -1238,15 +1236,11 @@ begin
 	end;
 end;
 
-{ ***********************************************************
-  TkbObjectPropertiesDialog class implementation
-  *********************************************************** }
-
+{ ******************************** TkbObjectPropertiesDialog class implementation ********************************************* }
 constructor TkbObjectPropertiesDialog.Create(TheOwner: TComponent);
 begin
 	{ Call the ancestor constructor. }
 	inherited Create(TheOwner);
-
 	{ Initialize simple-type properties. }
 	Self.FInitialTab := EmptyStr;
 	Self.FObjectName := EmptyStr;
@@ -1258,45 +1252,25 @@ var
 	ObjectNameBuffer: Pointer;
 	TabNameBuffer   : Pointer;
 begin
-	{ Allocate a buffer to hold the object name, long enough for UNICODE if need be. }
 	ObjectNameBuffer := GetMemory((Length(Self.ObjectName) + 1) * SizeOf(widechar));
 	try
-
-		{ If WinNT, convert object name string to UNICODE.  Otherwise, just copy to buffer. }
-		if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
-			StringToWideChar(Self.ObjectName, PWideChar(ObjectNameBuffer), (Length(Self.ObjectName) + 1));
-		end else begin
-			StrPCopy(PChar(ObjectNameBuffer), Self.ObjectName);
-		end;
-
+		StringToWideChar(Self.ObjectName, PWideChar(ObjectNameBuffer), (Length(Self.ObjectName) + 1));
 		{ Allocate a buffer to hold the initial tab name, long enough for UNICODE if need be. }
 		TabNameBuffer := GetMemory((Length(Self.InitialTab) + 1) * SizeOf(widechar));
 		try
-
-			{ If WinNT, convert initial tab name string to UNICODE.  Otherwise, just copy to buffer. }
-			if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
-				StringToWideChar(Self.InitialTab, PWideChar(TabNameBuffer), (Length(Self.InitialTab) + 1));
-			end else begin
-				StrPCopy(PChar(TabNameBuffer), Self.InitialTab);
-			end;
-
+			StringToWideChar(Self.InitialTab, PWideChar(TabNameBuffer), (Length(Self.InitialTab) + 1));
 			{ Execute the dialog and translate the result to the return value. }
 			Result := SHObjectProperties(Application.Handle, ShellObjectTypeEnumToConst(Self.ObjectType), ObjectNameBuffer,
 				TabNameBuffer);
-
 		finally
 			FreeMemory(TabNameBuffer);
 		end;
-
 	finally
 		FreeMemory(ObjectNameBuffer);
 	end;
 end;
 
-{ ***********************************************************
-  Public unit method implementations
-  *********************************************************** }
-
+{ ******************************** Public unit method implementations ************************************************** }
 function ShowShellAboutDialog: boolean;
 var
 	Dialog: TkbShellAboutDialog;
@@ -1347,8 +1321,7 @@ begin
 		Dialog.ObjectName := ObjectName;
 		Dialog.ObjectType := ObjectType;
 		Dialog.InitialTab := InitialTab;
-
-		Result := Dialog.Execute;
+		Result            := Dialog.Execute;
 	finally
 		Dialog.Free;
 	end;
@@ -1362,16 +1335,11 @@ begin
 	{ We must pass ANSI for Win95 and UNICODE for NT, or nil if the Resource string is empty. }
 	{$WARN UNSAFE_CODE OFF}
 	if (Resource <> EmptyStr) then begin
-		if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
-			StringToWideChar(Resource, PWideChar(@ResourceBuffer), MAX_PATH);
-		end else begin
-			StrPCopy(ResourceBuffer, Resource);
-		end;
+		StringToWideChar(Resource, PWideChar(@ResourceBuffer), MAX_PATH);
 		BufferAddress := @ResourceBuffer;
 	end else begin
 		BufferAddress := nil;
 	end;
-
 	{ Call API function and return result. }
 	Result := SHNetConnectionDialog(Application.Handle, BufferAddress, NetResourceTypeEnumToConst(ResourceType));
 	{$WARN UNSAFE_CODE OFF}
@@ -1628,8 +1596,6 @@ begin
 		end;
 	end;
 end;
-
-{ TODO -oroger -croger : inicio da area a ser testada pela carga dinamica }
 
 procedure RunFileDlg(Owner: HWND; IconHandle: HICON; WorkPath: Pointer; Caption: Pointer; Description: Pointer;
 	Flags: UINT); stdcall;

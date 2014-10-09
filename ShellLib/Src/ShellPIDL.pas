@@ -7,7 +7,7 @@ unit ShellPIDL;
 
 interface
 
-uses Windows, ShlObj;
+uses Windows, Winapi.ShlObj;
 
 { ************************************************  Public enumerated types ******************************************************* }
 type
@@ -26,14 +26,10 @@ type
 	TkbsdSpecialLocations = set of TkbsdSpecialLocation;
 
 	{ ************************************ Public PIDL manipulation method interfaces ******************************************* }
-procedure FreePIDL(PIDL: PItemIDList); stdcall;
+//procedure FreePIDL(PIDL: PItemIDList); stdcall;
 function GetPathFromPIDL(AbsolutePIDL: PItemIDList): string; stdcall;
 function GetPIDLFromPath(ThePath: string): PItemIDList; stdcall;
 function GetSpecialLocationPIDL(Location: TkbsdSpecialLocation): PItemIDList; stdcall;
-
-{ *******************************  Undocumented Windows PIDL manipulation method interfaces *************************************** }
-procedure ILFree(PIDL: Pointer); stdcall;
-function ILCreateFromPath(Path: Pointer): PItemIDList; stdcall;
 
 // ******************************************************
 //Public enum/const conversion function interfaces
@@ -52,7 +48,7 @@ const
 	// *******************************************************
 	//Public PIDL manipulation method implementations
 	// *******************************************************
-procedure FreePIDL; external Shell32 index 155; //Frees a PIDL.  Direct call to undocumented Windows function.
+//procedure FreePIDL; external Shell32 index 155; //Frees a PIDL.  Direct call to undocumented Windows function.
 
 function GetPathFromPIDL(AbsolutePIDL: PItemIDList): string; stdcall; //Gets a DOS path from a PIDL. Requires an absolute PIDL.
 var
@@ -64,7 +60,7 @@ begin
 	{ Check that the PIDL parameter is not nil. }
 	if (AbsolutePIDL = nil) then begin
 		Exit;
-	end; { if }
+	end;
 
 	{ Convert the absolute PIDL into a DOS path and return the string. }
 	SHGetPathFromIDList(AbsolutePIDL, PathBuffer);
@@ -77,14 +73,9 @@ var
 	Buffer: array[0 .. MAX_PATH] of WideChar;
 begin
 	{$WARN UNSAFE_CODE OFF}
-	{ If NT, convert path to UNICODE. }
-	if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
-		StringToWideChar(ThePath, Buffer, (high(Buffer) - low(Buffer) + 1));
-	end else begin                                          { If not NT, copy path as a standard ANSI null-term string. }
-		StrPLCopy(PChar(@Buffer), ThePath, Length(Buffer)); //Roger: Trocado SizeOf por Length de modo a corrigir retorno
-	end;
+	StringToWideChar(ThePath, Buffer, (high(Buffer) - low(Buffer) + 1));
 	{ Convert Path into PIDL }
-	Result := ILCreateFromPath(@Buffer);
+	Result := ILCreateFromPath(Buffer);
 	{$WARN UNSAFE_CODE ON}
 end;
 
@@ -94,11 +85,7 @@ begin
 	SHGetSpecialFolderLocation(0, SpecialLocationEnumToConst(Location), Result);
 end;
 
-{ ********************************* Undocumented Windows PIDL manipulation method imports **************************************** }
-procedure ILFree; external Shell32 index 155;
-function ILCreateFromPath; external Shell32 index 157;
-
-{ ************************** *****Public enum/const conversion function implementations ********************************* }
+{ ******************************  Public enum/const conversion function implementations ********************************* }
 function SpecialLocationEnumToConst(Location: TkbsdSpecialLocation): DWORD;
 begin
 	case (Location) of
@@ -152,7 +139,7 @@ begin
 			Result := CSIDL_PRINTHOOD;
 	else
 		Result := 0;
-	end; { case }
+	end;
 end;
 
 function SpecialLocationConstToEnum(Location: DWORD): TkbsdSpecialLocation;
@@ -206,7 +193,7 @@ begin
 			Result := kbsdCommonPrinters;
 	else
 		Result := kbsdPath;
-	end; { case }
+	end;
 end;
 
 function GetPIDLSize(PIDL: PItemIDList): Integer;
@@ -226,7 +213,7 @@ begin
 		end
 	end else begin { If PIDL is nil, return 0 size }
 		Result := 0;
-	end; { else }
+	end;
 end;
 
 end.

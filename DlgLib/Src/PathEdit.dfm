@@ -24,7 +24,7 @@ object PathEditorDlg: TPathEditorDlg
   object DescriptionLabel: TLabel
     Left = 20
     Top = 20
-    Width = 104
+    Width = 108
     Height = 13
     Caption = 'Lista ordenada de %s '
   end
@@ -231,7 +231,7 @@ object PathEditorDlg: TPathEditorDlg
     InstructionText = 'Selecione a pasta desejada'
     RootFolder = kbsdPath
     RootPath = 'c:\temp'
-    Left = 287
-    Top = 178
+    Left = 135
+    Top = 90
   end
 end

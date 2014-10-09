@@ -42,6 +42,9 @@
         <Projects Include="ShellLib\Src\ShellLibD20.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="DlgLib\Src\DlgLibD20.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -167,14 +170,23 @@
     <Target Name="ShellLibD20:Make">
         <MSBuild Projects="ShellLib\Src\ShellLibD20.dproj" Targets="Make"/>
     </Target>
+    <Target Name="DlgLibD20">
+        <MSBuild Projects="DlgLib\Src\DlgLibD20.dproj"/>
+    </Target>
+    <Target Name="DlgLibD20:Clean">
+        <MSBuild Projects="DlgLib\Src\DlgLibD20.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DlgLibD20:Make">
+        <MSBuild Projects="DlgLib\Src\DlgLibD20.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="XPLibD20;OPLibD20;GDBLibD20;BDELibD20;FXLibD20;GeneralLibD20;StFLibD20;INetLibD20;WinSysLibD20;WinNetLibD20;TRELibD20;ECLibD20;ShellLibD20"/>
+        <CallTarget Targets="XPLibD20;OPLibD20;GDBLibD20;BDELibD20;FXLibD20;GeneralLibD20;StFLibD20;INetLibD20;WinSysLibD20;WinNetLibD20;TRELibD20;ECLibD20;ShellLibD20;DlgLibD20"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="XPLibD20:Clean;OPLibD20:Clean;GDBLibD20:Clean;BDELibD20:Clean;FXLibD20:Clean;GeneralLibD20:Clean;StFLibD20:Clean;INetLibD20:Clean;WinSysLibD20:Clean;WinNetLibD20:Clean;TRELibD20:Clean;ECLibD20:Clean;ShellLibD20:Clean"/>
+        <CallTarget Targets="XPLibD20:Clean;OPLibD20:Clean;GDBLibD20:Clean;BDELibD20:Clean;FXLibD20:Clean;GeneralLibD20:Clean;StFLibD20:Clean;INetLibD20:Clean;WinSysLibD20:Clean;WinNetLibD20:Clean;TRELibD20:Clean;ECLibD20:Clean;ShellLibD20:Clean;DlgLibD20:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="XPLibD20:Make;OPLibD20:Make;GDBLibD20:Make;BDELibD20:Make;FXLibD20:Make;GeneralLibD20:Make;StFLibD20:Make;INetLibD20:Make;WinSysLibD20:Make;WinNetLibD20:Make;TRELibD20:Make;ECLibD20:Make;ShellLibD20:Make"/>
+        <CallTarget Targets="XPLibD20:Make;OPLibD20:Make;GDBLibD20:Make;BDELibD20:Make;FXLibD20:Make;GeneralLibD20:Make;StFLibD20:Make;INetLibD20:Make;WinSysLibD20:Make;WinNetLibD20:Make;TRELibD20:Make;ECLibD20:Make;ShellLibD20:Make;DlgLibD20:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

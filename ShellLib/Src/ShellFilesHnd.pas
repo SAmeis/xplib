@@ -2,42 +2,40 @@
 {$DEFINE DEBUG_UNIT}
 {$ENDIF}
 {$I ShellLib.inc}
-
-
 (*
-///coletado de http://msdn.microsoft.com/en-us/library/windows/desktop/aa364819%28v=vs.85%29.aspx
-///
-///Since GetBinary is unreliable, this gets target architecture header info in the compile file
-///
-///GetBinaryType is not reliable for a solution, it seems. Bob Shen is on right track.
-///
-///This code actually examines the compiled header file that is present in the compiled file that details the target platform. This article is the inspiration, from
-///http://msdn.microsoft.com/en-us/magazine/cc301805.aspx which references
-///http://msdn.microsoft.com/en-us/magazine/bb985997.aspx and
-///http://msdn.microsoft.com/en-us/library/windows/desktop/ms680313(v=vs.85).aspx
-///
-///The target CPU for this executable. Common values are:
-///IMAGE_FILE_MACHINE_I386    0x014c // Intel 386 x32
-///IMAGE_FILE_MACHINE_IA64    0x0200 // Intel 64   x64
-///
-///and here is the code
-///
-///public enum MachineType { Native = 0, x86 = 0x014c, Itanium = 0x0200, x64 = 0x8664 }
-///
-///        public string GetAppCompiledMachineType(string fileName)
-///        {
-///            const int PE_POINTER_OFFSET = 60;
-///            const int MACHINE_OFFSET = 4;
-///            byte[] data = new byte[4096];
-///            using (Stream s = new FileStream(fileName, FileMode.Open, FileAccess.Read)) {
-///                s.Read(data, 0, 4096);
-///            }
-///            // dos header is 64 bytes, last element, long (4 bytes) is the address of the PE header
-///            int PE_HEADER_ADDR = BitConverter.ToInt32(data, PE_POINTER_OFFSET);
-///            int machineUint = BitConverter.ToUInt16(data, PE_HEADER_ADDR + MACHINE_OFFSET);
-///            return ((MachineType)machineUint).ToString();
-///         }
-///
+  ///coletado de http://msdn.microsoft.com/en-us/library/windows/desktop/aa364819%28v=vs.85%29.aspx
+  ///
+  ///Since GetBinary is unreliable, this gets target architecture header info in the compile file
+  ///
+  ///GetBinaryType is not reliable for a solution, it seems. Bob Shen is on right track.
+  ///
+  ///This code actually examines the compiled header file that is present in the compiled file that details the target platform. This article is the inspiration, from
+  ///http://msdn.microsoft.com/en-us/magazine/cc301805.aspx which references
+  ///http://msdn.microsoft.com/en-us/magazine/bb985997.aspx and
+  ///http://msdn.microsoft.com/en-us/library/windows/desktop/ms680313(v=vs.85).aspx
+  ///
+  ///The target CPU for this executable. Common values are:
+  ///IMAGE_FILE_MACHINE_I386    0x014c // Intel 386 x32
+  ///IMAGE_FILE_MACHINE_IA64    0x0200 // Intel 64   x64
+  ///
+  ///and here is the code
+  ///
+  ///public enum MachineType { Native = 0, x86 = 0x014c, Itanium = 0x0200, x64 = 0x8664 }
+  ///
+  ///        public string GetAppCompiledMachineType(string fileName)
+  ///        {
+  ///            const int PE_POINTER_OFFSET = 60;
+  ///            const int MACHINE_OFFSET = 4;
+  ///            byte[] data = new byte[4096];
+  ///            using (Stream s = new FileStream(fileName, FileMode.Open, FileAccess.Read)) {
+  ///                s.Read(data, 0, 4096);
+  ///            }
+  ///            // dos header is 64 bytes, last element, long (4 bytes) is the address of the PE header
+  ///            int PE_HEADER_ADDR = BitConverter.ToInt32(data, PE_POINTER_OFFSET);
+  ///            int machineUint = BitConverter.ToUInt16(data, PE_HEADER_ADDR + MACHINE_OFFSET);
+  ///            return ((MachineType)machineUint).ToString();
+  ///         }
+  ///
 *)
 unit ShellFilesHnd;
 
@@ -47,7 +45,8 @@ uses
 	Windows, SysUtils, ShellAPI, Types, Str_Pas, FileHnd, Graphics, Classes, Controls;
 
 type
-	TExecutableType = (etDOS, etWIN16, etWIN32, etWin64, etWINCONSOLE, etBATCH, etPIF, etVBScript, etPowerShell, etLINK, etERROR);
+	TExecutableType = (etDOS, etOS2, etPOSIX, etWIN16, etWIN32, etWin64, etWINCONSOLE, etBATCH, etPIF, etVBScript, etPowerShell,
+		etLINK, etERROR);
 
 	TShellHnd = class
 	public
@@ -133,6 +132,7 @@ var
 	PFile   : array[0 .. 1024] of char;
 	PPos    : PChar;
 	RetHigh : WORD;
+	valRet  : DWORD;
 begin
 	Result := etERROR;
 	StrPCopy(PFile, UpperCase(FileName));
@@ -182,19 +182,47 @@ begin
 				Result := etWINCONSOLE;
 			end;
 		end;
-	end else begin                                                       //Aplicativo GUI/Windows
+	end else begin //Aplicativo GUI/Windows
 		RetHigh := HiWord(Ret);
-		if ( RetHigh >= $300) then begin                              //Checa se dentro do limite
+		if (RetHigh >= $300) then begin                          //Checa se dentro do limite
 			if (RetHigh >= $300) and (RetHigh < $350) then begin //WIN16
 				Result := etWIN16;
 			end else begin
 				if (RetHigh >= $350) and (RetHigh < $400) then begin //NT3?????
-					Result := etWIN32;                                       //Fazer o que? eh 32bits
+					Result := etWIN32;                               //Fazer o que? eh 32bits
 				end else begin
 					if (RetHigh >= $400) then begin
 						//Preencher as lacunas de SHGetFileInfo() com GetBinaryType()
-						--- inserir GetBinaryType() para os demais casos
-						Result := etWIN32;
+						if (GetBinaryType(PFile, valRet)) then begin
+							case valRet of
+								SCS_32BIT_BINARY: begin
+										Result := etWIN32;
+									end;
+								SCS_64BIT_BINARY: begin
+										Result := etWin64;
+									end;
+								SCS_DOS_BINARY: begin
+										Result := etDOS;
+									end;
+								SCS_OS216_BINARY: begin
+										Result := etOS2;
+									end;
+								SCS_PIF_BINARY: begin
+										Result := etPIF;
+									end;
+								SCS_POSIX_BINARY: begin
+										Result := etPOSIX;
+									end;
+								SCS_WOW_BINARY: begin
+										Result := etWIN16;
+									end;
+							else begin
+									Result := etERROR;
+								end;
+							end;
+						end else begin
+							Result := etERROR;
+						end;
 					end;
 				end;
 			end;
@@ -398,8 +426,6 @@ begin
 		Result := EmptyStr;
 	end;
 end;
-
-{ TShellHnd }
 
 class procedure TShellHnd.CreateShellShortCut(const TargetName, LinkFileName, IconFilename: WideString; IconIndex: Integer);
 var

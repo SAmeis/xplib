@@ -2,1815 +2,1737 @@
 {$DEFINE DEBUG_UNIT}
 {$ENDIF}
 {$I ShellLib.inc}
-
 unit ShellDialogs deprecated;
 
 interface
 
 uses
-    Windows, Messages, ShlObj, SysUtils, Classes, Forms, Graphics, ShellPIDL, ShellAPIFuncs;
+	Windows, Messages, ShlObj, SysUtils, Classes, Forms, Graphics, ShellPIDL, ShellAPIFuncs, ShellShlDlg;
 
+{ ******************* Undocumented Windows Shell Dialog API interface ******************************* }
 
-{******************* Undocumented Windows Shell Dialog API interface *******************************}
+const                         //SHFormatDrive FormatID parameter values
+	SHFMT_ID_DEFAULT = $FFFF; //Use the default format scheme
 
-const //SHFormatDrive FormatID parameter values
-    SHFMT_ID_DEFAULT = $FFFF;  //Use the default format scheme
+const                          //SHFormatDrive Options parameter flags
+	SHFMT_OPT_FULL    = $0001; //Check "Quick Format" by default.
+	SHFMT_OPT_SYSONLY = $0002; //Check "Sys Only" by default.
 
-const //SHFormatDrive Options parameter flags
-    SHFMT_OPT_FULL    = $0001;  //Check "Quick Format" by default.
-    SHFMT_OPT_SYSONLY = $0002;  //Check "Sys Only" by default.
+const                           //SHFormatDrive returned error values
+	SHFMT_ERROR    = $FFFFFFFF; //Error on last format, but drive may be formattable
+	SHFMT_CANCEL   = $FFFFFFFE; //Last format was canceled
+	SHFMT_NOFORMAT = $FFFFFFFD; //Drive is not formatable
 
-const //SHFormatDrive returned error values
-    SHFMT_ERROR    = $FFFFFFFF; //Error on last format, but drive may be formattable
-    SHFMT_CANCEL   = $FFFFFFFE; //Last format was canceled
-    SHFMT_NOFORMAT = $FFFFFFFD; //Drive is not formatable
-
-const {RunFileDlg Flags}
-    RFF_NOBROWSE      = $01;   //Removes the browse button
-    RFF_NODEFAULT     = $02;   //No default item selected
-    RFF_CALCDIRECTORY = $04;   //Determines the work directory from the file name.
-    RFF_NOLABEL       = $08;   //Removes the edit box label
-    RFF_NOSEPARATEMEM = $20;   //Removes the Separate Memory Space check box
+const                        { RunFileDlg Flags }
+	RFF_NOBROWSE      = $01; //Removes the browse button
+	RFF_NODEFAULT     = $02; //No default item selected
+	RFF_CALCDIRECTORY = $04; //Determines the work directory from the file name.
+	RFF_NOLABEL       = $08; //Removes the edit box label
+	RFF_NOSEPARATEMEM = $20; //Removes the Separate Memory Space check box
 
 type //RunFileDlg record type
-    TNM_RunFileDlg = packed record
-        hdr:         TNMHdr;
-        lpFile:      Pointer;
-        lpDirectory: Pointer;
-		nShow:       longbool;
-    end;
-    PNM_RunFileDlg = ^TNM_RunFileDlg;
+	TNM_RunFileDlg = packed record
+		hdr: TNMHdr;
+		lpFile: Pointer;
+		lpDirectory: Pointer;
+		nShow: longbool;
+	end;
+
+	PNM_RunFileDlg = ^TNM_RunFileDlg;
 
 const //RunFileDlg Notification Code
-    RFN_VALIDATE = -510;
+	RFN_VALIDATE = -510;
 
-const //RunFileDlg notification message return values
-    RF_OK     = $00;  //Allow the application to run
-    RF_CANCEL = $01;  //Cancel the operation and close the dialog
-    RF_RETRY  = $02;  //Cancel the operation, but leave the dialog open
+const                //RunFileDlg notification message return values
+	RF_OK     = $00; //Allow the application to run
+	RF_CANCEL = $01; //Cancel the operation and close the dialog
+	RF_RETRY  = $02; //Cancel the operation, but leave the dialog open
 
 const //Additional flags for RestartDialog
-    EW_RESTARTWINDOWS = $42;
-    EW_REBOOTSYSTEM   = $43;
-    EW_EXITANDEXECAPP = $44;
+	EW_RESTARTWINDOWS = $42;
+	EW_REBOOTSYSTEM   = $43;
+	EW_EXITANDEXECAPP = $44;
 
 const //SHObjectProperties Flags
-    OPF_PRINTERNAME = $01;
-    OPF_PATHNAME    = $02;
+	OPF_PRINTERNAME = $01;
+	OPF_PATHNAME    = $02;
 
+//procedure RunFileDlg(Owner: HWND; IconHandle: HICON; WorkPath: Pointer; Caption: Pointer; Description: Pointer; Flags: UINT); stdcall;
 
-procedure RunFileDlg(Owner : HWND; IconHandle : HICON; WorkPath : Pointer; Caption : Pointer; Description : Pointer;
-    Flags : UINT); stdcall;
+//function SHFindFiles(Root: PItemIDList; SavedSearchFile: PItemIDList): longbool; stdcall;
 
-function SHFindFiles(Root : PItemIDList; SavedSearchFile : PItemIDList) : longbool; stdcall;
+//function SHFindComputer(Reserved1: PItemIDList; Reserved2: PItemIDList): longbool; stdcall;
 
-function SHFindComputer(Reserved1 : PItemIDList; Reserved2 : PItemIDList) : longbool; stdcall;
+//procedure ExitWindowsDialog(Owner: HWND); stdcall;
 
-procedure ExitWindowsDialog(Owner : HWND); stdcall;
+//function RestartDialog(Owner: HWND; Reason: Pointer; Flags: UINT): DWORD; stdcall;
 
-function RestartDialog(Owner : HWND; Reason : Pointer; Flags : UINT) : DWORD; stdcall;
+//function GetFileNameFromBrowse(Owner: HWND; FileName: Pointer; MaxFileNameChars: DWORD; InitialDirectory: Pointer;
+//	DefaultExtension: Pointer; Filter: Pointer; Caption: Pointer): longbool; stdcall;
 
-function GetFileNameFromBrowse(Owner : HWND; FileName : Pointer; MaxFileNameChars : DWORD; InitialDirectory : Pointer;
-    DefaultExtension : Pointer; Filter : Pointer; Caption : Pointer) : longbool; stdcall;
+//function SHObjectProperties(Owner: HWND; Flags: UINT; ObjectName: Pointer; InitialTabName: Pointer): longbool; stdcall;
 
-function SHObjectProperties(Owner : HWND; Flags : UINT; ObjectName : Pointer; InitialTabName : Pointer) : longbool; stdcall;
+//function SHNetConnectionDialog(Owner: HWND; ResourceName: Pointer; ResourceType: DWORD): DWORD; stdcall;
 
-function SHNetConnectionDialog(Owner : HWND; ResourceName : Pointer; ResourceType : DWORD) : DWORD; stdcall;
+function SHStartNetConnectionDialog(Owner: HWND; ResourceName: PWideChar; ResourceType: DWORD): DWORD; stdcall;
 
-function SHStartNetConnectionDialog(Owner : HWND; ResourceName : PWideChar; ResourceType : DWORD) : DWORD; stdcall;
+//function SHOutOfMemoryMessageBox(Owner: HWND; Caption: Pointer; Style: UINT): Integer; stdcall;
 
-function SHOutOfMemoryMessageBox(Owner : HWND; Caption : Pointer; Style : UINT) : Integer; stdcall;
+//procedure SHHandleDiskFull(Owner: HWND; uDrive: UINT); stdcall;
 
-procedure SHHandleDiskFull(Owner : HWND; uDrive : UINT); stdcall;
+function ShellMessageBox(Instance: THandle; Owner: HWND; Text: PChar; Caption: PChar; Style: UINT; Parameters: array of Pointer)
+	: Integer; cdecl;
 
-function ShellMessageBox(Instance : THandle; Owner : HWND; Text : PChar; Caption : PChar; Style : UINT;
-    Parameters : array of Pointer) : Integer; cdecl;
+function ShellMessageBoxA(Instance: THandle; Owner: HWND; Text: PChar; Caption: PChar; Style: UINT; Parameters: array of Pointer)
+	: Integer; cdecl;
 
-function ShellMessageBoxA(Instance : THandle; Owner : HWND; Text : PChar; Caption : PChar;
-    Style : UINT; Parameters : array of Pointer) :
-    Integer; cdecl;
+function ShellMessageBoxW(Instance: THandle; Owner: HWND; Text: PWideChar; Caption: PWideChar; Style: UINT;
+	Parameters: array of Pointer): Integer; cdecl;
 
-function ShellMessageBoxW(Instance : THandle; Owner : HWND; Text : PWideChar; Caption : PWideChar;
-    Style : UINT; Parameters : array of Pointer) :
-    Integer; cdecl;
-
-
-
-{***********************************************************
-                   Public enumerated types
- ***********************************************************}
+{ ***********************************************************
+  Public enumerated types
+  *********************************************************** }
 
 type
-    TkbBrowseFilter = (kbsdBrowseForAnything, kbsdBrowseForComputers, kbsdBrowseForDirectories,
-        kbsdBrowseForFileAncestors, kbsdBrowseForPrinters);
+	TkbBrowseFilter = (kbsdBrowseForAnything, kbsdBrowseForComputers, kbsdBrowseForDirectories, kbsdBrowseForFileAncestors,
+		kbsdBrowseForPrinters);
 
-    TkbOKState = (kbsdDefaultState, kbsdEnableOK, kbsdDisableOK);
+	TkbOKState = (kbsdDefaultState, kbsdEnableOK, kbsdDisableOK);
 
-    TkbDriveLetter = (kbsdDriveA, kbsdDriveB, kbsdDriveC, kbsdDriveD, kbsdDriveE, kbsdDriveF, kbsdDriveG,
-        kbsdDriveH, kbsdDriveI, kbsdDriveJ, kbsdDriveK, kbsdDriveL, kbsdDriveM, kbsdDriveN,
-        kbsdDriveO, kbsdDriveP, kbsdDriveQ, kbsdDriveR, kbsdDriveS, kbsdDriveT, kbsdDriveU,
-        kbsdDriveV, kbsdDriveW, kbsdDriveX, kbsdDriveY, kbsdDriveZ);
+	TkbDriveLetter = (kbsdDriveA, kbsdDriveB, kbsdDriveC, kbsdDriveD, kbsdDriveE, kbsdDriveF, kbsdDriveG, kbsdDriveH, kbsdDriveI,
+		kbsdDriveJ, kbsdDriveK, kbsdDriveL, kbsdDriveM, kbsdDriveN, kbsdDriveO, kbsdDriveP, kbsdDriveQ, kbsdDriveR, kbsdDriveS,
+		kbsdDriveT, kbsdDriveU, kbsdDriveV, kbsdDriveW, kbsdDriveX, kbsdDriveY, kbsdDriveZ);
 
-    TkbFormatResult = (kbsdFormatSucceeded, kbsdFormatCancelled, kbsdDriveNotFormattable, kbsdFormatError);
+	TkbFormatResult = (kbsdFormatSucceeded, kbsdFormatCancelled, kbsdDriveNotFormattable, kbsdFormatError);
 
-    TkbRestartOption = (kbsdLogoff, kbsdShutdown, kbsdReboot, kbsdRestartWindows, kbsdRebootSystem, kbsdExitAndExecApp);
+	TkbRestartOption = (kbsdLogoff, kbsdShutdown, kbsdReboot, kbsdRestartWindows, kbsdRebootSystem, kbsdExitAndExecApp);
 
 	TkbShellObjectType = (kbsdPathObject, kbsdPrinterObject);
 
-    TkbRunFileOption = (kbsdNoBrowseButton, kbsdNoDefaultPick, kbsdCalculateWorkPath, kbsdNoEditLabel, kbsdNoSeparateMemory);
+	TkbRunFileOption = (kbsdNoBrowseButton, kbsdNoDefaultPick, kbsdCalculateWorkPath, kbsdNoEditLabel, kbsdNoSeparateMemory);
 
-    TkbRunFileAction = (kbsdRun, kbsdCancel, kbsdRetry);
+	TkbRunFileAction = (kbsdRun, kbsdCancel, kbsdRetry);
 
-    TkbNetResourceType = (kbsdDiskResource, kbsdPrintResource);
+	TkbNetResourceType = (kbsdDiskResource, kbsdPrintResource);
 
-{***********************************************************
-                      Public set types
- ***********************************************************}
-
-type
-    TkbBrowseFilters = set of TkbBrowseFilter;
-
-    TkbOKStates = set of TkbOKState;
-
-    TkbDriveLetters = set of TkbDriveLetter;
-
-    TkbFormatResults = set of TkbFormatResult;
-
-    TkbRestartOptions = set of TkbRestartOption;
-
-    TkbShellObjectTypes = set of TkbShellObjectType;
-
-    TkbRunFileOptions = set of TkbRunFileOption;
-
-{***********************************************************
-                Public event procedural types
- ***********************************************************}
-
-    TkbBrowseChangeEvent = procedure(Sender : TObject; var Path : string; var StatusText : string;
-        var OKState : TkbOKState) of object;
-    TkbBrowseInitEvent = procedure(Sender : TObject; DialogHandle : HWND) of object;
-    TkbRunFileValidateEvent = procedure(Sender : TObject; TheFile : TFileName; TheWorkPath : TFileName;
-        Visible : boolean; var Action : TkbRunFileAction) of object;
-
-{***********************************************************
-              TkbShellAboutDialog class interface
- ***********************************************************}
+	{ ***********************************************************
+	  Public set types
+	  *********************************************************** }
 
 type
-    TkbShellAboutDialog = class(TComponent)
-    public    {Constructors/Destructors}
-        constructor Create(TheOwner : TComponent); override;
-        destructor Destroy; override;
-    private   {Private data members}
-        FCaption :   string;
-        FIcon :      TIcon;
-        FOtherText : string;
-        FProduct :   string;
-    private   {Private property writer methods}
-        procedure SetIcon(NewValue : TIcon);
-    private   {Private property storage methods}
-        function StoreIcon : boolean;
-    public    {Public methods}
-     {$IFDEF MSWINDOWS}
-        function Execute : boolean;
-     {$ENDIF}
-    published {Published properties}
-        property Caption : string read FCaption write FCaption;
-        property Icon : TIcon read FIcon write SetIcon stored StoreIcon;
-        property OtherText : string read FOtherText write FOtherText;
-        property Product : string read FProduct write FProduct;
-    end platform;
+	TkbBrowseFilters = set of TkbBrowseFilter;
 
+	TkbOKStates = set of TkbOKState;
 
-{***********************************************************
-           TkbBrowseForFolderDialog class interface
- ***********************************************************}
+	TkbDriveLetters = set of TkbDriveLetter;
 
-    TkbBrowseForFolderDialog = class(TComponent)
-    private   {Private data members}
-        FCanExpandDomains : boolean;
-        FCaption :          string;
-        FDescription :      string;
-        FDialogHandle :     HWND;
-        FDisplayName :      string;
-		FFilter :           TkbBrowseFilter;
-        FInstructionText :  string;
-        FImageIndex :       DWORD;
-        FImageLarge :       TBitmap;
-        FImageSmall :       TBitmap;
-        FOnChange :         TkbBrowseChangeEvent;
-        FOnInitialize :     TkbBrowseInitEvent;
-        FRootFolder :       TkbsdSpecialLocation;
-        FRootPath :         TFileName;
-        FShowStatusText :   boolean;
-        FStatusText :       string;
-    private
-        function GetImage(Index : Integer) : TBitmap;
-    private
-        procedure SetCaption(NewValue : string);
-        procedure SetRootPath(NewValue : TFileName);
-        procedure SetStatusText(NewValue : string);
-    protected
-        procedure Change(DialogHandle : HWND; PIDL : Pointer); dynamic;
-        procedure Initialize(DialogHandle : HWND); dynamic;
-    public    {Public methods}
-        function Execute : boolean;
-        constructor Create(TheOwner : TComponent); override;
-    public    {Public read-only properties}
-        property Description : string read FDescription;
-        property DisplayName : string read FDisplayName;
-        property ImageIndex : DWORD read FImageIndex;
-        property ImageLarge : TBitmap index 1 read GetImage;
-        property ImageSmall : TBitmap index 2 read GetImage;
-    published {Published properties}
-        property CanExpandDomains : boolean read FCanExpandDomains write FCanExpandDomains default False;
-        property Caption : string read FCaption write SetCaption;
-        property Filter : TkbBrowseFilter read FFilter write FFilter default
-            kbsdBrowseForAnything;
-        property InstructionText : string read FInstructionText write FInstructionText;
-        property RootFolder : TkbsdSpecialLocation read FRootFolder write FRootFolder default rfDesktop;
-        property RootPath : TFileName read FRootPath write SetRootPath;
-        property ShowStatusText : boolean read FShowStatusText write FShowStatusText default False;
-        property StatusText : string read FStatusText write SetStatusText;
+	TkbFormatResults = set of TkbFormatResult;
+
+	TkbRestartOptions = set of TkbRestartOption;
+
+	TkbShellObjectTypes = set of TkbShellObjectType;
+
+	TkbRunFileOptions = set of TkbRunFileOption;
+
+	{ ***********************************************************
+	  Public event procedural types
+	  *********************************************************** }
+
+	TkbBrowseChangeEvent = procedure(Sender: TObject; var Path: string; var StatusText: string; var OKState: TkbOKState) of object;
+	TkbBrowseInitEvent   = procedure(Sender: TObject; DialogHandle: HWND) of object;
+	TkbRunFileValidateEvent = procedure(Sender: TObject; TheFile: TFileName; TheWorkPath: TFileName; Visible: boolean;
+		var Action: TkbRunFileAction) of object;
+
+	{ ***********************************************************
+	  TkbShellAboutDialog class interface
+	  *********************************************************** }
+
+type
+	TkbShellAboutDialog = class(TComponent)
+	public { Constructors/Destructors }
+		constructor Create(TheOwner: TComponent); override;
+		destructor Destroy; override;
+	private { Private data members }
+		FCaption  : string;
+		FIcon     : TIcon;
+		FOtherText: string;
+		FProduct  : string;
+	private { Private property writer methods }
+		procedure SetIcon(NewValue: TIcon);
+	private { Private property storage methods }
+		function StoreIcon: boolean;
+	public { Public methods }
+		{$IFDEF MSWINDOWS}
+		function Execute: boolean;
+		{$ENDIF}
+	published { Published properties }
+		property Caption  : string read FCaption write FCaption;
+		property Icon     : TIcon read FIcon write SetIcon stored StoreIcon;
+		property OtherText: string read FOtherText write FOtherText;
+		property Product  : string read FProduct write FProduct;
+	end platform;
+
+	{ ***********************************************************
+	  TkbBrowseForFolderDialog class interface
+	  *********************************************************** }
+
+	TkbBrowseForFolderDialog = class(TComponent)
+	private { Private data members }
+		FCanExpandDomains: boolean;
+		FCaption         : string;
+		FDescription     : string;
+		FDialogHandle    : HWND;
+		FDisplayName     : string;
+		FFilter          : TkbBrowseFilter;
+		FInstructionText : string;
+		FImageIndex      : DWORD;
+		FImageLarge      : TBitmap;
+		FImageSmall      : TBitmap;
+		FOnChange        : TkbBrowseChangeEvent;
+		FOnInitialize    : TkbBrowseInitEvent;
+		FRootFolder      : TkbsdSpecialLocation;
+		FRootPath        : TFileName;
+		FShowStatusText  : boolean;
+		FStatusText      : string;
+	private
+		function GetImage(Index: Integer): TBitmap;
+	private
+		procedure SetCaption(NewValue: string);
+		procedure SetRootPath(NewValue: TFileName);
+		procedure SetStatusText(NewValue: string);
+	protected
+		procedure Change(DialogHandle: HWND; PIDL: Pointer); dynamic;
+		procedure Initialize(DialogHandle: HWND); dynamic;
+	public { Public methods }
+		function Execute: boolean;
+		constructor Create(TheOwner: TComponent); override;
+	public { Public read-only properties }
+		property Description: string read FDescription;
+		property DisplayName: string read FDisplayName;
+		property ImageIndex : DWORD read FImageIndex;
+		property ImageLarge : TBitmap index 1 read GetImage;
+		property ImageSmall : TBitmap index 2 read GetImage;
+	published { Published properties }
+		property CanExpandDomains: boolean read FCanExpandDomains write FCanExpandDomains default False;
+		property Caption         : string read FCaption write SetCaption;
+		property Filter          : TkbBrowseFilter read FFilter write FFilter default kbsdBrowseForAnything;
+		property InstructionText : string read FInstructionText write FInstructionText;
+		property RootFolder      : TkbsdSpecialLocation read FRootFolder write FRootFolder default rfDesktop;
+		property RootPath        : TFileName read FRootPath write SetRootPath;
+		property ShowStatusText  : boolean read FShowStatusText write FShowStatusText default False;
+		property StatusText      : string read FStatusText write SetStatusText;
 	published
-        property OnChange : TkbBrowseChangeEvent read FOnChange write FOnChange;
-        property OnInitialize : TkbBrowseInitEvent read FOnInitialize write FOnInitialize;
-    end;
+		property OnChange    : TkbBrowseChangeEvent read FOnChange write FOnChange;
+		property OnInitialize: TkbBrowseInitEvent read FOnInitialize write FOnInitialize;
+	end;
 
+	{ ***********************************************************
+	  TkbFormatDriveDialog class interface
+	  *********************************************************** }
 
-{***********************************************************
-            TkbFormatDriveDialog class interface
- ***********************************************************}
+	TkbFormatDriveDialog = class(TComponent)
+	public { Constructors/Destructors }
+		constructor Create(TheOwner: TComponent); override;
+	private
+		FDefaultQuickFormat: boolean;
+		FDefaultSysOnly    : boolean;
+		FDriveToFormat     : TkbDriveLetter;
+		FLastFormatID      : UINT;
+		FRememberLastFormat: boolean;
+		FSuppressARI       : boolean;
+	public { Public methods }
+		function Execute: TkbFormatResult;
+	public
+		property LastFormatID: UINT read FLastFormatID;
+	published
+		property DefaultQuickFormat: boolean read FDefaultQuickFormat write FDefaultQuickFormat default False;
+		property DefaultSysOnly    : boolean read FDefaultSysOnly write FDefaultSysOnly default False;
+		property DriveToFormat     : TkbDriveLetter read FDriveToFormat write FDriveToFormat default kbsdDriveA;
+		property RememberLastFormat: boolean read FRememberLastFormat write FRememberLastFormat default True;
+		property SuppressARI       : boolean read FSuppressARI write FSuppressARI default True;
+	end;
 
-    TkbFormatDriveDialog = class(TComponent)
-    public    {Constructors/Destructors}
-        constructor Create(TheOwner : TComponent); override;
-    private
-        FDefaultQuickFormat : boolean;
-        FDefaultSysOnly :     boolean;
-        FDriveToFormat :      TkbDriveLetter;
-        FLastFormatID :       UINT;
-        FRememberLastFormat : boolean;
-        FSuppressARI :        boolean;
-    public    {Public methods}
-		 function Execute : TkbFormatResult;
-	 public
-        property LastFormatID : UINT read FLastFormatID;
-    published
-        property DefaultQuickFormat : boolean read FDefaultQuickFormat write FDefaultQuickFormat default False;
-        property DefaultSysOnly : boolean read FDefaultSysOnly write FDefaultSysOnly default False;
-        property DriveToFormat : TkbDriveLetter read FDriveToFormat write FDriveToFormat default kbsdDriveA;
-        property RememberLastFormat : boolean read FRememberLastFormat write FRememberLastFormat default True;
-        property SuppressARI : boolean read FSuppressARI write FSuppressARI default True;
-    end;
+	{ ***********************************************************
+	  TkbPickIconDialog class interface
+	  *********************************************************** }
 
+	TkbPickIconDialog = class(TComponent)
+	public { Constructors/Destructors }
+		constructor Create(TheOwner: TComponent); override;
+	private
+		FFileName : TFileName;
+		FIconIndex: Integer;
+	public { Public methods }
+		function Execute: Integer;
+	published
+		property FileName : TFileName read FFileName write FFileName;
+		property IconIndex: Integer read FIconIndex write FIconIndex default 0;
+	end;
 
-{***********************************************************
-              TkbPickIconDialog class interface
- ***********************************************************}
+	{ ***********************************************************
+	  TkbRunFileDialog class interface
+	  *********************************************************** }
 
-    TkbPickIconDialog = class(TComponent)
-    public    {Constructors/Destructors}
-		constructor Create(TheOwner : TComponent); override;
-    private
-        FFileName :  TFileName;
-		 FIconIndex : Integer;
-    public    {Public methods}
-        function Execute : integer;
-    published
-        property FileName : TFileName read FFileName write FFileName;
-        property IconIndex : integer read FIconIndex write FIconIndex default 0;
-    end;
+	TkbRunFileDialog = class(TComponent)
+	public { Constructors/Destructors }
+		constructor Create(TheOwner: TComponent); override;
+		destructor Destroy; override;
+	private
+		FCaption      : string;
+		FDescription  : string;
+		FIcon         : TIcon;
+		FMessageWindow: HWND;
+		FOptions      : TkbRunFileOptions;
+		FWorkingPath  : TFileName;
+	private
+		FOnValidate: TkbRunFileValidateEvent;
+	private
+		procedure SetIcon(NewValue: TIcon);
+	private
+		function StoreIcon: boolean;
+	private
+		procedure HandleMessage(var TheMessage: TMessage);
+		procedure Validate(TheFile: TFileName; TheWorkPath: TFileName; Visible: boolean; var Action: TkbRunFileAction);
+	public { Public methods }
+		procedure Execute;
+	published
+		property Caption    : string read FCaption write FCaption;
+		property Description: string read FDescription write FDescription;
+		property Icon       : TIcon read FIcon write SetIcon stored StoreIcon;
+		property Options    : TkbRunFileOptions read FOptions write FOptions default [];
+		property WorkingPath: TFileName read FWorkingPath write FWorkingPath;
+	published
+		property OnValidate: TkbRunFileValidateEvent read FOnValidate write FOnValidate;
 
+	end;
 
-{***********************************************************
-              TkbRunFileDialog class interface
- ***********************************************************}
+	{ ***********************************************************
+	  TkbFindFilesDialog class interface
+	  *********************************************************** }
 
-    TkbRunFileDialog = class(TComponent)
-    public    {Constructors/Destructors}
-        constructor Create(TheOwner : TComponent); override;
-        destructor Destroy; override;
-    private
-        FCaption :       string;
-        FDescription :   string;
-        FIcon :          TIcon;
-        FMessageWindow : HWND;
-        FOptions :       TkbRunFileOptions;
-        FWorkingPath :   TFileName;
-    private
-        FOnValidate : TkbRunFileValidateEvent;
-    private
-        procedure SetIcon(NewValue : TIcon);
-    private
-        function StoreIcon : boolean;
-    private
-        procedure HandleMessage(var TheMessage : TMessage);
-        procedure Validate(TheFile : TFileName; TheWorkPath : TFileName; Visible : boolean; var Action : TkbRunFileAction);
-    public    {Public methods}
-        procedure Execute;
-    published
-		property Caption : string read FCaption write FCaption;
-        property Description : string read FDescription write FDescription;
-        property Icon : TIcon read FIcon write SetIcon stored StoreIcon;
-        property Options : TkbRunFileOptions read FOptions write FOptions default [];
-        property WorkingPath : TFileName read FWorkingPath write FWorkingPath;
-    published
-        property OnValidate : TkbRunFileValidateEvent read FOnValidate write FOnValidate;
+	TkbFindFilesDialog = class(TComponent)
+	public { Constructors/Destructors }
+		constructor Create(TheOwner: TComponent); override;
+	private
+		FSearchFileName: TFileName;
+		FRootFolder    : TkbsdSpecialLocation;
+		FRootPath      : TFileName;
+	private
+		procedure SetRootPath(NewValue: TFileName);
+	public { Public methods }
+		function Execute: boolean;
+	published
+		property SearchFileName: TFileName read FSearchFileName write FSearchFileName;
+		property RootFolder    : TkbsdSpecialLocation read FRootFolder write FRootFolder default rfDesktop;
+		property RootPath      : TFileName read FRootPath write SetRootPath;
+	end;
 
-    end;
+	{ ***********************************************************
+	  TkbRestartWindowsDialog class interface
+	  *********************************************************** }
 
+	TkbRestartWindowsDialog = class(TComponent)
+	public { Constructors/Destructors }
+		constructor Create(TheOwner: TComponent); override;
+	private
+		FReason       : string;
+		FRestartOption: TkbRestartOption;
+	public { Public methods }
+		function Execute: boolean;
+	published
+		property Reason       : string read FReason write FReason;
+		property RestartOption: TkbRestartOption read FRestartOption write FRestartOption default kbsdRestartWindows;
+	end;
 
-{***********************************************************
-              TkbFindFilesDialog class interface
- ***********************************************************}
+	{ ***********************************************************
+	  TkbObjectPropertiesDialog class interface
+	  *********************************************************** }
 
-    TkbFindFilesDialog = class(TComponent)
-    public    {Constructors/Destructors}
-        constructor Create(TheOwner : TComponent); override;
-    private
-        FSearchFileName : TFileName;
-        FRootFolder :     TkbsdSpecialLocation;
-        FRootPath :       TFileName;
-    private
-        procedure SetRootPath(NewValue : TFileName);
-    public    {Public methods}
-        function Execute : boolean;
-    published
-        property SearchFileName : TFileName read FSearchFileName write FSearchFileName;
-        property RootFolder : TkbsdSpecialLocation read FRootFolder write FRootFolder default rfDesktop;
-        property RootPath : TFileName read FRootPath write SetRootPath;
-    end;
+	TkbObjectPropertiesDialog = class(TComponent)
+	public { Constructors/Destructors }
+		constructor Create(TheOwner: TComponent); override;
+	private
+		FInitialTab: string;
+		FObjectName: TFileName;
+		FObjectType: TkbShellObjectType;
+	public { Public methods }
+		function Execute: boolean;
+	published
+		property InitialTab: string read FInitialTab write FInitialTab;
+		property ObjectName: TFileName read FObjectName write FObjectName;
+		property ObjectType: TkbShellObjectType read FObjectType write FObjectType default kbsdPathObject;
+	end;
 
+	{ ***********************************************************
+	  Public unit method interfaces
+	  *********************************************************** }
 
-{***********************************************************
-          TkbRestartWindowsDialog class interface
- ***********************************************************}
-
-    TkbRestartWindowsDialog = class(TComponent)
-    public    {Constructors/Destructors}
-		constructor Create(TheOwner : TComponent); override;
-    private
-        FReason :        string;
-        FRestartOption : TkbRestartOption;
-    public    {Public methods}
-        function Execute : boolean;
-    published
-        property Reason : string read FReason write FReason;
-        property RestartOption : TkbRestartOption read FRestartOption write FRestartOption default kbsdRestartWindows;
-    end;
-
-
-{***********************************************************
-         TkbObjectPropertiesDialog class interface
- ***********************************************************}
-
-    TkbObjectPropertiesDialog = class(TComponent)
-    public    {Constructors/Destructors}
-        constructor Create(TheOwner : TComponent); override;
-    private
-        FInitialTab : string;
-        FObjectName : TFileName;
-        FObjectType : TkbShellObjectType;
-    public    {Public methods}
-        function Execute : boolean;
-    published
-        property InitialTab : string read FInitialTab write FInitialTab;
-        property ObjectName : TFileName read FObjectName write FObjectName;
-        property ObjectType : TkbShellObjectType read FObjectType write FObjectType default kbsdPathObject;
-    end;
-
-
-{***********************************************************
-               Public unit method interfaces
- ***********************************************************}
-
-{Default dialog functions}
-function ShowShellAboutDialog : boolean; platform;
-function ShowFindFilesDialog : longbool;
-function ShowFindComputerDialog : longbool;
+	{ Default dialog functions }
+function ShowShellAboutDialog: boolean; platform;
+function ShowFindFilesDialog: longbool;
+function ShowFindComputerDialog: longbool;
 procedure ShowExitWindowsDialog;
-function ShowRestartDialog(Reason : string) : boolean;
-function ShowObjectPropertiesDialog(ObjectName : TFileName; ObjectType : TkbShellObjectType; InitialTab : string) : boolean;
-function ShowNetConnectionDialog(Resource : string; ResourceType : TkbNetResourceType) : DWORD;
-function ShowOutOfMemoryDialog : Integer;
-procedure ShowHandleDiskFullDialog(Drive : TkbDriveLetter);
-function ShowShellMessageBox(Caption : PChar; Text : PChar; Style : UINT; Parameters : array of Pointer) : Integer;
+function ShowRestartDialog(Reason: string): boolean;
+function ShowObjectPropertiesDialog(ObjectName: TFileName; ObjectType: TkbShellObjectType; InitialTab: string): boolean;
+function ShowNetConnectionDialog(Resource: string; ResourceType: TkbNetResourceType): DWORD;
+function ShowOutOfMemoryDialog: Integer;
+procedure ShowHandleDiskFullDialog(Drive: TkbDriveLetter);
+function ShowShellMessageBox(Caption: PChar; Text: PChar; Style: UINT; Parameters: array of Pointer): Integer;
 
-{Conversion functions}
-function FormatResultEnumToConst(FormatResult : TkbFormatResult) : UINT;
-function FormatResultConstToEnum(FormatResult : UINT) : TkbFormatResult;
-function RestartOptionEnumToConst(RestartOption : TkbRestartOption) : UINT;
-function RestartOptionConstToEnum(RestartOption : UINT) : TkbRestartOption;
-function ShellObjectTypeEnumToConst(ShellObjectType : TkbShellObjectType) : UINT;
-function ShellObjectTypeConstToEnum(ShellObjectType : UINT) : TkbShellObjectType;
-function RunFileOptionEnumToConst(RunFileOption : TkbRunFileOption) : UINT;
-function RunFileOptionConstToEnum(RunFileOption : UINT) : TkbRunFileOption;
-function RunFileActionEnumToConst(RunFileAction : TkbRunFileAction) : UINT;
-function RunFileActionConstToEnum(RunFileAction : UINT) : TkbRunFileAction;
-function NetResourceTypeEnumToConst(NetResourceType : TkbNetResourceType) : DWORD;
-function NetResourceTypeConstToEnum(NetResourceType : DWORD) : TkbNetResourceType;
-
-
+{ Conversion functions }
+function FormatResultEnumToConst(FormatResult: TkbFormatResult): UINT;
+function FormatResultConstToEnum(FormatResult: UINT): TkbFormatResult;
+function RestartOptionEnumToConst(RestartOption: TkbRestartOption): UINT;
+function RestartOptionConstToEnum(RestartOption: UINT): TkbRestartOption;
+function ShellObjectTypeEnumToConst(ShellObjectType: TkbShellObjectType): UINT;
+function ShellObjectTypeConstToEnum(ShellObjectType: UINT): TkbShellObjectType;
+function RunFileOptionEnumToConst(RunFileOption: TkbRunFileOption): UINT;
+function RunFileOptionConstToEnum(RunFileOption: UINT): TkbRunFileOption;
+function RunFileActionEnumToConst(RunFileAction: TkbRunFileAction): UINT;
+function RunFileActionConstToEnum(RunFileAction: UINT): TkbRunFileAction;
+function NetResourceTypeEnumToConst(NetResourceType: TkbNetResourceType): DWORD;
+function NetResourceTypeConstToEnum(NetResourceType: DWORD): TkbNetResourceType;
 
 implementation
 
 uses Controls, ShellAPI,
-    {If we're compiling in Delphi 2}
-{$IFDEF VER90}
-     OLE2;
-{If we're compiling in Delphi 3 or later}
-{$ELSE}
-    ActiveX;
+	{If we're compiling in Delphi 2}
+	{$IFDEF VER90}
+	OLE2;
+{ If we're compiling in Delphi 3 or later }
+	{$ELSE}
+ActiveX;
 
 {$ENDIF}
 
-
 const
-	 Shell32 = 'shell32.dll';
-    RunFileDlg_Index = 61;
-    SHFindFiles_Index = 90;
-    SHFindComputer_Index = 91;
-    ExitWindowsDialog_Index = 60;
-    RestartDialog_Index = 59;
-    GetFileNameFromBrowse_Index = 63;
-    SHObjectProperties_Index = 178;
-    SHNetConnectionDialog_Index = 160;
-    SHStartNetConnectionDialog_Index = 215;
-    SHOutOfMemoryMessageBox_Index = 126;
-    SHHandleDiskFull_Index = 185;
-    ShellMessageBoxA_Index = 183;
-    ShellMessageBoxW_Index = 182;
+	Shell32                          = 'shell32.dll';
+	RunFileDlg_Index                 = 61;
+	SHFindFiles_Index                = 90;
+	SHFindComputer_Index             = 91;
+	ExitWindowsDialog_Index          = 60;
+	RestartDialog_Index              = 59;
+	GetFileNameFromBrowse_Index      = 63;
+	SHObjectProperties_Index         = 178;
+	SHNetConnectionDialog_Index      = 160;
+	SHStartNetConnectionDialog_Index = 215;
+	SHOutOfMemoryMessageBox_Index    = 126;
+	SHHandleDiskFull_Index           = 185;
+	ShellMessageBoxA_Index           = 183;
+	ShellMessageBoxW_Index           = 182;
 
 var
-    ShellDLL : HMODULE;
+	ShellDLL: HMODULE;
 
-
-{***********************************************************
-    Undocumented Windows Shell Dialog API implementations
- ***********************************************************}
+	{ ***********************************************************
+	  Undocumented Windows Shell Dialog API implementations
+	  *********************************************************** }
 {$WARN SYMBOL_PLATFORM OFF }
-procedure RunFileDlg; external Shell32 index RunFileDlg_Index;
-function SHFindFiles; external Shell32 index SHFindFiles_Index;
-function SHFindComputer; external Shell32 index SHFindComputer_Index;
-procedure ExitWindowsDialog; external Shell32 index ExitWindowsDialog_Index;
-function RestartDialog; external Shell32 index RestartDialog_Index;
-function GetFileNameFromBrowse; external Shell32 index GetFileNameFromBrowse_Index;
-function SHObjectProperties; external Shell32 index SHObjectProperties_Index;
-function SHNetConnectionDialog; external Shell32 index SHNetConnectionDialog_Index;
+{TODO -oroger -clib : remover todas as cargas estaticas abaixo }
+//procedure RunFileDlg; external Shell32 index RunFileDlg_Index;
+//function SHFindFiles; external Shell32 index SHFindFiles_Index;
+//function SHFindComputer; external Shell32 index SHFindComputer_Index;
+//procedure ExitWindowsDialog; external Shell32 index ExitWindowsDialog_Index;
+//function RestartDialog; external Shell32 index RestartDialog_Index;
+//function GetFileNameFromBrowse; external Shell32 index GetFileNameFromBrowse_Index;
+//function SHObjectProperties; external Shell32 index SHObjectProperties_Index;
+//function SHNetConnectionDialog; external Shell32 index SHNetConnectionDialog_Index;
+//function SHOutOfMemoryMessageBox; external Shell32 index SHOutOfMemoryMessageBox_Index;
+//procedure SHHandleDiskFull; external Shell32 index SHHandleDiskFull_Index;
 
-{This function is only supported on NT, and so must be dynamically loaded.}
-function SHStartNetConnectionDialog(Owner : HWND; ResourceName : PWideChar; ResourceType : DWORD) :
-DWORD; stdcall;
+{$WARN SYMBOL_PLATFORM ON}
+
+{ This function is only supported on NT, and so must be dynamically loaded. }
+function SHStartNetConnectionDialog(Owner: HWND; ResourceName: PWideChar; ResourceType: DWORD): DWORD; stdcall;
 type
-    TheFunctionType = function(Owner : HWND; ResourceName : PWideChar; ResourceType : DWORD) : DWORD; stdcall;
+	TheFunctionType = function(Owner: HWND; ResourceName: PWideChar; ResourceType: DWORD): DWORD; stdcall;
 var
-    TheFunction : TheFunctionType;
+	TheFunction: TheFunctionType;
 begin
 	if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
 		TheFunction := GetProcAddress(ShellDLL, PChar(SHStartNetConnectionDialog_Index));
 		if (Assigned(TheFunction)) then begin
 			Result := TheFunction(Owner, ResourceName, ResourceType);
-		end      else begin
+		end else begin
 			Result := GetLastError;
 		end;
-	end    else begin
+	end else begin
 		SetLastError(ERROR_CALL_NOT_IMPLEMENTED);
 		Result := ERROR_CALL_NOT_IMPLEMENTED;
 	end;
 end;
 
-function SHOutOfMemoryMessageBox; external Shell32 index SHOutOfMemoryMessageBox_Index;
-procedure SHHandleDiskFull; external Shell32 index SHHandleDiskFull_Index;
-
-{This is an auxiliary method for the ShellMessageBox functions to enable the cdecl style
- extra parameters within the syntax limits of Delphi. Assembler is needed to do this.}
-function CallShellMessageBox(MethodPtr : Pointer; Instance : THandle; Owner : HWND; Text : Pointer;
-	Caption : Pointer; Style : UINT; Parameters : array of Pointer) :
-Integer;
+{ This is an auxiliary method for the ShellMessageBox functions to enable the cdecl style extra parameters within the syntax limits of Delphi. Assembler is needed to do this. }
+function CallShellMessageBox(MethodPtr: Pointer; Instance: THandle; Owner: HWND; Text: Pointer; Caption: Pointer; Style: UINT;
+	Parameters: array of Pointer): Integer;
 type
 	PPointer = ^Pointer;
 var
-	ParamCount :  Integer;
-	ParamBuffer : PChar;
-	BufferIndex : Integer;
+	ParamCount : Integer;
+	ParamBuffer: PChar;
+	BufferIndex: Integer;
 begin
 	{$WARN UNSAFE_CODE OFF}
-	{Determine how many bytes of extra arguments there are.}
-	ParamCount := (High(Parameters) + 1);
-	ParamBuffer:= GetMemory( ParamCount * SizeOf(Pointer));
+	{ Determine how many bytes of extra arguments there are. }
+	ParamCount  := (high(Parameters) + 1);
+	ParamBuffer := GetMemory(ParamCount * SizeOf(Pointer));
 	try
 
-		{Stuff the extra arguments into a buffer in cdecl (right-to-left) order.}
-		for BufferIndex := 0 to High(Parameters) do begin
-            PPointer(@ParamBuffer[BufferIndex * SizeOf(Pointer)])^ := Parameters[High(Parameters) - BufferIndex];
-        end; {for}
+		{ Stuff the extra arguments into a buffer in cdecl (right-to-left) order. }
+		for BufferIndex                                            := 0 to high(Parameters) do begin
+			PPointer(@ParamBuffer[BufferIndex * SizeOf(Pointer)])^ := Parameters[high(Parameters) - BufferIndex];
+		end; { for }
 
-        {Use assembler to push arguments onto the stack, call the DLL function, and store the function's result.}
-        asm
-                   mov     ECX, ParamCount  // Initialize loop counter with ParamCount in DWORDs
-                   cmp     ECX, 0           // Check to see if loop counter in ECX is equal to 0
-                   je      @MethodCall      // If ECX counter is indeed 0, jump to the method call label
-                   mov EDX, ParamBuffer // Load ParamBuffer pointer into EBX register
+		{ Use assembler to push arguments onto the stack, call the DLL function, and store the function's result. }
+		asm
+			mov     ECX, ParamCount  //Initialize loop counter with ParamCount in DWORDs
+			cmp     ECX, 0           //Check to see if loop counter in ECX is equal to 0
+			je      @MethodCall      //If ECX counter is indeed 0, jump to the method call label
+			mov EDX, ParamBuffer     //Load ParamBuffer pointer into EBX register
 
-                   @StartLoop:          // Label where the push loop starts
+		@StartLoop:          //Label where the push loop starts
 
-                   push    DWORD PTR[EDX]  // Push the DWORD value indexed by EDX onto the stack
-                   add     EDX, 4          // Increment EDX by size of DWORD to point to the next DWORD in the buffer
-                   loop    @StartLoop      // Decrement ECX, and loop back to the StartLoop label while ECX <> 0
+			push    DWORD PTR[EDX]  //Push the DWORD value indexed by EDX onto the stack
+			add     EDX, 4          //Increment EDX by size of DWORD to point to the next DWORD in the buffer
+			loop    @StartLoop      //Decrement ECX, and loop back to the StartLoop label while ECX <> 0
 
-                   @MethodCall:         // Label to start the call to the DLL method
+		@MethodCall:         //Label to start the call to the DLL method
 
-				   push    Style           // Push the Style argument onto the stack
-				   push    Caption         // Push the Caption argument onto the stack
-				   push    Text            // Push the Text argument onto the stack
-				   push    Owner           // Push the Owner argument onto the stack
-				   push    Instance        // Push the Instance argument onto the stack
+			push    Style           //Push the Style argument onto the stack
+			push    Caption         //Push the Caption argument onto the stack
+			push    Text            //Push the Text argument onto the stack
+			push    Owner           //Push the Owner argument onto the stack
+			push    Instance        //Push the Instance argument onto the stack
 
-				   call    MethodPtr       // Call the DLL procedure
-				   mov     Result, EAX     // Save the result from the method call into the Result variable
-		end; {asm}
+			call    MethodPtr       //Call the DLL procedure
+			mov     Result, EAX     //Save the result from the method call into the Result variable
+		end;                        { asm }
 
-		{Ensure extra argument buffer is freed.}
+		{ Ensure extra argument buffer is freed. }
 	finally
 		FreeMemory(ParamBuffer);
 	end;
 	{$WARN UNSAFE_CODE ON}
 end;
 
-function ShellMessageBox(Instance : THandle; Owner : HWND; Text : PChar; Caption : PChar;
-    Style : UINT; Parameters : array of Pointer) :
-Integer; cdecl;
+function ShellMessageBox(Instance: THandle; Owner: HWND; Text: PChar; Caption: PChar; Style: UINT; Parameters: array of Pointer)
+	: Integer; cdecl;
 begin
-    {Call ShellMessageBoxA.}
-    Result := ShellMessageBoxA(Instance, Owner, Text, Caption, Style, Parameters);
+	{ Call ShellMessageBoxA. }
+	Result := ShellMessageBoxA(Instance, Owner, Text, Caption, Style, Parameters);
 end;
 
-{This function takes a cdecl-style variable parameter list, which is implemented using
- an open-array parameter and which requires assembler to fully implement. See the
- CallShellMessageBox function for this implementation.}
-function ShellMessageBoxA(Instance : THandle; Owner : HWND; Text : PChar; Caption : PChar;
-    Style : UINT; Parameters : array of Pointer) :
-Integer; cdecl;
+{ This function takes a cdecl-style variable parameter list, which is implemented using
+  an open-array parameter and which requires assembler to fully implement. See the
+  CallShellMessageBox function for this implementation. }
+function ShellMessageBoxA(Instance: THandle; Owner: HWND; Text: PChar; Caption: PChar; Style: UINT; Parameters: array of Pointer)
+	: Integer; cdecl;
 var
-    MethodPtr : Pointer;
+	MethodPtr: Pointer;
 begin
-    {Try to load the function address from SHELL32.DLL}
-    MethodPtr := GetProcAddress(ShellDLL, PChar(ShellMessageBoxA_Index));
+	{ Try to load the function address from SHELL32.DLL }
+	MethodPtr := GetProcAddress(ShellDLL, PChar(ShellMessageBoxA_Index));
 
-    {If function load was good, call the function.  If not, return cancel result.}
-    if (MethodPtr <> nil) then begin
-        Result := CallShellMessageBox(MethodPtr, Instance, Owner, Text, Caption, Style, Parameters);
-    end    else begin
-        Result := ID_CANCEL;
-    end;
+	{ If function load was good, call the function.  If not, return cancel result. }
+	if (MethodPtr <> nil) then begin
+		Result := CallShellMessageBox(MethodPtr, Instance, Owner, Text, Caption, Style, Parameters);
+	end else begin
+		Result := ID_CANCEL;
+	end;
 end;
 
-{This function takes a cdecl-style variable parameter list, which is implemented using
- an open-array parameter and which requires assembler to fully implement. See the
- CallShellMessageBox function for this implementation. In addition, this function is
- only supported on NT, and so must be dynamically loaded.}
-function ShellMessageBoxW(Instance : THandle; Owner : HWND; Text : PWideChar; Caption : PWideChar;
-    Style : UINT; Parameters : array of Pointer) :
-Integer; cdecl;
+{ This function takes a cdecl-style variable parameter list, which is implemented using
+  an open-array parameter and which requires assembler to fully implement. See the
+  CallShellMessageBox function for this implementation. In addition, this function is
+  only supported on NT, and so must be dynamically loaded. }
+function ShellMessageBoxW(Instance: THandle; Owner: HWND; Text: PWideChar; Caption: PWideChar; Style: UINT;
+	Parameters: array of Pointer): Integer; cdecl;
 var
-    MethodPtr : Pointer;
+	MethodPtr: Pointer;
 begin
-    {If this OS is NT...}
-    if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
+	{ If this OS is NT... }
+	if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
 
-        {Try to load the function address from SHELL32.DLL}
-        MethodPtr := GetProcAddress(ShellDLL, PChar(ShellMessageBoxW_Index));
+		{ Try to load the function address from SHELL32.DLL }
+		MethodPtr := GetProcAddress(ShellDLL, PChar(ShellMessageBoxW_Index));
 
-        {If function load was good, call the function.  If not, return cancel result.}
-        if (MethodPtr <> nil) then begin
-            Result := CallShellMessageBox(MethodPtr, Instance, Owner, Text, Caption, Style, Parameters);
-            Exit;
-        end      else begin
-            Result := ID_CANCEL;
-        end;
-    end
-    {If not NT, return a NOT IMPLEMENTED error.}
-    else begin
-        SetLastError(ERROR_CALL_NOT_IMPLEMENTED);
-        Result := ID_CANCEL;
-    end;
+		{ If function load was good, call the function.  If not, return cancel result. }
+		if (MethodPtr <> nil) then begin
+			Result := CallShellMessageBox(MethodPtr, Instance, Owner, Text, Caption, Style, Parameters);
+			Exit;
+		end else begin
+			Result := ID_CANCEL;
+		end;
+	end
+	{ If not NT, return a NOT IMPLEMENTED error. }
+	else begin
+		SetLastError(ERROR_CALL_NOT_IMPLEMENTED);
+		Result := ID_CANCEL;
+	end;
 end;
 
+{ ***********************************************************
+  TkbShellAboutDialog class implementation
+  *********************************************************** }
 
-
-{***********************************************************
-           TkbShellAboutDialog class implementation
- ***********************************************************}
-
-constructor TkbShellAboutDialog.Create(TheOwner : TComponent);
+constructor TkbShellAboutDialog.Create(TheOwner: TComponent);
 begin
-    {Call ancestor constructor.}
-    inherited Create(TheOwner);
+	{ Call ancestor constructor. }
+	inherited Create(TheOwner);
 
-    {Initialize simple-type data members.}
-    Self.FCaption   := EmptyStr;
-    Self.FOtherText := EmptyStr;
-    Self.FProduct   := EmptyStr;
+	{ Initialize simple-type data members. }
+	Self.FCaption   := EmptyStr;
+	Self.FOtherText := EmptyStr;
+	Self.FProduct   := EmptyStr;
 
-    {Allocate object-type data members.}
-    Self.FIcon := TIcon.Create;
+	{ Allocate object-type data members. }
+	Self.FIcon := TIcon.Create;
 end;
 
 destructor TkbShellAboutDialog.Destroy;
 begin
-    {Free allocated object-type data members.}
-    Self.FIcon.Free;
+	{ Free allocated object-type data members. }
+	Self.FIcon.Free;
 
-    {Call ancestor destructor.}
-    inherited Destroy;
+	{ Call ancestor destructor. }
+	inherited Destroy;
 end;
 
-procedure TkbShellAboutDialog.SetIcon(NewValue : TIcon);
+procedure TkbShellAboutDialog.SetIcon(NewValue: TIcon);
 begin
-    {Assign the new icon to the internal icon object.}
-    Self.FIcon.Assign(NewValue);
+	{ Assign the new icon to the internal icon object. }
+	Self.FIcon.Assign(NewValue);
 end;
 
-function TkbShellAboutDialog.StoreIcon : boolean;
+function TkbShellAboutDialog.StoreIcon: boolean;
 begin
-  {Store the TIcon's data in the *.frm file only
-   if icon data has actually been loaded into it.}
-    Result := (not Self.FIcon.Empty);
+	{ Store the TIcon's data in the *.frm file only
+	  if icon data has actually been loaded into it. }
+	Result := (not Self.FIcon.Empty);
 end;
 
-function TkbShellAboutDialog.Execute : boolean;
+function TkbShellAboutDialog.Execute: boolean;
 const
-    AboutText   = 'About ';
-    WindowsText = 'Windows';
-    WinNTText   = WindowsText + ' NT';
-    CaptionSeparator = '#';
+	AboutText        = 'About ';
+	WindowsText      = 'Windows';
+	WinNTText        = WindowsText + ' NT';
+	CaptionSeparator = '#';
 var
-    CaptionText : string;
+	CaptionText: string;
 begin
-  {Assemble the CaptionText string based on the property values and
-    whether the defaults are set.}
+	{ Assemble the CaptionText string based on the property values and
+	  whether the defaults are set. }
 
-  {If Caption is empty, use the default caption constants.
-    Otherwise, use the Caption property text.}
-    if (Self.Caption = EmptyStr) then begin
-        CaptionText := AboutText + WindowsText;
-    end    else begin
-        CaptionText := Self.Caption;
-    end;
+	{ If Caption is empty, use the default caption constants.
+	  Otherwise, use the Caption property text. }
+	if (Self.Caption = EmptyStr) then begin
+		CaptionText := AboutText + WindowsText;
+	end else begin
+		CaptionText := Self.Caption;
+	end;
 
-    {Insert the separator between the caption and the first line strings.}
-    CaptionText := CaptionText + CaptionSeparator;
+	{ Insert the separator between the caption and the first line strings. }
+	CaptionText := CaptionText + CaptionSeparator;
 
-  {If Product is empty, use the default product constants based
-    on what OS is running. Otherwise, use the Product property text.}
-    if (Self.Product = EmptyStr) then begin
-        if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
-            CaptionText := CaptionText + WinNTText;
-        end      else begin
-            CaptionText := CaptionText + WindowsText;
-        end;
-    end    else begin
-        CaptionText := CaptionText + Self.Product;
-    end;
+	{ If Product is empty, use the default product constants based
+	  on what OS is running. Otherwise, use the Product property text. }
+	if (Self.Product = EmptyStr) then begin
+		if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
+			CaptionText := CaptionText + WinNTText;
+		end else begin
+			CaptionText := CaptionText + WindowsText;
+		end;
+	end else begin
+		CaptionText := CaptionText + Self.Product;
+	end;
 
-  {Show the dialog. Raise an exception if the function failed.
-    Always return True for this dialog.}
-    Win32Check(longbool(ShellAbout(Application.MainForm.Handle, PChar(CaptionText), PChar(Self.OtherText), Self.Icon.Handle)));
-    Result := True;
+	{ Show the dialog. Raise an exception if the function failed.
+	  Always return True for this dialog. }
+	Win32Check(longbool(ShellAbout(Application.MainForm.Handle, PChar(CaptionText), PChar(Self.OtherText), Self.Icon.Handle)));
+	Result := True;
 end;
 
+{ ***********************************************************
+  TkbBrowseForFolderDialog class implementation
+  *********************************************************** }
 
-{***********************************************************
-         TkbBrowseForFolderDialog class implementation
- ***********************************************************}
+function BrowseForFolderCallback(DialogHandle: HWND; MessageID: UINT; PIDL: LPARAM; ComponentPointer: LPARAM): Integer;
+	stdcall; forward;
 
-
-function BrowseForFolderCallback(DialogHandle : HWND;
-    MessageID : UINT;
-    PIDL : LPARAM;
-    ComponentPointer : LPARAM) :
-Integer; stdcall; forward;
-
-constructor TkbBrowseForFolderDialog.Create(TheOwner : TComponent);
+constructor TkbBrowseForFolderDialog.Create(TheOwner: TComponent);
 begin
-    {Call ancestor constructor.}
-    inherited Create(TheOwner);
+	{ Call ancestor constructor. }
+	inherited Create(TheOwner);
 
-    {Initialize simple-type data members.}
-    Self.FCaption    := EmptyStr;
-    Self.FCanExpandDomains := False;
-    Self.FDialogHandle := 0;
-    Self.FDisplayName := EmptyStr;
-    Self.FFilter     := kbsdBrowseForAnything;
-    Self.FImageIndex := 0;
-    Self.FRootPath   := EmptyStr;
-    Self.FRootFolder := rfDesktop;
-    Self.FShowStatusText := False;
-    Self.FStatusText := EmptyStr;
+	{ Initialize simple-type data members. }
+	Self.FCaption          := EmptyStr;
+	Self.FCanExpandDomains := False;
+	Self.FDialogHandle     := 0;
+	Self.FDisplayName      := EmptyStr;
+	Self.FFilter           := kbsdBrowseForAnything;
+	Self.FImageIndex       := 0;
+	Self.FRootPath         := EmptyStr;
+	Self.FRootFolder       := rfDesktop;
+	Self.FShowStatusText   := False;
+	Self.FStatusText       := EmptyStr;
 
-    Self.FImageLarge := TBitmap.Create;
-    Self.FImageSmall := TBitmap.Create;
+	Self.FImageLarge := TBitmap.Create;
+	Self.FImageSmall := TBitmap.Create;
 end;
 
-function TkbBrowseForFolderDialog.GetImage(Index : Integer) : TBitmap;
+function TkbBrowseForFolderDialog.GetImage(Index: Integer): TBitmap;
 var
-    SystemImages : TImageList;
-    Flags :  DWORD;
-    Unused : TSHFileInfo;
+	SystemImages: TImageList;
+	Flags       : DWORD;
+	Unused      : TSHFileInfo;
 begin
-    {Create an object to refer to one of the system image lists.}
-    SystemImages := TImageList.Create(Self);
-    try
+	{ Create an object to refer to one of the system image lists. }
+	SystemImages := TImageList.Create(Self);
+	try
 
-    {Set the bitmap to return and the flags for retrieving image info
-     based on the property index.}
-        case (Index) of
-            1 : begin
-                Result := Self.FImageLarge;
-                Flags  := SHGFI_SYSICONINDEX or SHGFI_LARGEICON;
-            end; {case 1}
-            2 : begin
-                Result := Self.FImageSmall;
-                Flags  := SHGFI_SYSICONINDEX or SHGFI_SMALLICON;
-            end; {case 2}
-            else
-            begin
-                Result := nil;
-                Exit;
-            end;
-        end; {case}
+		{ Set the bitmap to return and the flags for retrieving image info based on the property index. }
+		case (index) of
+			1: begin
+					Result := Self.FImageLarge;
+					Flags  := SHGFI_SYSICONINDEX or SHGFI_LARGEICON;
+				end;
+			2: begin
+					Result := Self.FImageSmall;
+					Flags  := SHGFI_SYSICONINDEX or SHGFI_SMALLICON;
+				end;
+		else begin
+				Result := nil;
+				Exit;
+			end;
+		end;
 
-    {Point image list object at the appropriate system image list, make sure it
-     will not free that list when it is freed, and load the indexed bitmap into
-     the returned object.}
-        SystemImages.Handle      := SHGetFileInfo(PChar(EmptyStr), 0, Unused, SizeOf(Unused), Flags);
-        SystemImages.ShareImages := True;
-        SystemImages.GetBitmap(Self.ImageIndex, Result);
+		{ Point image list object at the appropriate system image list, make sure it will not free that list when it is freed, and load the indexed bitmap into the returned object. }
+		SystemImages.Handle      := SHGetFileInfo(PChar(EmptyStr), 0, Unused, SizeOf(Unused), Flags);
+		SystemImages.ShareImages := True;
+		SystemImages.GetBitmap(Self.ImageIndex, Result);
 
-  {Ensure the allocated system list object is freed. Actual system image
-   list will not be freed, because ShareImages is set True.}
-    finally
-        SystemImages.Free;
-    end;
+		{ Ensure the allocated system list object is freed. Actual system image list will not be freed, because ShareImages is set True. }
+	finally
+		SystemImages.Free;
+	end;
 end;
 
-procedure TkbBrowseForFolderDialog.SetCaption(NewValue : string);
+procedure TkbBrowseForFolderDialog.SetCaption(NewValue: string);
 begin
-  {If the Dialog window handle is valid, send it a message to
-   change its caption.}
-    if (Self.FDialogHandle <> 0) then begin
-        SetWindowText(Self.FDialogHandle, PChar(NewValue));
-    end;
+	{ If the Dialog window handle is valid, send it a message to change its caption. }
+	if (Self.FDialogHandle <> 0) then begin
+		SetWindowText(Self.FDialogHandle, PChar(NewValue));
+	end;
 
-    {Update the data member.}
-    Self.FCaption := NewValue;
+	{ Update the data member. }
+	Self.FCaption := NewValue;
 end;
 
-procedure TkbBrowseForFolderDialog.SetRootPath(NewValue : TFileName);
+procedure TkbBrowseForFolderDialog.SetRootPath(NewValue: TFileName);
 begin
-    {If we're setting a new Root Path, ensure the Root Folder is set to Path.}
-    if (NewValue <> EmptyStr) then begin
-        Self.RootFolder := kbsdPath;
-    end;
-    Self.FRootPath := NewValue;
+	{ If we're setting a new Root Path, ensure the Root Folder is set to Path. }
+	if (NewValue <> EmptyStr) then begin
+		Self.RootFolder := kbsdPath;
+	end;
+	Self.FRootPath := NewValue;
 end;
 
-procedure TkbBrowseForFolderDialog.SetStatusText(NewValue : string);
+procedure TkbBrowseForFolderDialog.SetStatusText(NewValue: string);
 begin
-  {If the Dialog window handle is valid, send it a message to
-   change its status text. Has no effect if ShowStatusText
-   is not True.}
-    if (Self.FDialogHandle <> 0) then begin
-        PostMessage(Self.FDialogHandle, BFFM_SETSTATUSTEXT, 0, DWORD(PChar(NewValue)));
-    end;
+	{ If the Dialog window handle is valid, send it a message to
+	  change its status text. Has no effect if ShowStatusText
+	  is not True. }
+	if (Self.FDialogHandle <> 0) then begin
+		PostMessage(Self.FDialogHandle, BFFM_SETSTATUSTEXT, 0, DWORD(PChar(NewValue)));
+	end;
 
-    {Update the data member.}
-    Self.FStatusText := NewValue;
+	{ Update the data member. }
+	Self.FStatusText := NewValue;
 end;
 
-procedure TkbBrowseForFolderDialog.Change(DialogHandle : HWND; PIDL : Pointer);
+procedure TkbBrowseForFolderDialog.Change(DialogHandle: HWND; PIDL: Pointer);
 var
-    FileInfo :   TSHFileInfo;
-    NewPath :    string;
-    OldPath :    string;
-    NewStatusText : string;
-    NewOKState : TkbOKState;
+	FileInfo     : TSHFileInfo;
+	NewPath      : string;
+	OldPath      : string;
+	NewStatusText: string;
+	NewOKState   : TkbOKState;
 begin
-    {If a handler is assigned for the OnChange event...}
-    if (Assigned(Self.OnChange)) then begin
-    {Fetch the System Image Index, Display Name, and the Folder Description from
-     the PIDL, and load them into the corresponding internal data members.}
-        SHGetFileInfo(PIDL, 0, FileInfo, SizeOf(FileInfo), SHGFI_PIDL or SHGFI_DISPLAYNAME or SHGFI_TYPENAME or SHGFI_ICON);
-        Self.FDescription := StrPas(FileInfo.szTypeName);
-        Self.FDisplayName := StrPas(FileInfo.szDisplayName);
-        Self.FImageIndex  := FileInfo.iIcon;
+	{ If a handler is assigned for the OnChange event... }
+	if (Assigned(Self.OnChange)) then begin
+		{ Fetch the System Image Index, Display Name, and the Folder Description from
+		  the PIDL, and load them into the corresponding internal data members. }
+		SHGetFileInfo(PIDL, 0, FileInfo, SizeOf(FileInfo), SHGFI_PIDL or SHGFI_DISPLAYNAME or SHGFI_TYPENAME or SHGFI_ICON);
+		Self.FDescription := StrPas(FileInfo.szTypeName);
+		Self.FDisplayName := StrPas(FileInfo.szDisplayName);
+		Self.FImageIndex  := FileInfo.iIcon;
 
-        {Initialize the event's var parameters to their default values.}
-        OldPath    := GetPathFromPIDL(PIDL);
-        NewPath    := OldPath;
-        NewStatusText := Self.StatusText;
-        NewOKState := kbsdDefaultState;
+		{ Initialize the event's var parameters to their default values. }
+		OldPath       := GetPathFromPIDL(PIDL);
+		NewPath       := OldPath;
+		NewStatusText := Self.StatusText;
+		NewOKState    := kbsdDefaultState;
 
-        {Call the event handler.}
-        Self.OnChange(Self, NewPath, NewStatusText, NewOKState);
+		{ Call the event handler. }
+		Self.OnChange(Self, NewPath, NewStatusText, NewOKState);
 
-    {Update the dialog's path based on the value that emerged from
-     the handler.}
-        if ((NewPath <> EmptyStr) and (NewPath <> OldPath)) then begin
-            PostMessage(DialogHandle, BFFM_SETSELECTION, LPARAM(True), LPARAM(PChar(NewPath)));
-        end;
+		{ Update the dialog's path based on the value that emerged from
+		  the handler. }
+		if ((NewPath <> EmptyStr) and (NewPath <> OldPath)) then begin
+			PostMessage(DialogHandle, BFFM_SETSELECTION, LPARAM(True), LPARAM(PChar(NewPath)));
+		end;
 
-    {Update the status text based on the value that emerged from
-     the handler.}
-        Self.StatusText := NewStatusText;
+		{ Update the status text based on the value that emerged from
+		  the handler. }
+		Self.StatusText := NewStatusText;
 
-    {If the event handler overrode the OK status, send the dialog
-     a message to enact the override.}
-        case (NewOKState) of
-            kbsdEnableOK : begin
-                PostMessage(Self.FDialogHandle, BFFM_ENABLEOK, 0, LPARAM(True));
-            end;
-            kbsdDisableOK : begin
-                PostMessage(Self.FDialogHandle, BFFM_ENABLEOK, 0, LPARAM(False));
-            end;
-        end; {case}
-    end;
+		{ If the event handler overrode the OK status, send the dialog
+		  a message to enact the override. }
+		case (NewOKState) of
+			kbsdEnableOK: begin
+					PostMessage(Self.FDialogHandle, BFFM_ENABLEOK, 0, LPARAM(True));
+				end;
+			kbsdDisableOK: begin
+					PostMessage(Self.FDialogHandle, BFFM_ENABLEOK, 0, LPARAM(False));
+				end;
+		end; { case }
+	end;
 end;
 
-procedure TkbBrowseForFolderDialog.Initialize(DialogHandle : HWND);
+procedure TkbBrowseForFolderDialog.Initialize(DialogHandle: HWND);
 begin
-    {Set the internal dialog handle data member for later use.}
-    Self.FDialogHandle := DialogHandle;
+	{ Set the internal dialog handle data member for later use. }
+	Self.FDialogHandle := DialogHandle;
 
-  {If the caption is an empty string, just leave the default
-   dialog caption alone. Otherwise, override the dialog's
-   caption with the user-specified one.}
-    if (Self.Caption <> EmptyStr) then begin
-        Self.SetCaption(Self.Caption);
-    end;
+	{ If the caption is an empty string, just leave the default
+	  dialog caption alone. Otherwise, override the dialog's
+	  caption with the user-specified one. }
+	if (Self.Caption <> EmptyStr) then begin
+		Self.SetCaption(Self.Caption);
+	end;
 
-    {Set the status text in the dialog.}
-    Self.SetStatusText(Self.StatusText);
+	{ Set the status text in the dialog. }
+	Self.SetStatusText(Self.StatusText);
 
-    {If the OnInitialize event handler is assigned, call it.}
-    if (Assigned(Self.OnInitialize)) then begin
-        Self.OnInitialize(Self, DialogHandle);
-    end;
+	{ If the OnInitialize event handler is assigned, call it. }
+	if (Assigned(Self.OnInitialize)) then begin
+		Self.OnInitialize(Self, DialogHandle);
+	end;
 end;
 
-function TkbBrowseForFolderDialog.Execute : boolean;
+function TkbBrowseForFolderDialog.Execute: boolean;
 var
-    BrowseInfo : TBrowseInfo;
-    NameBuffer : array[0..MAX_PATH] of char;
-    FinalPIDL :  PItemIDList;
+	BrowseInfo: TBrowseInfo;
+	NameBuffer: array[0 .. MAX_PATH] of char;
+	FinalPIDL : PItemIDList;
 begin
-    {Initialize the BrowseInfo structure with default values.}
+	{ Initialize the BrowseInfo structure with default values. }
 	{$WARN UNSAFE_CAST OFF}
-	BrowseInfo.hwndOwner := Application.MainForm.Handle;
-	BrowseInfo.pidlRoot  := nil;
+	BrowseInfo.hwndOwner      := Application.MainForm.Handle;
+	BrowseInfo.pidlRoot       := nil;
 	BrowseInfo.pszDisplayName := NameBuffer;
-	BrowseInfo.lpszTitle := PChar(Self.InstructionText);
-	BrowseInfo.ulFlags   := 0;
-	BrowseInfo.lpfn      := BrowseForFolderCallback;
-	BrowseInfo.lParam    := DWORD(Self);
-	BrowseInfo.iImage    := 0;
+	BrowseInfo.lpszTitle      := PChar(Self.InstructionText);
+	BrowseInfo.ulFlags        := 0;
+	BrowseInfo.lpfn           := BrowseForFolderCallback;
+	BrowseInfo.LPARAM         := DWORD(Self);
+	BrowseInfo.iImage         := 0;
 	{$WARN UNSAFE_CAST ON}
+	{ Ensure the NameBuffer starts with a null-terminator to signal
+	  it is empty. }
+	NameBuffer[0] := #0;
 
-  {Ensure the NameBuffer starts with a null-terminator to signal
-   it is empty.}
-    NameBuffer[0] := #0;
+	{ If the RootFolder property specifies to use the Path property
+	  as the root, fetch the PIDL for that path and load it into
+	  the pidlRoot member of BrowseInfo. }
+	if (Self.RootFolder = kbsdPath) then begin
+		BrowseInfo.pidlRoot := GetPIDLFromPath(Self.RootPath);
+	end else if (Self.RootFolder = rfDesktop) then begin
+		BrowseInfo.pidlRoot := nil;
+	end { else if }
+	{ If RootFolder is not specifying a path for the root, try to
+	  fetch the PIDL for some special folder. If the folder is not
+	  recognized, just leave the root PIDL nil to get a default tree. }
+	else begin
+		BrowseInfo.pidlRoot := GetSpecialLocationPIDL(Self.RootFolder);
+	end;
 
-  {If the RootFolder property specifies to use the Path property
-   as the root, fetch the PIDL for that path and load it into
-   the pidlRoot member of BrowseInfo.}
-    if (Self.RootFolder = kbsdPath) then begin
-        BrowseInfo.pidlRoot := GetPIDLFromPath(Self.RootPath);
-    end
-    else
-    if (Self.RootFolder = rfDesktop) then begin
-        BrowseInfo.pidlRoot := nil;
-    end  {else if}
-  {If RootFolder is not specifying a path for the root, try to
-   fetch the PIDL for some special folder. If the folder is not
-   recognized, just leave the root PIDL nil to get a default tree.}
-    else begin
-        BrowseInfo.pidlRoot := GetSpecialLocationPIDL(Self.RootFolder);
-    end;
+	{ Set the Flags member of BrowseInfo if we are filtering for some particular type of folder. }
+	case (Self.Filter) of
+		kbsdBrowseForComputers: begin
+				BrowseInfo.ulFlags := BrowseInfo.ulFlags or BIF_BROWSEFORCOMPUTER;
+			end;
+		kbsdBrowseForDirectories: begin
+				BrowseInfo.ulFlags := BrowseInfo.ulFlags or BIF_RETURNONLYFSDIRS;
+			end;
+		kbsdBrowseForFileAncestors: begin
+				BrowseInfo.ulFlags := BrowseInfo.ulFlags or BIF_RETURNFSANCESTORS;
+			end;
+		kbsdBrowseForPrinters: begin
+				BrowseInfo.ulFlags := BrowseInfo.ulFlags or BIF_BROWSEFORPRINTER;
+			end;
+	end; { case }
 
-    {Set the Flags member of BrowseInfo if we are filtering for some particular type of folder.}
-    case (Self.Filter) of
-        kbsdBrowseForComputers : begin
-            BrowseInfo.ulFlags := BrowseInfo.ulFlags or BIF_BROWSEFORCOMPUTER;
-        end;
-        kbsdBrowseForDirectories : begin
-            BrowseInfo.ulFlags := BrowseInfo.ulFlags or BIF_RETURNONLYFSDIRS;
-        end;
-        kbsdBrowseForFileAncestors : begin
-            BrowseInfo.ulFlags := BrowseInfo.ulFlags or BIF_RETURNFSANCESTORS;
-        end;
-        kbsdBrowseForPrinters : begin
-            BrowseInfo.ulFlags := BrowseInfo.ulFlags or BIF_BROWSEFORPRINTER;
-        end;
-    end; {case}
+	{ Set the Flags member of BrowseInfo if we want to restrict access to network neighborhood. }
+	if (not(Self.CanExpandDomains)) then begin
+		BrowseInfo.ulFlags := BrowseInfo.ulFlags or BIF_DONTGOBELOWDOMAIN;
+	end;
 
-    {Set the Flags member of BrowseInfo if we want to restrict access to network neighborhood.}
-    if (not (Self.CanExpandDomains)) then begin
-        BrowseInfo.ulFlags := BrowseInfo.ulFlags or BIF_DONTGOBELOWDOMAIN;
-    end;
+	{ Set the Flags member of BrowseInfo if we want to show status text in the dialog. }
+	if (Self.ShowStatusText) then begin
+		BrowseInfo.ulFlags := BrowseInfo.ulFlags or BIF_STATUSTEXT;
+	end;
 
-    {Set the Flags member of BrowseInfo if we want to show status text in the dialog.}
-    if (Self.ShowStatusText) then begin
-        BrowseInfo.ulFlags := BrowseInfo.ulFlags or BIF_STATUSTEXT;
-    end;
+	{ Show the dialog and save the PIDL reflecting the user's final selection, if any. }
+	FinalPIDL := SHBrowseForFolder(BrowseInfo);
 
-    {Show the dialog and save the PIDL reflecting the user's final selection, if any.}
-    FinalPIDL := SHBrowseForFolder(BrowseInfo);
+	{ If the final PIDL is not nil, return True. If it is nil, return False. }
+	Result := (FinalPIDL <> nil);
 
-    {If the final PIDL is not nil, return True. If it is nil, return False.}
-    Result := (FinalPIDL <> nil);
+	{ Reset the dialog window handle value to 0, since the dialog
+	  is no longer available. }
+	Self.FDialogHandle := 0;
 
-  {Reset the dialog window handle value to 0, since the dialog
-   is no longer available.}
-    Self.FDialogHandle := 0;
+	{ Extract the file path, if any, from the final PIDL. }
+	Self.FRootPath := GetPathFromPIDL(FinalPIDL);
 
-    {Extract the file path, if any, from the final PIDL.}
-    Self.FRootPath := GetPathFromPIDL(FinalPIDL);
-
-    {Free PIDLs allocated by the system.}
-    FreePIDL(FinalPIDL);
-    FreePIDL(BrowseInfo.pidlRoot);
+	{ Free PIDLs allocated by the system. }
+	ILFree(FinalPIDL);
+	ILFree(BrowseInfo.pidlRoot);
 end;
 
+{ ***********************************************************
+  Browse For Folder Callback function implementation
+  *********************************************************** }
 
-
-{***********************************************************
-     Browse For Folder Callback function implementation
- ***********************************************************}
-
-function BrowseForFolderCallback(DialogHandle : HWND;
-    MessageID : UINT;
-    PIDL : LPARAM;
-    ComponentPointer : LPARAM) :
-Integer; stdcall;
+function BrowseForFolderCallback(DialogHandle: HWND; MessageID: UINT; PIDL: LPARAM; ComponentPointer: LPARAM): Integer; stdcall;
 var
-    DialogComponent : TkbBrowseForFolderDialog;
+	DialogComponent: TkbBrowseForFolderDialog;
 begin
 	{$WARN UNSAFE_CAST OFF}
-	{If the value which we expect to point to the dialog component is not nil...}
+	{ If the value which we expect to point to the dialog component is not nil... }
 	if (ComponentPointer <> 0) then begin
 		DialogComponent := TkbBrowseForFolderDialog(ComponentPointer);
 
-	{Based on which message is invoking the callback, invoke the appropriate event
-	 dispatch method for the referenced component. We are cheating a bit --- these
-	 are actually protected methods, but we can access them from outside the class
-	 because this is in the same unit.}
+		{ Based on which message is invoking the callback, invoke the appropriate event
+		  dispatch method for the referenced component. We are cheating a bit --- these
+		  are actually protected methods, but we can access them from outside the class
+		  because this is in the same unit. }
 		case (MessageID) of
-			BFFM_INITIALIZED : begin
-				DialogComponent.Initialize(DialogHandle);
-			end; {case BFFM_INITIALIZED}
-			BFFM_SELCHANGED : begin
-				TkbBrowseForFolderDialog(DialogComponent).Change(DialogHandle, PItemIDList(PIDL));
-			end; {case BFFM_SELCHANGED}
-		end; {case}
+			BFFM_INITIALIZED: begin
+					DialogComponent.Initialize(DialogHandle);
+				end; { case BFFM_INITIALIZED }
+			BFFM_SELCHANGED: begin
+					TkbBrowseForFolderDialog(DialogComponent).Change(DialogHandle, PItemIDList(PIDL));
+				end; { case BFFM_SELCHANGED }
+		end;         { case }
 	end;
 
-	{Always return 0.}
+	{ Always return 0. }
 	Result := 0;
 	{$WARN UNSAFE_CAST ON}
 end;
 
+{ ***********************************************************
+  TkbFormatDriveDialog class implementation
+  *********************************************************** }
 
-{***********************************************************
-          TkbFormatDriveDialog class implementation
- ***********************************************************}
-
-constructor TkbFormatDriveDialog.Create(TheOwner : TComponent);
+constructor TkbFormatDriveDialog.Create(TheOwner: TComponent);
 begin
-    {Call the ancestor constructor.}
-    inherited Create(TheOwner);
+	{ Call the ancestor constructor. }
+	inherited Create(TheOwner);
 
-    {Initialize simple-type properties.}
-    Self.FDefaultQuickFormat := False;
-    Self.FDefaultSysOnly := False;
-    Self.FDriveToFormat := kbsdDriveA;
-    Self.FRememberLastFormat := True;
-    Self.FLastFormatID := SHFMT_ID_DEFAULT;
-    Self.FSuppressARI  := True;
+	{ Initialize simple-type properties. }
+	Self.FDefaultQuickFormat := False;
+	Self.FDefaultSysOnly     := False;
+	Self.FDriveToFormat      := kbsdDriveA;
+	Self.FRememberLastFormat := True;
+	Self.FLastFormatID       := SHFMT_ID_DEFAULT;
+	Self.FSuppressARI        := True;
 
 end;
 
-function TkbFormatDriveDialog.Execute : TkbFormatResult;
+function TkbFormatDriveDialog.Execute: TkbFormatResult;
 var
-    OldErrorMode :      UINT;
-    LocalLastFormatID : UINT;
-    LocalOptionFlags :  UINT;
-    FormatResult :      DWORD;
+	OldErrorMode     : UINT;
+	LocalLastFormatID: UINT;
+	LocalOptionFlags : UINT;
+	FormatResult     : DWORD;
 begin
-    {Set whether to remember the last format ID.}
-    if (Self.RememberLastFormat) then begin
-        LocalLastFormatID := LOWORD(Self.LastFormatID);
-    end    else begin
-        LocalLastFormatID := SHFMT_ID_DEFAULT;
-    end;
+	{ Set whether to remember the last format ID. }
+	if (Self.RememberLastFormat) then begin
+		LocalLastFormatID := LOWORD(Self.LastFormatID);
+	end else begin
+		LocalLastFormatID := SHFMT_ID_DEFAULT;
+	end;
 
-  {Set checkbox option flags. Note that NT has SHFMT_OPT_FULL backwards and
-   screws up SHFMT_OPT_SYSONLY.}
-    LocalOptionFlags := 0;
-    if (Self.DefaultQuickFormat) then begin
-        if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
-            LocalOptionFlags := LocalOptionFlags or SHFMT_OPT_FULL;
-        end;
-    end    else begin
-        if (SysUtils.Win32Platform <> VER_PLATFORM_WIN32_NT) then begin
-            LocalOptionFlags := LocalOptionFlags or SHFMT_OPT_FULL;
-        end;
-    end;
-    if ((Self.DefaultSysOnly) and (SysUtils.Win32Platform <> VER_PLATFORM_WIN32_NT)) then begin
-        LocalOptionFlags := LocalOptionFlags or SHFMT_OPT_SYSONLY;
-    end;
+	{ Set checkbox option flags. Note that NT has SHFMT_OPT_FULL backwards and
+	  screws up SHFMT_OPT_SYSONLY. }
+	LocalOptionFlags := 0;
+	if (Self.DefaultQuickFormat) then begin
+		if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
+			LocalOptionFlags := LocalOptionFlags or SHFMT_OPT_FULL;
+		end;
+	end else begin
+		if (SysUtils.Win32Platform <> VER_PLATFORM_WIN32_NT) then begin
+			LocalOptionFlags := LocalOptionFlags or SHFMT_OPT_FULL;
+		end;
+	end;
+	if ((Self.DefaultSysOnly) and (SysUtils.Win32Platform <> VER_PLATFORM_WIN32_NT)) then begin
+		LocalOptionFlags := LocalOptionFlags or SHFMT_OPT_SYSONLY;
+	end;
 
-    {Save the current process error mode.}
-    OldErrorMode := SetErrorMode(0);
-    try
+	{ Save the current process error mode. }
+	OldErrorMode := SetErrorMode(0);
+	try
 
-        {If supress AbortRetryIgnore is on, set the error mode accordingly. }
-        if (Self.SuppressARI) then begin
-            SetErrorMode(OldErrorMode or SEM_FAILCRITICALERRORS);
-        end      else begin
-            SetErrorMode(OldErrorMode and not SEM_FAILCRITICALERRORS);
-        end;
+		{ If supress AbortRetryIgnore is on, set the error mode accordingly. }
+		if (Self.SuppressARI) then begin
+			SetErrorMode(OldErrorMode or SEM_FAILCRITICALERRORS);
+		end else begin
+			SetErrorMode(OldErrorMode and not SEM_FAILCRITICALERRORS);
+		end;
 
-        {Invoke dialog and save result.}
-        FormatResult := SHFormatDrive(Application.Handle, UINT(Self.DriveToFormat), LocalLastFormatID, LocalOptionFlags);
+		{ Invoke dialog and save result. }
+		FormatResult := SHFormatDrive(Application.Handle, UINT(Self.DriveToFormat), LocalLastFormatID, LocalOptionFlags);
 
-        {Ensure old error mode is restored.}
-    finally
-        SetErrorMode(OldErrorMode);
-    end;
+		{ Ensure old error mode is restored. }
+	finally
+		SetErrorMode(OldErrorMode);
+	end;
 
-    {Translate format result into function result.}
-    Result := FormatResultConstToEnum(FormatResult);
+	{ Translate format result into function result. }
+	Result := FormatResultConstToEnum(FormatResult);
 
-    {If the format was successful, remember the format ID.}
-    if (Result = kbsdFormatSucceeded) then begin
-        Self.FLastFormatID := FormatResult;
-    end;
+	{ If the format was successful, remember the format ID. }
+	if (Result = kbsdFormatSucceeded) then begin
+		Self.FLastFormatID := FormatResult;
+	end;
 end;
 
+{ ***********************************************************
+  TkbPickIconDialog class implementation
+  *********************************************************** }
 
-{***********************************************************
-              TkbPickIconDialog class implementation
- ***********************************************************}
-
-constructor TkbPickIconDialog.Create(TheOwner : TComponent);
+constructor TkbPickIconDialog.Create(TheOwner: TComponent);
 begin
-    {Call the ancestor constructor.}
-    inherited Create(TheOwner);
+	{ Call the ancestor constructor. }
+	inherited Create(TheOwner);
 
-    {Initialize simple-type properties.}
-    Self.FFileName  := EmptyStr;
-    Self.FIconIndex := 0;
+	{ Initialize simple-type properties. }
+	Self.FFileName  := EmptyStr;
+	Self.FIconIndex := 0;
 end;
 
-function TkbPickIconDialog.Execute : integer;
+function TkbPickIconDialog.Execute: Integer;
 var
-    FileNameBuffer : Pointer;
+	FileNameBuffer: Pointer;
 begin
-    {The Win NT UNICODE version.}
-    if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
-    {Allocate a suitably sized PWideChar buffer and transliterate the
-     initial filename into the buffer.}
-		FileNameBuffer:=GetMemory( MAX_PATH * SizeOf(widechar));
-        try
-            StringToWideChar(Self.FileName, FileNameBuffer, MAX_PATH + 1);
+	{ The Win NT UNICODE version. }
+	if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
+		{ Allocate a suitably sized PWideChar buffer and transliterate the
+		  initial filename into the buffer. }
+		FileNameBuffer := GetMemory(MAX_PATH * SizeOf(widechar));
+		try
+			StringToWideChar(Self.FileName, FileNameBuffer, MAX_PATH + 1);
 
-            {Call the dialog and use the return value as the function result.}
-            Result := PickIconDlg(Application.Handle, PWideChar(FileNameBuffer), UINT(MAX_PATH), Self.FIconIndex);
+			{ Call the dialog and use the return value as the function result. }
+			Result := PickIconDlg(Application.Handle, PWideChar(FileNameBuffer), UINT(MAX_PATH), Self.FIconIndex);
 
-            {If function was successful, transliterate the returned filename back to a string.}
-            if (Result <> 0) then begin
-                Self.FileName := WideCharToString(FileNameBuffer);
-            end;
-
-            {Ensure the buffer is freed.}
-        finally
-			FreeMemory(FileNameBuffer);
-        end;
-    end
-    {The Win 95 ANSI version.}
-    else begin
-    {Allocate a suitably sized PChar buffer and copy the
-     initial filename into the buffer.}
-		FileNameBuffer:=GetMemory( MAX_PATH * SizeOf(AnsiChar));
-        try
-            StrPCopy(FileNameBuffer, Self.FileName);
-
-            {Call the dialog and use the return value as the function result.}
-            Result := PickIconDlg(Application.Handle, FileNameBuffer, MAX_PATH, Self.FIconIndex);
-
-            {If function was successful, copy the filename back to a string.}
-			 if (Result <> 0 ) then begin
-				 Self.FileName := StrPas(PWideChar(FileNameBuffer));
+			{ If function was successful, transliterate the returned filename back to a string. }
+			if (Result <> 0) then begin
+				Self.FileName := WideCharToString(FileNameBuffer);
 			end;
 
-            {Ensure the buffer is freed.}
-        finally
+			{ Ensure the buffer is freed. }
+		finally
 			FreeMemory(FileNameBuffer);
-        end;
-    end;
+		end;
+	end
+	{ The Win 95 ANSI version. }
+	else begin
+		{ Allocate a suitably sized PChar buffer and copy the
+		  initial filename into the buffer. }
+		FileNameBuffer := GetMemory(MAX_PATH * SizeOf(AnsiChar));
+		try
+			StrPCopy(FileNameBuffer, Self.FileName);
+
+			{ Call the dialog and use the return value as the function result. }
+			Result := PickIconDlg(Application.Handle, FileNameBuffer, MAX_PATH, Self.FIconIndex);
+
+			{ If function was successful, copy the filename back to a string. }
+			if (Result <> 0) then begin
+				Self.FileName := StrPas(PWideChar(FileNameBuffer));
+			end;
+
+			{ Ensure the buffer is freed. }
+		finally
+			FreeMemory(FileNameBuffer);
+		end;
+	end;
 
 end;
 
+{ ***********************************************************
+  TkbRunFileDialog class implementation
+  *********************************************************** }
 
-
-{***********************************************************
-            TkbRunFileDialog class implementation
- ***********************************************************}
-
-constructor TkbRunFileDialog.Create(TheOwner : TComponent);
+constructor TkbRunFileDialog.Create(TheOwner: TComponent);
 begin
-    {Call the ancestor constructor.}
-    inherited Create(TheOwner);
+	{ Call the ancestor constructor. }
+	inherited Create(TheOwner);
 
-    {Initialize simple-type data members.}
-    Self.FCaption     := EmptyStr;
-    Self.FDescription := EmptyStr;
-    Self.FWorkingPath := EmptyStr;
+	{ Initialize simple-type data members. }
+	Self.FCaption     := EmptyStr;
+	Self.FDescription := EmptyStr;
+	Self.FWorkingPath := EmptyStr;
 
-    {Initialize event-type data members.}
-    Self.FOnValidate := nil;
+	{ Initialize event-type data members. }
+	Self.FOnValidate := nil;
 
-    {Initialize set-type data members.}
-    Self.FOptions := [];
+	{ Initialize set-type data members. }
+	Self.FOptions := [];
 
-    {Allocate object-type data members.}
-    Self.FIcon := TIcon.Create;
+	{ Allocate object-type data members. }
+	Self.FIcon := TIcon.Create;
 
-    {Allocate a message-handling window.}
-    Self.FMessageWindow := Classes.AllocateHWnd(Self.HandleMessage);
+	{ Allocate a message-handling window. }
+	Self.FMessageWindow := Classes.AllocateHWnd(Self.HandleMessage);
 end;
 
 destructor TkbRunFileDialog.Destroy;
 begin
-    {Destroy the message-handling window}
-    Classes.DeallocateHWnd(Self.FMessageWindow);
+	{ Destroy the message-handling window }
+	Classes.DeallocateHWnd(Self.FMessageWindow);
 
-    {Free object-type data members.}
-    Self.FIcon.Free;
+	{ Free object-type data members. }
+	Self.FIcon.Free;
 
-    {Call the ancestor destructor.}
-    inherited Destroy;
+	{ Call the ancestor destructor. }
+	inherited Destroy;
 end;
 
-procedure TkbRunFileDialog.SetIcon(NewValue : TIcon);
+procedure TkbRunFileDialog.SetIcon(NewValue: TIcon);
 begin
-    {Copy the new TIcon's data to the object's instance.}
-    Self.Icon.Assign(NewValue);
+	{ Copy the new TIcon's data to the object's instance. }
+	Self.Icon.Assign(NewValue);
 end;
 
-function TkbRunFileDialog.StoreIcon : boolean;
+function TkbRunFileDialog.StoreIcon: boolean;
 begin
-    {Only store the object's TIcon in the DFM if an icon is assigned.}
-    Result := (Self.Icon.Handle <> 0);
+	{ Only store the object's TIcon in the DFM if an icon is assigned. }
+	Result := (Self.Icon.Handle <> 0);
 end;
 
-procedure TkbRunFileDialog.HandleMessage(var TheMessage : TMessage);
+procedure TkbRunFileDialog.HandleMessage(var TheMessage: TMessage);
 var
-    FileToRun : string;
-    WorkPath :  string;
-    RunAction : TkbRunFileAction;
+	FileToRun: string;
+	WorkPath : string;
+	RunAction: TkbRunFileAction;
 begin
-    {If we have a notify message with code run validate...}
-    if TheMessage.Msg = WM_NOTIFY then begin
-        if PNMHdr(TheMessage.LParam).code = RFN_VALIDATE then begin
-      {Translate the file into a string.  Note that NT and 95 are UNICODE vs. ANSI,
-       as usual.}
-            FileToRun := EmptyStr;
-            if (PNM_RunFileDlg(TheMessage.LParam).lpFile <> nil) then begin
-                if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
-                    WideCharToStrVar(PWideChar(PNM_RunFileDlg(TheMessage.LParam).lpFile), FileToRun);
-                end      else begin
-                    FileToRun := StrPas(PChar(PNM_RunFileDlg(TheMessage.LParam).lpFile));
-                end;
-            end;
-            WorkPath := EmptyStr;
-            if (PNM_RunFileDlg(TheMessage.LParam).lpDirectory <> nil) then begin
-                if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
-                    WideCharToStrVar(PWideChar(PNM_RunFileDlg(TheMessage.LParam).lpDirectory), WorkPath);
-                end      else begin
-                    FileToRun := StrPas(PChar(PNM_RunFileDlg(TheMessage.LParam).lpDirectory));
-                end;
-            end;
+	{ If we have a notify message with code run validate... }
+	if TheMessage.Msg = WM_NOTIFY then begin
+		if PNMHdr(TheMessage.LPARAM).code = RFN_VALIDATE then begin
+			{ Translate the file into a string.  Note that NT and 95 are UNICODE vs. ANSI,
+			  as usual. }
+			FileToRun := EmptyStr;
+			if (PNM_RunFileDlg(TheMessage.LPARAM).lpFile <> nil) then begin
+				if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
+					WideCharToStrVar(PWideChar(PNM_RunFileDlg(TheMessage.LPARAM).lpFile), FileToRun);
+				end else begin
+					FileToRun := StrPas(PChar(PNM_RunFileDlg(TheMessage.LPARAM).lpFile));
+				end;
+			end;
+			WorkPath := EmptyStr;
+			if (PNM_RunFileDlg(TheMessage.LPARAM).lpDirectory <> nil) then begin
+				if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
+					WideCharToStrVar(PWideChar(PNM_RunFileDlg(TheMessage.LPARAM).lpDirectory), WorkPath);
+				end else begin
+					FileToRun := StrPas(PChar(PNM_RunFileDlg(TheMessage.LPARAM).lpDirectory));
+				end;
+			end;
 
-      {Set up and invoke event handler. Return the result from event handler to
-       the message and exit this method.}
-            RunAction := kbsdRun;
-            Self.Validate(FileToRun, WorkPath, PNM_RunFileDlg(TheMessage.LParam).nShow, RunAction);
-            TheMessage.Result := RunFileActionEnumToConst(RunAction);
-            Exit;
-        end;
-    end;
+			{ Set up and invoke event handler. Return the result from event handler to
+			  the message and exit this method. }
+			RunAction := kbsdRun;
+			Self.Validate(FileToRun, WorkPath, PNM_RunFileDlg(TheMessage.LPARAM).nShow, RunAction);
+			TheMessage.Result := RunFileActionEnumToConst(RunAction);
+			Exit;
+		end;
+	end;
 
-    {If message was not handled above, send it to the default window procedure.}
-    TheMessage.Result := DefWindowProc(Self.FMessageWindow, TheMessage.Msg, TheMessage.wParam, TheMessage.lParam);
+	{ If message was not handled above, send it to the default window procedure. }
+	TheMessage.Result := DefWindowProc(Self.FMessageWindow, TheMessage.Msg, TheMessage.wParam, TheMessage.LPARAM);
 end;
 
-procedure TkbRunFileDialog.Validate(TheFile : TFileName; TheWorkPath : TFileName; Visible : boolean; var Action : TkbRunFileAction);
+procedure TkbRunFileDialog.Validate(TheFile: TFileName; TheWorkPath: TFileName; Visible: boolean; var Action: TkbRunFileAction);
 begin
-    {If event handler is assigned, call it.}
-    if Assigned(Self.OnValidate) then begin
-        Self.OnValidate(Self, TheFile, TheWorkPath, Visible, Action);
-    end;
+	{ If event handler is assigned, call it. }
+	if Assigned(Self.OnValidate) then begin
+		Self.OnValidate(Self, TheFile, TheWorkPath, Visible, Action);
+	end;
 end;
 
 procedure TkbRunFileDialog.Execute;
 var
-    CaptionBuffer : Pointer;
-    DescriptionBuffer : Pointer;
-    WorkPathBuffer : Pointer;
-    Option :      TkbRunFileOption;
-    OptionFlags : UINT;
+	CaptionBuffer    : Pointer;
+	DescriptionBuffer: Pointer;
+	WorkPathBuffer   : Pointer;
+	Option           : TkbRunFileOption;
+	OptionFlags      : UINT;
 begin
-    {Initialize buffers to nil}
-    CaptionBuffer     := nil;
-    DescriptionBuffer := nil;
-    WorkPathBuffer    := nil;
+	{ Initialize buffers to nil }
+	CaptionBuffer     := nil;
+	DescriptionBuffer := nil;
+	WorkPathBuffer    := nil;
 
-    {Allocate a buffer to hold the caption, long enough for UNICODE if need be.}
-    if (Self.Caption <> EmptyStr) then begin
-		CaptionBuffer:=GetMemory( (Length(Self.Caption) + 1) * SizeOf(widechar));
-    end;
-    try
-
-        {Allocate a buffer to hold the description, long enough for UNICODE if need be.}
-        if (Self.Description <> EmptyStr) then begin
-			DescriptionBuffer:=GetMemory( (Length(Self.Description) + 1) * SizeOf(widechar));
-        end;
-        try
-
-            {Allocate a buffer to hold the work path, long enough for UNICODE if need be.}
-            if (Self.WorkingPath <> EmptyStr) then begin
-				WorkPathBuffer:=GetMemory( (Length(Self.WorkingPath) + 1) * SizeOf(widechar));
-            end;
-            try
-
-                {If WinNT, convert strings to UNICODE.  Otherwise, just copy to buffer. Test for nil buffers.}
-                if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
-                    if (CaptionBuffer <> nil) then begin
-                        StringToWideChar(Self.Caption, PWideChar(CaptionBuffer), (Length(Self.Caption) + 1));
-                    end;
-                    if (DescriptionBuffer <> nil) then begin
-                        StringToWideChar(Self.Description, PWideChar(DescriptionBuffer), (Length(Self.Description) + 1));
-                    end;
-                    if (WorkPathBuffer <> nil) then begin
-                        StringToWideChar(Self.WorkingPath, PWideChar(WorkPathBuffer), (Length(Self.WorkingPath) + 1));
-                    end;
-                end      else begin
-                    if (CaptionBuffer <> nil) then begin
-                        StrPCopy(PChar(CaptionBuffer), Self.Caption);
-                    end;
-                    if (DescriptionBuffer <> nil) then begin
-                        StrPCopy(PChar(DescriptionBuffer), Self.Description);
-                    end;
-                    if (WorkPathBuffer <> nil) then begin
-                        StrPCopy(PChar(WorkPathBuffer), Self.WorkingPath);
-                    end;
-                end;
-
-                {Set up option flags.}
-                OptionFlags := 0;
-                for Option := Low(TkbRunFileOption) to High(TkbRunFileOption) do begin
-                    if (Option in Self.Options) then begin
-                        OptionFlags := OptionFlags or RunFileOptionEnumToConst(Option);
-                    end;
-                end; {for}
-
-                {Execute the dialog.}
-                RunFileDlg(Self.FMessageWindow, Self.Icon.Handle, WorkPathBuffer, CaptionBuffer, DescriptionBuffer, OptionFlags);
-
-                {Ensure the work path buffer is freed.}
-            finally
-				FreeMemory(WorkPathBuffer);
-            end;
-
-            {Ensure the description buffer is freed.}
-        finally
-			FreeMemory(DescriptionBuffer);
-        end;
-
-        {Ensure the caption buffer is freed.}
-    finally
-		FreeMemory(CaptionBuffer);
-    end;
-end;
-
-
-
-{***********************************************************
-              TkbFindFilesDialog class implementation
- ***********************************************************}
-
-constructor TkbFindFilesDialog.Create(TheOwner : TComponent);
-begin
-    {Call the ancestor constructor.}
-    inherited Create(TheOwner);
-
-    {Initialize simple-type properties.}
-    Self.FSearchFileName := EmptyStr;
-    Self.FRootPath   := EmptyStr;
-    Self.FRootFolder := rfDesktop;
-end;
-
-procedure TkbFindFilesDialog.SetRootPath(NewValue : TFileName);
-begin
-    {If we're setting a new Root Path, ensure the Root Folder is set to Path.}
-    if (NewValue <> EmptyStr) then begin
-        Self.RootFolder := kbsdPath;
-    end;
-    Self.FRootPath := NewValue;
-end;
-
-function TkbFindFilesDialog.Execute : boolean;
-var
-    RootPIDL :   PItemIDList;
-    SearchFile : PItemIDList;
-begin
-    {Initialize Root PIDL to nil by default.}
-    RootPIDL := nil;
-
-    try
-
-        {Try to set the search file PIDL.}
-        SearchFile := GetPIDLFromPath(Self.SearchFileName);
-
-        {Set the Root PIDL.}
-        if (Self.RootFolder = kbsdPath) then begin
-            RootPIDL := GetPIDLFromPath(Self.RootPath);
-        end      else begin
-            RootPIDL := GetSpecialLocationPIDL(Self.RootFolder);
-        end;
-
-        {Show the dialog and return the result.}
-        Result := SHFindFiles(RootPIDL, SearchFile);
-
-        {Free the Root PIDL.}
-    finally
-        FreePIDL(RootPIDL);
-    end;
-end;
-
-
-
-{***********************************************************
-        TkbRestartWindowsDialog class implementation
- ***********************************************************}
-
-constructor TkbRestartWindowsDialog.Create(TheOwner : TComponent);
-begin
-    {Call the ancestor constructor.}
-    inherited Create(TheOwner);
-
-    {Initialize simple-type properties.}
-    Self.FReason := EmptyStr;
-    Self.FRestartOption := kbsdRestartWindows;
-end;
-
-function TkbRestartWindowsDialog.Execute : boolean;
-const
-    Space = ' ';
-var
-    ReasonString : String;
-    ReasonBuffer : PWideChar;
-begin
-    {Allocate a buffer to hold the reason, long enough for UNICODE if need be.}
-    ReasonString := Self.Reason + Space;
-	ReasonBuffer:=GetMemory( (Length(ReasonString) + 1) * SizeOf(widechar));
+	{ Allocate a buffer to hold the caption, long enough for UNICODE if need be. }
+	if (Self.Caption <> EmptyStr) then begin
+		CaptionBuffer := GetMemory((Length(Self.Caption) + 1) * SizeOf(widechar));
+	end;
 	try
-	   StringToWideChar(ReasonString, PWideChar(ReasonBuffer), (Length(ReasonString) + 1));
-		{Execute the dialog and convert the result to the return value.}
+
+		{ Allocate a buffer to hold the description, long enough for UNICODE if need be. }
+		if (Self.Description <> EmptyStr) then begin
+			DescriptionBuffer := GetMemory((Length(Self.Description) + 1) * SizeOf(widechar));
+		end;
+		try
+
+			{ Allocate a buffer to hold the work path, long enough for UNICODE if need be. }
+			if (Self.WorkingPath <> EmptyStr) then begin
+				WorkPathBuffer := GetMemory((Length(Self.WorkingPath) + 1) * SizeOf(widechar));
+			end;
+			try
+
+				{ If WinNT, convert strings to UNICODE.  Otherwise, just copy to buffer. Test for nil buffers. }
+				if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
+					if (CaptionBuffer <> nil) then begin
+						StringToWideChar(Self.Caption, PWideChar(CaptionBuffer), (Length(Self.Caption) + 1));
+					end;
+					if (DescriptionBuffer <> nil) then begin
+						StringToWideChar(Self.Description, PWideChar(DescriptionBuffer), (Length(Self.Description) + 1));
+					end;
+					if (WorkPathBuffer <> nil) then begin
+						StringToWideChar(Self.WorkingPath, PWideChar(WorkPathBuffer), (Length(Self.WorkingPath) + 1));
+					end;
+				end else begin
+					if (CaptionBuffer <> nil) then begin
+						StrPCopy(PChar(CaptionBuffer), Self.Caption);
+					end;
+					if (DescriptionBuffer <> nil) then begin
+						StrPCopy(PChar(DescriptionBuffer), Self.Description);
+					end;
+					if (WorkPathBuffer <> nil) then begin
+						StrPCopy(PChar(WorkPathBuffer), Self.WorkingPath);
+					end;
+				end;
+
+				{ Set up option flags. }
+				OptionFlags := 0;
+				for Option  := low(TkbRunFileOption) to high(TkbRunFileOption) do begin
+					if (Option in Self.Options) then begin
+						OptionFlags := OptionFlags or RunFileOptionEnumToConst(Option);
+					end;
+				end; { for }
+
+				{ Execute the dialog. }
+				RunFileDlg(Self.FMessageWindow, Self.Icon.Handle, WorkPathBuffer, CaptionBuffer, DescriptionBuffer, OptionFlags);
+
+				{ Ensure the work path buffer is freed. }
+			finally
+				FreeMemory(WorkPathBuffer);
+			end;
+
+			{ Ensure the description buffer is freed. }
+		finally
+			FreeMemory(DescriptionBuffer);
+		end;
+
+		{ Ensure the caption buffer is freed. }
+	finally
+		FreeMemory(CaptionBuffer);
+	end;
+end;
+
+{ ***********************************************************
+  TkbFindFilesDialog class implementation
+  *********************************************************** }
+
+constructor TkbFindFilesDialog.Create(TheOwner: TComponent);
+begin
+	{ Call the ancestor constructor. }
+	inherited Create(TheOwner);
+
+	{ Initialize simple-type properties. }
+	Self.FSearchFileName := EmptyStr;
+	Self.FRootPath       := EmptyStr;
+	Self.FRootFolder     := rfDesktop;
+end;
+
+procedure TkbFindFilesDialog.SetRootPath(NewValue: TFileName);
+begin
+	{ If we're setting a new Root Path, ensure the Root Folder is set to Path. }
+	if (NewValue <> EmptyStr) then begin
+		Self.RootFolder := kbsdPath;
+	end;
+	Self.FRootPath := NewValue;
+end;
+
+function TkbFindFilesDialog.Execute: boolean;
+var
+	RootPIDL  : PItemIDList;
+	SearchFile: PItemIDList;
+begin
+	{ Initialize Root PIDL to nil by default. }
+	RootPIDL := nil;
+
+	try
+
+		{ Try to set the search file PIDL. }
+		SearchFile := GetPIDLFromPath(Self.SearchFileName);
+
+		{ Set the Root PIDL. }
+		if (Self.RootFolder = kbsdPath) then begin
+			RootPIDL := GetPIDLFromPath(Self.RootPath);
+		end else begin
+			RootPIDL := GetSpecialLocationPIDL(Self.RootFolder);
+		end;
+		Result := SHFindFiles(RootPIDL, SearchFile);
+	finally
+		ILFree(RootPIDL);
+	end;
+end;
+
+{ ***********************************************************
+  TkbRestartWindowsDialog class implementation
+  *********************************************************** }
+
+constructor TkbRestartWindowsDialog.Create(TheOwner: TComponent);
+begin
+	{ Call the ancestor constructor. }
+	inherited Create(TheOwner);
+	{ Initialize simple-type properties. }
+	Self.FReason        := EmptyStr;
+	Self.FRestartOption := kbsdRestartWindows;
+end;
+
+function TkbRestartWindowsDialog.Execute: boolean;
+const
+	Space = ' ';
+var
+	ReasonString: string;
+	ReasonBuffer: PWideChar;
+begin
+	{ Allocate a buffer to hold the reason, long enough for UNICODE if need be. }
+	ReasonString := Self.Reason + Space;
+	ReasonBuffer := GetMemory((Length(ReasonString) + 1) * SizeOf(widechar));
+	try
+		StringToWideChar(ReasonString, PWideChar(ReasonBuffer), (Length(ReasonString) + 1));
+		{ Execute the dialog and convert the result to the return value. }
 		Result := (RestartDialog(Application.Handle, ReasonBuffer, RestartOptionEnumToConst(Self.RestartOption)) = idYes);
 	finally
 		FreeMemory(ReasonBuffer);
 	end;
 end;
 
-{***********************************************************
-        TkbObjectPropertiesDialog class implementation
- ***********************************************************}
+{ ***********************************************************
+  TkbObjectPropertiesDialog class implementation
+  *********************************************************** }
 
-constructor TkbObjectPropertiesDialog.Create(TheOwner : TComponent);
+constructor TkbObjectPropertiesDialog.Create(TheOwner: TComponent);
 begin
-    {Call the ancestor constructor.}
-    inherited Create(TheOwner);
+	{ Call the ancestor constructor. }
+	inherited Create(TheOwner);
 
-    {Initialize simple-type properties.}
-    Self.FInitialTab := EmptyStr;
-    Self.FObjectName := EmptyStr;
-    Self.FObjectType := kbsdPathObject;
+	{ Initialize simple-type properties. }
+	Self.FInitialTab := EmptyStr;
+	Self.FObjectName := EmptyStr;
+	Self.FObjectType := kbsdPathObject;
 end;
 
-function TkbObjectPropertiesDialog.Execute : boolean;
+function TkbObjectPropertiesDialog.Execute: boolean;
 var
-    ObjectNameBuffer : Pointer;
-    TabNameBuffer :    Pointer;
+	ObjectNameBuffer: Pointer;
+	TabNameBuffer   : Pointer;
 begin
-    {Allocate a buffer to hold the object name, long enough for UNICODE if need be.}
-	ObjectNameBuffer:=GetMemory( (Length(Self.ObjectName) + 1) * SizeOf(widechar));
-    try
+	{ Allocate a buffer to hold the object name, long enough for UNICODE if need be. }
+	ObjectNameBuffer := GetMemory((Length(Self.ObjectName) + 1) * SizeOf(widechar));
+	try
 
-        {If WinNT, convert object name string to UNICODE.  Otherwise, just copy to buffer.}
-        if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
-            StringToWideChar(Self.ObjectName, PWideChar(ObjectNameBuffer), (Length(Self.ObjectName) + 1));
-        end      else begin
-            StrPCopy(PChar(ObjectNameBuffer), Self.ObjectName);
-        end;
+		{ If WinNT, convert object name string to UNICODE.  Otherwise, just copy to buffer. }
+		if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
+			StringToWideChar(Self.ObjectName, PWideChar(ObjectNameBuffer), (Length(Self.ObjectName) + 1));
+		end else begin
+			StrPCopy(PChar(ObjectNameBuffer), Self.ObjectName);
+		end;
 
-        {Allocate a buffer to hold the initial tab name, long enough for UNICODE if need be.}
-        TabNameBuffer:=GetMemory( (Length(Self.InitialTab) + 1) * SizeOf(widechar));
-        try
+		{ Allocate a buffer to hold the initial tab name, long enough for UNICODE if need be. }
+		TabNameBuffer := GetMemory((Length(Self.InitialTab) + 1) * SizeOf(widechar));
+		try
 
-            {If WinNT, convert initial tab name string to UNICODE.  Otherwise, just copy to buffer.}
-            if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
-                StringToWideChar(Self.InitialTab, PWideChar(TabNameBuffer), (Length(Self.InitialTab) + 1));
-            end      else begin
-                StrPCopy(PChar(TabNameBuffer), Self.InitialTab);
-            end;
+			{ If WinNT, convert initial tab name string to UNICODE.  Otherwise, just copy to buffer. }
+			if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
+				StringToWideChar(Self.InitialTab, PWideChar(TabNameBuffer), (Length(Self.InitialTab) + 1));
+			end else begin
+				StrPCopy(PChar(TabNameBuffer), Self.InitialTab);
+			end;
 
-			{Execute the dialog and translate the result to the return value.}
-            Result := SHObjectProperties(Application.Handle, ShellObjectTypeEnumToConst(Self.ObjectType),
-                ObjectNameBuffer, TabNameBuffer);
+			{ Execute the dialog and translate the result to the return value. }
+			Result := SHObjectProperties(Application.Handle, ShellObjectTypeEnumToConst(Self.ObjectType), ObjectNameBuffer,
+				TabNameBuffer);
 
-            {Ensure tab name buffer is freed.}
+			{ Ensure tab name buffer is freed. }
 		finally
 			FreeMemory(TabNameBuffer);
-        end;
+		end;
 
-        {Ensure object name buffer is freed.}
-    finally
+		{ Ensure object name buffer is freed. }
+	finally
 		FreeMemory(ObjectNameBuffer);
 	end;
 end;
 
+{ ***********************************************************
+  Public unit method implementations
+  *********************************************************** }
 
-
-{***********************************************************
-            Public unit method implementations
- ***********************************************************}
-
-function ShowShellAboutDialog : boolean;
+function ShowShellAboutDialog: boolean;
 var
-    Dialog : TkbShellAboutDialog;
+	Dialog: TkbShellAboutDialog;
 begin
-    Dialog := TkbShellAboutDialog.Create(Application);
-    try
-        Result := Dialog.Execute;
-    finally
-        Dialog.Free;
-    end;
+	Dialog := TkbShellAboutDialog.Create(Application);
+	try
+		Result := Dialog.Execute;
+	finally
+		Dialog.Free;
+	end;
 end;
 
-function ShowFindFilesDialog : longbool;
+function ShowFindFilesDialog: longbool;
 begin
-    Result := SHFindFiles(nil, nil);
+	Result := SHFindFiles(nil, nil);
 end;
 
-function ShowFindComputerDialog : longbool;
+function ShowFindComputerDialog: longbool;
 begin
-    Result := SHFindComputer(nil, nil);
+	Result := SHFindComputer(nil, nil);
 end;
 
 procedure ShowExitWindowsDialog;
 begin
-    ExitWindowsDialog(Application.Handle);
+	ExitWindowsDialog(Application.Handle);
 end;
 
-function ShowRestartDialog(Reason : string) : boolean;
+function ShowRestartDialog(Reason: string): boolean;
 var
-    Dialog : TkbRestartWindowsDialog;
+	Dialog: TkbRestartWindowsDialog;
 begin
-    Dialog := TkbRestartWindowsDialog.Create(Application);
-    try
-        Dialog.Reason := Reason;
-
-        Result := Dialog.Execute;
-    finally
-        Dialog.Free;
-    end;
-end;
-
-function ShowObjectPropertiesDialog(ObjectName : TFileName; ObjectType : TkbShellObjectType; InitialTab : string) : boolean;
-var
-    Dialog : TkbObjectPropertiesDialog;
-begin
-    Dialog := TkbObjectPropertiesDialog.Create(Application);
+	Dialog := TkbRestartWindowsDialog.Create(Application);
 	try
-        Dialog.ObjectName := ObjectName;
-        Dialog.ObjectType := ObjectType;
-        Dialog.InitialTab := InitialTab;
+		Dialog.Reason := Reason;
 
-        Result := Dialog.Execute;
-    finally
-        Dialog.Free;
+		Result := Dialog.Execute;
+	finally
+		Dialog.Free;
 	end;
 end;
 
-function ShowNetConnectionDialog(Resource : string; ResourceType : TkbNetResourceType) : DWORD;
+function ShowObjectPropertiesDialog(ObjectName: TFileName; ObjectType: TkbShellObjectType; InitialTab: string): boolean;
 var
-    ResourceBuffer : array[0..(MAX_PATH * SizeOf(widechar))] of char;
-    BufferAddress :  Pointer;
+	Dialog: TkbObjectPropertiesDialog;
 begin
-  {We must pass ANSI for Win95 and UNICODE for NT, or nil if the Resource string is empty.}
+	Dialog := TkbObjectPropertiesDialog.Create(Application);
+	try
+		Dialog.ObjectName := ObjectName;
+		Dialog.ObjectType := ObjectType;
+		Dialog.InitialTab := InitialTab;
+
+		Result := Dialog.Execute;
+	finally
+		Dialog.Free;
+	end;
+end;
+
+function ShowNetConnectionDialog(Resource: string; ResourceType: TkbNetResourceType): DWORD;
+var
+	ResourceBuffer: array[0 ..(MAX_PATH * SizeOf(widechar))] of char;
+	BufferAddress : Pointer;
+begin
+	{ We must pass ANSI for Win95 and UNICODE for NT, or nil if the Resource string is empty. }
 	if (Resource <> EmptyStr) then begin
 		{$WARN UNSAFE_CODE OFF}
 		if (SysUtils.Win32Platform = VER_PLATFORM_WIN32_NT) then begin
 			StringToWideChar(Resource, PWideChar(@ResourceBuffer), MAX_PATH);
-		end      else begin
+		end else begin
 			StrPCopy(ResourceBuffer, Resource);
 		end;
 		BufferAddress := @ResourceBuffer;
 		{$WARN UNSAFE_CODE ON}
-	end    else begin
+	end else begin
 		BufferAddress := nil;
 	end;
 	Result := SHNetConnectionDialog(Application.Handle, BufferAddress, NetResourceTypeEnumToConst(ResourceType));
 end;
 
-function ShowOutOfMemoryDialog : Integer;
+function ShowOutOfMemoryDialog: Integer;
 begin
-    Result := SHOutOfMemoryMessageBox(Application.Handle, nil, MB_OK or MB_ICONHAND);
+	Result := SHOutOfMemoryMessageBox(Application.Handle, nil, MB_OK or MB_ICONHAND);
 end;
 
-procedure ShowHandleDiskFullDialog(Drive : TkbDriveLetter);
+procedure ShowHandleDiskFullDialog(Drive: TkbDriveLetter);
 begin
-    SHHandleDiskFull(Application.Handle, UINT(Drive));
+	SHHandleDiskFull(Application.Handle, UINT(Drive));
 end;
 
-function ShowShellMessageBox(Caption : PChar; Text : PChar; Style : UINT; Parameters : array of Pointer) : Integer;
+function ShowShellMessageBox(Caption: PChar; Text: PChar; Style: UINT; Parameters: array of Pointer): Integer;
 begin
-    Result := ShellMessageBoxA(HInstance, Application.Handle, Text, Caption, Style, Parameters);
+	Result := ShellMessageBoxA(HInstance, Application.Handle, Text, Caption, Style, Parameters);
 end;
 
-
-function FormatResultEnumToConst(FormatResult : TkbFormatResult) : UINT;
+function FormatResultEnumToConst(FormatResult: TkbFormatResult): UINT;
 begin
-    case (FormatResult) of
-        kbsdFormatSucceeded : begin
-            Result := 0;
-        end;
-        kbsdFormatCancelled : begin
-            Result := SHFMT_CANCEL;
-        end;
-        kbsdDriveNotFormattable : begin
-            Result := SHFMT_NOFORMAT;
-        end;
-        kbsdFormatError : begin
-            Result := SHFMT_ERROR;
-        end;
-        else
-        begin
-            Result := SHFMT_ERROR;
-        end;
-    end; {case}
+	case (FormatResult) of
+		kbsdFormatSucceeded: begin
+				Result := 0;
+			end;
+		kbsdFormatCancelled: begin
+				Result := SHFMT_CANCEL;
+			end;
+		kbsdDriveNotFormattable: begin
+				Result := SHFMT_NOFORMAT;
+			end;
+		kbsdFormatError: begin
+				Result := SHFMT_ERROR;
+			end;
+	else begin
+			Result := SHFMT_ERROR;
+		end;
+	end;
 end;
 
-function FormatResultConstToEnum(FormatResult : UINT) : TkbFormatResult;
+function FormatResultConstToEnum(FormatResult: UINT): TkbFormatResult;
 begin
-    case (FormatResult) of
-        SHFMT_CANCEL : begin
-            Result := kbsdFormatCancelled;
-        end;
-        SHFMT_NOFORMAT : begin
-            Result := kbsdDriveNotFormattable;
-        end;
-        SHFMT_ERROR : begin
-            Result := kbsdFormatError;
-        end;
-        else
-        begin
-            Result := kbsdFormatSucceeded;
-        end;
-    end; {case}
+	case (FormatResult) of
+		SHFMT_CANCEL: begin
+				Result := kbsdFormatCancelled;
+			end;
+		SHFMT_NOFORMAT: begin
+				Result := kbsdDriveNotFormattable;
+			end;
+		SHFMT_ERROR: begin
+				Result := kbsdFormatError;
+			end;
+	else begin
+			Result := kbsdFormatSucceeded;
+		end;
+	end;
 end;
 
-function RestartOptionEnumToConst(RestartOption : TkbRestartOption) : UINT;
+function RestartOptionEnumToConst(RestartOption: TkbRestartOption): UINT;
 begin
-    case (RestartOption) of
-        kbsdLogoff : begin
-            Result := EWX_LOGOFF;
-        end;
-        kbsdShutdown : begin
-            Result := EWX_SHUTDOWN;
-        end;
-        kbsdReboot : begin
-            Result := EWX_REBOOT;
-        end;
-        kbsdRestartWindows : begin
-            Result := EW_RESTARTWINDOWS;
-        end;
-        kbsdRebootSystem : begin
-            Result := EW_REBOOTSYSTEM;
-        end;
-        kbsdExitAndExecApp : begin
-            Result := EW_EXITANDEXECAPP;
-        end;
-        else
-        begin
-            Result := 0;
-        end;
-    end; {case}
+	case (RestartOption) of
+		kbsdLogoff: begin
+				Result := EWX_LOGOFF;
+			end;
+		kbsdShutdown: begin
+				Result := EWX_SHUTDOWN;
+			end;
+		kbsdReboot: begin
+				Result := EWX_REBOOT;
+			end;
+		kbsdRestartWindows: begin
+				Result := EW_RESTARTWINDOWS;
+			end;
+		kbsdRebootSystem: begin
+				Result := EW_REBOOTSYSTEM;
+			end;
+		kbsdExitAndExecApp: begin
+				Result := EW_EXITANDEXECAPP;
+			end;
+	else begin
+			Result := 0;
+		end;
+	end;
 end;
 
-function RestartOptionConstToEnum(RestartOption : UINT) : TkbRestartOption;
+function RestartOptionConstToEnum(RestartOption: UINT): TkbRestartOption;
 begin
-    case (RestartOption) of
-        EWX_LOGOFF : begin
-            Result := kbsdLogoff;
-        end;
-        EWX_SHUTDOWN : begin
-            Result := kbsdShutdown;
-        end;
-        EWX_REBOOT : begin
-            Result := kbsdReboot;
-        end;
-        EW_RESTARTWINDOWS : begin
-            Result := kbsdRestartWindows;
-        end;
-        EW_REBOOTSYSTEM : begin
-            Result := kbsdRebootSystem;
-        end;
-        EW_EXITANDEXECAPP : begin
-            Result := kbsdExitAndExecApp;
-        end;
-        else
-        begin
-            Result := kbsdRestartWindows;
-        end;
-    end; {case}
+	case (RestartOption) of
+		EWX_LOGOFF: begin
+				Result := kbsdLogoff;
+			end;
+		EWX_SHUTDOWN: begin
+				Result := kbsdShutdown;
+			end;
+		EWX_REBOOT: begin
+				Result := kbsdReboot;
+			end;
+		EW_RESTARTWINDOWS: begin
+				Result := kbsdRestartWindows;
+			end;
+		EW_REBOOTSYSTEM: begin
+				Result := kbsdRebootSystem;
+			end;
+		EW_EXITANDEXECAPP: begin
+				Result := kbsdExitAndExecApp;
+			end;
+	else begin
+			Result := kbsdRestartWindows;
+		end;
+	end;
 end;
 
-function ShellObjectTypeEnumToConst(ShellObjectType : TkbShellObjectType) : UINT;
+function ShellObjectTypeEnumToConst(ShellObjectType: TkbShellObjectType): UINT;
 begin
-    case (ShellObjectType) of
-        kbsdPathObject : begin
-            Result := OPF_PATHNAME;
-        end;
-        kbsdPrinterObject : begin
-            Result := OPF_PRINTERNAME;
-        end;
-        else
-        begin
-            Result := 0;
-        end;
-    end; {case}
+	case (ShellObjectType) of
+		kbsdPathObject: begin
+				Result := OPF_PATHNAME;
+			end;
+		kbsdPrinterObject: begin
+				Result := OPF_PRINTERNAME;
+			end;
+	else begin
+			Result := 0;
+		end;
+	end;
 end;
 
-function ShellObjectTypeConstToEnum(ShellObjectType : UINT) : TkbShellObjectType;
+function ShellObjectTypeConstToEnum(ShellObjectType: UINT): TkbShellObjectType;
 begin
-    case (ShellObjectType) of
-        OPF_PATHNAME : begin
-            Result := kbsdPathObject;
-        end;
-        OPF_PRINTERNAME : begin
-            Result := kbsdPrinterObject;
-        end;
-        else
-        begin
-            Result := kbsdPathObject;
-        end;
-    end; {case}
+	case (ShellObjectType) of
+		OPF_PATHNAME: begin
+				Result := kbsdPathObject;
+			end;
+		OPF_PRINTERNAME: begin
+				Result := kbsdPrinterObject;
+			end;
+	else begin
+			Result := kbsdPathObject;
+		end;
+	end;
 end;
 
-function RunFileOptionEnumToConst(RunFileOption : TkbRunFileOption) : UINT;
+function RunFileOptionEnumToConst(RunFileOption: TkbRunFileOption): UINT;
 begin
-    case (RunFileOption) of
-        kbsdNoBrowseButton : begin
-            Result := RFF_NOBROWSE;
-        end;
-        kbsdNoDefaultPick : begin
-            Result := RFF_NODEFAULT;
-        end;
-        kbsdCalculateWorkPath : begin
-            Result := RFF_CALCDIRECTORY;
-        end;
-        kbsdNoEditLabel : begin
-            Result := RFF_NOLABEL;
-        end;
-        kbsdNoSeparateMemory : begin
-            Result := RFF_NOSEPARATEMEM;
-        end;
-        else
-        begin
-            Result := 0;
-        end;
-    end; {case}
+	case (RunFileOption) of
+		kbsdNoBrowseButton: begin
+				Result := RFF_NOBROWSE;
+			end;
+		kbsdNoDefaultPick: begin
+				Result := RFF_NODEFAULT;
+			end;
+		kbsdCalculateWorkPath: begin
+				Result := RFF_CALCDIRECTORY;
+			end;
+		kbsdNoEditLabel: begin
+				Result := RFF_NOLABEL;
+			end;
+		kbsdNoSeparateMemory: begin
+				Result := RFF_NOSEPARATEMEM;
+			end;
+	else begin
+			Result := 0;
+		end;
+	end;
 end;
 
-function RunFileOptionConstToEnum(RunFileOption : UINT) : TkbRunFileOption;
+function RunFileOptionConstToEnum(RunFileOption: UINT): TkbRunFileOption;
 begin
-    case (RunFileOption) of
-        RFF_NOBROWSE : begin
-            Result := kbsdNoBrowseButton;
-        end;
-        RFF_NODEFAULT : begin
-            Result := kbsdNoDefaultPick;
-        end;
-        RFF_CALCDIRECTORY : begin
-            Result := kbsdCalculateWorkPath;
-        end;
-        RFF_NOLABEL : begin
-            Result := kbsdNoEditLabel;
-        end;
-        RFF_NOSEPARATEMEM : begin
-            Result := kbsdNoSeparateMemory;
-        end;
-        else
-        begin
-            Result := kbsdNoSeparateMemory;
-        end;
-    end; {case}
+	case (RunFileOption) of
+		RFF_NOBROWSE: begin
+				Result := kbsdNoBrowseButton;
+			end;
+		RFF_NODEFAULT: begin
+				Result := kbsdNoDefaultPick;
+			end;
+		RFF_CALCDIRECTORY: begin
+				Result := kbsdCalculateWorkPath;
+			end;
+		RFF_NOLABEL: begin
+				Result := kbsdNoEditLabel;
+			end;
+		RFF_NOSEPARATEMEM: begin
+				Result := kbsdNoSeparateMemory;
+			end;
+	else begin
+			Result := kbsdNoSeparateMemory;
+		end;
+	end;
 end;
 
-function RunFileActionEnumToConst(RunFileAction : TkbRunFileAction) : UINT;
+function RunFileActionEnumToConst(RunFileAction: TkbRunFileAction): UINT;
 begin
-    case (RunFileAction) of
-        kbsdRun : begin
-            Result := RF_OK;
-        end;
-        kbsdCancel : begin
-            Result := RF_CANCEL;
-        end;
-        kbsdRetry : begin
-            Result := RF_RETRY;
-        end;
-        else
-        begin
-            Result := RF_OK;
-        end;
-    end; {case}
+	case (RunFileAction) of
+		kbsdRun: begin
+				Result := RF_OK;
+			end;
+		kbsdCancel: begin
+				Result := RF_CANCEL;
+			end;
+		kbsdRetry: begin
+				Result := RF_RETRY;
+			end;
+	else begin
+			Result := RF_OK;
+		end;
+	end;
 end;
 
-function RunFileActionConstToEnum(RunFileAction : UINT) : TkbRunFileAction;
+function RunFileActionConstToEnum(RunFileAction: UINT): TkbRunFileAction;
 begin
-    case (RunFileAction) of
-        RF_OK : begin
-            Result := kbsdRun;
-        end;
-        RF_CANCEL : begin
-            Result := kbsdCancel;
-        end;
-        RF_RETRY : begin
-            Result := kbsdRetry;
-        end;
-        else
-        begin
-            Result := kbsdRun;
-        end;
-    end; {case}
+	case (RunFileAction) of
+		RF_OK: begin
+				Result := kbsdRun;
+			end;
+		RF_CANCEL: begin
+				Result := kbsdCancel;
+			end;
+		RF_RETRY: begin
+				Result := kbsdRetry;
+			end;
+	else begin
+			Result := kbsdRun;
+		end;
+	end;
 end;
 
-function NetResourceTypeEnumToConst(NetResourceType : TkbNetResourceType) : DWORD;
+function NetResourceTypeEnumToConst(NetResourceType: TkbNetResourceType): DWORD;
 begin
-    case (NetResourceType) of
-        kbsdDiskResource : begin
-            Result := RESOURCETYPE_DISK;
-        end;
-        kbsdPrintResource : begin
-            Result := RESOURCETYPE_PRINT;
-        end;
-        else
-        begin
-            Result := RESOURCETYPE_DISK;
-        end;
-    end; {case}
+	case (NetResourceType) of
+		kbsdDiskResource: begin
+				Result := RESOURCETYPE_DISK;
+			end;
+		kbsdPrintResource: begin
+				Result := RESOURCETYPE_PRINT;
+			end;
+	else begin
+			Result := RESOURCETYPE_DISK;
+		end;
+	end;
 end;
 
-function NetResourceTypeConstToEnum(NetResourceType : DWORD) : TkbNetResourceType;
+function NetResourceTypeConstToEnum(NetResourceType: DWORD): TkbNetResourceType;
 begin
-    case (NetResourceType) of
-        RESOURCETYPE_DISK : begin
-            Result := kbsdDiskResource;
-        end;
-        RESOURCETYPE_PRINT : begin
-            Result := kbsdPrintResource;
-        end;
-        else
-        begin
-            Result := kbsdDiskResource;
-        end;
-    end; {case}
+	case (NetResourceType) of
+		RESOURCETYPE_DISK: begin
+				Result := kbsdDiskResource;
+			end;
+		RESOURCETYPE_PRINT: begin
+				Result := kbsdPrintResource;
+			end;
+	else begin
+			Result := kbsdDiskResource;
+		end;
+	end; { case }
 end;
-
-
 
 initialization
 
-    {Get a reference to the SHELL32.DLL library}
-    ShellDLL := LoadLibraryA(PAnsiChar(Shell32));
+{ Get a reference to the SHELL32.DLL library }
+ShellDLL := LoadLibraryA(PAnsiChar(Shell32));
 
 finalization
 
-    {Free reference to the SHELL32.DLL library}
-    FreeLibrary(ShellDLL);
+{ Free reference to the SHELL32.DLL library }
+FreeLibrary(ShellDLL);
 
 end.

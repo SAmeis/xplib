@@ -43,6 +43,7 @@ implementation
 function TAboutBoxDlg.Execute : Boolean;
 	//----------------------------------------------------------------------------------------------------------------------------------
 begin
+	{$WARN UNSAFE_CODE OFF}
 	//Create dialog in memory
 	AboutBox := TAboutBox.Create(Application);
 	//Set dialog strings
@@ -80,6 +81,7 @@ begin
 		Result := (ShowModal = IDOK);
 	end;
 	AboutBox.Free;
+	{$WARN UNSAFE_CODE ON}
 end;
 
 end.

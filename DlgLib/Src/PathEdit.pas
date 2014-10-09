@@ -8,9 +8,9 @@ unit PathEdit;
 interface
 
 uses
-	Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls, Buttons, ExtCtrls, lbhorz,
+	Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls, Buttons, ExtCtrls, lbhorz, ShellShlDlg;
 	{ TODO -oRoger -cLIB : Resolver depencia do ShellLib do melhor modo possivel, ou seja removendo ( ShellShlDlg )}
-	ShellShlDlg;
+
 
 type
 	TPathEditorDlg = Class (TForm)

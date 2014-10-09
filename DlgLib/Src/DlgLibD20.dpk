@@ -1,0 +1,63 @@
+{$I DlgLib.inc }
+
+package DlgLibD20;
+
+{$R *.res}
+{$R 'DlgLib.dcr'}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS OFF}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS OFF}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE RELEASE}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'AAA - Dialogs-Lib - Delphi 2010'}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  vcl,
+  XPLibD20,
+  ECLibD20,
+  StFLibD20,
+  VclSmp,
+  vclx,
+  vclactnband,
+  designide,
+  dbrtl,
+  bdertl,
+  ShellLibD20;
+
+contains
+  Aboutdlg in 'Aboutdlg.pas',
+  About in 'About.pas' {AboutBox},
+  Logndlg in 'Logndlg.pas' {LoginDlgs},
+  Chgpwd in 'Chgpwd.pas' {ChgPwdDlg},
+  Passdlg in 'Passdlg.pas' {PasswordDlg},
+  PathEdit in 'PathEdit.pas' {PathEditorDlg},
+  RadioDlg in 'RadioDlg.pas' {RadioDlgFrm},
+  FileCDlg in 'FileCDlg.pas' {FCSimpleGaugeForm},
+  SimpleProgress in 'SimpleProgress.pas' {SimpleProgressForm},
+  ThreadProgressForm in 'ThreadProgressForm.pas' {ThreadedSimpleProgressForm},
+  LognDBdlg in 'LognDBdlg.pas' {LoginDBDlgForm},
+  DlgLibDsgnRegister in 'DlgLibDsgnRegister.pas',
+  DlgTxtEditor in 'DlgTxtEditor.pas' {XPTxtEditForm};
+
+end.
