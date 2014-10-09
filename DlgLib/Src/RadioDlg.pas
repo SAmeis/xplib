@@ -1,8 +1,7 @@
 {$IFDEF RadioDlg}
-    {$DEFINE DEBUG_UNIT}
+{$DEFINE DEBUG_UNIT}
 {$ENDIF}
 {$I DlgLib.inc}
-
 unit RadioDlg;
 
 interface
@@ -12,14 +11,14 @@ uses
 	StdCtrls, Buttons, ExtCtrls;
 
 type
-	TRadioDlgFrm = Class (TForm)
-		RadioGroup : TRadioGroup;
-		HlpBtn : TBitBtn;
-		CancelBtn : TBitBtn;
-    PanelBottom: TPanel;
-    OkBtn: TBitBtn;
-		procedure FormActivate(Sender : TObject);
-    procedure FormShow(Sender: TObject);
+	TRadioDlgFrm = class(TForm)
+		RadioGroup: TRadioGroup;
+		HlpBtn: TBitBtn;
+		CancelBtn: TBitBtn;
+		PanelBottom: TPanel;
+		OkBtn: TBitBtn;
+		procedure FormActivate(Sender: TObject);
+		procedure FormShow(Sender: TObject);
 	private
 		{ Private declarations }
 	public
@@ -27,48 +26,48 @@ type
 	end;
 
 type
-	TRadioDlg = Class (TComponent)
+	TRadioDlg = class(TComponent)
 	private
-		FHelpContext : THelpContext;
-		RadioFrm : TRadioDlgFrm;
-		FItems : TStrings;
-		FRemoveButtons : TMsgDlgButtons;
-		FItemIndex : integer;
-		FCaption : string;
-		FTitle : string;
-		procedure SetItems(const Value : TStrings);
+		FHelpContext  : THelpContext;
+		RadioFrm      : TRadioDlgFrm;
+		FItems        : TStrings;
+		FRemoveButtons: TMsgDlgButtons;
+		FItemIndex    : integer;
+		FCaption      : string;
+		FTitle        : string;
+		procedure SetItems(const Value: TStrings);
 	public
-		constructor Create(AOwner : TComponent); override;
+		constructor Create(AOwner: TComponent); override;
 		destructor Destroy; override;
-		function Execute : boolean;
+		function Execute: boolean;
 	published
-		property Title : string read FTitle write FTitle;
-		property Caption : string read FCaption write FCaption;
-		property Items : TStrings read FItems write SetItems;
-		property ItemIndex : integer read FItemIndex write FItemIndex stored TRUE;
-		property HelpContext : THelpContext read FHelpContext write FHelpContext;
-		property RemoveButtons : TMsgDlgButtons read FRemoveButtons write FRemoveButtons;
+		property Title        : string read FTitle write FTitle;
+		property Caption      : string read FCaption write FCaption;
+		property Items        : TStrings read FItems write SetItems;
+		property ItemIndex    : integer read FItemIndex write FItemIndex stored TRUE;
+		property HelpContext  : THelpContext read FHelpContext write FHelpContext;
+		property RemoveButtons: TMsgDlgButtons read FRemoveButtons write FRemoveButtons;
 	end;
 
 var
-	RadioDlgFrm : TRadioDlgFrm;
+	RadioDlgFrm: TRadioDlgFrm;
 
 implementation
 
 {$R *.DFM}
 
-constructor TRadioDlg.Create(AOwner : TComponent);
-	{------------------------------------------------------------------------------------------------------------}
+constructor TRadioDlg.Create(AOwner: TComponent);
+{ ------------------------------------------------------------------------------------------------------------ }
 begin
 	inherited Create(AOwner);
 	Self.FRemoveButtons := [];
-	Self.FItemIndex := -1;
-	FItems := TStringList.Create;
-	RadioFrm := NIL;
+	Self.FItemIndex     := -1;
+	FItems              := TStringList.Create;
+	RadioFrm            := nil;
 end;
 
 destructor TRadioDlg.Destroy;
-	{------------------------------------------------------------------------------------------------------------}
+{ ------------------------------------------------------------------------------------------------------------ }
 begin
 	if Assigned(RadioFrm) then begin
 		RadioFrm.Free;
@@ -77,27 +76,27 @@ begin
 	inherited Destroy;
 end;
 
-function TRadioDlg.Execute : boolean;
-	{------------------------------------------------------------------------------------------------------------}
+function TRadioDlg.Execute: boolean;
+{ ------------------------------------------------------------------------------------------------------------ }
 begin
 	if not Assigned(RadioFrm) then begin
 		Self.RadioFrm := TRadioDlgFrm.Create(Self);
 		RadioFrm.RadioGroup.Items.Assign(Self.FItems);
 	end;
-	RadioFrm.RadioGroup.Caption := Self.Caption;
-	RadioFrm.Caption := Self.Title;
+	RadioFrm.RadioGroup.Caption   := Self.Caption;
+	RadioFrm.Caption              := Self.Title;
 	RadioFrm.RadioGroup.ItemIndex := FItemIndex;
 	try
-		Result := (RadioFrm.ShowModal = mrOK);
+		Result     := (RadioFrm.ShowModal = mrOK);
 		FItemIndex := RadioFrm.RadioGroup.ItemIndex;
 	finally
 		RadioFrm.Free;
-		RadioFrm := NIL;
+		RadioFrm := nil;
 	end;
 end;
 
-procedure TRadioDlg.SetItems(const Value : TStrings);
-{------------------------------------------------------------------------------------------------------------}
+procedure TRadioDlg.SetItems(const Value: TStrings);
+{ ------------------------------------------------------------------------------------------------------------ }
 begin
 	FItems.Assign(Value);
 	if Assigned(RadioFrm) then begin
@@ -105,16 +104,14 @@ begin
 	end;
 end;
 
-procedure TRadioDlgFrm.FormActivate(Sender : TObject);
+procedure TRadioDlgFrm.FormActivate(Sender: TObject);
 begin
 	Self.ActiveControl := RadioGroup;
 end;
 
 procedure TRadioDlgFrm.FormShow(Sender: TObject);
 begin
-    Self.RadioGroup.Columns:=1 + ( Self.RadioGroup.Items.Count div 8  );
+	Self.RadioGroup.Columns := 1 + (Self.RadioGroup.Items.Count div 8);
 end;
 
 end.
-
-

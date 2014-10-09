@@ -53,20 +53,22 @@ object LoginDBDlgForm: TLoginDBDlgForm
     Top = 143
     Width = 77
     Height = 27
-    TabOrder = 3
     Kind = bkOK
     Margin = 2
+    NumGlyphs = 2
     Spacing = -1
+    TabOrder = 3
   end
   object CancelBtn: TBitBtn
     Left = 218
     Top = 143
     Width = 77
     Height = 27
-    TabOrder = 4
     Kind = bkCancel
     Margin = 2
+    NumGlyphs = 2
     Spacing = -1
+    TabOrder = 4
   end
   object UserNameEdit: TEdit
     Left = 19
@@ -82,7 +84,6 @@ object LoginDBDlgForm: TLoginDBDlgForm
     Width = 220
     Height = 21
     Style = csDropDownList
-    ItemHeight = 13
     MaxLength = 40
     TabOrder = 0
   end

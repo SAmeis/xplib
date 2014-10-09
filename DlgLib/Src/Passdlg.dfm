@@ -40,10 +40,11 @@ object PasswordDlg: TPasswordDlg
     Width = 77
     Height = 27
     Anchors = [akRight, akBottom]
-    TabOrder = 1
     Kind = bkOK
     Margin = 2
+    NumGlyphs = 2
     Spacing = -1
+    TabOrder = 1
   end
   object CancelBtn: TBitBtn
     Left = 152
@@ -51,9 +52,10 @@ object PasswordDlg: TPasswordDlg
     Width = 77
     Height = 27
     Anchors = [akRight, akBottom]
-    TabOrder = 2
     Kind = bkCancel
     Margin = 2
+    NumGlyphs = 2
     Spacing = -1
+    TabOrder = 2
   end
 end

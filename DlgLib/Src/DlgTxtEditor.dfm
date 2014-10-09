@@ -1,9 +1,9 @@
 object XPTxtEditForm: TXPTxtEditForm
   Left = 335
   Top = 190
-  Width = 435
-  Height = 308
   Caption = 'Sem t'#237'tulo'
+  ClientHeight = 250
+  ClientWidth = 419
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,12 +21,14 @@ object XPTxtEditForm: TXPTxtEditForm
   object Editor: TRichEdit
     Left = 0
     Top = 0
-    Width = 427
-    Height = 254
+    Width = 419
+    Height = 250
     Align = alClient
     BorderStyle = bsNone
+    ParentFont = False
     ScrollBars = ssVertical
     TabOrder = 0
+    Zoom = 100
   end
   object MainMenu: TMainMenu
     Left = 264

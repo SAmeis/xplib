@@ -4,6 +4,8 @@
 {$I ShellLib.inc}
 {$WARN SYMBOL_PLATFORM OFF }  //É uma festa de simbolos exclusivos do Windows aqui
 
+{TODO -oroger -clib : Extrair isoladamente todos os componentes que possam deixar de ser dependentes da plataforma e implementados com o firedac}
+
 //diretivas originais abaixo
 { -$IFDEF ShellShlDlg }
 { -$A+,B-,C-,D+,E-,F-,G+,H+,I+,J+,K-,L+,M-,N+,O-,P+,Q-,R+,S-,T-,U-,V+,W-,X+,Y+,Z1 }

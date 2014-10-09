@@ -32,16 +32,18 @@ object RadioDlgFrm: TRadioDlgFrm
       Width = 83
       Height = 26
       Caption = '&Cancel'
-      TabOrder = 0
       Kind = bkCancel
+      NumGlyphs = 2
+      TabOrder = 0
     end
     object HlpBtn: TBitBtn
       Left = 204
       Top = 14
       Width = 83
       Height = 26
-      TabOrder = 1
       Kind = bkHelp
+      NumGlyphs = 2
+      TabOrder = 1
     end
     object OkBtn: TBitBtn
       Left = 23
@@ -49,8 +51,9 @@ object RadioDlgFrm: TRadioDlgFrm
       Width = 83
       Height = 26
       Caption = '&OK'
-      TabOrder = 2
       Kind = bkOK
+      NumGlyphs = 2
+      TabOrder = 2
     end
   end
   object RadioGroup: TRadioGroup

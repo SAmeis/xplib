@@ -62,10 +62,11 @@ object ChgPwdDlg: TChgPwdDlg
     Width = 77
     Height = 27
     Caption = '&OK'
-    TabOrder = 0
     Kind = bkOK
     Margin = 2
+    NumGlyphs = 2
     Spacing = -1
+    TabOrder = 0
     IsControl = True
   end
   object CancelBtn: TBitBtn
@@ -74,10 +75,11 @@ object ChgPwdDlg: TChgPwdDlg
     Width = 77
     Height = 27
     Caption = '&Cancel'
-    TabOrder = 1
     Kind = bkCancel
     Margin = 2
+    NumGlyphs = 2
     Spacing = -1
+    TabOrder = 1
     IsControl = True
   end
   object HelpBtn: TBitBtn
@@ -85,10 +87,11 @@ object ChgPwdDlg: TChgPwdDlg
     Top = 79
     Width = 77
     Height = 27
-    TabOrder = 2
     Kind = bkHelp
     Margin = 2
+    NumGlyphs = 2
     Spacing = -1
+    TabOrder = 2
     IsControl = True
   end
   object OldPassEdit: TEdit

@@ -1,52 +1,39 @@
 ﻿[Closed Files]
-File_0=TSourceModule,'c:\program files (x86)\embarcadero\studio\14.0\SOURCE\RTL\SYS\System.pas',0,1,1,1,11,0,0,,
-File_1=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\About.pas',0,1,1,10,4,0,0,,
-File_2=TSourceModule,'C:\Sw\WorkDir\Pcks\ShellLib\Src\ShellLib.inc',0,1,1,23,179,0,0,,
-File_3=TSourceModule,'C:\Sw\WorkDir\Pcks\ShellLib\Src\ShellAPIFuncs.pas',0,1,1,1,1,0,0,,
-File_4=TSourceModule,'C:\Sw\WorkDir\Pcks\ShellLib\Src\ShellDialogs.pas',0,1,1721,10,1729,0,0,,{1,1469,15}
-File_5=TSourceModule,'C:\Sw\WorkDir\Pcks\ShellLib\Src\ShellDlgReg.pas',0,1,69,1,69,0,0,,
-File_6=TSourceModule,'C:\Sw\WorkDir\Pcks\ShellLib\Src\ShellPIDL.pas',0,1,171,1,171,0,0,,{1,213,1}{2,34,1}
-File_7=TSourceModule,'C:\Sw\WorkDir\Pcks\ShellLib\Src\ShellFilesHnd.pas',0,1,470,1,470,0,0,,{1,11,6}
-File_8=TSourceModule,'C:\Sw\WorkDir\Pcks\ShellLib\Src\ShellFileOper.pas',0,1,137,1,137,0,0,,
-File_9=TSourceModule,'c:\program files (x86)\embarcadero\studio\14.0\Source\rtl\win\Winapi.ShlObj.pas',0,1,9194,11,9211,0,0,,
-File_10=TSourceModule,'c:\program files (x86)\embarcadero\studio\14.0\source\rtl\win\Winapi.Windows.pas',0,1,34135,1,34155,0,0,,
-File_11=TSourceModule,'c:\program files (x86)\embarcadero\studio\14.0\SOURCE\RTL\SYS\System.SysUtils.pas',0,1,11014,1,11033,0,0,,{1
-File_12=TSourceModule,'C:\Sw\WorkDir\Pcks\ECLib\Src\ECLib.inc',0,1,189,69,223,0,0,,
-File_13=TSourceModule,'C:\Sw\WorkDir\Pcks\ECLib\Src\CheckCombo.pas',0,1,703,1,703,0,0,,
+File_0=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\DlgLib.inc',0,1,1,86,19,0,0,,
+File_1=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\About.pas',0,1,54,1,54,0,0,,
+File_2=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\Aboutdlg.pas',0,1,86,1,86,0,0,,
+File_3=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\Chgpwd.pas',0,1,205,1,205,0,0,,
+File_4=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\DlgLibDsgnRegister.pas',0,1,1,1,2,0,0,,
+File_5=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\DlgTxtEditor.pas',0,1,362,1,362,0,0,,
+File_6=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\FileCDlg.pas',0,1,236,1,239,0,0,,
+File_7=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\LognDBdlg.pas',0,1,205,1,205,0,0,,{1
+File_8=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\Logndlg.pas',0,1,1,1,1,0,0,,{1
+File_9=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\Passdlg.pas',0,1,1,1,1,0,0,,
+File_10=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\PathEdit.pas',0,1,306,1,306,0,0,,
+File_11=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\RadioDlg.pas',0,1,117,1,117,0,0,,
+File_12=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\SimpleProgress.pas',0,1,361,1,361,0,0,,
+File_13=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\ThreadProgressForm.pas',0,1,477,1,477,0,0,,{1
+File_14=TSourceModule,'C:\Sw\WorkDir\Pcks\ShellLib\Src\ShellShlDlg.pas',0,1,1,146,7,0,0,,{1
 
 [Modules]
-Module0=C:\Sw\WorkDir\Pcks\ShellLib\Src\ShellShlDlg.pas
-Module1=C:\Sw\WorkDir\Pcks\DlgLib\Src\PathEdit.pas
-Module2=C:\Sw\WorkDir\Pcks\DlgLib\Src\Aboutdlg.pas
-Module3=C:\Sw\WorkDir\Pcks\DlgLib\Src\DlgLib.inc
-Count=4
+Module0=C:\Sw\WorkDir\Pcks\WinAdvLib\Src\WinLSAUtils.pas
+Module1=C:\Sw\WorkDir\Pcks\WinAdvLib\Src\WinAdvLib.inc
+Count=2
 EditWindowCount=1
 
-[C:\Sw\WorkDir\Pcks\ShellLib\Src\ShellShlDlg.pas]
+[C:\Sw\WorkDir\Pcks\WinAdvLib\Src\WinLSAUtils.pas]
 ModuleType=TSourceModule
 FormState=0
 FormOnTop=0
 
-[C:\Sw\WorkDir\Pcks\DlgLib\Src\PathEdit.pas]
-ModuleType=TSourceModule
-FormState=1
-FormOnTop=0
-
-[C:\Sw\WorkDir\Pcks\DlgLib\Src\Aboutdlg.pas]
-ModuleType=TSourceModule
-FormState=0
-FormOnTop=0
-
-[C:\Sw\WorkDir\Pcks\DlgLib\Src\DlgLib.inc]
+[C:\Sw\WorkDir\Pcks\WinAdvLib\Src\WinAdvLib.inc]
 ModuleType=TSourceModule
 
 [EditWindow0]
-ViewCount=4
-CurrentEditView=C:\Sw\WorkDir\Pcks\ShellLib\Src\ShellShlDlg.pas
+ViewCount=2
+CurrentEditView=C:\Sw\WorkDir\Pcks\WinAdvLib\Src\WinLSAUtils.pas
 View0=0
 View1=1
-View2=2
-View3=3
 PercentageSizes=1
 Create=1
 Visible=1
@@ -78,47 +65,25 @@ BottomMiddelPanelData=0000080001000100000010000000477261706844726177696E67566965
 
 [View0]
 CustomEditViewType=TEditView
-Module=C:\Sw\WorkDir\Pcks\DlgLib\Src\DlgLib.inc
+Module=C:\Sw\WorkDir\Pcks\WinAdvLib\Src\WinAdvLib.inc
 CursorX=1
 CursorY=1
 TopLine=1
 LeftCol=1
 Elisions=
 Bookmarks=
-EditViewName=C:\Sw\WorkDir\Pcks\DlgLib\Src\DlgLib.inc
+EditViewName=C:\Sw\WorkDir\Pcks\WinAdvLib\Src\WinAdvLib.inc
 
 [View1]
 CustomEditViewType=TEditView
-Module=C:\Sw\WorkDir\Pcks\DlgLib\Src\Aboutdlg.pas
-CursorX=37
-CursorY=25
-TopLine=67
+Module=C:\Sw\WorkDir\Pcks\WinAdvLib\Src\WinLSAUtils.pas
+CursorX=98
+CursorY=20
+TopLine=1
 LeftCol=1
 Elisions=
 Bookmarks=
-EditViewName=C:\Sw\WorkDir\Pcks\DlgLib\Src\Aboutdlg.pas
-
-[View2]
-CustomEditViewType=TEditView
-Module=C:\Sw\WorkDir\Pcks\DlgLib\Src\PathEdit.pas
-CursorX=103
-CursorY=11
-TopLine=4
-LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=C:\Sw\WorkDir\Pcks\DlgLib\Src\PathEdit.pas
-
-[View3]
-CustomEditViewType=TEditView
-Module=C:\Sw\WorkDir\Pcks\ShellLib\Src\ShellShlDlg.pas
-CursorX=88
-CursorY=104
-TopLine=87
-LeftCol=1
-Elisions=
-Bookmarks={1,335,1}{2,90,1}
-EditViewName=C:\Sw\WorkDir\Pcks\ShellLib\Src\ShellShlDlg.pas
+EditViewName=C:\Sw\WorkDir\Pcks\WinAdvLib\Src\WinLSAUtils.pas
 
 [Watches]
 Count=1
@@ -248,12 +213,12 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=10000
-Height=1537
+Width=1495
+Height=8833
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=10000
-ClientHeight=1537
+ClientWidth=1495
+ClientHeight=8833
 TBDockHeight=4880
 LRDockWidth=5307
 Dockable=1
@@ -265,8 +230,8 @@ Create=1
 Visible=0
 Docked=1
 State=0
-Left=-1536
-Top=-152
+Left=-170
+Top=-101
 Width=1844
 Height=3148
 MaxLeft=-1
@@ -355,19 +320,14 @@ Dockable=1
 StayOnTop=0
 SplitPos=148
 
-[PropInspDesignerSelection]
-ArrangeBy=Name
-SelectedItem=Align,
-ExpandedItems=Anchors=0,Constraints=0,BevelEdges=0
-
 [TFileExplorerForm]
 PercentageSizes=1
 Create=1
 Visible=0
 Docked=1
 State=0
-Left=-1515
-Top=-858
+Left=-1633
+Top=-101
 Width=2844
 Height=6204
 MaxLeft=-1
@@ -385,8 +345,8 @@ Create=1
 Visible=0
 Docked=1
 State=0
-Left=-1633
-Top=284
+Left=-1776
+Top=-101
 Width=276
 Height=361
 MaxLeft=-1
@@ -489,11 +449,11 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=3677
+Width=3333
 Height=2269
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=3677
+ClientWidth=3333
 ClientHeight=2269
 TBDockHeight=2315
 LRDockWidth=2823
@@ -508,12 +468,12 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=3333
-Height=2500
+Width=3677
+Height=2269
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=3333
-ClientHeight=2500
+ClientWidth=3677
+ClientHeight=2269
 TBDockHeight=3204
 LRDockWidth=2823
 Dockable=1
@@ -554,12 +514,12 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=10000
-Height=1537
+Width=1495
+Height=8833
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=10000
-ClientHeight=1537
+ClientWidth=1495
+ClientHeight=8833
 TBDockHeight=4880
 LRDockWidth=7151
 Dockable=1
@@ -571,8 +531,8 @@ Create=1
 Visible=0
 Docked=1
 State=0
-Left=370
-Top=867
+Left=0
+Top=0
 Width=2859
 Height=3213
 MaxLeft=-1
@@ -724,25 +684,6 @@ LRDockWidth=1896
 Dockable=1
 StayOnTop=0
 
-[CnScriptForm]
-PercentageSizes=1
-Create=1
-Visible=0
-Docked=0
-State=0
-Left=0
-Top=0
-Width=2990
-Height=4139
-MaxLeft=-5
-MaxTop=-9
-ClientWidth=2906
-ClientHeight=3824
-TBDockHeight=4139
-LRDockWidth=2990
-Dockable=1
-StayOnTop=0
-
 [BorlandEditorCodeExplorer@EditWindow0]
 PercentageSizes=1
 Create=1
@@ -882,9 +823,9 @@ LRDockWidth=2339
 Dockable=1
 StayOnTop=0
 TabPosition=1
-ActiveTabID=FindReferencsForm
+ActiveTabID=RefactoringForm
 TabDockClients=RefactoringForm,FindReferencsForm,UsagesView,ToDo List,CppChecks,MetricsView,QAView,FindRefsResults,FindDefsResults,HeaderDepResults,TypeHierarchyResults
 
 [ActiveProject]
-ActiveProject=14
+ActiveProject=15
 

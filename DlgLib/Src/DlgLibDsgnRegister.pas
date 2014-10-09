@@ -1,5 +1,4 @@
 {$I DlgLib.inc}
-
 unit DlgLibDsgnRegister;
 
 interface
@@ -17,20 +16,15 @@ uses
 	ThreadProgressForm,
 	LognDBdlg;
 
-
 procedure Register;
 
 implementation
 
-
 procedure Register;
 //----------------------------------------------------------------------------------------------------------------------------------
 begin
-	RegisterComponents('Dialogs',
-		[TLoginDlg, TAboutBoxDlg, TChgPwd, TPassDlg, TMultPathEditor, TRadioDlg, TSimpleFileCopy, TSimpleProgress, TDBLoginDlg]);
+	RegisterComponents('Dialogs', [TLoginDlg, TAboutBoxDlg, TChgPwd, TPassDlg, TMultPathEditor, TRadioDlg, TSimpleFileCopy,
+		TSimpleProgress, TDBLoginDlg]);
 end;
 
-
 end.
-
-

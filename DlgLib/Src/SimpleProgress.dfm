@@ -36,9 +36,10 @@ object SimpleProgressForm: TSimpleProgressForm
     Width = 75
     Height = 25
     Caption = '&Cancelar'
+    Kind = bkCancel
+    NumGlyphs = 2
     TabOrder = 0
     OnClick = CancelBtnClick
-    Kind = bkCancel
   end
   object ProgressTimer: TTimer
     Enabled = False
