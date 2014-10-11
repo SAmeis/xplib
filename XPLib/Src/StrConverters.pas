@@ -6,12 +6,14 @@ uses
 	SysUtils, Classes, XPTypes;
 
 type
+	PFormatSettings = ^TFormatSettings;
 	TStrConv = class
-	private
+	strict private
 		class var GlobalFormatSettings: TFormatSettings;
-		class function GetFormatSettings: TFormatSettings; static;
+		class function GetFormatSettings: PFormatSettings; static;
 	public
-		class property FormatSettings: TFormatSettings read GetFormatSettings;
+		class property FormatSettings: PFormatSettings read GetFormatSettings;
+		class procedure InitClass;
 		class function StrToCurrency(const Str: string): currency;
 		class procedure AdjustFormatSettings(fs: TFormatSettings);
 		class function StrToFloat2(const Str: string): Extended;
@@ -27,7 +29,7 @@ uses
 
 procedure InitDefaultFormatSettings();
 begin
-	TStrConv.GlobalFormatSettings := TFormatSettings.Create('');
+	TStrConv.InitClass;
 end;
 
 { TStrConv }
@@ -38,9 +40,16 @@ begin
 	Self.GlobalFormatSettings := fs;
 end;
 
-class function TStrConv.GetFormatSettings: TFormatSettings;
+class function TStrConv.GetFormatSettings: PFormatSettings;
 begin
-	Result := TStrConv.GlobalFormatSettings;
+	{$WARN UNSAFE_CODE OFF}
+	Result := @TStrConv.GlobalFormatSettings;
+	{$WARN UNSAFE_CODE ON}
+end;
+
+class procedure TStrConv.InitClass;
+begin
+	Self.GlobalFormatSettings := TFormatSettings.Create('');
 end;
 
 class function TStrConv.MonthFromName(const S: string; MaxLen: byte): byte;
@@ -62,10 +71,12 @@ class function TStrConv.MonthLongNameToInt(const StrMonth: string): Integer;
 //Recupera o valor do mes pela sua grafia longa
 { TODO -oroger -clib : dever receber SysUtils.FormatSettings passado com o padrao classico }
 var
-	i:  Integer;
+	i : Integer;
 	fs: TFormatSettings;
 begin
-	fs := FormatSettings;
+	{$WARN UNSAFE_CODE OFF}
+	fs    := Self.FormatSettings^;
+	{$WARN UNSAFE_CODE ON}
 	for i := 1 to high(fs.LongMonthNames) do begin
 		if fs.LongMonthNames[i] = StrMonth then begin
 			Result := i;
@@ -80,10 +91,12 @@ class function TStrConv.MonthShortNameToInt(const StrMonth: string): Integer;
 //Recupera o valor do mes pela sua grafia curta
 { TODO -oroger -clib : dever receber SysUtils.FormatSettings passado com o padrao classico }
 var
-	i:  Integer;
+	i : Integer;
 	fs: TFormatSettings;
 begin
-	fs := FormatSettings;
+	{$WARN UNSAFE_CODE OFF}
+	fs    := Self.FormatSettings^;
+	{$WARN UNSAFE_CODE ON}
 	for i := 1 to high(fs.ShortMonthNames) do begin
 		if fs.LongMonthNames[i] = StrMonth then begin
 			Result := i;
@@ -97,12 +110,14 @@ class function TStrConv.StrToCurrency(const Str: string): currency;
 //----------------------------------------------------------------------------------------------------------------------
 //Converte string para currency
 var
-	DotSep, SemiCSep:    PChar;
+	DotSep, SemiCSep   : PChar;
 	OldDecimalSeparator: char;
-	fs:                  TFormatSettings;
+	fs                 : TFormatSettings;
 begin
-	fs := FormatSettings;
-	DotSep := StrRScan(PChar(Str), '.');
+	{$WARN UNSAFE_CODE OFF}
+	fs       := Self.FormatSettings^;
+	{$WARN UNSAFE_CODE ON}
+	DotSep   := StrRScan(PChar(Str), '.');
 	SemiCSep := StrRScan(PChar(Str), ',');
 	if ((DWORD(DotSep) or DWORD(SemiCSep)) <> $0) then begin //Existe separador
 		OldDecimalSeparator := FormatSettings.DecimalSeparator;
@@ -133,12 +148,14 @@ class function TStrConv.StrToFloat2(const Str: string): Extended;
 //----------------------------------------------------------------------------------------------------------------------
 //Converte string para float
 var
-	DotSep, SemiCSep:    PChar;
+	DotSep, SemiCSep   : PChar;
 	OldDecimalSeparator: char;
-	fs:                  TFormatSettings;
+	fs                 : TFormatSettings;
 begin
-	fs := FormatSettings;
-	DotSep := StrRScan(PChar(Str), '.');
+	{$WARN UNSAFE_CODE OFF}
+	fs       := Self.FormatSettings^;
+	{$WARN UNSAFE_CODE ON}
+	DotSep   := StrRScan(PChar(Str), '.');
 	SemiCSep := StrRScan(PChar(Str), ',');
 	if ((DWORD(DotSep) or DWORD(SemiCSep)) <> $0) then begin //Existe separador
 		OldDecimalSeparator := fs.DecimalSeparator;

@@ -77,8 +77,6 @@ type
 	  FPath: string;
 	  FPattern: string;
 	  FRecursive: Boolean;
-	  FReturnFullPath: Boolean;
-	  FType: TDirEnumType;
 	  FMask: TMask;
 
 	  { __State__based__ }

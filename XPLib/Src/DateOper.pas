@@ -825,7 +825,9 @@ var
   FS: TFormatSettings;
 begin
   // carrega valores de formatação
-  FS := TStrConv.FormatSettings;
+  {$WARN UNSAFE_CODE OFF}
+  FS := TStrConv.FormatSettings^;
+  {$WARN UNSAFE_CODE ON}
   Result := False;
   Y := 0;
   M := 0;

@@ -180,6 +180,7 @@
         </DCCReference>
         <DCCReference Include="XPFileEnumerator.pas"/>
         <DCCReference Include="StrConverters.pas"/>
+        <DCCReference Include="XPGenerics.pas"/>
         <None Include="..\Docs\History.txt"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>

@@ -29,7 +29,7 @@ package XPLibD20;
 {$IMAGEBASE $400000}
 {$DEFINE RELEASE}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'AAA - XP-Lib - Delphi 2010'}
+{$DESCRIPTION '3E - XP-Lib - RS-XE6'}
 {$IMPLICITBUILD OFF}
 
 requires
@@ -75,6 +75,7 @@ contains
   XPFiles in 'XPFiles.pas',
   WinRegDemo in '..\Demos\MasterDemo\WinRegistry\WinRegDemo.pas' {FormWinRegDemo},
   XPFileEnumerator in 'XPFileEnumerator.pas',
-  StrConverters in 'StrConverters.pas';
+  StrConverters in 'StrConverters.pas',
+  XPGenerics in 'XPGenerics.pas';
 
 end.
