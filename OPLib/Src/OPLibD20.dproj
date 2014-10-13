@@ -82,7 +82,7 @@
         <DCC_K>false</DCC_K>
         <GenDll>true</GenDll>
         <DCC_OutputNeverBuildDcps>true</DCC_OutputNeverBuildDcps>
-        <DCC_DcpOutput>$(DLib)\$(PLATFORM)\DCP</DCC_DcpOutput>
+        <DCC_DcpOutput>$(DLib)\$(PLATFORM)\$(Config)</DCC_DcpOutput>
         <DCC_DcuOutput>$(DLib)\$(PLATFORM)\$(Config)</DCC_DcuOutput>
         <GenPackage>true</GenPackage>
         <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
@@ -197,12 +197,7 @@
                     <VersionInfoKeys Name="ProductVersion">14.0.2010.0</VersionInfoKeys>
                     <VersionInfoKeys Name="Comments">Rogerlais Andrade</VersionInfoKeys>
                 </VersionInfoKeys>
-                <Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\bcboffice2k200.bpl">Embarcadero C++Builder Office 2000 Servers Package</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\bcbofficexp200.bpl">Embarcadero C++Builder Office XP Servers Package</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k200.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp200.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
-                </Excluded_Packages>
+                <Excluded_Packages/>
             </Delphi.Personality>
             <ModelSupport>False</ModelSupport>
             <Platforms>

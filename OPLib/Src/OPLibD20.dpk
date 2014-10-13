@@ -29,7 +29,7 @@ package OPLibD20;
 {$DEFINE RELEASE}
 {$DEFINE RTTI_LEVEL2}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION '3E - Object Persistence Library - RS-XE6'}
+{$DESCRIPTION 'AAA - Object Persistence Library - Delphi 2010'}
 {$IMPLICITBUILD OFF}
 
 requires

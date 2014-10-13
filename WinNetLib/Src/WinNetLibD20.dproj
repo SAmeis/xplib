@@ -62,6 +62,7 @@
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
+        <DCC_UnitSearchPath>$(DLib)\$(Platform)\$(Config);$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <VerInfo_Locale>1046</VerInfo_Locale>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Release>2005</VerInfo_Release>
@@ -80,7 +81,7 @@
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
         <DCC_S>false</DCC_S>
         <DCC_N>true</DCC_N>
-        <DCC_DcpOutput>$(DLib)\$(Platform)\DCP</DCC_DcpOutput>
+        <DCC_DcpOutput>$(DLib)\$(Platform)\$(Config)</DCC_DcpOutput>
         <GenDll>true</GenDll>
         <DCC_OutputNeverBuildDcps>true</DCC_OutputNeverBuildDcps>
         <DCC_K>false</DCC_K>
@@ -103,7 +104,7 @@
         <DCC_UsePackage>rtl;$(DCC_UsePackage)</DCC_UsePackage>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
-        <DCC_UsePackage>rtl;vclx;vcl;XPLibD20;WinSysLibD20;$(DCC_UsePackage)</DCC_UsePackage>
+        <DCC_UsePackage>rtl;vclx;vcl;XPLibD20;WinSysLibD20;BDELibD20;$(DCC_UsePackage)</DCC_UsePackage>
         <VerInfo_MajorVer>1</VerInfo_MajorVer>
         <DCC_Namespace>System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
         <VerInfo_Build>0</VerInfo_Build>
@@ -140,10 +141,10 @@
         </DelphiCompile>
         <DCCReference Include="WinNetLib.dcr"/>
         <DCCReference Include="rtl.dcp"/>
-        <DCCReference Include="WinSysLibD20.dcp"/>
         <DCCReference Include="vcl.dcp"/>
-        <DCCReference Include="XPLibD20.dcp"/>
         <DCCReference Include="vclx.dcp"/>
+        <DCCReference Include="BDELibD20.dcp"/>
+        <DCCReference Include="WinSysLibD20.dcp"/>
         <DCCReference Include="WNetSever.pas"/>
         <DCCReference Include="LmAccess.pas"/>
         <DCCReference Include="LmAlert.pas"/>
@@ -230,12 +231,7 @@
                     <VersionInfoKeys Name="ProductVersion">7.0.2005.6</VersionInfoKeys>
                     <VersionInfoKeys Name="Comments">Rogerlais Andrade</VersionInfoKeys>
                 </VersionInfoKeys>
-                <Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\bcboffice2k200.bpl">Embarcadero C++Builder Office 2000 Servers Package</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\bcbofficexp200.bpl">Embarcadero C++Builder Office XP Servers Package</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k200.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp200.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
-                </Excluded_Packages>
+                <Excluded_Packages/>
             </Delphi.Personality>
             <Platforms>
                 <Platform value="Android">False</Platform>

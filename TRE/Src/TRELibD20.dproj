@@ -62,6 +62,7 @@
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
+        <DCC_UnitSearchPath>$(DLib)\$(Platform)\$(Config);$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <SanitizedProjectName>TRELibD20</SanitizedProjectName>
         <VerInfo_Locale>1046</VerInfo_Locale>
         <VerInfo_Keys>CompanyName=TRE-PB®;FileDescription=;FileVersion=7.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=TRE-PB®;OriginalFilename=;ProductName=;ProductVersion=7.0.0.0;Comments=Rogerlais Andrade</VerInfo_Keys>
@@ -81,7 +82,7 @@
         <DCC_K>false</DCC_K>
         <GenDll>true</GenDll>
         <DCC_OutputNeverBuildDcps>true</DCC_OutputNeverBuildDcps>
-        <DCC_DcpOutput>$(DLib)\$(Platform)\DCP</DCC_DcpOutput>
+        <DCC_DcpOutput>$(DLib)\$(Platform)\$(Config)</DCC_DcpOutput>
         <DCC_F>false</DCC_F>
         <GenPackage>true</GenPackage>
         <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
@@ -136,7 +137,6 @@
         </DelphiCompile>
         <DCCReference Include="TRELib.dcr"/>
         <DCCReference Include="rtl.dcp"/>
-        <DCCReference Include="XPLibD20.dcp"/>
         <DCCReference Include="vclactnband.dcp"/>
         <DCCReference Include="vclx.dcp"/>
         <DCCReference Include="vcl.dcp"/>
@@ -202,12 +202,7 @@
                     <VersionInfoKeys Name="ProductVersion">7.0.0.0</VersionInfoKeys>
                     <VersionInfoKeys Name="Comments">Rogerlais Andrade</VersionInfoKeys>
                 </VersionInfoKeys>
-                <Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\bcboffice2k200.bpl">Embarcadero C++Builder Office 2000 Servers Package</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\bcbofficexp200.bpl">Embarcadero C++Builder Office XP Servers Package</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k200.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp200.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
-                </Excluded_Packages>
+                <Excluded_Packages/>
             </Delphi.Personality>
             <ModelSupport>False</ModelSupport>
             <Platforms>

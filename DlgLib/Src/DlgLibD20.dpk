@@ -34,15 +34,16 @@ package DlgLibD20;
 requires
   rtl,
   vcl,
-  XPLibD20,
-  ECLibD20,
-  StFLibD20,
   VclSmp,
   vclx,
   vclactnband,
   designide,
   dbrtl,
   bdertl,
+  BDELibD20,
+  StFLibD20,
+  WinSysLibD20,
+  ECLibD20,
   ShellLibD20;
 
 contains

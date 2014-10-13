@@ -35,8 +35,9 @@ requires
   rtl,
   vcl,
   vclx,
-  XPLibD20,
-  OPLibD20;
+  OPLibD20,
+  BDELibD20,
+  StFLibD20;
 
 contains
   CpltComboBox in 'CpltComboBox.pas',

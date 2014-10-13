@@ -62,6 +62,7 @@
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
+        <DCC_UnitSearchPath>$(DLib)\$(Platform)\$(Config);$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <VerInfo_Release>2005</VerInfo_Release>
         <VerInfo_MajorVer>7</VerInfo_MajorVer>
         <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;$(DCC_Namespace)</DCC_Namespace>
@@ -80,7 +81,7 @@
         <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
         <DCC_S>false</DCC_S>
         <DCC_N>true</DCC_N>
-        <DCC_DcpOutput>$(DLib)\$(Platform)\DCP</DCC_DcpOutput>
+        <DCC_DcpOutput>$(DLib)\$(Platform)\$(Config)</DCC_DcpOutput>
         <GenDll>true</GenDll>
         <DCC_OutputNeverBuildDcps>true</DCC_OutputNeverBuildDcps>
         <DCC_K>false</DCC_K>
@@ -143,7 +144,6 @@
         <DCCReference Include="rtl.dcp"/>
         <DCCReference Include="vcl.dcp"/>
         <DCCReference Include="vclx.dcp"/>
-        <DCCReference Include="XPLibD20.dcp"/>
         <DCCReference Include="StFLibD20.dcp"/>
         <DCCReference Include="vclimg.dcp"/>
         <DCCReference Include="vclactnband.dcp"/>
@@ -216,12 +216,7 @@
                     <VersionInfoKeys Name="ProductVersion">7.0.2005.4</VersionInfoKeys>
                     <VersionInfoKeys Name="Comments">Rogerlais Andrade</VersionInfoKeys>
                 </VersionInfoKeys>
-                <Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\bcboffice2k200.bpl">Embarcadero C++Builder Office 2000 Servers Package</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\bcbofficexp200.bpl">Embarcadero C++Builder Office XP Servers Package</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k200.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp200.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
-                </Excluded_Packages>
+                <Excluded_Packages/>
             </Delphi.Personality>
             <Platforms>
                 <Platform value="Android">False</Platform>

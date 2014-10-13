@@ -62,6 +62,7 @@
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
+        <DCC_UnitSearchPath>$(DLib)\$(Platform)\$(Config);$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <VerInfo_Keys>CompanyName=3E®;FileDescription=;FileVersion=16.0.2014.0;InternalName=;LegalCopyright=3E®;LegalTrademarks=3E®;OriginalFilename=;ProductName=Super Library;ProductVersion=16.0.2014.0;Comments=</VerInfo_Keys>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_MajorVer>16</VerInfo_MajorVer>
@@ -78,7 +79,7 @@
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
         <DCC_S>false</DCC_S>
         <DCC_N>true</DCC_N>
-        <DCC_DcpOutput>$(DLib)\$(Platform)\DCP</DCC_DcpOutput>
+        <DCC_DcpOutput>$(DLib)\$(Platform)\$(Config)</DCC_DcpOutput>
         <GenDll>true</GenDll>
         <DCC_OutputNeverBuildDcps>true</DCC_OutputNeverBuildDcps>
         <DCC_K>false</DCC_K>
@@ -101,7 +102,7 @@
         <DCC_UsePackage>xmlrtl;rtl;inet;IndySystem;IndyProtocols;IndyCore;$(DCC_UsePackage)</DCC_UsePackage>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
-        <DCC_UsePackage>xmlrtl;rtl;vclx;vcl;inet;IndySystem;IndyProtocols;IndyCore;XPLibD20;$(DCC_UsePackage)</DCC_UsePackage>
+        <DCC_UsePackage>xmlrtl;rtl;vclx;vcl;inet;IndySystem;IndyProtocols;IndyCore;XPLibD20;BDELibD20;$(DCC_UsePackage)</DCC_UsePackage>
         <VerInfo_MajorVer>1</VerInfo_MajorVer>
         <DCC_Namespace>Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
@@ -136,13 +137,13 @@
         <DCCReference Include="StFLib.dcr"/>
         <DCCReference Include="rtl.dcp"/>
         <DCCReference Include="vcl.dcp"/>
-        <DCCReference Include="XPLibD20.dcp"/>
         <DCCReference Include="xmlrtl.dcp"/>
         <DCCReference Include="inet.dcp"/>
         <DCCReference Include="vclx.dcp"/>
         <DCCReference Include="IndyCore.dcp"/>
         <DCCReference Include="IndySystem.dcp"/>
         <DCCReference Include="IndyProtocols.dcp"/>
+        <DCCReference Include="BDELibD20.dcp"/>
         <DCCReference Include="Modulo11.PAS"/>
         <DCCReference Include="PasParser.pas"/>
         <DCCReference Include="HKStreamRoutines.pas"/>
@@ -206,12 +207,7 @@
                     <VersionInfoKeys Name="ProductVersion">16.0.2014.0</VersionInfoKeys>
                     <VersionInfoKeys Name="Comments"/>
                 </VersionInfoKeys>
-                <Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\bcboffice2k200.bpl">Embarcadero C++Builder Office 2000 Servers Package</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\bcbofficexp200.bpl">Embarcadero C++Builder Office XP Servers Package</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k200.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp200.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
-                </Excluded_Packages>
+                <Excluded_Packages/>
             </Delphi.Personality>
             <Platforms>
                 <Platform value="Android">False</Platform>

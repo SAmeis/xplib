@@ -80,7 +80,7 @@
         <GenPackage>true</GenPackage>
         <DCC_S>false</DCC_S>
         <DCC_N>true</DCC_N>
-        <DCC_DcpOutput>$(DLib)\$(PLATFORM)\DCP</DCC_DcpOutput>
+        <DCC_DcpOutput>$(DLib)\$(PLATFORM)\$(Config)</DCC_DcpOutput>
         <GenDll>true</GenDll>
         <DCC_OutputNeverBuildDcps>true</DCC_OutputNeverBuildDcps>
         <DCC_K>false</DCC_K>
@@ -179,7 +179,7 @@
             <Form>FormWinRegDemo</Form>
         </DCCReference>
         <DCCReference Include="XPFileEnumerator.pas"/>
-        <DCCReference Include="StrConverters.pas"/>
+        <DCCReference Include="XP.StrConverters.pas"/>
         <DCCReference Include="XPGenerics.pas"/>
         <None Include="..\Docs\History.txt"/>
         <BuildConfiguration Include="Debug">
@@ -235,12 +235,7 @@
                     <VersionInfoKeys Name="ProductVersion">7.2.2005.2</VersionInfoKeys>
                     <VersionInfoKeys Name="Comments">Rogerlais Andrade</VersionInfoKeys>
                 </VersionInfoKeys>
-                <Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\bcboffice2k200.bpl">Embarcadero C++Builder Office 2000 Servers Package</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\bcbofficexp200.bpl">Embarcadero C++Builder Office XP Servers Package</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k200.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp200.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
-                </Excluded_Packages>
+                <Excluded_Packages/>
             </Delphi.Personality>
             <ModelSupport>False</ModelSupport>
             <Platforms>

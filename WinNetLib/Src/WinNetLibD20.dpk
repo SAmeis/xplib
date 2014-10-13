@@ -34,10 +34,10 @@ package WinNetLibD20;
 
 requires
   rtl,
-  WinSysLibD20,
   vcl,
-  XPLibD20,
-  vclx;
+  vclx,
+  BDELibD20,
+  WinSysLibD20;
 
 contains
   WNetSever in 'WNetSever.pas',

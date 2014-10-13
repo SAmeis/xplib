@@ -1,35 +1,34 @@
 ﻿[Closed Files]
-File_0=TSourceModule,'C:\Sw\WorkDir\Pcks\XPLib\Src\XPTypes.pas',0,1,55,1,1,0,0,,
-File_1=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\DlgLib.inc',0,1,1,86,19,0,0,,
-File_2=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\About.pas',0,1,54,1,54,0,0,,
-File_3=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\Aboutdlg.pas',0,1,86,1,86,0,0,,
-File_4=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\Chgpwd.pas',0,1,205,1,205,0,0,,
-File_5=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\DlgLibDsgnRegister.pas',0,1,1,1,2,0,0,,
-File_6=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\DlgTxtEditor.pas',0,1,362,1,362,0,0,,
-File_7=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\FileCDlg.pas',0,1,236,1,239,0,0,,
-File_8=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\LognDBdlg.pas',0,1,205,1,205,0,0,,{1
-File_9=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\Logndlg.pas',0,1,1,1,1,0,0,,{1
-File_10=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\Passdlg.pas',0,1,1,1,1,0,0,,
-File_11=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\PathEdit.pas',0,1,306,1,306,0,0,,
-File_12=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\RadioDlg.pas',0,1,117,1,117,0,0,,
-File_13=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\SimpleProgress.pas',0,1,361,1,361,0,0,,
-File_14=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\ThreadProgressForm.pas',0,1,477,1,477,0,0,,{1
+File_0=TSourceModule,'C:\Sw\WorkDir\Pcks\FXLib\Src\PicShow.pas',0,1,1,1,1,0,0,,
+File_1=TSourceModule,'C:\Sw\WorkDir\Pcks\XPLib\Src\XPTypes.pas',0,1,55,1,1,0,0,,
+File_2=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\DlgLib.inc',0,1,1,86,19,0,0,,
+File_3=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\About.pas',0,1,54,1,54,0,0,,
+File_4=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\Aboutdlg.pas',0,1,86,1,86,0,0,,
+File_5=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\Chgpwd.pas',0,1,205,1,205,0,0,,
+File_6=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\DlgLibDsgnRegister.pas',0,1,1,1,2,0,0,,
+File_7=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\DlgTxtEditor.pas',0,1,362,1,362,0,0,,
+File_8=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\FileCDlg.pas',0,1,236,1,239,0,0,,
+File_9=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\LognDBdlg.pas',0,1,205,1,205,0,0,,{1
+File_10=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\Logndlg.pas',0,1,1,1,1,0,0,,{1
+File_11=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\Passdlg.pas',0,1,1,1,1,0,0,,
+File_12=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\PathEdit.pas',0,1,306,1,306,0,0,,
+File_13=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\RadioDlg.pas',0,1,117,1,117,0,0,,
+File_14=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\SimpleProgress.pas',0,1,361,1,361,0,0,,
 
 [Modules]
-Module0=C:\Sw\WorkDir\Pcks\XPLib\Src\StrConverters.pas
+Module0=C:\Sw\WorkDir\Pcks\ECLib\Src\XPSpinControls.pas
 Module1=C:\Sw\WorkDir\Pcks\TRE\Src\TRELibD20.dproj
-Module2=C:\Sw\WorkDir\Pcks\ShellLib\Src\ShellFilesHnd.pas
-Module3=C:\Sw\WorkDir\Pcks\ECLib\Src\XPSpinControls.pas
+Module2=C:\Sw\WorkDir\Pcks\XPLib\Src\Dateoper.pas
+Module3=C:\Sw\WorkDir\Pcks\ShellLib\Src\ShellFilesHnd.pas
 Module4=C:\Sw\WorkDir\Pcks\WinSysLib\Src\FileInfo.pas
 Module5=C:\Sw\WorkDir\Pcks\INetLib\Src\WDBGrid.pas
-Module6=C:\Sw\WorkDir\Pcks\XPLib\Src\Dateoper.pas
-Module7=C:\Sw\WorkDir\Pcks\XPLib\Src\Str_Pas.pas
-Module8=C:\Sw\WorkDir\Pcks\WinAdvLib\Src\WinLSAUtils.pas
-Module9=C:\Sw\WorkDir\Pcks\WinAdvLib\Src\WinAdvLib.inc
-Count=10
+Module6=C:\Sw\WorkDir\Pcks\XPLib\Src\Str_Pas.pas
+Module7=C:\Sw\WorkDir\Pcks\WinAdvLib\Src\WinLSAUtils.pas
+Module8=C:\Sw\WorkDir\Pcks\WinAdvLib\Src\WinAdvLib.inc
+Count=9
 EditWindowCount=1
 
-[C:\Sw\WorkDir\Pcks\XPLib\Src\StrConverters.pas]
+[C:\Sw\WorkDir\Pcks\ECLib\Src\XPSpinControls.pas]
 ModuleType=TSourceModule
 FormState=0
 FormOnTop=0
@@ -37,12 +36,12 @@ FormOnTop=0
 [C:\Sw\WorkDir\Pcks\TRE\Src\TRELibD20.dproj]
 ModuleType=TBaseProject
 
-[C:\Sw\WorkDir\Pcks\ShellLib\Src\ShellFilesHnd.pas]
+[C:\Sw\WorkDir\Pcks\XPLib\Src\Dateoper.pas]
 ModuleType=TSourceModule
 FormState=0
 FormOnTop=0
 
-[C:\Sw\WorkDir\Pcks\ECLib\Src\XPSpinControls.pas]
+[C:\Sw\WorkDir\Pcks\ShellLib\Src\ShellFilesHnd.pas]
 ModuleType=TSourceModule
 FormState=0
 FormOnTop=0
@@ -53,11 +52,6 @@ FormState=0
 FormOnTop=0
 
 [C:\Sw\WorkDir\Pcks\INetLib\Src\WDBGrid.pas]
-ModuleType=TSourceModule
-FormState=0
-FormOnTop=0
-
-[C:\Sw\WorkDir\Pcks\XPLib\Src\Dateoper.pas]
 ModuleType=TSourceModule
 FormState=0
 FormOnTop=0
@@ -76,8 +70,8 @@ FormOnTop=0
 ModuleType=TSourceModule
 
 [EditWindow0]
-ViewCount=10
-CurrentEditView=C:\Sw\WorkDir\Pcks\XPLib\Src\StrConverters.pas
+ViewCount=9
+CurrentEditView=C:\Sw\WorkDir\Pcks\ECLib\Src\XPSpinControls.pas
 View0=0
 View1=1
 View2=2
@@ -87,7 +81,6 @@ View5=5
 View6=6
 View7=7
 View8=8
-View9=9
 PercentageSizes=1
 Create=1
 Visible=1
@@ -106,29 +99,18 @@ BorlandEditorCodeExplorer=BorlandEditorCodeExplorer@EditWindow0
 TopPanelSize=0
 LeftPanelSize=1776
 LeftPanelClients=PropertyInspector,DockSite2
-LeftPanelData=000008000101000000006E0D00000000000001F00600000000000001000000005C0E000009000000446F636B53697465320100000000DF1700001100000050726F7065727479496E73706563746F72FFFFFFFF
+LeftPanelData=00000800010100000000580E00000000000001F00600000000000001000000005C0E000009000000446F636B53697465320100000000801900001100000050726F7065727479496E73706563746F72FFFFFFFF
 RightPanelSize=1495
 RightPanelClients=DockSite1,DockSite3
-RightPanelData=000008000101000000006E0D00000000000001D70500000000000001000000004412000009000000446F636B53697465310100000000DF17000009000000446F636B5369746533FFFFFFFF
-BottomPanelSize=3130
+RightPanelData=00000800010100000000580E00000000000001D70500000000000001000000004412000009000000446F636B536974653101000000008019000009000000446F636B5369746533FFFFFFFF
+BottomPanelSize=2713
 BottomPanelClients=MessageView,DockSite0,DockSite4
-BottomPanelData=000008000102000000007245000000000000023A0C00000000000001000000002617000009000000446F636B53697465300100000000702B000009000000446F636B53697465340100000000724500000F0000004D65737361676556696577466F726DFFFFFFFF
+BottomPanelData=00000800010200000000724500000000000002990A00000000000001000000002617000009000000446F636B53697465300100000000DD30000009000000446F636B53697465340100000000724500000F0000004D65737361676556696577466F726DFFFFFFFF
 BottomMiddlePanelSize=0
 BottomMiddlePanelClients=GraphDrawingModel
 BottomMiddelPanelData=0000080001000100000010000000477261706844726177696E67566965771D0600000000000000F529000000000000FFFFFFFF
 
 [View0]
-CustomEditViewType=TEditView
-Module=C:\Sw\WorkDir\Pcks\XPLib\Src\StrConverters.pas
-CursorX=90
-CursorY=11
-TopLine=1
-LeftCol=1
-Elisions=
-Bookmarks={1,46,1}
-EditViewName=C:\Sw\WorkDir\Pcks\XPLib\Src\StrConverters.pas
-
-[View1]
 CustomEditViewType=TEditView
 Module=C:\Sw\WorkDir\Pcks\XPLib\Src\Dateoper.pas
 CursorX=49
@@ -139,7 +121,7 @@ Elisions=
 Bookmarks={1,967,3}
 EditViewName=C:\Sw\WorkDir\Pcks\XPLib\Src\Dateoper.pas
 
-[View2]
+[View1]
 CustomEditViewType=TEditView
 Module=C:\Sw\WorkDir\Pcks\INetLib\Src\WDBGrid.pas
 CursorX=41
@@ -150,7 +132,7 @@ Elisions=
 Bookmarks=
 EditViewName=C:\Sw\WorkDir\Pcks\INetLib\Src\WDBGrid.pas
 
-[View3]
+[View2]
 CustomEditViewType=TEditView
 Module=C:\Sw\WorkDir\Pcks\WinSysLib\Src\FileInfo.pas
 CursorX=14
@@ -161,18 +143,18 @@ Elisions=
 Bookmarks={1,606,1}
 EditViewName=C:\Sw\WorkDir\Pcks\WinSysLib\Src\FileInfo.pas
 
-[View4]
+[View3]
 CustomEditViewType=TEditView
 Module=C:\Sw\WorkDir\Pcks\ECLib\Src\XPSpinControls.pas
-CursorX=93
-CursorY=192
-TopLine=173
+CursorX=95
+CursorY=554
+TopLine=528
 LeftCol=1
 Elisions=
 Bookmarks=
 EditViewName=C:\Sw\WorkDir\Pcks\ECLib\Src\XPSpinControls.pas
 
-[View5]
+[View4]
 CustomEditViewType=TEditView
 Module=C:\Sw\WorkDir\Pcks\ShellLib\Src\ShellFilesHnd.pas
 CursorX=84
@@ -183,7 +165,7 @@ Elisions=
 Bookmarks={1,11,1}
 EditViewName=C:\Sw\WorkDir\Pcks\ShellLib\Src\ShellFilesHnd.pas
 
-[View6]
+[View5]
 CustomEditViewType=TEditView
 Module=C:\Sw\WorkDir\Pcks\WinAdvLib\Src\WinAdvLib.inc
 CursorX=1
@@ -194,7 +176,7 @@ Elisions=
 Bookmarks=
 EditViewName=C:\Sw\WorkDir\Pcks\WinAdvLib\Src\WinAdvLib.inc
 
-[View7]
+[View6]
 CustomEditViewType=TEditView
 Module=C:\Sw\WorkDir\Pcks\WinAdvLib\Src\WinLSAUtils.pas
 CursorX=98
@@ -205,7 +187,7 @@ Elisions=
 Bookmarks=
 EditViewName=C:\Sw\WorkDir\Pcks\WinAdvLib\Src\WinLSAUtils.pas
 
-[View8]
+[View7]
 CustomEditViewType=TEditView
 Module=C:\Sw\WorkDir\Pcks\TRE\Src\TRELibD20.dpk
 CursorX=39
@@ -216,7 +198,7 @@ Elisions=
 Bookmarks=
 EditViewName=C:\Sw\WorkDir\Pcks\TRE\Src\TRELibD20.dpk
 
-[View9]
+[View8]
 CustomEditViewType=TEditView
 Module=C:\Sw\WorkDir\Pcks\XPLib\Src\Str_Pas.pas
 CursorX=39
@@ -315,15 +297,15 @@ Create=1
 Visible=1
 Docked=1
 State=0
-Left=1201
+Left=1351
 Top=23
-Width=3745
-Height=2917
+Width=2964
+Height=2500
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=3745
-ClientHeight=2917
-TBDockHeight=2917
+ClientWidth=2964
+ClientHeight=2500
+TBDockHeight=2500
 LRDockWidth=2771
 Dockable=1
 StayOnTop=0
@@ -337,11 +319,11 @@ State=0
 Left=0
 Top=0
 Width=1495
-Height=1222
+Height=1639
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1495
-ClientHeight=1222
+ClientHeight=1639
 TBDockHeight=7157
 LRDockWidth=2000
 Dockable=1
@@ -451,11 +433,11 @@ State=0
 Left=0
 Top=420
 Width=1776
-Height=2222
+Height=2639
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1776
-ClientHeight=2222
+ClientHeight=2639
 TBDockHeight=9065
 LRDockWidth=1776
 Dockable=1
@@ -512,11 +494,11 @@ State=0
 Left=0
 Top=0
 Width=3312
-Height=2685
+Height=2269
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=3312
-ClientHeight=2685
+ClientHeight=2269
 TBDockHeight=407
 LRDockWidth=4948
 Dockable=1
@@ -591,12 +573,12 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=2901
-Height=2685
+Width=3333
+Height=2269
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=2901
-ClientHeight=2685
+ClientWidth=3333
+ClientHeight=2269
 TBDockHeight=2315
 LRDockWidth=2823
 Dockable=1
@@ -610,12 +592,12 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=2896
-Height=1250
+Width=3682
+Height=2269
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=2896
-ClientHeight=1250
+ClientWidth=3682
+ClientHeight=2269
 TBDockHeight=3204
 LRDockWidth=2823
 Dockable=1
@@ -859,12 +841,12 @@ State=0
 Left=0
 Top=23
 Width=3312
-Height=2917
+Height=2500
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=3312
-ClientHeight=2917
-TBDockHeight=2917
+ClientHeight=2500
+TBDockHeight=2500
 LRDockWidth=3823
 Dockable=1
 StayOnTop=0
@@ -931,11 +913,11 @@ State=0
 Left=0
 Top=528
 Width=1495
-Height=1222
+Height=1639
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1495
-ClientHeight=1222
+ClientHeight=1639
 TBDockHeight=9065
 LRDockWidth=1495
 Dockable=1
@@ -954,18 +936,18 @@ Docked=1
 State=0
 Left=640
 Top=23
-Width=2901
-Height=2917
+Width=3682
+Height=2500
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=2901
-ClientHeight=2917
-TBDockHeight=2917
+ClientWidth=3682
+ClientHeight=2500
+TBDockHeight=2500
 LRDockWidth=2339
 Dockable=1
 StayOnTop=0
 TabPosition=1
-ActiveTabID=FindReferencsForm
+ActiveTabID=RefactoringForm
 TabDockClients=RefactoringForm,FindReferencsForm,UsagesView,ToDo List,CppChecks,MetricsView,QAView,FindRefsResults,FindDefsResults,HeaderDepResults,TypeHierarchyResults
 
 [ActiveProject]

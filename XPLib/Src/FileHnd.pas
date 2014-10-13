@@ -204,6 +204,7 @@ type
 	class function ChangeFileName(const OriginalFullPath, FileName: string): string;
 	class function ConcatPath(Paths: array of string): string;
 	class function CopyDir(const SourceDir, DestDir: TFilename): Integer;
+	class function CopyFile(const SourceFile, DestFile: TFilename; Overwrite, ResetProtections : boolean): Integer;
 	class function CreateTempFileName(const Prefix: PChar; const Number: byte; CreateFile: boolean): string;
 	class function ExpandFilename(const BasePath, Path: string): string;
 	class function FileSize(const FileName: string): int64;
@@ -2104,7 +2105,7 @@ begin
 		if (SearchRec.Name <> '.') and (SearchRec.Name <> '..') then begin
 		  if (SearchRec.Attr and faDirectory) = faDirectory then begin
 			Result := CopyDir(Path + SearchRec.Name, TFileHnd.SlashAdd(DestDir) + SearchRec.Name);
-		  end else if (not CopyFile(PChar(Path + SearchRec.Name), PChar(DestPath + SearchRec.Name), True)) then begin
+		  end else if (not Windows.CopyFile(PChar(Path + SearchRec.Name), PChar(DestPath + SearchRec.Name), True)) then begin
 			Result := GetLastError();
 			Exit;
 		  end;
@@ -2117,6 +2118,42 @@ begin
 	  raise;
 	end;
   end;
+end;
+
+class function TFileHnd.CopyFile(const SourceFile, DestFile: TFilename; Overwrite, ResetProtections: boolean): Integer;
+/// <summary>
+/// Copia os arquivos.
+/// </summary>
+/// <param name="SourceFile">Nome do arquivo fonte</param>
+/// <param name="DestFile">Nome do arquivo destino</param>
+/// <param name="Overwrite">Flag de sobrescrita. Caso falso e destino exista, ocorre erro</param>
+/// <param name="ResetProtections">Remove atributos de proteção do destino que impeçam a sobrescrita</param>
+/// <returns>sucesso = ERRROR_SUCCESS, para falhar o error code correlato</returns>
+var
+	attr : Integer;
+begin
+	//Verifica se destino existe
+	if ( FileExists( DestFile ) ) then begin
+		if ( not Overwrite  ) then begin
+			Result := ERROR_FILE_EXISTS;
+		end else begin
+			//Como se sobrescreve devemos testar os atributos de proteção
+			if ( ResetProtections ) then begin
+				attr:=GetFileAttributes( PWideChar( DestFile ));
+				attr := ( attr ) and not( FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_SYSTEM or FILE_ATTRIBUTE_READONLY );
+				if ( not  SetFileAttributes( PWideChar( DestFile ), attr ) ) then begin
+					Result := GetLastError();
+					Exit;
+				end;
+			end;
+		end;
+	end;
+	//Chegando aqui tentamos gravar no destino
+	if ( Windows.CopyFile( PWideChar( SourceFile ), PWideChar( DestFile), True ) ) then begin
+		Result := ERROR_SUCCESS;
+	end else begin
+		Result := GetLastError();
+	end;
 end;
 
 class function TFileHnd.CreateTempFileName(const Prefix: PChar; const Number: byte; CreateFile: boolean): string;

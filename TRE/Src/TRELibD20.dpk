@@ -33,7 +33,6 @@ package TRELibD20;
 
 requires
   rtl,
-  XPLibD20,
   vclactnband,
   vclx,
   vcl,

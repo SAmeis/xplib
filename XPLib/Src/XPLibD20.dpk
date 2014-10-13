@@ -75,7 +75,7 @@ contains
   XPFiles in 'XPFiles.pas',
   WinRegDemo in '..\Demos\MasterDemo\WinRegistry\WinRegDemo.pas' {FormWinRegDemo},
   XPFileEnumerator in 'XPFileEnumerator.pas',
-  StrConverters in 'StrConverters.pas',
+  XP.StrConverters in 'XP.StrConverters.pas',
   XPGenerics in 'XPGenerics.pas';
 
 end.

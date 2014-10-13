@@ -176,7 +176,7 @@ function SetLocalDateTime(DateTime: TDateTime): Integer;
 implementation
 
 uses
-  SysUtils, Str_Pas, Math, DateUtils, SysConst, StrConverters;
+  SysUtils, Str_Pas, Math, DateUtils, SysConst, XP.StrConverters;
 
 resourcestring
   RsMakeUTCTime = 'Erro convertendo tempo para formato UTC. Aspectos regionais não podem ser determinados.';

@@ -6,7 +6,7 @@ unit Str_pas;
 
 interface
 
-uses SysUtils, Classes, Windows, StrConverters;
+uses SysUtils, Classes, Windows, XP.StrConverters;
 
 const
   DEFAULT_WORD_DELIMITERS_LIST = [#0, ' ', #13, #10, #9]; // Caracteres que podem preceder/anteceder um palavra;

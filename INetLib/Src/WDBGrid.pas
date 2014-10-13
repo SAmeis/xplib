@@ -293,7 +293,7 @@ function LoadWebDataSourceInput(Str: string): TWebDataSourceInput;
 implementation
 
 uses
-	dbTables, Str_Pas, IOObj, Variants, StrConverters;
+	dbTables, Str_Pas, IOObj, Variants, XP.StrConverters;
 
 const
 	thAlignments: array [TAlignment] of THTMLTableAlignHoriz = (thLeft, thRight, thCentre);

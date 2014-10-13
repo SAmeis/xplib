@@ -26,7 +26,7 @@ package ShellLibD20;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DEFINE DEBUG}
+{$DEFINE RELEASE}
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'AAA - Shell Tools - Delphi 2010'}
 {$IMPLICITBUILD OFF}
@@ -36,7 +36,7 @@ requires
   vcl,
   vclx,
   DesignIDE,
-  XPLibD20;
+  BDELibD20;
 
 contains
   ShellFilesHnd in 'ShellFilesHnd.pas',

@@ -54,9 +54,9 @@ begin
 	if TypeReturnT.Kind <> tkClass then
 		raise Exception.Create('Destination type is not a class');
 
-	{$WARN UNSAFE_CODE OFF} {$WARN UNSAFE_TYPE OFF}
+	{$WARN UNSAFE_CODE OFF} {$WARN UNSAFE_CAST OFF}
 	Obj := TObject(Pointer(@Value)^);
-	{$WARN UNSAFE_CODE ON} {$WARN UNSAFE_TYPE ON}
+	{$WARN UNSAFE_CODE ON} {$WARN UNSAFE_CAST ON}
 	if Obj = nil then
 		Result := default (ReturnT)
 	else begin

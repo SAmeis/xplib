@@ -34,13 +34,13 @@ package StFLibD20;
 requires
   rtl,
   vcl,
-  XPLibD20,
   xmlrtl,
   inet,
   vclx,
   IndyCore,
   IndySystem,
-  IndyProtocols;
+  IndyProtocols,
+  BDELibD20;
 
 contains
   Modulo11 in 'Modulo11.PAS',

@@ -83,7 +83,7 @@
         <DCC_K>false</DCC_K>
         <GenDll>true</GenDll>
         <DCC_OutputNeverBuildDcps>true</DCC_OutputNeverBuildDcps>
-        <DCC_DcpOutput>$(DLib)\$(Platform)\DCP</DCC_DcpOutput>
+        <DCC_DcpOutput>$(DLib)\$(Platform)\$(Config)</DCC_DcpOutput>
         <DCC_DcuOutput>$(DLib)\$(Platform)\$(Config)</DCC_DcuOutput>
         <GenPackage>true</GenPackage>
         <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
@@ -120,7 +120,6 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <VerInfo_MajorVer>1</VerInfo_MajorVer>
-        <VerInfo_Build>0</VerInfo_Build>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <VerInfo_Release>0</VerInfo_Release>
@@ -144,7 +143,6 @@
         <DCCReference Include="vcldb.dcp"/>
         <DCCReference Include="bdertl.dcp"/>
         <DCCReference Include="inet.dcp"/>
-        <DCCReference Include="XPLibD20.dcp"/>
         <DCCReference Include="OPLibD20.dcp"/>
         <DCCReference Include="StFLibD20.dcp"/>
         <DCCReference Include="HTMLData.pas"/>
@@ -216,12 +214,7 @@
                     <VersionInfoKeys Name="ProductVersion">7.0.2005.2</VersionInfoKeys>
                     <VersionInfoKeys Name="Comments">Rogerlais Andrade</VersionInfoKeys>
                 </VersionInfoKeys>
-                <Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\bcboffice2k200.bpl">Embarcadero C++Builder Office 2000 Servers Package</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\bcbofficexp200.bpl">Embarcadero C++Builder Office XP Servers Package</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k200.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp200.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
-                </Excluded_Packages>
+                <Excluded_Packages/>
             </Delphi.Personality>
             <Platforms>
                 <Platform value="Android">False</Platform>

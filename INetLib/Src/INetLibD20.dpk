@@ -35,13 +35,12 @@ requires
   vcldb,
   bdertl,
   inet,
-  XPLibD20,
   OPLibD20,
   StFLibD20;
 
 contains
   HTMLData in 'HTMLData.pas',
-  HTMLWRTR in 'HTMLWrtr.pas',
+  HTMLWrtr in 'HTMLWrtr.pas',
   IHTML4 in 'IHTML4.pas',
   IHTMLPas in 'IHTMLPas.pas',
   IHTMLDir in 'IHTMLDir.pas',

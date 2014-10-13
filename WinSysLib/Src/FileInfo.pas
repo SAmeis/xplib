@@ -197,7 +197,7 @@ procedure Register;
 implementation
 
 uses
-	Str_Pas, StrConverters;
+	Str_Pas, XP.StrConverters;
 
 function TCustomFileVersionInfo.GetComments: string;
 { ------------------------------------------------------------------------------------------------------------- }
