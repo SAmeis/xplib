@@ -27,7 +27,7 @@ object AppLogDemoFrm: TAppLogDemoFrm
     Left = 264
     Top = 136
     Width = 75
-    Height = 25
+    Height = 21
     Caption = 'Log'
     TabOrder = 1
     OnClick = LogBtnClick
@@ -36,7 +36,7 @@ object AppLogDemoFrm: TAppLogDemoFrm
     Left = 264
     Top = 168
     Width = 75
-    Height = 25
+    Height = 21
     Caption = 'Commit'
     Enabled = False
     TabOrder = 2
@@ -69,7 +69,7 @@ object AppLogDemoFrm: TAppLogDemoFrm
     Left = 263
     Top = 199
     Width = 75
-    Height = 25
+    Height = 21
     Caption = 'btnMultiSz'
     TabOrder = 5
     OnClick = btnMultiSzClick

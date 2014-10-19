@@ -61,7 +61,7 @@ object FormWinRegDemo: TFormWinRegDemo
     Left = 32
     Top = 160
     Width = 82
-    Height = 25
+    Height = 21
     Caption = 'Chave Existe?'
     TabOrder = 3
     OnClick = BtnKeyExistsClick

@@ -1,9 +1,9 @@
 object MasterDemoFrm: TMasterDemoFrm
   Left = 207
   Top = 198
-  Width = 783
-  Height = 540
   Caption = 'XPLibDemo Application'
+  ClientHeight = 502
+  ClientWidth = 767
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,7 +17,7 @@ object MasterDemoFrm: TMasterDemoFrm
     Left = 32
     Top = 32
     Width = 97
-    Height = 25
+    Height = 21
     Caption = 'CtrlsHnd Demo'
     TabOrder = 0
     OnClick = Button1Click
@@ -26,7 +26,7 @@ object MasterDemoFrm: TMasterDemoFrm
     Left = 152
     Top = 32
     Width = 89
-    Height = 25
+    Height = 21
     Caption = 'AppLogDemo'
     TabOrder = 1
     OnClick = Button2Click
@@ -35,7 +35,7 @@ object MasterDemoFrm: TMasterDemoFrm
     Left = 264
     Top = 32
     Width = 75
-    Height = 25
+    Height = 21
     Caption = 'FileHndDemo'
     TabOrder = 2
     OnClick = BtnFileHndClick
@@ -44,7 +44,7 @@ object MasterDemoFrm: TMasterDemoFrm
     Left = 360
     Top = 32
     Width = 75
-    Height = 25
+    Height = 21
     Caption = 'WinRegDemo'
     TabOrder = 3
     OnClick = BtnWinRegClick

@@ -118,6 +118,7 @@
         <DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
+        <DCC_OutputXMLDocumentation>true</DCC_OutputXMLDocumentation>
         <VerInfo_Release>0</VerInfo_Release>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_MajorVer>1</VerInfo_MajorVer>
@@ -143,10 +144,10 @@
         <DCCReference Include="designide.dcp"/>
         <DCCReference Include="vclactnband.dcp"/>
         <DCCReference Include="Super.pas"/>
-        <DCCReference Include="BinHnd.PAS"/>
+        <DCCReference Include="BinHnd.pas"/>
         <DCCReference Include="Str_Pas.pas"/>
-        <DCCReference Include="Cripto.pas"/>
-        <DCCReference Include="Dateoper.pas"/>
+        <DCCReference Include="cripto.pas"/>
+        <DCCReference Include="DateOper.pas"/>
         <DCCReference Include="CtrlsHnd.pas"/>
         <DCCReference Include="FileHnd.pas"/>
         <DCCReference Include="Str_Null.pas"/>
@@ -235,7 +236,13 @@
                     <VersionInfoKeys Name="ProductVersion">7.2.2005.2</VersionInfoKeys>
                     <VersionInfoKeys Name="Comments">Rogerlais Andrade</VersionInfoKeys>
                 </VersionInfoKeys>
-                <Excluded_Packages/>
+                <Excluded_Packages>
+                    <Excluded_Packages Name="C:\SW\WorkDir\Lib\BDS\Win32\Release\BDELibD20.bpl">3E - BDE-Lib - RS-XE6</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\bcboffice2k200.bpl">Embarcadero C++Builder Office 2000 Servers Package</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\bcbofficexp200.bpl">Embarcadero C++Builder Office XP Servers Package</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k200.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp200.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                </Excluded_Packages>
             </Delphi.Personality>
             <ModelSupport>False</ModelSupport>
             <Platforms>

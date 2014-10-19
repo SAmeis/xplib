@@ -32,7 +32,7 @@ implementation
 {$R *.dfm}
 
 uses
-    WinReg32;
+    WinReg32, System.UITypes;
 
 
 function TFormWinRegDemo.GetPrimaryArgument : string;

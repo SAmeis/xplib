@@ -1,9 +1,9 @@
 object FileHndDemoForm: TFileHndDemoForm
   Left = 257
   Top = 151
-  Width = 870
-  Height = 640
   Caption = 'FileHndDemoForm'
+  ClientHeight = 602
+  ClientWidth = 854
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

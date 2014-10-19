@@ -11,8 +11,7 @@ uses
   WinReg32 in '..\..\Src\WinReg32.pas',
   TestCtrlsHnd in 'CtrlsHnd\TestCtrlsHnd.pas' {CtrlsHndDemoFrm},
   AppLogDemoForm in 'AppLog\AppLogDemoForm.pas' {AppLogDemoFrm},
-  XPTypes in '..\..\Src\XPTypes.pas',
-  Registry in 'c:\program files\embarcadero\rad studio\7.0\source\Win32\rtl\common\Registry.pas';
+  XPTypes in '..\..\Src\XPTypes.pas';
 
 {$R *.res}
 

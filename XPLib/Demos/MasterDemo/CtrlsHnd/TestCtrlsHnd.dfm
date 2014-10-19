@@ -79,7 +79,8 @@ object CtrlsHndDemoFrm: TCtrlsHndDemoFrm
     Top = 200
     Width = 75
     Height = 25
-    TabOrder = 4
     Kind = bkClose
+    NumGlyphs = 2
+    TabOrder = 4
   end
 end

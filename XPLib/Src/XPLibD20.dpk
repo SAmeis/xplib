@@ -41,10 +41,10 @@ requires
 
 contains
   Super in 'Super.pas',
-  BinHnd in 'BinHnd.PAS',
+  BinHnd in 'BinHnd.pas',
   Str_Pas in 'Str_Pas.pas',
-  Cripto in 'Cripto.pas',
-  Dateoper in 'Dateoper.pas',
+  cripto in 'cripto.pas',
+  DateOper in 'DateOper.pas',
   CtrlsHnd in 'CtrlsHnd.pas',
   FileHnd in 'FileHnd.pas',
   Str_Null in 'Str_Null.pas',

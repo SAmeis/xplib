@@ -159,7 +159,14 @@ function LastDateNotWeekendOfMonth(Month: Word; Year: Word): TDateTime; overload
 function MonthIncrement(ADate: TDateTime; nM: Word): TDateTime;
 // Retorna o conjunto de meses da mascara dada
 function MonthsFromBitMask(Mask: Integer; StartMonth: TMonthEnum = meJan): TMonthSet;
-// Monta mascara de bits dado o conjunto de meses
+/// <summary> Monta mascara de bits dado o conjunto de meses <bold>Esta rotina precisa de melhor documentação</bold>
+/// </summary>
+/// <param name="Months">Meses que pertencem ao conjunto de interesse
+/// </param>
+/// <param name="StartMonth">Mês de offset da operação
+/// </param>
+/// <returns>Valor inteiro mascarado em bits dos meses do conjunto
+/// </returns>
 function MonthsToBitMask(Months: TMonthSet; StartMonth: TMonthEnum = meJan): Integer;
 // Monta lista com o meses incluidos em Months
 function MonthEnumListNames(Months: TMonthSet): string;
@@ -332,13 +339,6 @@ begin
   end;
 end;
 
-/// <summary>
-/// Monta mascara de bits dado o conjunto de meses
-/// <bold>Esta rotina precisa de melhor documentação</bold>
-/// </summary>
-/// <param name="Months">Meses que pertencem ao conjunto de interesse</param>
-/// <param name="StartMonth">Mês de offset da operação</param>
-/// <returns>Valor inteiro mascarado em bits dos meses do conjunto</returns>
 function MonthsToBitMask(Months: TMonthSet; StartMonth: TMonthEnum = meJan): Integer;
 var
   I: TMonthEnum;
@@ -970,10 +970,11 @@ begin
 end;
 
 class function TTimeConvert.DateTimeToLocalDateTime(const DateTime: TDateTime): TDateTime;
+/// <remarks>
+   /// Ajusta a hora absoluta para o valor gmt local.
+   /// </remarks>
 { {
-  Ajusta a hora absoluta para o valor gmt local.
-
-  Revision: 30/11/2005 - Roger
+ Revision: 30/11/2005 - Roger
 }
 var
   TimeZoneInfo: TTimeZoneInformation;
