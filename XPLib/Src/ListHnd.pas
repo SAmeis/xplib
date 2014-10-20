@@ -3,10 +3,6 @@
 {$ENDIF}
 {$I XPLib.inc}
 
-{TODO -oroger -cFUTURE : Remover desativação dos alertas abaixo para unit inteira}
-{$WARN UNSAFE_CODE OFF}
-{$WARN UNSAFE_CAST OFF}
-
 unit ListHnd;
 
 { {
@@ -23,88 +19,88 @@ unit ListHnd;
 interface
 
 uses
-  Windows, Classes, SysUtils, IniFiles;
+	Windows, Classes, SysUtils, IniFiles;
 
 type
-  TReferenceType = (rtStruct, rtClass);
+	TReferenceType = (rtStruct, rtClass);
 
-  TContainerList = class(TList)
-  protected
-	FRefType: TReferenceType;
-  public
-	constructor Create(RefType: TReferenceType);
-	destructor Destroy; override;
-	procedure Clear; override;
-	procedure Delete(Index: integer);
-	procedure Move(CurIndex, NewIndex: integer);
-	function Remove(Item: Pointer): integer;
-  end;
+	TContainerList = class(TList)
+	protected
+		FRefType: TReferenceType;
+	public
+		constructor Create(RefType: TReferenceType);
+		destructor Destroy; override;
+		procedure Clear; override;
+		procedure Delete(Index: integer);
+		procedure Move(CurIndex, NewIndex: integer);
+		function Remove(Item: Pointer): integer;
+	end;
 
-  PPIdString = ^PIdString;
-  PIdString  = ^TIdString;
+	PPIdString = ^PIdString;
+	PIdString  = ^TIdString;
 
-  TIdString = record
-	ID: integer;
-	Value: string;
-  end;
+	TIdString = record
+		ID: integer;
+		Value: string;
+	end;
 
-  TValueList = class(TObject)
-	{ {
-	  Classe para armazenar valores de strings vinculadas a numeros inteiros.
-	}
-  private
-	FBlockSize: word;
-	FCapacity: integer;
-	FCount: integer;
-	FPointers: PPIdString;
-	procedure CheckCapacity;
-  public
-	constructor Create(BlockSize: word = 10);
-	destructor Destroy; override;
-	procedure Clear;
-	function Delete(ID: integer): boolean;
-	function Exists(ID: integer): boolean;
-	function Insert(ID: integer; const Value: string): boolean;
-	function Value(ID: integer): string;
-  published
-	property Capacity: integer read FCapacity;
-	property Count: integer read FCount;
-  end;
+	TValueList = class(TObject)
+		{ {
+		  Classe para armazenar valores de strings vinculadas a numeros inteiros.
+		}
+	private
+		FBlockSize: word;
+		FCapacity : integer;
+		FCount    : integer;
+		FPointers : PPIdString;
+		procedure CheckCapacity;
+	public
+		constructor Create(BlockSize: word = 10);
+		destructor Destroy; override;
+		procedure Clear;
+		function Delete(ID: integer): boolean;
+		function Exists(ID: integer): boolean;
+		function Insert(ID: integer; const Value: string): boolean;
+		function Value(ID: integer): string;
+	published
+		property Capacity: integer read FCapacity;
+		property Count   : integer read FCount;
+	end;
 
-  TListHnd = class
-  public
-	class function HasDupItems(List: TList): boolean;
-	class procedure InvertOrder(List: TList);
-  end;
+	TListHnd = class
+	public
+		class function HasDupItems(List: TList): boolean;
+		class procedure InvertOrder(List: TList);
+	end;
 
-  TStringsHnd = class
-  public
-	class procedure AddIdentMapEntriesIndex(Strings: TStrings; Items: array of TIdentMapEntry);
-	class procedure LoadIdentMapEntriesIndex(Strings: TStrings; Items: array of TIdentMapEntry);
-	class procedure AddIdentMapEntries(Strings: TStrings; Items: array of TIdentMapEntry);
-	class procedure LoadIdentMapEntries(Strings: TStrings; Items: array of TIdentMapEntry);
-  end;
+	TStringsHnd = class
+	public
+		class procedure AddIdentMapEntriesIndex(Strings: TStrings; Items: array of TIdentMapEntry);
+		class procedure LoadIdentMapEntriesIndex(Strings: TStrings; Items: array of TIdentMapEntry);
+		class procedure AddIdentMapEntries(Strings: TStrings; Items: array of TIdentMapEntry);
+		class procedure LoadIdentMapEntries(Strings: TStrings; Items: array of TIdentMapEntry);
+	end;
 
-  TNamedObjectList = class
-  private
-	FList: THashedStringList;
-	FOwnedObjects: boolean;
-	function GetObjects(const Name: string): TObject;
-	function GetItems(Index: integer): TObject;
-	function GetNames(Index: integer): string;
-	function GetCount: integer;
-  public
-	constructor Create(AOwnedObjects: boolean = False); virtual;
-	destructor Destroy; override;
-	procedure Add(const AName: string; Obj: TObject);
-	procedure Remove(const AName: string);
-	procedure Extract(const AName: string);
-	property Items[index: integer]: TObject read GetItems;
-	property Objects[const name: string]: TObject read GetObjects;
-	property Names[index: integer]: string read GetNames;
-	property OwnedObjects: boolean read FOwnedObjects write FOwnedObjects;
-	property Count: integer read GetCount;
-  end;
+	TNamedObjectList = class
+	private
+		FList        : THashedStringList;
+		FOwnedObjects: boolean;
+		function GetObjects(const Name: string): TObject;
+		function GetItems(Index: integer): TObject;
+		function GetNames(Index: integer): string;
+		function GetCount: integer;
+	public
+		constructor Create(AOwnedObjects: boolean = False); virtual;
+		destructor Destroy; override;
+		procedure Add(const AName: string; Obj: TObject);
+		procedure Remove(const AName: string);
+		procedure Extract(const AName: string);
+		property Items[index: integer]: TObject read GetItems;
+		property Objects[const name: string]: TObject read GetObjects;
+		property Names[index: integer]: string read GetNames;
+		property OwnedObjects: boolean read FOwnedObjects write FOwnedObjects;
+		property Count: integer read GetCount;
+	end;
 
 implementation
 
@@ -121,93 +117,98 @@ implementation
 { -------------------------------------------------------------------------------------------------------------------------------- }
 constructor TContainerList.Create(RefType: TReferenceType);
 begin
-  FRefType := RefType;
-  inherited Create;
+	FRefType := RefType;
+	inherited Create;
 end;
 
 { -------------------------------------------------------------------------------------------------------------------------------- }
 destructor TContainerList.Destroy;
 begin
-  Clear;
-  inherited;
+	Clear;
+	inherited;
 end;
 
 { -------------------------------------------------------------------------------------------------------------------------------- }
 procedure TContainerList.Clear;
 var
-  i: integer;
+	i: integer;
 begin
-  for i := Count - 1 downto 0 do begin
-	Delete(i);
-  end;
-  inherited;
+	for i := Count - 1 downto 0 do begin
+		Delete(i);
+	end;
+	inherited;
 end;
 
 { -------------------------------------------------------------------------------------------------------------------------------- }
 procedure TContainerList.Delete(Index: integer);
 begin
-  if Items[index] <> nil then begin
-	if FRefType = rtClass then begin
-	  TObject(Items[index]).Free;
-	end else begin
-	  if FRefType = rtStruct then begin
-		Dispose(Items[index]);
-	  end;
+	if Items[index] <> nil then begin
+		if FRefType = rtClass then begin
+        	{$WARN UNSAFE_CAST OFF}
+			TObject(Items[index]).Free;
+            {$WARN UNSAFE_CAST ON}
+		end else begin
+			if FRefType = rtStruct then begin
+				Dispose(Items[index]);
+			end;
+		end;
 	end;
-  end;
-  inherited;
+	inherited;
 end;
 
 { -------------------------------------------------------------------------------------------------------------------------------- }
 procedure TContainerList.Move(CurIndex, NewIndex: integer);
 begin
-  if Items[NewIndex] <> nil then begin
-	if FRefType = rtClass then begin
-	  TObject(Items[NewIndex]).Free;
-	end else begin
-	  if FRefType = rtStruct then begin
-		Dispose(Items[NewIndex]);
-	  end;
+	{$WARN UNSAFE_CAST OFF}
+	if Items[NewIndex] <> nil then begin
+		if FRefType = rtClass then begin
+			TObject(Items[NewIndex]).Free;
+		end else begin
+			if FRefType = rtStruct then begin
+				Dispose(Items[NewIndex]);
+			end;
+		end;
 	end;
-  end;
-  inherited;
+	inherited;
 end;
 
 { -------------------------------------------------------------------------------------------------------------------------------- }
 function TContainerList.Remove(Item: Pointer): integer;
 
 type
-  PPointer = ^Pointer;
+	PPointer = ^Pointer;
 var
-  pArray: Pointer;
-  p: PPointer; // p is a pointer to memory that contains a pointer. Confusing?
-  i: integer;
+	pArray: Pointer;
+	p     : PPointer; //p is a pointer to memory that contains a pointer. Confusing?
+	i     : integer;
 
 begin
-  GetMem(pArray, Count * SizeOf(Pointer));
-  try
-	p := pArray;
-	for i := 0 to Count - 1 do begin
-	  Inc(p, i);
-	  p^ := Items[i];
-	end;
-	Result := inherited Remove(Item);
-	if Result >= 0 then begin
-	  p := pArray;
-	  Inc(p, Result);
-	  if p^ <> nil then begin
-		if FRefType = rtClass then begin
-		  TObject(p^).Free;
-		end else begin
-		  if FRefType = rtStruct then begin
-			Dispose(p^);
-		  end;
+	pArray:=GetMemory(Count * SizeOf(Pointer));
+	try
+    	{$WARN UNSAFE_CODE OFF}
+		p     := pArray;
+		for i := 0 to Count - 1 do begin
+			Inc(p, i);
+			p^ := Items[i];
 		end;
-	  end;
+		Result := inherited Remove(Item);
+		if Result >= 0 then begin
+			p := pArray;
+			Inc(p, Result);
+			if p^ <> nil then begin
+				if FRefType = rtClass then begin
+					TObject(p^).Free;
+				end else begin
+					if FRefType = rtStruct then begin
+						Dispose(p^);
+					end;
+				end;
+			end;
+		end;
+	finally
+		FreeMemory(pArray);
 	end;
-  finally
-	FreeMem(pArray);
-  end;
+    {$WARN UNSAFE_CODE ON}
 end;
 
 { TValueList }
@@ -226,11 +227,11 @@ constructor TValueList.Create(BlockSize: word = 10);
   Constructor que recebe o tamanho do bloco a ser alocado, um valor sugerido é 10.
 }
 begin
-  inherited Create;
-  FBlockSize := BlockSize;
-  if FBlockSize = 0 then begin
-	Inc(FBlockSize);
-  end;
+	inherited Create;
+	FBlockSize := BlockSize;
+	if FBlockSize = 0 then begin
+		Inc(FBlockSize);
+	end;
 end;
 
 { -------------------------------------------------------------------------------------------------------------------------------- }
@@ -241,9 +242,9 @@ destructor TValueList.Destroy;
   Chama Clear() e libera a memoria da lista
 }
 begin
-  Clear;
-  ReallocMem(FPointers, 0);
-  inherited;
+	Clear;
+	FPointers:=ReallocMemory(FPointers, 0);
+	inherited;
 end;
 
 { -------------------------------------------------------------------------------------------------------------------------------- }
@@ -255,14 +256,14 @@ procedure TValueList.CheckCapacity;
 
 }
 begin
-  if FCount <= (FCapacity - FBlockSize) then begin
-	if (FCount mod FBlockSize) > 0 then begin
-	  FCapacity := ((FCount div FBlockSize) + 1) * FBlockSize;
-	end else begin
-	  FCapacity := FCount;
+	if FCount <= (FCapacity - FBlockSize) then begin
+		if (FCount mod FBlockSize) > 0 then begin
+			FCapacity := ((FCount div FBlockSize) + 1) * FBlockSize;
+		end else begin
+			FCapacity := FCount;
+		end;
+		FPointers:=ReallocMemory(FPointers, FCapacity * SizeOf(PPIdString));
 	end;
-	ReallocMem(FPointers, FCapacity * SizeOf(PPIdString));
-  end;
 end;
 
 { -------------------------------------------------------------------------------------------------------------------------------- }
@@ -271,15 +272,17 @@ procedure TValueList.Clear;
   Limpa TODAS as entradas da lista e chama CheckCapacity() ao final
 }
 var
-  p: PPIdString;
+	p: PPIdString;
 begin
-  p := FPointers;
-  while FCount > 0 do begin
-	Dispose(p^);
-	Inc(p);
-	Dec(FCount);
-  end;
-  CheckCapacity;
+	p := FPointers;
+	while FCount > 0 do begin
+    	{$WARN UNSAFE_CODE OFF}
+		Dispose(p^);
+        {$WARN UNSAFE_CODE ON}
+		Inc(p);
+		Dec(FCount);
+	end;
+	CheckCapacity;
 end;
 
 { -------------------------------------------------------------------------------------------------------------------------------- }
@@ -288,25 +291,27 @@ function TValueList.Delete(ID: integer): boolean;
   Realiza a busca da entrada com o identificador passado e o remove da lista
 }
 var
-  i, j: integer;
-  p: PPIdString;
+	i, j: integer;
+	p   : PPIdString;
 begin
-  p := FPointers;
-  Result := False;
-  for i := 0 to FCount - 1 do begin
-	if p^^.ID = ID then begin
-	  Dispose(p^);
-	  Dec(FCount);
-	  for j := i to FCount - 1 do begin
-		p^ := PPIdString(DWORD(p) + SizeOf(PPIdString))^;
+	{$WARN UNSAFE_CODE OFF}
+	p      := FPointers;
+	Result := False;
+	for i  := 0 to FCount - 1 do begin
+		if p^^.ID = ID then begin
+			Dispose(p^);
+			Dec(FCount);
+			for j  := i to FCount - 1 do begin
+				p^ := PPIdString(DWORD(p) + SizeOf(PPIdString))^;
+				Inc(p);
+			end;
+			Result := True;
+			Break;
+		end;
 		Inc(p);
-	  end;
-	  Result := True;
-	  Break;
 	end;
-	Inc(p);
-  end;
-  CheckCapacity;
+	CheckCapacity;
+    {$WARN UNSAFE_CODE ON}
 end;
 
 { -------------------------------------------------------------------------------------------------------------------------------- }
@@ -315,18 +320,20 @@ function TValueList.Exists(ID: integer): boolean;
   Verifica se existe valor associado ao identificador dado
 }
 var
-  i: integer;
-  p: PPIdString;
+	i: integer;
+	p: PPIdString;
 begin
-  p := FPointers;
-  Result := False;
-  for i := 0 to FCount - 1 do begin
-	if p^^.ID = ID then begin
-	  Result := True;
-	  Break;
+	{$WARN UNSAFE_CODE OFF}
+	p      := FPointers;
+	Result := False;
+	for i  := 0 to FCount - 1 do begin
+		if p^^.ID = ID then begin
+			Result := True;
+			Break;
+		end;
+		Inc(p);
 	end;
-	Inc(p);
-  end;
+    {$WARN UNSAFE_CODE ON}
 end;
 
 { -------------------------------------------------------------------------------------------------------------------------------- }
@@ -335,21 +342,23 @@ function TValueList.Insert(ID: integer; const Value: string): boolean;
   Insere um valor associado ao identificador passado
 }
 var
-  p: PPIdString;
+	p: PPIdString;
 begin
-  Result := not Exists(ID);
-  if Result then begin
-	if FCount >= FCapacity then begin
-	  ReallocMem(FPointers, (FCapacity + FBlockSize) * SizeOf(PPIdString));
-	  Inc(FCapacity, FBlockSize);
+	{$WARN UNSAFE_CODE OFF}
+	Result := not Exists(ID);
+	if Result then begin
+		if FCount >= FCapacity then begin
+			ReallocMem(FPointers, (FCapacity + FBlockSize) * SizeOf(PPIdString));
+			Inc(FCapacity, FBlockSize);
+		end;
+		p := FPointers;
+		Inc(p, FCount);
+		new(p^);
+		p^^.ID    := ID;
+		p^^.Value := Value;
+		Inc(FCount);
 	end;
-	p := FPointers;
-	Inc(p, FCount);
-	new(p^);
-	p^^.ID := ID;
-	p^^.Value := Value;
-	Inc(FCount);
-  end;
+	{$WARN UNSAFE_CODE ON}
 end;
 
 { -------------------------------------------------------------------------------------------------------------------------------- }
@@ -358,18 +367,20 @@ function TValueList.Value(ID: integer): string;
   Recupera o valor associado ao identificador dado, Se este nao existir EmptyStr sera retornado
 }
 var
-  i: integer;
-  p: PPIdString;
+	i: integer;
+	p: PPIdString;
 begin
-  p := FPointers;
-  Result := EmptyStr;
-  for i := 0 to FCount - 1 do begin
-	if p^^.ID = ID then begin
-	  Result := p^^.Value;
-	  Break;
+	{$WARN UNSAFE_CODE OFF}
+	p      := FPointers;
+	Result := EmptyStr;
+	for i  := 0 to FCount - 1 do begin
+		if p^^.ID = ID then begin
+			Result := p^^.Value;
+			Break;
+		end;
+		Inc(p);
 	end;
-	Inc(p);
-  end;
+    {$WARN UNSAFE_CODE ON}
 end;
 
 { TListHnd }
@@ -379,21 +390,21 @@ class function TListHnd.HasDupItems(List: TList): boolean;
   Identifica se existe elementos duplicados na lista.
 }
 var
-  c, i: integer;
-  Item: Pointer;
+	c, i: integer;
+	Item: Pointer;
 begin
-  Result := False;
-  c := 0;
-  while c < List.Count do begin
-	Item := List.Items[c];
-	for i := (c + 1) to List.Count - 1 do begin
-	  if (Item = List.Items[i]) then begin
-		Result := True;
-		Exit;
-	  end;
+	Result := False;
+	c      := 0;
+	while c < List.Count do begin
+		Item  := List.Items[c];
+		for i := (c + 1) to List.Count - 1 do begin
+			if (Item = List.Items[i]) then begin
+				Result := True;
+				Exit;
+			end;
+		end;
+		Inc(c);
 	end;
-	Inc(c);
-  end;
 end;
 
 class procedure TListHnd.InvertOrder(List: TList);
@@ -401,15 +412,15 @@ class procedure TListHnd.InvertOrder(List: TList);
   Inverte a ordem dos elementos de um TList
 }
 var
-  LIndex, RIndex: integer;
+	LIndex, RIndex: integer;
 begin
-  LIndex := 0;
-  RIndex := List.Count - 1;
-  while (RIndex > LIndex) do begin
-	List.Exchange(LIndex, RIndex);
-	Inc(LIndex);
-	Dec(RIndex);
-  end;
+	LIndex := 0;
+	RIndex := List.Count - 1;
+	while (RIndex > LIndex) do begin
+		List.Exchange(LIndex, RIndex);
+		Inc(LIndex);
+		Dec(RIndex);
+	end;
 end;
 
 class procedure TStringsHnd.AddIdentMapEntries(Strings: TStrings; Items: array of TIdentMapEntry);
@@ -421,16 +432,16 @@ class procedure TStringsHnd.AddIdentMapEntries(Strings: TStrings; Items: array o
   Revision: 7/4/2006 - Roger
 }
 var
-  i: integer;
+	i: integer;
 begin
-  Strings.BeginUpdate;
-  try
-	for i := low(Items) to high(Items) do begin
-	  Strings.Add(Items[i].Name);
+	Strings.BeginUpdate;
+	try
+		for i := low(Items) to high(Items) do begin
+			Strings.Add(Items[i].Name);
+		end;
+	finally
+		Strings.EndUpdate;
 	end;
-  finally
-	Strings.EndUpdate;
-  end;
 end;
 
 class procedure TStringsHnd.AddIdentMapEntriesIndex(Strings: TStrings; Items: array of TIdentMapEntry);
@@ -443,16 +454,16 @@ class procedure TStringsHnd.AddIdentMapEntriesIndex(Strings: TStrings; Items: ar
   Revision: 7/4/2006 - Roger
 }
 var
-  i: integer;
+	i: integer;
 begin
-  Strings.BeginUpdate;
-  try
-	for i := low(Items) to high(Items) do begin
-	  Strings.AddObject(Items[i].Name, TObject(i));
+	Strings.BeginUpdate;
+	try
+		for i := low(Items) to high(Items) do begin
+			Strings.AddObject(Items[i].Name, TObject(i));
+		end;
+	finally
+		Strings.EndUpdate;
 	end;
-  finally
-	Strings.EndUpdate;
-  end;
 end;
 
 class procedure TStringsHnd.LoadIdentMapEntries(Strings: TStrings; Items: array of TIdentMapEntry);
@@ -464,16 +475,16 @@ class procedure TStringsHnd.LoadIdentMapEntries(Strings: TStrings; Items: array 
   Revision: 7/4/2006 - Roger
 }
 var
-  i: integer;
+	i: integer;
 begin
-  Strings.BeginUpdate;
-  try
-	for i := low(Items) to high(Items) do begin
-	  Strings.Add(Items[i].Name);
+	Strings.BeginUpdate;
+	try
+		for i := low(Items) to high(Items) do begin
+			Strings.Add(Items[i].Name);
+		end;
+	finally
+		Strings.EndUpdate;
 	end;
-  finally
-	Strings.EndUpdate;
-  end;
 end;
 
 class procedure TStringsHnd.LoadIdentMapEntriesIndex(Strings: TStrings; Items: array of TIdentMapEntry);
@@ -486,22 +497,22 @@ class procedure TStringsHnd.LoadIdentMapEntriesIndex(Strings: TStrings; Items: a
   Revision: 7/4/2006 - Roger
 }
 var
-  i: integer;
+	i: integer;
 begin
-  Strings.BeginUpdate;
-  try
-	Strings.Clear;
-	for i := low(Items) to high(Items) do begin
-	  Strings.AddObject(Items[i].Name, TObject(i));
+	Strings.BeginUpdate;
+	try
+		Strings.Clear;
+		for i := low(Items) to high(Items) do begin
+			Strings.AddObject(Items[i].Name, TObject(i));
+		end;
+	finally
+		Strings.EndUpdate;
 	end;
-  finally
-	Strings.EndUpdate;
-  end;
 end;
 
 procedure TNamedObjectList.Add(const AName: string; Obj: TObject);
 begin
-  Self.FList.AddObject(AName, Obj);
+	Self.FList.AddObject(AName, Obj);
 end;
 
 constructor TNamedObjectList.Create(AOwnedObjects: boolean = False);
@@ -511,9 +522,9 @@ constructor TNamedObjectList.Create(AOwnedObjects: boolean = False);
   Revision: 17/4/2006 - Roger
 }
 begin
-  inherited Create;
-  Self.FList := THashedStringList.Create;
-  Self.FList.Duplicates := dupError;
+	inherited Create;
+	Self.FList            := THashedStringList.Create;
+	Self.FList.Duplicates := dupError;
 end;
 
 destructor TNamedObjectList.Destroy;
@@ -523,14 +534,14 @@ destructor TNamedObjectList.Destroy;
   Revision: 17/4/2006 - Roger
 }
 var
-  i: integer;
+	i: integer;
 begin
-  if (Self.FOwnedObjects) then begin
-	for i := 0 to Self.FList.Count - 1 do begin
-	  Self.FList.Objects[i].Free;
+	if (Self.FOwnedObjects) then begin
+		for i := 0 to Self.FList.Count - 1 do begin
+			Self.FList.Objects[i].Free;
+		end;
 	end;
-  end;
-  inherited;
+	inherited;
 end;
 
 procedure TNamedObjectList.Extract(const AName: string);
@@ -540,17 +551,17 @@ procedure TNamedObjectList.Extract(const AName: string);
   Revision: 17/4/2006 - Roger
 }
 var
-  p: integer;
+	p: integer;
 begin
-  p := Self.FList.IndexOf(AName);
-  if (p > 0) then begin
-	Self.FList.Delete(p);
-  end;
+	p := Self.FList.IndexOf(AName);
+	if (p > 0) then begin
+		Self.FList.Delete(p);
+	end;
 end;
 
 function TNamedObjectList.GetCount: integer;
 begin
-  Result := Self.FList.Count;
+	Result := Self.FList.Count;
 end;
 
 function TNamedObjectList.GetItems(Index: integer): TObject;
@@ -560,7 +571,7 @@ function TNamedObjectList.GetItems(Index: integer): TObject;
   Revision: 17/4/2006 - Roger
 }
 begin
-  Result := Self.FList.Objects[index];
+	Result := Self.FList.Objects[index];
 end;
 
 function TNamedObjectList.GetNames(Index: integer): string;
@@ -570,7 +581,7 @@ function TNamedObjectList.GetNames(Index: integer): string;
   Revision: 17/4/2006 - Roger
 }
 begin
-  Result := Self.FList.Strings[index];
+	Result := Self.FList.Strings[index];
 end;
 
 function TNamedObjectList.GetObjects(const Name: string): TObject;
@@ -580,14 +591,14 @@ function TNamedObjectList.GetObjects(const Name: string): TObject;
   Revision: 17/4/2006 - Roger
 }
 var
-  p: integer;
+	p: integer;
 begin
-  p := Self.FList.IndexOf(name);
-  if (p >= 0) then begin
-	Result := Self.FList.Objects[p];
-  end else begin
-	Result := nil;
-  end;
+	p := Self.FList.IndexOf(name);
+	if (p >= 0) then begin
+		Result := Self.FList.Objects[p];
+	end else begin
+		Result := nil;
+	end;
 end;
 
 procedure TNamedObjectList.Remove(const AName: string);
@@ -598,14 +609,14 @@ procedure TNamedObjectList.Remove(const AName: string);
   Revision: 17/4/2006 - Roger
 }
 var
-  Item: TObject;
+	Item: TObject;
 begin
-  if Self.FOwnedObjects then begin
-	Item := Self.Objects[AName];
-	if (Assigned(Item)) then begin
-	  Item.Free;
+	if Self.FOwnedObjects then begin
+		Item := Self.Objects[AName];
+		if (Assigned(Item)) then begin
+			Item.Free;
+		end;
 	end;
-  end;
 end;
 
 end.

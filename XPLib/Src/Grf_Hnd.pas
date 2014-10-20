@@ -351,7 +351,6 @@ var
   H, W: integer;
   C: TPoint;
 begin
-  { TODO -oRoger -cLIB : Adaptar para responder ao centro fixo }
   H := Trunc((Rect.Bottom - Rect.Top) * ScaleY);
   W := Trunc((Rect.Right - Rect.Left) * ScaleX);
   if FixedCenter then begin

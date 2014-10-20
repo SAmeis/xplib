@@ -11,8 +11,6 @@ unit DOS2UNIX deprecated 'Sem utilidade prática agora';
 
 interface
 
-{TODO -oroger -cFUTURE : Remover os warnings desta unit além de deslocá-la para outro lugar, bem como, atualizar seu código para uso das novas classes }
-
 uses Windows, Classes, SysUtils;
 
 type

@@ -281,7 +281,6 @@ type
 		///<param name="Mask">Máscara da busca</param>
 		///<returns>Nome completo do arquivo encontrado que atenda ao pedido</returns>
 		class function FirstOccurrence(const Path, Mask: string): string;
-
 		///<summary>
 		///Garante que o nome do arquivo finalizará com a extensão desejada
 		///</summary>
@@ -294,8 +293,23 @@ type
 		///SysUtils.ChangeFileExt()
 		///</remarks>
 		class function ForceFileExtension(const OriginalName, DesiredExtension: string): string;
+		///<summary>
+		///Garante a existencia de um arquivo com o nome especificado.
+		///Para o caso do arquivo não exisitir ele se´ra criado vazio, bem como a árvore de diretorios necessarios.
+		///</summary>
+		///<param name="FileName">nome do arquivo desejado.</param>
 		class procedure ForceFilename(const FileName: string);
+		///<summary>
+		///Retorna o caminho mais profundo válido. Caso não exista nem mesmo o raiz do caminho passado o home_dir é retornado.
+		///</summary>
+		///<param name="Path">Máximo caminho desejado</param>
+		///<returns>Máximo caminho criado, geralmente o mesmo passado, a menos que não se possa cria-lo</returns>
 		class function DeepExistingPath(const Path: string): string;
+		///<summary>
+		///Extrai apenas o nome do arquivo desconsiderando inclusive a extensão do mesmo
+		///</summary>
+		///<param name="FileName">Caminho, tanto faz se completo ou parial</param>
+		///<returns>Nome do arquivo sem todos os acessórios</returns>
 		class function ExtractFilenamePure(const FileName: string): string;
 		///<summary>
 		///Retorna o caminho do Homedir do usuário do processo.
@@ -306,23 +320,141 @@ type
 		///caso não exista usa-se o caminho apontado pelo shell
 		///</remarks>
 		class function GetUserHomeDir(): string;
+		///<summary>
+		///Retorna o caminho para a pasta "Meu documentos" do usuário chamador
+		///</summary>
+		///<remarks>
+		///Caso falhe retorna EmptytStr
+		///</remarks>
 		class function GetUserMyDocuments(): string;
+		///<summary>
+		///Calcula o tamanho do arquivo, caso o arquivo seja um diretório o cálculo será recursivo
+		///</summary>
+		///<param name="FileName">Objeto a ter seu tamanho calculado, pode ser diretório</param>
+		///<returns>Tamanho total de bytes usados pelo nome passado</returns>
 		class function GetFileSizeEx(const FileName: string): int64;
+		///<summary>
+		///Retorna nome de arquivo com a extensao default se esta não tiver sido especificada no proprio nome do arquivo
+		///Nenhuma critica é feita com o nome resultante.
+		///</summary>
+		///<param name="OriginalFileName">Nome original</param>
+		///<param name="DefaultExtension">Extensão desejada</param>
+		///<returns>Nome de arquivo baseado em OriginalFilename com a extensão desejada</returns>
+		///<remarks>
+		///Ver também:
+		///TFileHnd.ForceFileExtension
+		///</remarks>
 		class function MakeDefaultFileExtension(const OriginalFileName, DefaultExtension: string): string;
+		///<summary>
+		///Retorna o caminho do diretorio pai do arquivo sem a incoveniente "\" final.
+		///</summary>
+		///<param name="FileName">Nome do arquivo desejado.</param>
+		///<returns>Diretório pai sem barra final</returns>
 		class function ParentDir(const FileName: string): string; overload;
+		///<summary>
+		///Retorna o diretorio pai de um arquivo passado.
+		///Caso "Existing" o arquivo deve ser válido. Caso contrário o novo pai é calculado até que um válido seja encontrado, ou EmptyStr
+		///será retornada.
+		///</summary>
+		///<param name="FileName">Caminho completo do arquivo</param>
+		///<param name="Existing">Flag de prévia exitência</param>
+		///<returns>Caminho de acordo com a flag informada</returns>
 		class function ParentDir(const FileName: string; Existing: boolean): string; overload;
+		///<summary>
+		///Garante nome de caminho sem a barra final, exceto raiz com a flag ligada
+		///</summary>
+		///<param name="Path">Caminho original.</param>
+		///<param name="PreserveRoot">Se true mantem a barra final para caso de caminho raiz. Vale para unidade lógica e UNC's</param>
+		///<returns>Caminho passado sem barra caso possível</returns>
+		///<remarks>
+		///Valor do separador de caminho normalizado para a constante localizada em "SysUtils.PathDelim".
+		///</remarks>
 		class function SlashRem(const Path: string; PreserveRoot: boolean = False): string;
+		///<summary>
+		///Ensure a PathDelim at final of Path
+		///</summary>
+		///<param name="Path">Caminho de entrada</param>
+		///<returns>Caminho finalizado com PathDelim ao final</returns>
 		class function SlashAdd(const Path: string): string;
+		///<summary>
+		///Monta string com a versão do arquivo passado, para qq erro encontrado '0.0.0.0' será retornado
+		///</summary>
+		///<param name="FileName">Nome de arquivo de interesse. Caso string vazia seja passa o caminho de ParamStr(0) sera usado.</param>
+		///<returns>Versão do arquivo</returns>
 		class function VersionInfo(const FileName: string): string;
+		///<summary>
+		///Valida se o conjunto de caracteres que compoe o nome do arquivo pode ser gerado, isto é não viola o conjunto de
+		///caracteres invalidos representados por ContrainLevel.
+		///</summary>
+		///<param name="FileName">Arquivo a ser validado</param>
+		///<param name="ConstrainLevel">Nível de exigência</param>
+		///<returns>Nome do arquivo, com correções necessárias para atender as restrições</returns>
+		///<remarks>
+		///ConstrainLevel = 1, indica baixa critica, aceita espaco, acentos e ascii extendido
+		///ConstrainLevel = 2, indica media critica, aceita espaco e o ascii baixo ConstrainLevel diferente
+		///dos valores acima sera usado alta critica, invalidando todos os acima adcionados aos invalidos no linux
+		///</remarks>
 		class function IsValidFilename(const FileName: string; ConstrainLevel: Integer): boolean;
+		///<summary>
+		///Identifica se o arquivo passado pode ser escrito pelo thread em contexto
+		///</summary>
+		///<param name="FileName">Nome do objeto</param>
+		///<returns>True para o caso possível escrita</returns>
 		class function IsWritable(const FileName: string): boolean;
+		///<summary>
+		///Apaga o caminho passado e seus arquivos e sub-diretorios bem como.
+		///</summary>
+		///<param name="Path"></param>
+		///<returns>Valor do codigo de erro do sistema operacional ou 0 se sucesso.</returns>
+		///<remarks>
+		///Verifique se o diretorio corrente do aplicativo não pertence ao conjunto a ser apagado.
+		///</remarks>
 		class function RmDir(const Path: string): Integer;
+		///<summary>
+		///Calcula o nome do arquivo seguinte para a sequência na pasta destino dada por BaseFilename.
+		///Caso seja passsado BaseFilename já contendo um identificador de sequencia (n) este será desconsiderado, assim o nome
+		///gerado não será sequência(n+1).
+		///</summary>
+		///<param name="BaseFilename">Nome base</param>
+		///<returns>Nome de objeto único baseado no sequencial dado</returns>
 		class function NextFamilyFilename(const BaseFilename: string): string;
+		///<summary>
+		///Converte data/hora do windows para tipo TDateTime
+		///</summary>
+		///<param name="FTime">data hora formato de arquivo</param>
+		///<returns>data hora padrão </returns>
 		class function FileTimeToDateTime(FTime: TFileTime): TDateTime;
+		///<summary>
+		///Calcula as datas de criacao/acesso/escrita de um dado arquivo
+		///</summary>
+		///<param name="FileHandle">Handle do arquivo para coleta das datas</param>
+		///<param name="CreateDate"></param>
+		///<param name="LastAccessDate"></param>
+		///<param name="LastWriteDate"></param>
+		///<returns>Código de erro da operação</returns>
+		///<remarks>
+		///Notas : O arquivo deve ter a flag GENERIC_READ
+		///<BR>Exemplo:</BR>
+		///hf := CreateFile (PChar(FFilename), GENERIC_READ , 0, nil, OPEN_EXISTING,
+		///0, //FILE_ATTRIBUTE_NORMAL or FILE_FLAG_SEQUENTIAL_SCAN 0);
+		///</remarks>
 		class function FileTimeProperties(FileHandle: THandle; var CreateDate, LastAccessDate, LastWriteDate: TDateTime)
 			: Integer; overload;
+		///<summary>
+		///Calcula as datas de criacao/acesso/escrita de um dado arquivo
+		///</summary>
+		///<param name="FileName"></param>
+		///<param name="CreateDate"></param>
+		///<param name="LastAccessDate"></param>
+		///<param name="LastWriteDate"></param>
+		///<returns>Código de erro da operação</returns>
 		class function FileTimeProperties(const FileName: string; var CreateDate, LastAccessDate, LastWriteDate: TDateTime)
 			: Integer; overload;
+		///<summary>
+		///Retorna data de modificação de um dado arquivo
+		///</summary>
+		///<param name="FileName"></param>
+		///<returns>Data de modificação, -1 indica falha</returns>
 		class function FileTimeChangeTime(const FileName: string): TDateTime;
 
 	end;
@@ -1616,7 +1748,7 @@ type
 		Mask: TMask;
 	end;
 var
-	Param    : TEnumFileParam;
+	param    : TEnumFileParam;
 	DataParam: TLocalDataParam;
 	//.........................................................................................................
 	function LocalListFiles(const FileName: string; FileParam: TEnumFileParam): Integer;
@@ -1647,21 +1779,21 @@ begin
 	if GetIChar(Dir, Length(Dir)) = ':' then begin //Checa por raiz de unidade
 		Dir := Dir + PathDelim;
 	end;
-	Param := TEnumFileParam.Create;
+	param := TEnumFileParam.Create;
 	List.Clear;
 	DataParam.FList         := List;
 	DataParam.MatchAttribut := Attr;
 	DataParam.Mask          := TMask.Create(Mask);
-	Param.Data              := @DataParam;
+	param.Data              := @DataParam;
 	try
 		if IncSubDirs then begin
-			EnumFiles(Dir, Mask, Param, @LocalListFiles);
+			EnumFiles(Dir, Mask, param, @LocalListFiles);
 		end else begin
-			EnumFilesDir(Dir, Mask, Param, @LocalListFiles);
+			EnumFilesDir(Dir, Mask, param, @LocalListFiles);
 		end;
 	finally
 		DataParam.Mask.Free; //Libera mascara vinculada acima
-		Param.Free;
+		param.Free;
 	end;
 	{$TYPEDADDRESS ON} {$WARN UNSAFE_CODE ON}
 end;
@@ -2028,7 +2160,7 @@ function SpaceFree(const PathName: string): int64;
 }
 var
 	Drive                                                         : byte;
-	OS                                                            : OSVERSIONINFO;
+	os                                                            : OSVERSIONINFO;
 	TotalFree, TotalExisting                                      : int64;
 	SectorsPerCluster, BytesPerSector, FreeClusters, TotalClusters: cardinal;
 begin
@@ -2041,9 +2173,9 @@ begin
 		Result := _DiskFree(Drive);
 		{$ENDIF}
 	end else begin //Recurso via UNC
-		OS.dwOSVersionInfoSize := SizeOf(OSVERSIONINFO);
-		GetVersionEx(OS);
-		if (OS.dwMajorVersion = 4) and (OS.dwBuildNumber < 1000) and (OS.dwPlatformId = 1) then begin //Usar modo OSR1
+		os.dwOSVersionInfoSize := SizeOf(OSVERSIONINFO);
+		GetVersionEx(os);
+		if (os.dwMajorVersion = 4) and (os.dwBuildNumber < 1000) and (os.dwPlatformId = 1) then begin //Usar modo OSR1
 			if GetDiskFreeSpace(PChar(PathName), SectorsPerCluster, BytesPerSector, FreeClusters, TotalClusters) then begin
 				Result := (SectorsPerCluster * BytesPerSector * FreeClusters);
 			end else begin
@@ -2223,12 +2355,6 @@ begin
 end;
 
 class function TFileHnd.DeepExistingPath(const Path: string): string;
-///<summary>
-///Retorna o caminho mais profundo válido. Caso não exista nem mesmo o raiz do caminho passado o home_dir é retornado.
-///</summary>
-///<remarks>
-///
-///</remarks>
 begin
 	Result := Path;
 	while ((not DirectoryExists(Result) and (not IsRootDir(Result)))) do begin
@@ -2291,9 +2417,6 @@ begin
 end;
 
 class function TFileHnd.ExtractFilenamePure(const FileName: string): string;
-///<summary>
-///Extrai apenas o nome do arquivo desconsiderando inclusive a extensão do mesmo
-///</summary>
 var
 	i: Integer;
 begin
@@ -2323,11 +2446,6 @@ end;
 
 { -------------------------------------------------------------------------------------------------------------------------------- }
 class function TFileHnd.FileTimeProperties(FileHandle: THandle; var CreateDate, LastAccessDate, LastWriteDate: TDateTime): Integer;
-{ {
-  Calcula as datas de criacao/acesso/escrita de um dado arquivo Notas : O arquivo deve ter a flag GENERIC_READ
-  Exemplo :
-  hf := CreateFile (PChar(FFilename), GENERIC_READ , 0, nil, OPEN_EXISTING, 0, //FILE_ATTRIBUTE_NORMAL or FILE_FLAG_SEQUENTIAL_SCAN 0);
-}
 var
 	DCreate, DAccess, DWrite: TFileTime;
 begin
@@ -2350,14 +2468,12 @@ class function TFileHnd.FileTimeChangeTime(const FileName: string): TDateTime;
 var
 	Dummy: TDateTime;
 begin
-	FileTimeProperties(FileName, Dummy, Dummy, Result);
+	if (FileTimeProperties(FileName, Dummy, Dummy, Result) <> ERROR_SUCCESS) then
+		Result := -1;
 end;
 
 class function TFileHnd.FileTimeProperties(const FileName: string;
 	var CreateDate, LastAccessDate, LastWriteDate: TDateTime): Integer;
-{ {
-  Calcula as datas de criacao/acesso/escrita de um dado arquivo
-}
 var
 	SR                      : TSearchRec;
 	DCreate, DAccess, DWrite: TFileTime;
@@ -2400,8 +2516,6 @@ end;
 
 class function TFileHnd.FileTimeToDateTime(FTime: TFileTime): TDateTime;
 { {
-  Converte data/hora do windows para tipo TDateTime
-
   Revision: 10/8/2006 - Roger
 }
 var
@@ -2450,12 +2564,6 @@ end;
 
 { -------------------------------------------------------------------------------------------------------------------------------- }
 class procedure TFileHnd.ForceFilename(const FileName: string);
-{ {
-  Garante a existencia de um arquivo com o nome especificado.
-  Para o caso do arquivo não exisitir ele se´ra criado vazio, bem como a árvore de diretorios necessarios.
-
-  filename : nome do arquivo desejado.
-}
 var
 	ST: TFileStream;
 begin
@@ -2473,8 +2581,6 @@ end;
 { -------------------------------------------------------------------------------------------------------------------------------- }
 class function TFileHnd.GetFileSizeEx(const FileName: string): int64;
 { {
-  Calcula o tamanho do arquivo, caso o arquivo seja um diretório o cálculo será recursivo
-
   Revision: 3/6/2008 - roger
 }
 var
@@ -2528,12 +2634,6 @@ begin
 	end;
 end;
 
-///<summary>
-///Retorna o caminho para a pasta "Meu documentos do usuário chamador
-///</summary>
-///<remarks>
-///Caso falhe retorna EmptytStr
-///</remarks>
 class function TFileHnd.GetUserMyDocuments: string;
 var
 	Path: array [0 .. MAX_PATH] of char;
@@ -2547,13 +2647,6 @@ end;
 
 class function TFileHnd.IsValidFilename(const FileName: string; ConstrainLevel: Integer): boolean;
 { {
-  Valida se o conjunto de caracteres que compoe o nome do arquivo pode ser gerado, isto é não viola o conjunto de caracteres invalidos
-  representados por ContrainLevel.
-
-  ConstrainLevel = 1^, indica baixa critica, aceita espaco, acentos e ascii extendido
-  ConstrainLevel = 2 , indica media critica, aceita espaco e o ascii baixo
-  ConstrainLevel <> dos valores acima sera usado alta critica, invalidando todos os acima adcionados aos invalidos no linux
-
   Revision: 27/7/2005 - Roger
 }
 var
@@ -2591,10 +2684,6 @@ begin
 end;
 
 class function TFileHnd.IsWritable(const FileName: string): boolean;
-{ {
-  Identifica se o arquivo passado pode ser escrito pelo thread em contexto
-
-}
 var
 	FS: TFileStream;
 begin
@@ -2620,13 +2709,6 @@ begin
 end;
 
 class function TFileHnd.MakeDefaultFileExtension(const OriginalFileName, DefaultExtension: string): string;
-{ {
-  Retorna nome de arquivo com a extensao default se esta não tiver sido especificada no proprio nome do arquivo
-  Nenhuma critica é feita com o nome resultante.
-
-  Ver também:
-  TFileHnd.ForceFileExtension
-}
 var
 	Ext: string;
 begin
@@ -2641,15 +2723,9 @@ end;
 { -------------------------------------------------------------------------------------------------------------------------------- }
 class function TFileHnd.NextFamilyFilename(const BaseFilename: string): string;
 { {
-  Calcula o nome do arquivo seguinte para a sequência na pasta destino dada por BaseFilename.
-  Caso seja passsado BaseFilename já contendo um identificador de sequencia (n) este será desconsiderado, assim o nome
-  gerado não será sequência(n+1).
+  Revision - 11/3/2010 - roger Passou a funcionar para diretorios da mesma forma que para arquivos
 
-  Revision - 11/3/2010 - roger
-
-  Passou a funcionar para diretorios da mesma forma que para arquivos
-
-  Revision: 5/12/2005 - Roger
+  Revision: 5/12/2005 - Roger - original
 }
 var
 	TargetExt, Prefix: string;
@@ -2665,21 +2741,12 @@ begin
 end;
 
 class function TFileHnd.ParentDir(const FileName: string): string;
-{ {
-  Retorna o caminho do diretorio pai do arquivo sem a incoveniente "\" final.
-
-  filename : Nome do arquivo desejado.
-}
 begin
 	Result := SlashRem(ExtractFilePath(FileName));
 end;
 
 class function TFileHnd.ParentDir(const FileName: string; Existing: boolean): string;
 { {
-  Retorna o diretorio pai de um arquivo passado.
-  Caso "Existing" o arquivo deve ser válido. Caso contrário o novo pai é calculado até que um válido seja encontrado, ou EmptyStr
-  será retornada.
-
   Revision: 11/7/2006 - Roger
 }
 begin
@@ -2699,12 +2766,6 @@ end;
 
 class function TFileHnd.RmDir(const Path: string): Integer;
 { {
-  Apaga o caminho passado e seus arquivos e sub-diretorios bem como.
-
-  returns: Valor do codigo de erro do sistema operacional ou 0 se sucesso.
-
-  Nota: Verifique se o diretorio corrente do aplicativo não pertence ao conjunto a ser apagado.
-
   Revision: 26/9/2005 - Roger
 }
 	function LSRDeleteFile(const DirName: string; FileParam: TEnumFileParam): Integer;
@@ -2759,8 +2820,6 @@ end;
 
 class function TFileHnd.SlashAdd(const Path: string): string;
 { {
-  Ensure a PathDelim at final of Path
-
   Revision: 5/6/2008 - roger
 }
 begin
@@ -2775,21 +2834,14 @@ end;
 
 class function TFileHnd.SlashRem(const Path: string; PreserveRoot: boolean = False): string;
 { {
-  Path : Caminho original.
-
-  PreserveRootPath : Se true mantem a barra final para caso de caminho raiz. Vale para unidade lógica e UNC's
-
   Revision: 30/10/2006 - Roger
-
-  Valor do separador de caminho normalizado para a constante localizada em "SysUtils.PathDelim".
-
 }
 var
 	P: PChar;
 begin
 	{$WARN UNSAFE_CODE OFF}
 	P := AnsiLastChar(Path);
-	if (P = nil) or (P^ <> SysUtils.PathDelim) then begin
+	if (P = nil) or (P^ <> SysUtils.PathDelim) then begin //SysUtils.PathDelim agora definido como constante
 		Result := Path;
 	end else begin
 		Result := Copy(Path, 1, Length(Path) - 1);
@@ -2804,13 +2856,6 @@ end;
 
 { -------------------------------------------------------------------------------------------------------------------------------- }
 class function TFileHnd.VersionInfo(const FileName: string): string;
-{ {
-  Monta string com a versão do arquivo passado, para qq erro encontrado '0.0.0.0' será retornado
-
-  Filename - Nome de arquivo de interesse. Caso string vazia seja passa o caminho de ParamStr(0) sera usado.
-
-  Returns: Versão do arquivo
-}
 const
 	STR_DOT = '.';
 var
