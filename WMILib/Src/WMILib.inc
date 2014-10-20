@@ -9,6 +9,41 @@
 
 //************** START COMMON PART **************
 
+//****************************************************   RTTI  ********************************************************
+{$DEFINE RTTI_LEVEL2} //valores possiveis RTTI_LEVEL0, RTTI_LEVEL1 e RTTI_LEVEL2
+{$IFDEF RTTI_LEVEL2}
+	{$DEFINE RTTI_LEVEL1} //Setando nivel 2 implica em setar nivel 1(mais restrito)
+{$ENDIF}
+{$IFNDEF RTTI_LEVEL1}
+	{$DEFINE RTTI_LEVEL0} //Sem nível 1 implica sem RTTI alguma
+{$ENDIF}
+
+//Habilita total geração de RTTI para este código(habilitado apenas para casos necessários)
+{$IFDEF RTTI_LEVEL0}
+	//Desliga totalmente RTTI
+	{$TYPEINFO OFF}	//={$M-}
+	{$METHODINFO OFF}
+{$ELSE}
+	//Habilita RTTI base
+	{$IFDEF RTTI_LEVEL1}		
+		{$TYPEINFO ON}	//={$M+}
+	{$ENDIF}
+	//Habilita RTTI completa, tem como requisito o nivel 1(typeinfo on)
+	{$IFDEF RTTI_LEVEL2}
+		{$METHODINFO ON}
+	{$ENDIF}
+{$ENDIF}
+//****************************************************   RTTI  ********************************************************
+
+//************************************************  DESIGN/RUNTIME  ***************************************************
+{$DEFINE DESIGN} //Neste momento sempre teremos pacotes duais, ao menos {$YD} para a IDE realizar o browse dos simbolos nos pacotes de design
+{$IFDEF DESIGN}
+	{$DEFINITIONINFO ON} // =={$YD}
+{$ELSE}
+	{$DEFINITIONINFO OFF} // =={$Y+/-}
+{$ENDIF}
+//************************************************  DESIGN/RUNTIME  ***************************************************
+
 //Alinhamento de 64 bits ( para os novos processadores e os atuais )
 {$A8}
 
@@ -35,9 +70,6 @@
 {$WRITEABLECONST OFF}
 
 {$K+} // Smart callbacks ( Sem uso hoje )
-
- // == {$M-} Praticamente tudo deve ter acesso a RTTI no Delphi hoje
-{$TYPEINFO ON}
 
 {$N+} //N+ 80x87 instructions( obvio )
 
@@ -148,9 +180,11 @@
 {$WARN SYMBOL_DEPRECATED ON}
 {$WARN SYMBOL_LIBRARY ON}
 {$WARN SYMBOL_PLATFORM ON}
+{$WARN SYMBOL_EXPERIMENTAL ON}
 {$WARN UNIT_LIBRARY ON}
 {$WARN UNIT_PLATFORM ON}
 {$WARN UNIT_DEPRECATED ON}
+{$WARN UNIT_EXPERIMENTAL ON}
 {$WARN HRESULT_COMPAT ON}
 {$WARN HIDING_MEMBER ON}
 {$WARN HIDDEN_VIRTUAL ON}
@@ -183,15 +217,41 @@
 {$WARN FOR_LOOP_VAR_UNDEF ON}
 {$WARN UNIT_NAME_MISMATCH ON}
 {$WARN NO_CFG_FILE_FOUND ON}
-{$WARN MESSAGE_DIRECTIVE ON}
 {$WARN IMPLICIT_VARIANTS ON}
 {$WARN UNICODE_TO_LOCALE ON}
 {$WARN LOCALE_TO_UNICODE ON}
 {$WARN IMAGEBASE_MULTIPLE ON}
 {$WARN SUSPICIOUS_TYPECAST ON}
 {$WARN PRIVATE_PROPACCESSOR ON}
-{$WARN UNSAFE_TYPE OFF}
-{$WARN UNSAFE_CODE OFF}
-{$WARN UNSAFE_CAST OFF}
+{$WARN UNSAFE_TYPE ON}
+{$WARN UNSAFE_CODE ON}
+{$WARN UNSAFE_CAST ON}
+{$WARN OPTION_TRUNCATED ON}
+{$WARN WIDECHAR_REDUCED ON}
+{$WARN DUPLICATES_IGNORED ON}
+{$WARN UNIT_INIT_SEQ ON}
+{$WARN LOCAL_PINVOKE ON}
+{$WARN MESSAGE_DIRECTIVE ON}
+{$WARN TYPEINFO_IMPLICITLY_ADDED ON}
+{$WARN RLINK_WARNING ON}
+{$WARN IMPLICIT_STRING_CAST ON}
+{$WARN IMPLICIT_STRING_CAST_LOSS ON}
+{$WARN EXPLICIT_STRING_CAST ON}
+{$WARN EXPLICIT_STRING_CAST_LOSS ON}
+{$WARN CVT_WCHAR_TO_ACHAR ON}
+{$WARN CVT_NARROWING_STRING_LOST ON}
+{$WARN CVT_ACHAR_TO_WCHAR ON}
+{$WARN CVT_WIDENING_STRING_LOST ON}
+{$WARN XML_WHITESPACE_NOT_ALLOWED ON}
+{$WARN XML_UNKNOWN_ENTITY ON}
+{$WARN XML_INVALID_NAME_START ON}
+{$WARN XML_INVALID_NAME ON}
+{$WARN XML_EXPECTED_CHARACTER ON}
+{$WARN XML_CREF_NO_RESOLVE ON}
+{$WARN XML_NO_PARM ON}
+{$WARN XML_NO_MATCHING_PARM ON}
 
-
+{$IFDEF VER270} //Delphi XE6
+	{$WARN NON_PORTABLE_TYPECAST ON}
+	{$WARN IMMUTABLE_STRINGS ON}
+{$ENDIF}

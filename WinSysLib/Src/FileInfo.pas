@@ -65,33 +65,33 @@ type
 
 	TCustomFileVersionInfo = class(TComponent)
 	protected { private }
-		FComments:            string;
-		FCompanyName:         string;
-		FFileDate:            TDateTime;
-		FFileDescription:     string;
-		FFileFlags:           longint;
-		FFileFlagsMask:       longint;
-		FFileMajorVersion:    longint;
-		FFileMinorVersion:    longint;
-		FFileName:            string;
-		FFileOS:              longint;
-		FFileType:            longint;
-		FFileSubtype:         longint;
-		FFileVersion:         string;
-		FFileVersionFloat:    double;
-		FInternalName:        string;
-		FLanguageCount:       longint;
-		FLanguageName:        string;
-		FLegalCopyright:      string;
-		FLegalTrademark:      string;
-		FOriginalFilename:    string;
+		FComments           : string;
+		FCompanyName        : string;
+		FFileDate           : TDateTime;
+		FFileDescription    : string;
+		FFileFlags          : longint;
+		FFileFlagsMask      : longint;
+		FFileMajorVersion   : longint;
+		FFileMinorVersion   : longint;
+		FFileName           : string;
+		FFileOS             : longint;
+		FFileType           : longint;
+		FFileSubtype        : longint;
+		FFileVersion        : string;
+		FFileVersionFloat   : double;
+		FInternalName       : string;
+		FLanguageCount      : longint;
+		FLanguageName       : string;
+		FLegalCopyright     : string;
+		FLegalTrademark     : string;
+		FOriginalFilename   : string;
 		FProductMajorVersion: longint;
 		FProductMinorVersion: longint;
-		FProductName:         string;
-		FProductVersion:      string;
+		FProductName        : string;
+		FProductVersion     : string;
 		FProductVersionFloat: double;
-		FTranslationValue:    longint;
-		VInfoLoaded:          boolean;
+		FTranslationValue   : longint;
+		VInfoLoaded         : boolean;
 
 		function GetComments: string;
 		function GetCompanyName: string;
@@ -123,32 +123,32 @@ type
 		procedure SetFileName(const Value: string);
 	protected
 		{ properties }
-		property Comments:            string read GetComments;
-		property CompanyName:         string read GetCompanyName;
-		property FileDate:            TDateTime read GetFileDate;
-		property FileDescription:     string read GetFileDescription;
-		property FileFlags:           longint read GetFileFlags;
-		property FileFlagsMask:       longint read GetFileFlagsMask;
-		property FileMajorVersion:    longint read GetFileMajorVersion;
-		property FileMinorVersion:    longint read GetFileMinorVersion;
-		property FileName:            string read FFileName write SetFileName;
-		property FileOS:              longint read GetFileOS;
-		property FileType:            longint read GetFileType;
-		property FileSubtype:         longint read GetFileSubtype;
-		property FileVersion:         string read GetFileVersion;
-		property FileVersionFloat:    double read GetFileVersionFloat;
-		property InternalName:        string read GetInternalName;
-		property LanguageCount:       longint read GetLanguageCount;
-		property LanguageName:        string read GetLanguageName;
-		property LegalCopyright:      string read GetLegalCopyright;
-		property LegalTrademark:      string read GetLegalTrademark;
-		property OriginalFilename:    string read GetOriginalFilename;
-		property ProductName:         string read GetProductName;
+		property Comments           : string read GetComments;
+		property CompanyName        : string read GetCompanyName;
+		property FileDate           : TDateTime read GetFileDate;
+		property FileDescription    : string read GetFileDescription;
+		property FileFlags          : longint read GetFileFlags;
+		property FileFlagsMask      : longint read GetFileFlagsMask;
+		property FileMajorVersion   : longint read GetFileMajorVersion;
+		property FileMinorVersion   : longint read GetFileMinorVersion;
+		property FileName           : string read FFileName write SetFileName;
+		property FileOS             : longint read GetFileOS;
+		property FileType           : longint read GetFileType;
+		property FileSubtype        : longint read GetFileSubtype;
+		property FileVersion        : string read GetFileVersion;
+		property FileVersionFloat   : double read GetFileVersionFloat;
+		property InternalName       : string read GetInternalName;
+		property LanguageCount      : longint read GetLanguageCount;
+		property LanguageName       : string read GetLanguageName;
+		property LegalCopyright     : string read GetLegalCopyright;
+		property LegalTrademark     : string read GetLegalTrademark;
+		property OriginalFilename   : string read GetOriginalFilename;
+		property ProductName        : string read GetProductName;
 		property ProductMajorVersion: longint read GetProductMajorVersion;
 		property ProductMinorVersion: longint read GetProductMinorVersion;
-		property ProductVersion:      string read GetProductVersion;
+		property ProductVersion     : string read GetProductVersion;
 		property ProductVersionFloat: double read GetProductVersionFloat;
-		property TranslationValue:    longint read GetTranslationValue;
+		property TranslationValue   : longint read GetTranslationValue;
 	public
 		constructor Create(AOwner: TComponent); override;
 		destructor Destroy; override;
@@ -441,34 +441,33 @@ var
 	{$ELSE}
 	Handle: longint;
 	{$ENDIF}
-	Res:       boolean;
-	Size:      Integer;
-	Error:     longint;
-	Data:      Pointer;
-	Buffer:    Pointer;
-	ErrCode:   Integer;
-	Bytes:     Cardinal;
-	TempStr:   array [0 .. 259] of char;
-	LangBuff:  array [0 .. 259] of char;
-	BaseStr:   string;
-	InfoStr:   string;
-	Trans:     PVerTranslation;
-	TrSize:    Integer;
+	Res      : boolean;
+	Size     : Integer;
+	Error    : longint;
+	Data     : Pointer;
+	Buffer   : Pointer;
+	ErrCode  : Integer;
+	Bytes    : Cardinal;
+	TempStr  : array [0 .. 259] of char;
+	LangBuff : array [0 .. 259] of char;
+	BaseStr  : string;
+	InfoStr  : string;
+	Trans    : PVerTranslation;
+	TrSize   : Integer;
 	FixedInfo: TVSFixedFileInfo;
 
 	function MakeFloat(S: string): double;
 	var
-		Buff:  array [0 .. 5] of char;
-		I:     Integer;
+		Buff : array [0 .. 5] of char;
+		I    : Integer;
 		Count: Integer;
+		ForcedFS : TFormatSettings;
 	begin
 		{ TODO -oRoger -cLIB : Remover surgimento de excessao para esta rotina e melhorar robustez para range checking }
 		{$R-}
 		Count := 0;
 		FillChar(Buff, SizeOf(Buff), 0);
-		{ The file version string might be specified like }
-		{ 4.72.3105.0. Parse it down to just one decimal }
-		{ place and create the floating point version #. }
+		{ The file version string might be specified like 4.72.3105.0. Parse it down to just one decimal place and create the floating point version #. }
 		for I := 0 to Pred(Length(S)) do begin
 			if (S[I] = '.') then begin
 				///Modified by roger 03/10/2014 - sem localization agora
@@ -482,7 +481,9 @@ var
 				end;
 			end;
 		end;
-		Result := StrToFloat(Buff);
+		ForcedFS:= SysUtils.FormatSettings;
+		ForcedFS.DecimalSeparator:='.';
+		Result := StrToFloat(Buff, ForcedFS );
 		{$R+}
 	end;
 
@@ -500,8 +501,8 @@ begin
 		end;
 	end;
 	{ Allocate some memory and get version info block. }
-	Data := GetMemory(Size);
-	Res := GetFileVersionInfo(TempStr, Handle, Size, Data);
+	Data  := GetMemory(Size);
+	Res   := GetFileVersionInfo(TempStr, Handle, Size, Data);
 	Trans := nil;
 	try
 		if not Res then begin
@@ -516,7 +517,7 @@ begin
 			//RaiseStError(EStVersionInfoError, stscVerInfoFail);
 		end;
 		TrSize := Bytes;
-		Trans := GetMemory(TrSize);
+		Trans  := GetMemory(TrSize);
 		Move(Buffer^, Trans^, TrSize);
 		{$WARN UNSAFE_CAST OFF}
 		FTranslationValue := longint(Trans^);
@@ -524,7 +525,7 @@ begin
 		FLanguageCount := Bytes div SizeOf(TVerTranslation);
 		VerLanguageName(Trans^.Language, LangBuff, SizeOf(LangBuff));
 		FLanguageName := StrPas(LangBuff);
-		VInfoLoaded := True;
+		VInfoLoaded   := True;
 
 		{ Build a base string including the translation value. }
 		BaseStr := Format('StringFileInfo\%.4x%.4x\', [Trans^.Language, Trans^.CharSet]);
@@ -532,7 +533,7 @@ begin
 		{ User-defined string. Get the string and exit. }
 		if Key <> '' then begin
 			InfoStr := BaseStr + Key;
-			Res := VerQueryValue(Data, StrPCopy(TempStr, InfoStr), Buffer, Bytes);
+			Res     := VerQueryValue(Data, StrPCopy(TempStr, InfoStr), Buffer, Bytes);
 			if Res then begin
 				Result := StrPas(PChar(Buffer));
 				Exit;
@@ -554,22 +555,22 @@ begin
 		end;
 		Move(Buffer^, FixedInfo, Bytes);
 		with FixedInfo do begin
-			FFileMajorVersion := dwFileVersionMS;
-			FFileMinorVersion := dwFileVersionLS;
+			FFileMajorVersion    := dwFileVersionMS;
+			FFileMinorVersion    := dwFileVersionLS;
 			FProductMajorVersion := dwProductVersionMS;
 			FProductMinorVersion := dwProductVersionLS;
-			FFileFlagsMask := dwFileFlagsMask;
-			FFileFlags := dwFileFlags;
+			FFileFlagsMask       := dwFileFlagsMask;
+			FFileFlags           := dwFileFlags;
 			{ Note: Most files don't set the binary date. }
-			FFileDate := MakeLong(dwFileDateMS, dwFileDateLS);
-			FFileOS := dwFileOS;
-			FFileType := dwFileType;
+			FFileDate    := MakeLong(dwFileDateMS, dwFileDateLS);
+			FFileOS      := dwFileOS;
+			FFileType    := dwFileType;
 			FFileSubtype := dwFileSubtype;
 		end;
 
 		{ Comments }
 		InfoStr := BaseStr + 'Comments';
-		Res := VerQueryValue(Data, StrPCopy(TempStr, InfoStr), Buffer, Bytes);
+		Res     := VerQueryValue(Data, StrPCopy(TempStr, InfoStr), Buffer, Bytes);
 		if Res and (Bytes <> 0) then begin
 			FComments := StrPas(PChar(Buffer));
 		end else begin
@@ -577,7 +578,7 @@ begin
 		end;
 		{ CompanyName }
 		InfoStr := BaseStr + 'CompanyName';
-		Res := VerQueryValue(Data, StrPCopy(TempStr, InfoStr), Buffer, Bytes);
+		Res     := VerQueryValue(Data, StrPCopy(TempStr, InfoStr), Buffer, Bytes);
 		if Res and (Bytes <> 0) then begin
 			FCompanyName := StrPas(PChar(Buffer));
 		end else begin
@@ -586,7 +587,7 @@ begin
 
 		{ FileDescription }
 		InfoStr := BaseStr + 'FileDescription';
-		Res := VerQueryValue(Data, StrPCopy(TempStr, InfoStr), Buffer, Bytes);
+		Res     := VerQueryValue(Data, StrPCopy(TempStr, InfoStr), Buffer, Bytes);
 		if Res and (Bytes <> 0) then begin
 			FFileDescription := StrPas(PChar(Buffer));
 		end else begin
@@ -595,7 +596,7 @@ begin
 
 		{ FileVersion }
 		InfoStr := BaseStr + 'FileVersion';
-		Res := VerQueryValue(Data, StrPCopy(TempStr, InfoStr), Buffer, Bytes);
+		Res     := VerQueryValue(Data, StrPCopy(TempStr, InfoStr), Buffer, Bytes);
 		if Res and (Bytes <> 0) then begin
 			FFileVersion := StrPas(PChar(Buffer));
 			{ First try to convert the version number to a float as-is. }
@@ -603,20 +604,19 @@ begin
 			if ErrCode <> 0 then begin
 				{ Failed. Create the float with the local MakeFloat function. }
 				try
-					FFileVersionFloat := MakeFloat(StringReplace(FFileVersion, '.', TStrConv.FormatSettings.DecimalSeparator,
-						[rfReplaceAll]));
+					FFileVersionFloat := MakeFloat(StringReplace(FFileVersion,  ',', '.', [rfReplaceAll]));
 				except
 					FFileVersionFloat := 0;
 				end;
 			end;
 		end else begin
-			FFileVersion := EmptyStr;
+			FFileVersion      := EmptyStr;
 			FFileVersionFloat := 0;
 		end;
 
 		{ InternalName }
 		InfoStr := BaseStr + 'InternalName';
-		Res := VerQueryValue(Data, StrPCopy(TempStr, InfoStr), Buffer, Bytes);
+		Res     := VerQueryValue(Data, StrPCopy(TempStr, InfoStr), Buffer, Bytes);
 		if Res and (Bytes <> 0) then begin
 			FInternalName := StrPas(PChar(Buffer));
 		end else begin
@@ -625,7 +625,7 @@ begin
 
 		{ LegalCopyright }
 		InfoStr := BaseStr + 'LegalCopyright';
-		Res := VerQueryValue(Data, StrPCopy(TempStr, InfoStr), Buffer, Bytes);
+		Res     := VerQueryValue(Data, StrPCopy(TempStr, InfoStr), Buffer, Bytes);
 		if Res and (Bytes <> 0) then begin
 			FLegalCopyright := StrPas(PChar(Buffer));
 		end else begin
@@ -634,7 +634,7 @@ begin
 
 		{ LegalTrademark }
 		InfoStr := BaseStr + 'LegalTrademark';
-		Res := VerQueryValue(Data, StrPCopy(TempStr, InfoStr), Buffer, Bytes);
+		Res     := VerQueryValue(Data, StrPCopy(TempStr, InfoStr), Buffer, Bytes);
 		if Res and (Bytes <> 0) then begin
 			FLegalTrademark := StrPas(PChar(Buffer));
 		end else begin
@@ -643,7 +643,7 @@ begin
 
 		{ OriginalFilename }
 		InfoStr := BaseStr + 'OriginalFilename';
-		Res := VerQueryValue(Data, StrPCopy(TempStr, InfoStr), Buffer, Bytes);
+		Res     := VerQueryValue(Data, StrPCopy(TempStr, InfoStr), Buffer, Bytes);
 		if Res and (Bytes <> 0) then begin
 			FOriginalFilename := StrPas(PChar(Buffer));
 		end else begin
@@ -652,7 +652,7 @@ begin
 
 		{ ProductName }
 		InfoStr := BaseStr + 'ProductName';
-		Res := VerQueryValue(Data, StrPCopy(TempStr, InfoStr), Buffer, Bytes);
+		Res     := VerQueryValue(Data, StrPCopy(TempStr, InfoStr), Buffer, Bytes);
 		if Res and (Bytes <> 0) then begin
 			FProductName := StrPas(PChar(Buffer));
 		end else begin
@@ -661,7 +661,7 @@ begin
 
 		{ ProductVersion }
 		InfoStr := BaseStr + 'ProductVersion';
-		Res := VerQueryValue(Data, StrPCopy(TempStr, InfoStr), Buffer, Bytes);
+		Res     := VerQueryValue(Data, StrPCopy(TempStr, InfoStr), Buffer, Bytes);
 		if Res and (Bytes <> 0) then begin
 			FProductVersion := StrPas(PChar(Buffer));
 			{ First try to convert the product number to a float as-is. }
@@ -669,14 +669,13 @@ begin
 			if ErrCode <> 0 then begin
 				{ Failed. Create the float with the local MakeFloat function. }
 				try
-					FProductVersionFloat := MakeFloat(StringReplace(FProductVersion, '.', TStrConv.FormatSettings.DecimalSeparator,
-						[rfReplaceAll]));
+					FProductVersionFloat := MakeFloat(StringReplace(FProductVersion, '.' , '.', [rfReplaceAll]));
 				except
 					FProductVersionFloat := 0;
 				end;
 			end;
 		end else begin
-			FProductVersion := EmptyStr;
+			FProductVersion      := EmptyStr;
 			FProductVersionFloat := 0;
 		end;
 	finally
@@ -736,12 +735,12 @@ function FileVersionStrToNumberVersion(const StrVer: string): TNumberVersion;
 //----------------------------------------------------------------------------------------------------------------------
 var
 	I, ECode, Num: Integer;
-	S:             string;
+	S            : string;
 begin
 	Result.MajorVersionEx := 0;
 	Result.MinorVersionEx := 0;
-	for I := 0 to 3 do begin
-		S := Str_Pas.GetDelimitedSubStr('.', StrVer, I);
+	for I                 := 0 to 3 do begin
+		S                 := Str_Pas.GetDelimitedSubStr('.', StrVer, I);
 		Val(S, Num, ECode);
 		if ECode <> 0 then begin
 			case I of
@@ -848,12 +847,12 @@ end;
 class function TVersionInfo.Convert(const StrVersion: string): TNumberVersion;
 var
 	I, ECode, Num: Integer;
-	S:             string;
+	S            : string;
 begin
 	Result.MajorVersionEx := 0;
 	Result.MinorVersionEx := 0;
-	for I := 0 to 3 do begin
-		S := Str_Pas.GetDelimitedSubStr('.', StrVersion, I);
+	for I                 := 0 to 3 do begin
+		S                 := Str_Pas.GetDelimitedSubStr('.', StrVersion, I);
 		Val(S, Num, ECode);
 		if ECode <> 0 then begin
 			case I of

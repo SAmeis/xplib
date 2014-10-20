@@ -21,13 +21,12 @@
 //Habilita total geração de RTTI para este código(habilitado apenas para casos necessários)
 {$IFDEF RTTI_LEVEL0}
 	//Desliga totalmente RTTI
-	{$TYPEINFO OFF}
+	{$TYPEINFO OFF}	//={$M-}
 	{$METHODINFO OFF}
 {$ELSE}
 	//Habilita RTTI base
-	{$IFDEF RTTI_LEVEL1}
-		//={$M-}
-		{$TYPEINFO ON}
+	{$IFDEF RTTI_LEVEL1}		
+		{$TYPEINFO ON}	//={$M+}
 	{$ENDIF}
 	//Habilita RTTI completa, tem como requisito o nivel 1(typeinfo on)
 	{$IFDEF RTTI_LEVEL2}
@@ -36,6 +35,14 @@
 {$ENDIF}
 //****************************************************   RTTI  ********************************************************
 
+//************************************************  DESIGN/RUNTIME  ***************************************************
+{$DEFINE DESIGN} //Neste momento sempre teremos pacotes duais, ao menos {$YD} para a IDE realizar o browse dos simbolos nos pacotes de design
+{$IFDEF DESIGN}
+	{$DEFINITIONINFO ON} // =={$YD}
+{$ELSE}
+	{$DEFINITIONINFO OFF} // =={$Y+/-}
+{$ENDIF}
+//************************************************  DESIGN/RUNTIME  ***************************************************
 
 //Alinhamento de 64 bits ( para os novos processadores e os atuais )
 {$A8}

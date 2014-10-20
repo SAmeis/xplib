@@ -36,6 +36,14 @@
 {$ENDIF}
 //****************************************************   RTTI  ********************************************************
 
+//************************************************  DESIGN/RUNTIME  ***************************************************
+{$DEFINE DESIGN} //Neste momento sempre teremos pacotes duais, ao menos {$YD} para a IDE realizar o browse dos simbolos nos pacotes de design
+{$IFDEF DESIGN}
+	{$DEFINITIONINFO ON} // =={$YD}
+{$ELSE}
+	{$DEFINITIONINFO OFF} // =={$Y+/-}
+{$ENDIF}
+//************************************************  DESIGN/RUNTIME  ***************************************************
 
 //Alinhamento de 64 bits ( para os novos processadores e os atuais )
 {$A8}
