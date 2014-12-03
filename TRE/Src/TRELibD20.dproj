@@ -149,6 +149,18 @@
         <DCCReference Include="TREConfig.pas"/>
         <DCCReference Include="TREUtils.pas"/>
         <DCCReference Include="TREUsers.pas"/>
+        <None Include="ModelSupport_TRELibD20\default.txaPackage"/>
+        <None Include="ModelSupport_TRELibD20\default.txvpck"/>
+        <None Include="ModelSupport_TRELibD20\TREConfig\default.txvpck"/>
+        <None Include="ModelSupport_TRELibD20\TREConsts\default.txvpck"/>
+        <None Include="ModelSupport_TRELibD20\TREUtils\default.txvpck"/>
+        <None Include="ModelSupport_TRELibD20\TREUsers\default.txvpck"/>
+        <None Include="ModelSupport_TRELibD20\TREZones\default.txvpck"/>
+        <None Include="ModelSupport_TRELibD20\TREUsers\default.txaPackage"/>
+        <None Include="ModelSupport_TRELibD20\TREConfig\default.txaPackage"/>
+        <None Include="ModelSupport_TRELibD20\TREZones\default.txaPackage"/>
+        <None Include="ModelSupport_TRELibD20\TREZones\LogicalUnits.txvcls"/>
+        <None Include="ModelSupport_TRELibD20\TREUtils\default.txaPackage"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -204,7 +216,7 @@
                 </VersionInfoKeys>
                 <Excluded_Packages/>
             </Delphi.Personality>
-            <ModelSupport>False</ModelSupport>
+            <ModelSupport>True</ModelSupport>
             <Platforms>
                 <Platform value="Android">False</Platform>
                 <Platform value="iOSDevice">False</Platform>

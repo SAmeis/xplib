@@ -37,8 +37,10 @@ type
 	public
 		constructor Create; virtual;
 		function AddNetwork(ANet: TTRELocalNet): Integer;
+		///<label>Networks</label>
 		property Networks[index: Integer]: TTRELocalNet read GetNetworks;
 	published
+		///<label>LocalNetwork</label>
 		property LocalNetwork: TTRELocalNetworks read FLocalNetwork write FLocalNetwork;
 		property Description : string read FDescription write FDescription;
 	end;
@@ -69,10 +71,9 @@ type
 		procedure BeforeDestruction; override;
 		property Id: Integer read FId;
 		///<summary> Retorna ordem da zona dentro da central, caso haja uma definida para a mesma </summary>
-		///<remarks>
-		///Caso não haja central pai para esta zona -1 será retornado
-		///</remarks>
+		///<remarks>Caso não haja central pai para esta zona -1 será retornado</remarks>
 		property CentralIndex: Integer read GetCentralIndex;
+		///<label>Central</label>
 		property Central: TTRECentral read GetCentral write SetCentral;
 	end;
 
@@ -94,15 +95,16 @@ type
 		constructor Create(ACentralId: Integer); virtual;
 		property Id: Integer read FId;
 		property Count: Integer read GetCount;
+		///<label>Zones</label>
 		property Zones[index: Integer]: TTREZone read GetZones;
+		///<label>PrimaryZone</label>
 		property PrimaryZone: TTREZone read GetPrimaryZone write SetPrimaryZone;
 		///<summary> Adiciona uma zona a lista/central </summary>
 		///<remarks> Impede a repetição das zonas por instância </remarks>
 		function Add(Zone: TTREZone): Integer;
 		///<summary>Indica se a zona passada pertence ao conjunto(central)</summary>
 		///<remarks>
-		///Indica se a zona passada pertence ao conjunto(central)
-		///Informa-se o identificar da zona
+		///Indica se a zona passada pertence ao conjunto(central). Informa-se o identificar da zona
 		///</remarks>
 		function isPertinent(ZoneId: Integer): boolean;
 		function GetZoneById(ZoneId: Integer): TTREZone;
@@ -112,6 +114,7 @@ type
 
 	TTRECentralMapping = class(TTRESerializable)
 	private
+		///<link>aggregationByValue</link>
 		FCentralList: TTRECentralList;
 		function GetCentrals(index: Integer): TTRECentral;
 		procedure SetCentrals(index: Integer; const Value: TTRECentral);
@@ -122,9 +125,9 @@ type
 		procedure LoadXMLConfig(CentralMapping: IXMLNode);
 		procedure SaveXMLConfig(CentralMapping: IXMLNode);
 		function GetZoneById(ZoneId: Integer): TTREZone;
+		///<label>Centrals</label>
 		property Centrals[index: Integer]: TTRECentral read GetCentrals write SetCentrals;
 	published
-
 	end;
 
 implementation

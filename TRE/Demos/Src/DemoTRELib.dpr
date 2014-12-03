@@ -5,7 +5,8 @@ uses
   MainDemoForm in 'MainDemoForm.pas' {Form1},
   TREZones in '..\..\Src\TREZones.pas',
   RttiUtils in 'RttiUtils.pas',
-  MainDemoUtils in 'MainDemoUtils.pas';
+  MainDemoUtils in 'MainDemoUtils.pas',
+  XMLSerializer in 'XMLSerializer.pas';
 
 {$R *.res}
 

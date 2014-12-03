@@ -19,8 +19,6 @@ object Form1: TForm1
     Width = 97
     Height = 41
     Caption = 'btnLoadConfig'
-    DoubleBuffered = True
-    ParentDoubleBuffered = False
     TabOrder = 0
   end
   object btnSaveConfig: TBitBtn
@@ -29,8 +27,6 @@ object Form1: TForm1
     Width = 97
     Height = 41
     Caption = 'btnSaveConfig'
-    DoubleBuffered = True
-    ParentDoubleBuffered = False
     TabOrder = 1
     OnClick = btnSaveConfigClick
   end
@@ -76,8 +72,6 @@ object Form1: TForm1
     Width = 97
     Height = 41
     Caption = '&Test Serializer'
-    DoubleBuffered = True
-    ParentDoubleBuffered = False
     TabOrder = 3
     OnClick = btnTestSerialClick
   end
@@ -87,8 +81,6 @@ object Form1: TForm1
     Width = 97
     Height = 41
     Caption = '&Test DEH Serializer'
-    DoubleBuffered = True
-    ParentDoubleBuffered = False
     TabOrder = 4
     OnClick = btnDEHSerializerClick
   end
@@ -98,8 +90,6 @@ object Form1: TForm1
     Width = 97
     Height = 41
     Caption = '&Test DEH UNSerializer'
-    DoubleBuffered = True
-    ParentDoubleBuffered = False
     TabOrder = 5
     OnClick = btnDeHLUnserializeClick
   end

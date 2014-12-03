@@ -752,15 +752,15 @@ end;
 
 function SoapFloatToStr(const aValue : double) : string;
 begin
-    Result := StringReplace(FloatToStr(aValue), ThousandSeparator, '', [rfReplaceAll, rfIgnoreCase]);
-    Result := StringReplace(Result, DecimalSeparator, SoapDecimalSeparator, [rfReplaceAll, rfIgnoreCase]);
+	Result := StringReplace(FloatToStr(aValue), SysUtils.FormatSettings.ThousandSeparator, '', [rfReplaceAll, rfIgnoreCase]);
+	Result := StringReplace(Result, SysUtils.FormatSettings.DecimalSeparator, SoapDecimalSeparator, [rfReplaceAll, rfIgnoreCase]);
 end;
 
 function SoapStrToFloat(const aValue : string) : double;
 var
-    lStr : string;
+	lStr : string;
 begin
-    lStr   := StringReplace(aValue, SoapDecimalSeparator, DecimalSeparator, [rfReplaceAll, rfIgnoreCase]);
+	lStr   := StringReplace(aValue, SoapDecimalSeparator, SysUtils.FormatSettings.DecimalSeparator, [rfReplaceAll, rfIgnoreCase]);
     Result := StrToFloat(lStr);
 end;
 

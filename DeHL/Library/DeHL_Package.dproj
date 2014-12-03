@@ -1,0 +1,305 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{4BD2B7A5-48D7-4642-ACD6-903859D903F0}</ProjectGuid>
+        <MainSource>DeHL_Package.dpk</MainSource>
+        <ProjectVersion>15.4</ProjectVersion>
+        <Config Condition="'$(Config)'==''">Debug</Config>
+        <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
+        <Base>True</Base>
+        <AppType>Package</AppType>
+        <FrameworkType>None</FrameworkType>
+        <TargetedPlatforms>1</TargetedPlatforms>
+        <Platform Condition="'$(Platform)'==''">Win32</Platform>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Android' and '$(Base)'=='true') or '$(Base_Android)'!=''">
+        <Base_Android>true</Base_Android>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
+        <Base_Win32>true</Base_Win32>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win64' and '$(Base)'=='true') or '$(Base_Win64)'!=''">
+        <Base_Win64>true</Base_Win64>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
+        <Cfg_1>true</Cfg_1>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
+        <Cfg_2>true</Cfg_2>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_2)'=='true') or '$(Cfg_2_Win32)'!=''">
+        <Cfg_2_Win32>true</Cfg_2_Win32>
+        <CfgParent>Cfg_2</CfgParent>
+        <Cfg_2>true</Cfg_2>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base)'!=''">
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <VerInfo_MajorVer>0</VerInfo_MajorVer>
+        <VerInfo_MinorVer>8</VerInfo_MinorVer>
+        <VerInfo_Debug>true</VerInfo_Debug>
+        <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Winapi;$(DCC_Namespace)</DCC_Namespace>
+        <VerInfo_Release>4</VerInfo_Release>
+        <VerInfo_AutoGenVersion>true</VerInfo_AutoGenVersion>
+        <VerInfo_Build>649</VerInfo_Build>
+        <SanitizedProjectName>DeHL_Package</SanitizedProjectName>
+        <VerInfo_Keys>CompanyName=Ciobanu Alexandru;FileDescription=DeHL Package;FileVersion=0.8.4.649;InternalName=DeHL Package;LegalCopyright=Ciobanu Alexandru;LegalTrademarks=;OriginalFilename=DeHL_Packge.bpl;ProductName=DeHL Package;ProductVersion=0.8;Comments=</VerInfo_Keys>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <AppType>Package</AppType>
+        <FrameworkType>None</FrameworkType>
+        <DCC_Inlining>off</DCC_Inlining>
+        <DCC_UnitSearchPath>D:\Projects\HelperLib\Library\src;D:\Projects\HelperLib\Library\src\Collections;D:\Projects\HelperLib\Library\src\Date;D:\Projects\HelperLib\Library\src\Extensions;D:\Projects\HelperLib\Library\src\Math;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_DUPLICATE_CTOR_DTOR>false</DCC_DUPLICATE_CTOR_DTOR>
+        <DCC_ImageBase>00400000</DCC_ImageBase>
+        <DCC_DependencyCheckOutputName>..\bin\DeHL_Package.bpl</DCC_DependencyCheckOutputName>
+        <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+        <BRCC_OutputDir>..\bin\</BRCC_OutputDir>
+        <DCC_BplOutput>..\bin\</DCC_BplOutput>
+        <DCC_Platform>x86</DCC_Platform>
+        <GenPackage>true</GenPackage>
+        <DCC_S>false</DCC_S>
+        <DCC_N>false</DCC_N>
+        <GenDll>true</GenDll>
+        <DCC_DcpOutput>..\bin\</DCC_DcpOutput>
+        <DCC_E>false</DCC_E>
+        <DCC_DcuOutput>..\bin\</DCC_DcuOutput>
+        <DCC_K>false</DCC_K>
+        <DCC_F>false</DCC_F>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Android)'!=''">
+        <VerInfo_Keys>package=com.embarcadero.$(MSBuildProjectName);label=$(MSBuildProjectName);versionCode=1;versionName=1.0.0;persistent=False;restoreAnyVersion=False;installLocation=preferExternal;largeHeap=False;theme=TitleBar;hardwareAccelerated=true</VerInfo_Keys>
+        <VerInfo_IncludeVerInfo>false</VerInfo_IncludeVerInfo>
+        <BT_BuildType>Debug</BT_BuildType>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Win32)'!=''">
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <DCC_Namespace>System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Win64)'!=''">
+        <Icon_MainIcon>DeHL_Package_Icon.ico</Icon_MainIcon>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_1)'!=''">
+        <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+        <DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
+        <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+        <DCC_DebugInformation>0</DCC_DebugInformation>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2)'!=''">
+        <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
+        <VerInfo_MajorVer>1</VerInfo_MajorVer>
+        <VerInfo_Release>0</VerInfo_Release>
+        <VerInfo_MinorVer>0</VerInfo_MinorVer>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Build>0</VerInfo_Build>
+    </PropertyGroup>
+    <ItemGroup>
+        <DelphiCompile Include="$(MainSource)">
+            <MainSource>MainSource</MainSource>
+        </DelphiCompile>
+        <DCCReference Include="rtl.dcp"/>
+        <DCCReference Include="xmlrtl.dcp"/>
+        <DCCReference Include="src\DeHL.Base.pas"/>
+        <DCCReference Include="src\DeHL.Types.pas"/>
+        <DCCReference Include="src\DeHL.Exceptions.pas"/>
+        <DCCReference Include="src\DeHL.StrConsts.pas"/>
+        <DCCReference Include="src\Extensions\DeHL.Arrays.pas"/>
+        <DCCReference Include="src\Extensions\DeHL.Nullable.pas"/>
+        <DCCReference Include="src\Extensions\DeHL.References.pas"/>
+        <DCCReference Include="src\Extensions\DeHL.Box.pas"/>
+        <DCCReference Include="src\Extensions\DeHL.Singleton.pas"/>
+        <DCCReference Include="src\Extensions\DeHL.Strings.pas"/>
+        <DCCReference Include="src\Extensions\DeHL.Bytes.pas"/>
+        <DCCReference Include="src\Extensions\DeHL.Tuples.pas"/>
+        <DCCReference Include="src\Extensions\DeHL.WideCharSet.pas"/>
+        <DCCReference Include="src\Extensions\DeHL.Conversion.pas"/>
+        <DCCReference Include="src\Serialization\DeHL.Serialization.pas"/>
+        <DCCReference Include="src\Serialization\DeHL.Serialization.XML.pas"/>
+        <DCCReference Include="src\Serialization\DeHL.Serialization.Ini.pas"/>
+        <DCCReference Include="src\Serialization\DeHL.Serialization.Abstract.pas"/>
+        <DCCReference Include="src\Serialization\DeHL.Serialization.Binary.pas"/>
+        <DCCReference Include="src\Extensions\DeHL.Cloning.pas"/>
+        <DCCReference Include="src\Math\DeHL.Math.BigCardinal.pas"/>
+        <DCCReference Include="src\Math\DeHL.Math.BigInteger.pas"/>
+        <DCCReference Include="src\Math\DeHL.Math.BigDecimal.pas"/>
+        <DCCReference Include="src\Math\DeHL.Math.Half.pas"/>
+        <DCCReference Include="src\Math\DeHL.Math.Types.pas"/>
+        <DCCReference Include="src\Collections\DeHL.Collections.LinkedList.pas"/>
+        <DCCReference Include="src\Collections\DeHL.Collections.Stack.pas"/>
+        <DCCReference Include="src\Collections\DeHL.Collections.Queue.pas"/>
+        <DCCReference Include="src\Collections\DeHL.Collections.List.pas"/>
+        <DCCReference Include="src\Collections\DeHL.Collections.Dictionary.pas"/>
+        <DCCReference Include="src\Collections\DeHL.Collections.ArraySet.pas"/>
+        <DCCReference Include="src\Collections\DeHL.Collections.HashSet.pas"/>
+        <DCCReference Include="src\Collections\DeHL.Collections.MultiMap.pas"/>
+        <DCCReference Include="src\Collections\DeHL.Collections.SortedList.pas"/>
+        <DCCReference Include="src\Collections\DeHL.Collections.Bag.pas"/>
+        <DCCReference Include="src\Collections\DeHL.Collections.LinkedStack.pas"/>
+        <DCCReference Include="src\Collections\DeHL.Collections.LinkedQueue.pas"/>
+        <DCCReference Include="src\Collections\DeHL.Collections.SortedDictionary.pas"/>
+        <DCCReference Include="src\Collections\DeHL.Collections.SortedSet.pas"/>
+        <DCCReference Include="src\Collections\DeHL.Collections.SortedBag.pas"/>
+        <DCCReference Include="src\Collections\DeHL.Collections.SortedMultiMap.pas"/>
+        <DCCReference Include="src\Collections\DeHL.Collections.DoubleSortedMultiMap.pas"/>
+        <DCCReference Include="src\Collections\DeHL.Collections.Base.pas"/>
+        <DCCReference Include="src\Collections\DeHL.Collections.Interop.pas"/>
+        <DCCReference Include="src\Collections\DeHL.Collections.Abstract.pas"/>
+        <DCCReference Include="src\Collections\DeHL.Collections.DistinctMultiMap.pas"/>
+        <DCCReference Include="src\Collections\DeHL.Collections.SortedDistinctMultiMap.pas"/>
+        <DCCReference Include="src\Collections\DeHL.Collections.DoubleSortedDistinctMultiMap.pas"/>
+        <DCCReference Include="src\Collections\DeHL.Collections.PriorityQueue.pas"/>
+        <DCCReference Include="src\Collections\DeHL.Collections.BidiMap.pas"/>
+        <DCCReference Include="src\Collections\DeHL.Collections.SortedBidiMap.pas"/>
+        <DCCReference Include="src\Collections\DeHL.Collections.DoubleSortedBidiMap.pas"/>
+        <DCCReference Include="src\Collections\DeHL.Collections.Heap.pas"/>
+        <DCCReference Include="src\Extensions\DeHL.DateTime.pas"/>
+        <DCCReference Include="src\Math\DeHL.Math.Algorithms.pas"/>
+        <None Include="ModelSupport_DeHL_Package\default.txaPackage"/>
+        <None Include="ModelSupport_DeHL_Package\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Types\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Base\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Bytes\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Arrays\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\References\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\WideCharSet\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Box\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\DateTime\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Exceptions\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Strings\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Nullable\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Cloning\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\StrConsts\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Tuples\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Collections\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Collections\SortedSet\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Collections\LinkedStack\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Collections\ArraySet\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Collections\Abstract\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Collections\PriorityQueue\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Collections\BidiMap\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Collections\SortedList\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Collections\List\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Collections\Bag\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Collections\Interop\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Collections\MultiMap\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Collections\SortedMultiMap\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Collections\SortedBag\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Collections\Heap\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Collections\DoubleSortedDistinctMultiMap\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Collections\DistinctMultiMap\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Collections\LinkedQueue\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Collections\SortedDistinctMultiMap\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Collections\Stack\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Collections\SortedDictionary\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Collections\DoubleSortedMultiMap\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Collections\Dictionary\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Collections\Queue\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Collections\Base\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Collections\DoubleSortedBidiMap\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Collections\SortedBidiMap\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Collections\HashSet\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Collections\LinkedList\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Singleton\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Math\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Math\Algorithms\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Math\BigDecimal\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Math\BigCardinal\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Math\Types\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Math\Half\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Math\BigInteger\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Serialization\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Serialization\Abstract\default.txvpck"/>
+        <None Include="ModelSupport_DeHL_Package\DeHL\Conversion\default.txvpck"/>
+        <BuildConfiguration Include="Debug">
+            <Key>Cfg_2</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Base">
+            <Key>Base</Key>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Release">
+            <Key>Cfg_1</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+    </ItemGroup>
+    <Import Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')" Project="$(BDS)\Bin\CodeGear.Delphi.Targets"/>
+    <Import Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\9.0\UserTools.proj')" Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\9.0\UserTools.proj"/>
+    <ProjectExtensions>
+        <Borland.Personality>Delphi.Personality.12</Borland.Personality>
+        <Borland.ProjectType>Package</Borland.ProjectType>
+        <BorlandProject>
+            <Delphi.Personality>
+                <Source>
+                    <Source Name="MainSource">DeHL_Package.dpk</Source>
+                </Source>
+                <Parameters/>
+                <VersionInfo>
+                    <VersionInfo Name="IncludeVerInfo">True</VersionInfo>
+                    <VersionInfo Name="AutoIncBuild">True</VersionInfo>
+                    <VersionInfo Name="MajorVer">0</VersionInfo>
+                    <VersionInfo Name="MinorVer">8</VersionInfo>
+                    <VersionInfo Name="Release">4</VersionInfo>
+                    <VersionInfo Name="Build">649</VersionInfo>
+                    <VersionInfo Name="Debug">True</VersionInfo>
+                    <VersionInfo Name="PreRelease">False</VersionInfo>
+                    <VersionInfo Name="Special">False</VersionInfo>
+                    <VersionInfo Name="Private">False</VersionInfo>
+                    <VersionInfo Name="DLL">False</VersionInfo>
+                    <VersionInfo Name="Locale">1033</VersionInfo>
+                    <VersionInfo Name="CodePage">1252</VersionInfo>
+                </VersionInfo>
+                <VersionInfoKeys>
+                    <VersionInfoKeys Name="CompanyName">Ciobanu Alexandru</VersionInfoKeys>
+                    <VersionInfoKeys Name="FileDescription">DeHL Package</VersionInfoKeys>
+                    <VersionInfoKeys Name="FileVersion">0.8.4.649</VersionInfoKeys>
+                    <VersionInfoKeys Name="InternalName">DeHL Package</VersionInfoKeys>
+                    <VersionInfoKeys Name="LegalCopyright">Ciobanu Alexandru</VersionInfoKeys>
+                    <VersionInfoKeys Name="LegalTrademarks"/>
+                    <VersionInfoKeys Name="OriginalFilename">DeHL_Packge.bpl</VersionInfoKeys>
+                    <VersionInfoKeys Name="ProductName">DeHL Package</VersionInfoKeys>
+                    <VersionInfoKeys Name="ProductVersion">0.8</VersionInfoKeys>
+                    <VersionInfoKeys Name="Comments"/>
+                </VersionInfoKeys>
+                <Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\bcboffice2k200.bpl">Embarcadero C++Builder Office 2000 Servers Package</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\bcbofficexp200.bpl">Embarcadero C++Builder Office XP Servers Package</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k200.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp200.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                </Excluded_Packages>
+                <isVersionControl>
+                    <isVersionControl Name="isVersionControlID"/>
+                </isVersionControl>
+                <VersionControl>
+                    <VersionControl Name="VersionControlID"/>
+                </VersionControl>
+            </Delphi.Personality>
+            <ModelSupport>True</ModelSupport>
+            <Platforms>
+                <Platform value="Android">False</Platform>
+                <Platform value="iOSDevice">False</Platform>
+                <Platform value="iOSSimulator">False</Platform>
+                <Platform value="OSX32">False</Platform>
+                <Platform value="Win32">True</Platform>
+                <Platform value="Win64">False</Platform>
+            </Platforms>
+        </BorlandProject>
+        <ProjectFileVersion>12</ProjectFileVersion>
+    </ProjectExtensions>
+    <Import Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')" Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj"/>
+</Project>

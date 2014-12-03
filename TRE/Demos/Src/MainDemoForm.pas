@@ -10,7 +10,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, TREZones,
   Dialogs, StdCtrls, Buttons, TREConsts, TREUtils, TREConfig, ComCtrls, MainDemoUtils,
-  xmldom, XMLIntf, msxmldom, XMLDoc, JvgXMLSerializer, JvComponentBase, JvAppStorage, JvAppXMLStorage;
+  xmldom, XMLIntf, msxmldom, XMLDoc, JvgXMLSerializer, JvComponentBase, JvAppStorage, JvAppXMLStorage, XMLSerializer;
 
 type
 	TTRERegionalTest = class
@@ -43,13 +43,16 @@ var
 implementation
 
 uses
-  DeHL.Serialization.XML, Applog;
+  Applog;
 
 {$R *.dfm}
 
+type
+	TSerialHack = class( XMLSerializer.TXMLSerializer<TTRERegional> );
+
 procedure TForm1.btnDeHLUnserializeClick(Sender: TObject);
 var
-	serial : TXMLSerializer<TTRERegional>;
+	serial : TSerialHack;
 	dx : TXMLDocument;
 begin
 	if Assigned( Self.FRegional ) then

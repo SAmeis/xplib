@@ -1,149 +1,184 @@
-﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-		<PropertyGroup>
-			<ProjectGuid>{23E78F90-51D9-4391-92F6-A0AFD66FA2A6}</ProjectGuid>
-			<ProjectVersion>12.0</ProjectVersion>
-			<MainSource>DemoTRELib.dpr</MainSource>
-			<Config Condition="'$(Config)'==''">Debug</Config>
-			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
-			<Base>true</Base>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
-			<Cfg_1>true</Cfg_1>
-			<CfgParent>Base</CfgParent>
-			<Base>true</Base>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
-			<Cfg_2>true</Cfg_2>
-			<CfgParent>Base</CfgParent>
-			<Base>true</Base>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Base)'!=''">
-			<DCC_UnitSearchPath>C:\Sw\WorkDir\Testes\Delphi\DeHL\bin;C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src;C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Serialization;C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Collections;C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Math;C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Extensions;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
-			<DCC_RunTimeTypeInfo>true</DCC_RunTimeTypeInfo>
-			<DCC_Define>FULL_RTTI;$(DCC_Define)</DCC_Define>
-			<DCC_ExeOutput>..\Debug</DCC_ExeOutput>
-			<DCC_UnitAlias>WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;$(DCC_UnitAlias)</DCC_UnitAlias>
-			<DCC_BplOutput>..\Debug</DCC_BplOutput>
-			<DCC_DependencyCheckOutputName>..\Debug\DemoTRELib.exe</DCC_DependencyCheckOutputName>
-			<DCC_DcuOutput>..\Debug</DCC_DcuOutput>
-			<DCC_DcpOutput>..\Debug</DCC_DcpOutput>
-			<DCC_ImageBase>00400000</DCC_ImageBase>
-			<DCC_Platform>x86</DCC_Platform>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Cfg_1)'!=''">
-			<DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
-			<DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
-			<DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
-			<DCC_DebugInformation>false</DCC_DebugInformation>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Cfg_2)'!=''">
-			<DCC_Define>DEBUG;DEBU_ALL;OPLib;TRELib;DemoTRELib;$(DCC_Define)</DCC_Define>
-		</PropertyGroup>
-		<ItemGroup>
-			<DelphiCompile Include="DemoTRELib.dpr">
-				<MainSource>MainSource</MainSource>
-			</DelphiCompile>
-			<DCCReference Include="MainDemoForm.pas">
-				<Form>Form1</Form>
-			</DCCReference>
-			<DCCReference Include="..\..\Src\TREZones.pas"/>
-			<DCCReference Include="RttiUtils.pas"/>
-			<DCCReference Include="MainDemoUtils.pas"/>
-			<None Include="ModelSupport_DemoTRELib\default.txaPackage"/>
-			<None Include="ModelSupport_DemoTRELib\default.txvpck"/>
-			<None Include="ModelSupport_DemoTRELib\MainDemoForm\default.txvpck"/>
-			<None Include="ModelSupport_DemoTRELib\DemoTRELib\default.txvpck"/>
-			<None Include="ModelSupport_DemoTRELib\DeHL\Math\Types\default.txaPackage"/>
-			<None Include="ModelSupport_DemoTRELib\DeHL\Serialization\default.txaPackage"/>
-			<None Include="ModelSupport_DemoTRELib\DeHL\Math\Half\default.txaPackage"/>
-			<None Include="ModelSupport_DemoTRELib\DeHL\Math\BigCardinal\default.txaPackage"/>
-			<None Include="ModelSupport_DemoTRELib\DeHL\Math\default.txaPackage"/>
-			<None Include="ModelSupport_DemoTRELib\DeHL\default.txaPackage"/>
-			<None Include="ModelSupport_DemoTRELib\DeHL\Base\default.txaPackage"/>
-			<None Include="ModelSupport_DemoTRELib\DeHL\StrConsts\default.txaPackage"/>
-			<None Include="ModelSupport_DemoTRELib\DeHL\Math\Primes\default.txaPackage"/>
-			<None Include="ModelSupport_DemoTRELib\DeHL\Math\BigDecimal\default.txaPackage"/>
-			<None Include="ModelSupport_DemoTRELib\DeHL\Exceptions\default.txaPackage"/>
-			<None Include="ModelSupport_DemoTRELib\DeHL\Math\BigInteger\default.txaPackage"/>
-			<None Include="ModelSupport_DemoTRELib\DeHL\StrConsts\default.txvpck"/>
-			<None Include="ModelSupport_DemoTRELib\DeHL\Serialization\default.txvpck"/>
-			<None Include="ModelSupport_DemoTRELib\DeHL\Serialization\Binary\default.txaPackage"/>
-			<None Include="ModelSupport_DemoTRELib\DeHL\Serialization\Ini\default.txaPackage"/>
-			<None Include="ModelSupport_DemoTRELib\DeHL\Serialization\Abstract\default.txaPackage"/>
-			<None Include="ModelSupport_DemoTRELib\DeHL\Serialization\XML\default.txaPackage"/>
-			<None Include="ModelSupport_DemoTRELib\DeHL\Math\Types\default.txvpck"/>
-			<None Include="ModelSupport_DemoTRELib\DeHL\Math\Primes\default.txvpck"/>
-			<None Include="ModelSupport_DemoTRELib\DeHL\Math\Half\default.txvpck"/>
-			<None Include="ModelSupport_DemoTRELib\DeHL\Math\BigInteger\default.txvpck"/>
-			<None Include="ModelSupport_DemoTRELib\DeHL\Math\BigDecimal\default.txvpck"/>
-			<None Include="ModelSupport_DemoTRELib\DeHL\Math\BigCardinal\default.txvpck"/>
-			<None Include="ModelSupport_DemoTRELib\DeHL\Exceptions\default.txvpck"/>
-			<None Include="ModelSupport_DemoTRELib\DeHL\Base\default.txvpck"/>
-			<BuildConfiguration Include="Base">
-				<Key>Base</Key>
-			</BuildConfiguration>
-			<BuildConfiguration Include="Debug">
-				<Key>Cfg_2</Key>
-				<CfgParent>Base</CfgParent>
-			</BuildConfiguration>
-			<BuildConfiguration Include="Release">
-				<Key>Cfg_1</Key>
-				<CfgParent>Base</CfgParent>
-			</BuildConfiguration>
-		</ItemGroup>
-		<Import Project="$(BDS)\Bin\CodeGear.Delphi.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')"/>
-		<ProjectExtensions>
-			<Borland.Personality>Delphi.Personality.12</Borland.Personality>
-			<Borland.ProjectType/>
-			<BorlandProject>
-				<Delphi.Personality>
-					<Source>
-						<Source Name="MainSource">DemoTRELib.dpr</Source>
-					</Source>
-					<Parameters>
-						<Parameters Name="UseLauncher">False</Parameters>
-						<Parameters Name="LoadAllSymbols">True</Parameters>
-						<Parameters Name="LoadUnspecifiedSymbols">False</Parameters>
-						<Parameters Name="DebugSourceDirs">C:\Sw\WorkDir\Testes\Delphi\DeHL_0.8.4\src\Serialization\;C:\Sw\WorkDir\Testes\Delphi\DeHL_0.8.4\src\</Parameters>
-					</Parameters>
-					<VersionInfo>
-						<VersionInfo Name="IncludeVerInfo">False</VersionInfo>
-						<VersionInfo Name="AutoIncBuild">False</VersionInfo>
-						<VersionInfo Name="MajorVer">1</VersionInfo>
-						<VersionInfo Name="MinorVer">0</VersionInfo>
-						<VersionInfo Name="Release">0</VersionInfo>
-						<VersionInfo Name="Build">0</VersionInfo>
-						<VersionInfo Name="Debug">False</VersionInfo>
-						<VersionInfo Name="PreRelease">False</VersionInfo>
-						<VersionInfo Name="Special">False</VersionInfo>
-						<VersionInfo Name="Private">False</VersionInfo>
-						<VersionInfo Name="DLL">False</VersionInfo>
-						<VersionInfo Name="Locale">1046</VersionInfo>
-						<VersionInfo Name="CodePage">1252</VersionInfo>
-					</VersionInfo>
-					<VersionInfoKeys>
-						<VersionInfoKeys Name="CompanyName"/>
-						<VersionInfoKeys Name="FileDescription"/>
-						<VersionInfoKeys Name="FileVersion">1.0.0.0</VersionInfoKeys>
-						<VersionInfoKeys Name="InternalName"/>
-						<VersionInfoKeys Name="LegalCopyright"/>
-						<VersionInfoKeys Name="LegalTrademarks"/>
-						<VersionInfoKeys Name="OriginalFilename"/>
-						<VersionInfoKeys Name="ProductName"/>
-						<VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
-						<VersionInfoKeys Name="Comments"/>
-					</VersionInfoKeys>
-					<Excluded_Packages>
-						<Excluded_Packages Name="$(BDS)\bin\bcboffice2k140.bpl">Embarcadero C++Builder Office 2000 Servers Package</Excluded_Packages>
-						<Excluded_Packages Name="$(BDS)\bin\bcbofficexp140.bpl">Embarcadero C++Builder Office XP Servers Package</Excluded_Packages>
-						<Excluded_Packages Name="$(BDS)\bin\dcloffice2k140.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
-						<Excluded_Packages Name="$(BDS)\bin\dclofficexp140.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
-					</Excluded_Packages>
-				</Delphi.Personality>
-				<ModelSupport>True</ModelSupport>
-			</BorlandProject>
-			<ProjectFileVersion>12</ProjectFileVersion>
-		</ProjectExtensions>
-	</Project>
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{23E78F90-51D9-4391-92F6-A0AFD66FA2A6}</ProjectGuid>
+        <ProjectVersion>15.4</ProjectVersion>
+        <MainSource>DemoTRELib.dpr</MainSource>
+        <Config Condition="'$(Config)'==''">Debug</Config>
+        <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
+        <Base>True</Base>
+        <TargetedPlatforms>1</TargetedPlatforms>
+        <AppType>Application</AppType>
+        <FrameworkType>VCL</FrameworkType>
+        <Platform Condition="'$(Platform)'==''">Win32</Platform>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
+        <Base_Win32>true</Base_Win32>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win64' and '$(Base)'=='true') or '$(Base_Win64)'!=''">
+        <Base_Win64>true</Base_Win64>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
+        <Cfg_1>true</Cfg_1>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
+        <Cfg_2>true</Cfg_2>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_2)'=='true') or '$(Cfg_2_Win32)'!=''">
+        <Cfg_2_Win32>true</Cfg_2_Win32>
+        <CfgParent>Cfg_2</CfgParent>
+        <Cfg_2>true</Cfg_2>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base)'!=''">
+        <SanitizedProjectName>DemoTRELib</SanitizedProjectName>
+        <VerInfo_Locale>1046</VerInfo_Locale>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;Xml.Win;$(DCC_Namespace)</DCC_Namespace>
+        <DCC_UnitSearchPath>C:\Sw\WorkDir\Testes\Delphi\DeHL\bin;C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src;C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Serialization;C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Collections;C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Math;C:\Sw\WorkDir\Testes\Delphi\DeHL\Library\src\Extensions;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_RunTimeTypeInfo>true</DCC_RunTimeTypeInfo>
+        <DCC_Define>FULL_RTTI;$(DCC_Define)</DCC_Define>
+        <DCC_ExeOutput>..\Debug</DCC_ExeOutput>
+        <DCC_BplOutput>..\Debug</DCC_BplOutput>
+        <DCC_DependencyCheckOutputName>..\Debug\DemoTRELib.exe</DCC_DependencyCheckOutputName>
+        <DCC_DcuOutput>..\Debug</DCC_DcuOutput>
+        <DCC_DcpOutput>..\Debug</DCC_DcpOutput>
+        <DCC_ImageBase>00400000</DCC_ImageBase>
+        <DCC_Platform>x86</DCC_Platform>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Win32)'!=''">
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <Debugger_DebugSourcePath>C:\Sw\WorkDir\Testes\Delphi\DeHL_0.8.4\src\Serialization\;C:\Sw\WorkDir\Testes\Delphi\DeHL_0.8.4\src\;$(Debugger_DebugSourcePath)</Debugger_DebugSourcePath>
+        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+        <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
+        <Icon_MainIcon>DemoTRELib_Icon.ico</Icon_MainIcon>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Win64)'!=''">
+        <Icon_MainIcon>DemoTRELib_Icon.ico</Icon_MainIcon>
+        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_1)'!=''">
+        <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+        <DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
+        <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+        <DCC_DebugInformation>0</DCC_DebugInformation>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2)'!=''">
+        <DCC_Define>DEBUG;DEBU_ALL;OPLib;TRELib;DemoTRELib;$(DCC_Define)</DCC_Define>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <Manifest_File>None</Manifest_File>
+        <Icon_MainIcon>$(BDS)\bin\delphi_PROJECTICON.ico</Icon_MainIcon>
+    </PropertyGroup>
+    <ItemGroup>
+        <DelphiCompile Include="$(MainSource)">
+            <MainSource>MainSource</MainSource>
+        </DelphiCompile>
+        <DCCReference Include="MainDemoForm.pas">
+            <Form>Form1</Form>
+        </DCCReference>
+        <DCCReference Include="..\..\Src\TREZones.pas"/>
+        <DCCReference Include="RttiUtils.pas"/>
+        <DCCReference Include="MainDemoUtils.pas"/>
+        <DCCReference Include="XMLSerializer.pas"/>
+        <None Include="ModelSupport_DemoTRELib\default.txaPackage"/>
+        <None Include="ModelSupport_DemoTRELib\default.txvpck"/>
+        <None Include="ModelSupport_DemoTRELib\MainDemoForm\default.txvpck"/>
+        <None Include="ModelSupport_DemoTRELib\DemoTRELib\default.txvpck"/>
+        <None Include="ModelSupport_DemoTRELib\DeHL\default.txaPackage"/>
+        <None Include="ModelSupport_DemoTRELib\DeHL\StrConsts\default.txvpck"/>
+        <None Include="ModelSupport_DemoTRELib\DeHL\Serialization\default.txvpck"/>
+        <None Include="ModelSupport_DemoTRELib\DeHL\Math\Types\default.txvpck"/>
+        <None Include="ModelSupport_DemoTRELib\DeHL\Math\Primes\default.txvpck"/>
+        <None Include="ModelSupport_DemoTRELib\DeHL\Math\Half\default.txvpck"/>
+        <None Include="ModelSupport_DemoTRELib\DeHL\Math\BigInteger\default.txvpck"/>
+        <None Include="ModelSupport_DemoTRELib\DeHL\Math\BigDecimal\default.txvpck"/>
+        <None Include="ModelSupport_DemoTRELib\DeHL\Math\BigCardinal\default.txvpck"/>
+        <None Include="ModelSupport_DemoTRELib\DeHL\Exceptions\default.txvpck"/>
+        <None Include="ModelSupport_DemoTRELib\DeHL\Base\default.txvpck"/>
+        <None Include="ModelSupport_DemoTRELib\XMLSerializer\default.txvpck"/>
+        <None Include="ModelSupport_DemoTRELib\XMLSerializer\default.txaPackage"/>
+        <BuildConfiguration Include="Debug">
+            <Key>Cfg_2</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Base">
+            <Key>Base</Key>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Release">
+            <Key>Cfg_1</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+    </ItemGroup>
+    <Import Project="$(BDS)\Bin\CodeGear.Delphi.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')"/>
+    <ProjectExtensions>
+        <Borland.Personality>Delphi.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Delphi.Personality>
+                <Source>
+                    <Source Name="MainSource">DemoTRELib.dpr</Source>
+                </Source>
+                <Parameters>
+                    <Parameters Name="UseLauncher">False</Parameters>
+                    <Parameters Name="LoadAllSymbols">True</Parameters>
+                    <Parameters Name="LoadUnspecifiedSymbols">False</Parameters>
+                    <Parameters Name="DebugSourceDirs">C:\Sw\WorkDir\Testes\Delphi\DeHL_0.8.4\src\Serialization\;C:\Sw\WorkDir\Testes\Delphi\DeHL_0.8.4\src\</Parameters>
+                </Parameters>
+                <VersionInfo>
+                    <VersionInfo Name="IncludeVerInfo">False</VersionInfo>
+                    <VersionInfo Name="AutoIncBuild">False</VersionInfo>
+                    <VersionInfo Name="MajorVer">1</VersionInfo>
+                    <VersionInfo Name="MinorVer">0</VersionInfo>
+                    <VersionInfo Name="Release">0</VersionInfo>
+                    <VersionInfo Name="Build">0</VersionInfo>
+                    <VersionInfo Name="Debug">False</VersionInfo>
+                    <VersionInfo Name="PreRelease">False</VersionInfo>
+                    <VersionInfo Name="Special">False</VersionInfo>
+                    <VersionInfo Name="Private">False</VersionInfo>
+                    <VersionInfo Name="DLL">False</VersionInfo>
+                    <VersionInfo Name="Locale">1046</VersionInfo>
+                    <VersionInfo Name="CodePage">1252</VersionInfo>
+                </VersionInfo>
+                <VersionInfoKeys>
+                    <VersionInfoKeys Name="CompanyName"/>
+                    <VersionInfoKeys Name="FileDescription"/>
+                    <VersionInfoKeys Name="FileVersion">1.0.0.0</VersionInfoKeys>
+                    <VersionInfoKeys Name="InternalName"/>
+                    <VersionInfoKeys Name="LegalCopyright"/>
+                    <VersionInfoKeys Name="LegalTrademarks"/>
+                    <VersionInfoKeys Name="OriginalFilename"/>
+                    <VersionInfoKeys Name="ProductName"/>
+                    <VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
+                    <VersionInfoKeys Name="Comments"/>
+                </VersionInfoKeys>
+                <Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\bcboffice2k200.bpl">Embarcadero C++Builder Office 2000 Servers Package</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\bcbofficexp200.bpl">Embarcadero C++Builder Office XP Servers Package</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k200.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp200.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                </Excluded_Packages>
+            </Delphi.Personality>
+            <ModelSupport>True</ModelSupport>
+            <Platforms>
+                <Platform value="Win32">True</Platform>
+                <Platform value="Win64">False</Platform>
+            </Platforms>
+        </BorlandProject>
+        <ProjectFileVersion>12</ProjectFileVersion>
+    </ProjectExtensions>
+    <Import Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj" Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')"/>
+</Project>

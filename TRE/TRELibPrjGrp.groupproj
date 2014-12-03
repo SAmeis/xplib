@@ -1,60 +1,72 @@
-﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-		<PropertyGroup>
-			<ProjectGuid>{FDCF9C5D-31D0-438B-AEC5-8B43099E1AF7}</ProjectGuid>
-		</PropertyGroup>
-		<ItemGroup>
-			<Projects Include="..\OPLib\Src\OPLibD14.dproj">
-				<Dependencies/>
-			</Projects>
-			<Projects Include="Src\TRELib.dproj">
-				<Dependencies/>
-			</Projects>
-			<Projects Include="Demos\Src\DemoTRELib.dproj">
-				<Dependencies/>
-			</Projects>
-		</ItemGroup>
-		<ProjectExtensions>
-			<Borland.Personality>Default.Personality.12</Borland.Personality>
-			<Borland.ProjectType/>
-			<BorlandProject>
-				<Default.Personality/>
-			</BorlandProject>
-		</ProjectExtensions>
-		<Target Name="OPLibD14">
-			<MSBuild Projects="..\OPLib\Src\OPLibD14.dproj"/>
-		</Target>
-		<Target Name="OPLibD14:Clean">
-			<MSBuild Targets="Clean" Projects="..\OPLib\Src\OPLibD14.dproj"/>
-		</Target>
-		<Target Name="OPLibD14:Make">
-			<MSBuild Targets="Make" Projects="..\OPLib\Src\OPLibD14.dproj"/>
-		</Target>
-		<Target Name="TRELib">
-			<MSBuild Projects="Src\TRELib.dproj"/>
-		</Target>
-		<Target Name="TRELib:Clean">
-			<MSBuild Targets="Clean" Projects="Src\TRELib.dproj"/>
-		</Target>
-		<Target Name="TRELib:Make">
-			<MSBuild Targets="Make" Projects="Src\TRELib.dproj"/>
-		</Target>
-		<Target Name="DemoTRELib">
-			<MSBuild Projects="Demos\Src\DemoTRELib.dproj"/>
-		</Target>
-		<Target Name="DemoTRELib:Clean">
-			<MSBuild Targets="Clean" Projects="Demos\Src\DemoTRELib.dproj"/>
-		</Target>
-		<Target Name="DemoTRELib:Make">
-			<MSBuild Targets="Make" Projects="Demos\Src\DemoTRELib.dproj"/>
-		</Target>
-		<Target Name="Build">
-			<CallTarget Targets="OPLibD14;TRELib;DemoTRELib"/>
-		</Target>
-		<Target Name="Clean">
-			<CallTarget Targets="OPLibD14:Clean;TRELib:Clean;DemoTRELib:Clean"/>
-		</Target>
-		<Target Name="Make">
-			<CallTarget Targets="OPLibD14:Make;TRELib:Make;DemoTRELib:Make"/>
-		</Target>
-		<Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
-	</Project>
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{FDCF9C5D-31D0-438B-AEC5-8B43099E1AF7}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="..\OPLib\Src\OPLibD20.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\Externals\DeHL\trunk\Library\DeHL_Package.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Src\TRELibD20.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demos\Src\DemoTRELib.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="OPLibD20">
+        <MSBuild Projects="..\OPLib\Src\OPLibD20.dproj"/>
+    </Target>
+    <Target Name="OPLibD20:Clean">
+        <MSBuild Projects="..\OPLib\Src\OPLibD20.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="OPLibD20:Make">
+        <MSBuild Projects="..\OPLib\Src\OPLibD20.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DeHL_Package">
+        <MSBuild Projects="..\Externals\DeHL\trunk\Library\DeHL_Package.dproj"/>
+    </Target>
+    <Target Name="DeHL_Package:Clean">
+        <MSBuild Projects="..\Externals\DeHL\trunk\Library\DeHL_Package.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DeHL_Package:Make">
+        <MSBuild Projects="..\Externals\DeHL\trunk\Library\DeHL_Package.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TRELibD20">
+        <MSBuild Projects="Src\TRELibD20.dproj"/>
+    </Target>
+    <Target Name="TRELibD20:Clean">
+        <MSBuild Projects="Src\TRELibD20.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TRELibD20:Make">
+        <MSBuild Projects="Src\TRELibD20.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DemoTRELib">
+        <MSBuild Projects="Demos\Src\DemoTRELib.dproj"/>
+    </Target>
+    <Target Name="DemoTRELib:Clean">
+        <MSBuild Projects="Demos\Src\DemoTRELib.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DemoTRELib:Make">
+        <MSBuild Projects="Demos\Src\DemoTRELib.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="OPLibD20;DeHL_Package;TRELibD20;DemoTRELib"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="OPLibD20:Clean;DeHL_Package:Clean;TRELibD20:Clean;DemoTRELib:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="OPLibD20:Make;DeHL_Package:Make;TRELibD20:Make;DemoTRELib:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
