@@ -6,9 +6,6 @@
         <Projects Include="..\OPLib\Src\OPLibD20.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="..\Externals\DeHL\trunk\Library\DeHL_Package.dproj">
-            <Dependencies/>
-        </Projects>
         <Projects Include="Src\TRELibD20.dproj">
             <Dependencies/>
         </Projects>
@@ -32,15 +29,6 @@
     <Target Name="OPLibD20:Make">
         <MSBuild Projects="..\OPLib\Src\OPLibD20.dproj" Targets="Make"/>
     </Target>
-    <Target Name="DeHL_Package">
-        <MSBuild Projects="..\Externals\DeHL\trunk\Library\DeHL_Package.dproj"/>
-    </Target>
-    <Target Name="DeHL_Package:Clean">
-        <MSBuild Projects="..\Externals\DeHL\trunk\Library\DeHL_Package.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="DeHL_Package:Make">
-        <MSBuild Projects="..\Externals\DeHL\trunk\Library\DeHL_Package.dproj" Targets="Make"/>
-    </Target>
     <Target Name="TRELibD20">
         <MSBuild Projects="Src\TRELibD20.dproj"/>
     </Target>
@@ -60,13 +48,13 @@
         <MSBuild Projects="Demos\Src\DemoTRELib.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="OPLibD20;DeHL_Package;TRELibD20;DemoTRELib"/>
+        <CallTarget Targets="OPLibD20;TRELibD20;DemoTRELib"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="OPLibD20:Clean;DeHL_Package:Clean;TRELibD20:Clean;DemoTRELib:Clean"/>
+        <CallTarget Targets="OPLibD20:Clean;TRELibD20:Clean;DemoTRELib:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="OPLibD20:Make;DeHL_Package:Make;TRELibD20:Make;DemoTRELib:Make"/>
+        <CallTarget Targets="OPLibD20:Make;TRELibD20:Make;DemoTRELib:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
