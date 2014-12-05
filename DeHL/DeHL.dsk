@@ -1,48 +1,48 @@
 ﻿[Closed Files]
-File_0=TSourceModule,'C:\Sw\WorkDir\Pcks\DeHL\Library\src\Collections\DeHL.Collections.DoubleSortedMultiMap.pas',0,1,310,34,320,0,0,,
-File_1=TSourceModule,'C:\Sw\WorkDir\Pcks\DeHL\Library\src\Collections\DeHL.Collections.SortedMultiMap.pas',0,1,319,20,326,0,0,,
-File_2=TSourceModule,'C:\Sw\WorkDir\Pcks\DeHL\Library\src\Collections\DeHL.Collections.SortedSet.pas',0,1,1194,38,1140,0,0,,
-File_3=TSourceModule,'C:\Sw\WorkDir\Pcks\DeHL\Library\src\Collections\DeHL.Collections.SortedDictionary.pas',0,1,1407,22,1354,0,0,,
-File_4=TSourceModule,'C:\Sw\WorkDir\Pcks\DeHL\Library\src\Collections\DeHL.Collections.SortedBag.pas',0,1,196,24,206,0,0,,
+File_0=TSourceModule,'C:\Sw\WorkDir\Pcks\BDELib\Src\BDELib.inc',0,1,125,20,90,0,0,,
+File_1=TSourceModule,'C:\Sw\WorkDir\Pcks\DeHL\Library\src\Collections\DeHL.Collections.DoubleSortedBidiMap.pas',0,1,367,61,385,0,0,,
+File_2=TSourceModule,'C:\Sw\WorkDir\Pcks\DeHL\Library\src\Collections\DeHL.Collections.SortedBidiMap.pas',0,1,326,22,345,0,0,,
+File_3=TSourceModule,'C:\Sw\WorkDir\Pcks\DeHL\Library\src\Collections\DeHL.Collections.BidiMap.pas',0,1,176,46,194,0,0,,
+File_4=TSourceModule,'C:\Sw\WorkDir\Pcks\DeHL\Library\DeHL_Package.vrc',0,1,43,1,61,0,0,,
 File_5=TTogetherDocModule,'C:\Sw\WorkDir\Pcks\Externals\DeHL\trunk\Library\ModelSupport_DeHL_Package\default.txaPackage',0
 File_6=TSourceModule,'C:\Sw\WorkDir\Pcks\WinAdvLib\Src\WinAdvLib.inc',0,1,1,1,1,0,0,,
 File_7=TSourceModule,'C:\Sw\WorkDir\Pcks\WinAdvLib\Src\WinLSAUtils.pas',0,1,1,73,13,0,0,,
-File_8=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\DlgLib.inc',0,1,1,86,19,0,0,,
-File_9=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\About.pas',0,1,54,1,54,0,0,,
-File_10=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\Aboutdlg.pas',0,1,86,1,86,0,0,,
-File_11=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\Chgpwd.pas',0,1,205,1,205,0,0,,
-File_12=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\DlgLibDsgnRegister.pas',0,1,1,1,2,0,0,,
-File_13=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\DlgTxtEditor.pas',0,1,362,1,362,0,0,,
-File_14=TSourceModule,'C:\Sw\WorkDir\Pcks\DlgLib\Src\FileCDlg.pas',0,1,236,1,239,0,0,,
 
 [Modules]
-Module0=C:\Sw\WorkDir\Pcks\DeHL\Library\src\Collections\DeHL.Collections.DistinctMultiMap.pas
-Module1=C:\Sw\WorkDir\Pcks\DeHL\Library\src\Collections\DeHL.Collections.Abstract.pas
-Module2=C:\Sw\WorkDir\Pcks\DeHL\Library\src\Serialization\DeHL.Serialization.pas
-Count=3
+Module0=C:\Sw\WorkDir\Pcks\DeHL\Library\src\Math\DeHL.Math.BigCardinal.pas
+Module1=C:\Sw\WorkDir\Pcks\DeHL\Library\src\Extensions\DeHL.Conversion.pas
+Module2=c:\program files (x86)\embarcadero\studio\14.0\SOURCE\RTL\SYS\System.pas
+Module3=c:\program files (x86)\embarcadero\studio\14.0\SOURCE\RTL\SYS\System.SysUtils.pas
+Count=4
 EditWindowCount=1
 
-[C:\Sw\WorkDir\Pcks\DeHL\Library\src\Collections\DeHL.Collections.DistinctMultiMap.pas]
+[C:\Sw\WorkDir\Pcks\DeHL\Library\src\Math\DeHL.Math.BigCardinal.pas]
 ModuleType=TSourceModule
 FormState=0
 FormOnTop=0
 
-[C:\Sw\WorkDir\Pcks\DeHL\Library\src\Collections\DeHL.Collections.Abstract.pas]
+[C:\Sw\WorkDir\Pcks\DeHL\Library\src\Extensions\DeHL.Conversion.pas]
 ModuleType=TSourceModule
 FormState=0
 FormOnTop=0
 
-[C:\Sw\WorkDir\Pcks\DeHL\Library\src\Serialization\DeHL.Serialization.pas]
+[c:\program files (x86)\embarcadero\studio\14.0\SOURCE\RTL\SYS\System.pas]
+ModuleType=TSourceModule
+FormState=0
+FormOnTop=0
+
+[c:\program files (x86)\embarcadero\studio\14.0\SOURCE\RTL\SYS\System.SysUtils.pas]
 ModuleType=TSourceModule
 FormState=0
 FormOnTop=0
 
 [EditWindow0]
-ViewCount=3
-CurrentEditView=C:\Sw\WorkDir\Pcks\DeHL\Library\src\Collections\DeHL.Collections.DistinctMultiMap.pas
+ViewCount=4
+CurrentEditView=C:\Sw\WorkDir\Pcks\DeHL\Library\src\Math\DeHL.Math.BigCardinal.pas
 View0=0
 View1=1
 View2=2
+View3=3
 PercentageSizes=1
 Create=1
 Visible=1
@@ -74,36 +74,47 @@ BottomMiddelPanelData=0000080001000100000010000000477261706844726177696E67566965
 
 [View0]
 CustomEditViewType=TEditView
-Module=C:\Sw\WorkDir\Pcks\DeHL\Library\src\Collections\DeHL.Collections.DistinctMultiMap.pas
-CursorX=42
-CursorY=41
-TopLine=36
+Module=C:\Sw\WorkDir\Pcks\DeHL\Library\src\Extensions\DeHL.Conversion.pas
+CursorX=37
+CursorY=4104
+TopLine=4091
 LeftCol=1
 Elisions=
-Bookmarks=
-EditViewName=C:\Sw\WorkDir\Pcks\DeHL\Library\src\Collections\DeHL.Collections.DistinctMultiMap.pas
+Bookmarks={1,898,30}
+EditViewName=C:\Sw\WorkDir\Pcks\DeHL\Library\src\Extensions\DeHL.Conversion.pas
 
 [View1]
 CustomEditViewType=TEditView
-Module=C:\Sw\WorkDir\Pcks\DeHL\Library\src\Serialization\DeHL.Serialization.pas
-CursorX=3
-CursorY=821
-TopLine=1024
+Module=C:\Sw\WorkDir\Pcks\DeHL\Library\src\Math\DeHL.Math.BigCardinal.pas
+CursorX=39
+CursorY=766
+TopLine=748
 LeftCol=1
 Elisions=
-Bookmarks=
-EditViewName=C:\Sw\WorkDir\Pcks\DeHL\Library\src\Serialization\DeHL.Serialization.pas
+Bookmarks={1,667,64}
+EditViewName=C:\Sw\WorkDir\Pcks\DeHL\Library\src\Math\DeHL.Math.BigCardinal.pas
 
 [View2]
 CustomEditViewType=TEditView
-Module=C:\Sw\WorkDir\Pcks\DeHL\Library\src\Collections\DeHL.Collections.Abstract.pas
-CursorX=3
-CursorY=1982
-TopLine=1963
+Module=c:\program files (x86)\embarcadero\studio\14.0\SOURCE\RTL\SYS\System.SysUtils.pas
+CursorX=30
+CursorY=29620
+TopLine=29597
 LeftCol=1
-Elisions={{44,4},{164,15},{'Internal Types'}}{{401,4},{521,15},{'Internal Types'}}{{1002,4},{1022,15},{'Internal Types'}}
+Elisions=
+Bookmarks={1,214,1}{2,4407,9}
+EditViewName=c:\program files (x86)\embarcadero\studio\14.0\SOURCE\RTL\SYS\System.SysUtils.pas
+
+[View3]
+CustomEditViewType=TEditView
+Module=c:\program files (x86)\embarcadero\studio\14.0\SOURCE\RTL\SYS\System.pas
+CursorX=1
+CursorY=1218
+TopLine=1201
+LeftCol=1
+Elisions=
 Bookmarks=
-EditViewName=C:\Sw\WorkDir\Pcks\DeHL\Library\src\Collections\DeHL.Collections.Abstract.pas
+EditViewName=c:\program files (x86)\embarcadero\studio\14.0\SOURCE\RTL\SYS\System.pas
 
 [Watches]
 Count=0
@@ -118,11 +129,11 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=3312
+Width=5000
 Height=2269
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=3312
+ClientWidth=5000
 ClientHeight=2269
 TBDockHeight=213
 LRDockWidth=13599
@@ -233,11 +244,11 @@ State=0
 Left=0
 Top=0
 Width=1495
-Height=4194
+Height=8833
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1495
-ClientHeight=4194
+ClientHeight=8833
 TBDockHeight=4880
 LRDockWidth=5307
 Dockable=1
@@ -388,11 +399,11 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=3312
+Width=5000
 Height=2269
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=3312
+ClientWidth=5000
 ClientHeight=2269
 TBDockHeight=407
 LRDockWidth=4948
@@ -407,11 +418,11 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=3312
+Width=5000
 Height=2269
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=3312
+ClientWidth=5000
 ClientHeight=2269
 TBDockHeight=213
 LRDockWidth=7406
@@ -431,11 +442,11 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=3312
+Width=5000
 Height=2269
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=3312
+ClientWidth=5000
 ClientHeight=2269
 TBDockHeight=1537
 LRDockWidth=3479
@@ -450,11 +461,11 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=3312
+Width=5000
 Height=2269
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=3312
+ClientWidth=5000
 ClientHeight=2269
 TBDockHeight=2056
 LRDockWidth=3479
@@ -507,11 +518,11 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=3677
+Width=3333
 Height=2269
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=3677
+ClientWidth=3333
 ClientHeight=2269
 TBDockHeight=1157
 LRDockWidth=3677
@@ -535,11 +546,11 @@ State=0
 Left=0
 Top=0
 Width=1495
-Height=4194
+Height=8833
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1495
-ClientHeight=4194
+ClientHeight=8833
 TBDockHeight=4880
 LRDockWidth=7151
 Dockable=1
@@ -771,7 +782,7 @@ LRDockWidth=1495
 Dockable=1
 StayOnTop=0
 TabPosition=1
-ActiveTabID=ModelViewTool
+ActiveTabID=ProjectManager
 TabDockClients=ProjectManager,ModelViewTool,DataExplorerContainer,TFileExplorerForm
 
 [DockSite2]

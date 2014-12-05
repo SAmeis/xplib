@@ -662,8 +662,9 @@ var
 begin
 	if Source.VType = VarType then begin
 		{ Only continue if we're invoked for our data type }
-		{$TYPEDADDRESS OFF}
-		Big := TBigCardinalVarData(Source).BigCardinalPtr^;
+		{$TYPEDADDRESS OFF}   //!!!!Roger - tentativa sem sucesso
+		//Original Big := TBigCardinalVarData(Source).BigCardinalPtr^;
+		Big := TBigCardinalVarData((@Source)^).BigCardinalPtr^;
 		{$TYPEDADDRESS ON}
 
 		{ Initilize the destination }
@@ -733,8 +734,11 @@ begin
 	V.VType := varEmpty;
 
 	{ And dispose the value }
-	Dispose(TBigCardinalVarData(V).BigCardinalPtr);
-	TBigCardinalVarData(V).BigCardinalPtr := nil;
+	{$TYPEDADDRESS OFF}
+	Dispose(TBigCardinalVarData((@V)^).BigCardinalPtr); //Forçada de roger
+	//Linha acima original Dispose(TBigCardinalVarData(V^).BigCardinalPtr);
+	TBigCardinalVarData((@V)^).BigCardinalPtr := nil;
+	{$TYPEDADDRESS ON}
 end;
 
 procedure TBigCardinalVariantType.Compare(const Left, Right: TVarData; var Relationship: TVarCompareResult);
