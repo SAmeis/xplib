@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nodeSet version="1.0">
+  <view uin="itrob37sc93d4o24t_v">
+    <property name="$description" value="Package Global View" />
+    <property name="$metaclass" value="Class Diagram" />
+    <property name="$name" value="LogicalUnits" />
+    <property name="@stereotype" value="problem_domain" />
+    <reference referencedUin="delphi:e_class:src:TRELibD20:TREZones.TTRERegional">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="410,10,212,207" />
+      <reference referencedUin="delphi:e_field:src:TRELibD20:TREZones.TTRERegional.FLocalNetwork" />
+      <reference referencedUin="delphi:e_field:src:TRELibD20:TREZones.TTRERegional.FDescription" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREZones.TTRERegional.GetNetworks(System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREZones.TTRERegional.Create()" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREZones.TTRERegional.AddNetwork(TREZones.TTRELocalNet)" />
+      <reference referencedUin="delphi:e_property:src:TRELibD20:TREZones.TTRERegional.Networks[System.Integer]" />
+      <reference referencedUin="delphi:e_property:src:TRELibD20:TREZones.TTRERegional.LocalNetwork" />
+      <reference referencedUin="delphi:e_property:src:TRELibD20:TREZones.TTRERegional.Description" />
+      <reference referencedUin="delphi:l_ast:src:TRELibD20:TREZones.TTRERegional.Networks[System.Integer]">
+        <property name="sourceAnchor" value="516,217" />
+        <property name="targetAnchor" value="516,287" />
+        <property name="bendpoints" value="" />
+        <reference referencedUin="label:@label:delphi:l_ast:src:TRELibD20:TREZones.TTRERegional.Networks[System.Integer]">
+          <property name="bounds" value="519,244,56,16" />
+        </reference>
+      </reference>
+      <reference referencedUin="delphi:l_ast:src:TRELibD20:TREZones.TTRERegional.LocalNetwork">
+        <property name="sourceAnchor" value="410,113" />
+        <property name="targetAnchor" value="310,113" />
+        <property name="bendpoints" value="" />
+        <reference referencedUin="label:@label:delphi:l_ast:src:TRELibD20:TREZones.TTRERegional.LocalNetwork">
+          <property name="bounds" value="321,94,79,16" />
+        </reference>
+      </reference>
+      <reference referencedUin="delphi:l_ast:src:TRELibD20:TREZones.TTRERegional.FLocalNetwork">
+        <property name="$hidden" value="True" />
+        <property name="sourceAnchor" value="450,119" />
+        <property name="targetAnchor" value="310,119" />
+        <property name="bendpoints" value="" />
+      </reference>
+    </reference>
+    <reference referencedUin="delphi:e_class:src:TRELibD20:TREZones.TTRECentral">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="974,10,170,297" />
+      <reference referencedUin="delphi:e_field:src:TRELibD20:TREZones.TTRECentral.FId" />
+      <reference referencedUin="delphi:e_field:src:TRELibD20:TREZones.TTRECentral.FZoneList" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREZones.TTRECentral.GetZones(System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREZones.TTRECentral.GetPrimaryZone()" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREZones.TTRECentral.SetPrimaryZone(TREZones.TTREZone)" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREZones.TTRECentral.GetCount()" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREZones.TTRECentral.Create(System.Integer)" />
+      <reference referencedUin="delphi:e_property:src:TRELibD20:TREZones.TTRECentral.Id" />
+      <reference referencedUin="delphi:e_property:src:TRELibD20:TREZones.TTRECentral.Count" />
+      <reference referencedUin="delphi:e_property:src:TRELibD20:TREZones.TTRECentral.Zones[System.Integer]" />
+      <reference referencedUin="delphi:e_property:src:TRELibD20:TREZones.TTRECentral.PrimaryZone" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREZones.TTRECentral.Add(TREZones.TTREZone)" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREZones.TTRECentral.isPertinent(System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREZones.TTRECentral.GetZoneById(System.Integer)" />
+      <reference referencedUin="delphi:l_ast:src:TRELibD20:TREZones.TTRECentral.PrimaryZone">
+        <property name="sourceAnchor" value="974,217" />
+        <property name="targetAnchor" value="794,217" />
+        <property name="bendpoints" value="" />
+        <reference referencedUin="label:@label:delphi:l_ast:src:TRELibD20:TREZones.TTRECentral.PrimaryZone">
+          <property name="bounds" value="847,198,75,16" />
+        </reference>
+      </reference>
+      <reference referencedUin="delphi:l_ast:src:TRELibD20:TREZones.TTRECentral.Zones[System.Integer]">
+        <property name="sourceAnchor" value="974,158" />
+        <property name="targetAnchor" value="794,158" />
+        <property name="bendpoints" value="" />
+        <reference referencedUin="label:@label:delphi:l_ast:src:TRELibD20:TREZones.TTRECentral.Zones[System.Integer]">
+          <property name="bounds" value="865,139,39,16" />
+        </reference>
+      </reference>
+    </reference>
+    <reference referencedUin="delphi:e_class:src:TRELibD20:TREZones.TTRECentralMapping">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="972,397,174,237" />
+      <reference referencedUin="delphi:e_field:src:TRELibD20:TREZones.TTRECentralMapping.FCentralList" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREZones.TTRECentralMapping.GetCentrals(System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREZones.TTRECentralMapping.SetCentrals(System.Integer,TREZones.TTRECentral)" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREZones.TTRECentralMapping.Create()" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREZones.TTRECentralMapping.Destroy()" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREZones.TTRECentralMapping.LoadHardCoded()" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREZones.TTRECentralMapping.LoadXMLConfig(Xml.XMLIntf.IXMLNode)" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREZones.TTRECentralMapping.SaveXMLConfig(Xml.XMLIntf.IXMLNode)" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREZones.TTRECentralMapping.GetZoneById(System.Integer)" />
+      <reference referencedUin="delphi:e_property:src:TRELibD20:TREZones.TTRECentralMapping.Centrals[System.Integer]" />
+      <reference referencedUin="delphi:l_ast:src:TRELibD20:TREZones.TTRECentralMapping.Centrals[System.Integer]">
+        <property name="sourceAnchor" value="1059,397" />
+        <property name="targetAnchor" value="1059,307" />
+        <property name="bendpoints" value="" />
+        <reference referencedUin="label:@label:delphi:l_ast:src:TRELibD20:TREZones.TTRECentralMapping.Centrals[System.Integer]">
+          <property name="bounds" value="1062,344,51,16" />
+        </reference>
+      </reference>
+      <reference referencedUin="delphi:l_ast:src:TRELibD20:TREZones.TTRECentralMapping.FCentralList">
+        <property name="sourceAnchor" value="972,438" />
+        <property name="targetAnchor" value="928,438" />
+        <property name="bendpoints" value="" />
+        <property name="bounds_setted_by_user" value="True" />
+      </reference>
+    </reference>
+    <reference referencedUin="delphi:e_class:src:TRELibD20:TREZones.TTRELocalNet">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="448,287,136,192" />
+      <reference referencedUin="delphi:e_field:src:TRELibD20:TREZones.TTRELocalNet.FPrimaryZone" />
+      <reference referencedUin="delphi:e_field:src:TRELibD20:TREZones.TTRELocalNet.FUnits" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREZones.TTRELocalNet.GetSubNet()" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREZones.TTRELocalNet.Create(System.Integer)" />
+      <reference referencedUin="delphi:e_property:src:TRELibD20:TREZones.TTRELocalNet.SubNet" />
+      <reference referencedUin="delphi:e_property:src:TRELibD20:TREZones.TTRELocalNet.PrimaryZoneId" />
+      <reference referencedUin="delphi:e_property:src:TRELibD20:TREZones.TTRELocalNet.Units" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:TRELibD20:TREZones.TTREZone">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="643,40,151,237" />
+      <reference referencedUin="delphi:e_field:src:TRELibD20:TREZones.TTREZone.FId" />
+      <reference referencedUin="delphi:e_field:src:TRELibD20:TREZones.TTREZone.FCentral" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREZones.TTREZone.GetCentral()" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREZones.TTREZone.GetCentralIndex()" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREZones.TTREZone.SetCentral(TREZones.TTRECentral)" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREZones.TTREZone.Create(System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREZones.TTREZone.BeforeDestruction()" />
+      <reference referencedUin="delphi:e_property:src:TRELibD20:TREZones.TTREZone.Id" />
+      <reference referencedUin="delphi:e_property:src:TRELibD20:TREZones.TTREZone.CentralIndex" />
+      <reference referencedUin="delphi:e_property:src:TRELibD20:TREZones.TTREZone.Central" />
+      <reference referencedUin="delphi:l_ast:src:TRELibD20:TREZones.TTREZone.FCentral">
+        <property name="$hidden" value="True" />
+        <property name="sourceAnchor" value="833,87" />
+        <property name="targetAnchor" value="1053,87" />
+        <property name="bendpoints" value="" />
+      </reference>
+      <reference referencedUin="delphi:l_ast:src:TRELibD20:TREZones.TTREZone.Central">
+        <property name="sourceAnchor" value="794,99" />
+        <property name="targetAnchor" value="974,99" />
+        <property name="bendpoints" value="" />
+        <reference referencedUin="label:@label:delphi:l_ast:src:TRELibD20:TREZones.TTREZone.Central">
+          <property name="bounds" value="862,80,44,16" />
+        </reference>
+      </reference>
+    </reference>
+    <reference referencedUin="delphi:e_class:src:TRELibD20:TREZones.TTREStation">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="200,460,135,145" />
+      <property name="location_set_by_user" value="True" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREZones.TTREStation.GetIsPrimary()" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREZones.TTREStation.SetIsPrimary(System.Boolean)" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREZones.TTREStation.Create(TREZones.TTREUnits)" />
+      <reference referencedUin="delphi:e_property:src:TRELibD20:TREZones.TTREStation.isPrimary" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:TRELibD20:TREZones.TTRECentralList">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="660,420,268,36" />
+      <property name="location_set_by_user" value="True" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:TRELibD20:TREZones.TTRELocalNetworks">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="10,95,300,36" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:TRELibD20:TREUtils.TTREUtils">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="60,200,293,219" />
+      <property name="location_set_by_user" value="True" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREUtils.TTREUtils.CheckComputername(System.string)" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREUtils.TTREUtils.CheckComputername(System.string,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREUtils.TTREUtils.CheckComputername(System.string,TREConsts.TTREComputerType)" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREUtils.TTREUtils.CheckComputername(System.string,System.Integer,TREConsts.TTREComputerType)" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREUtils.TTREUtils.CheckComputername(System.string,System.Integer,System.Integer,TREConsts.TTREComputerType)" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREUtils.TTREUtils.GetComputerTypeByName(System.string)" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREUtils.TTREUtils.GetComputerZone(System.string)" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREUtils.TTREUtils.GetComputerId(System.string)" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREUtils.TTREUtils.GetNetworkType(System.string)" />
+      <reference referencedUin="delphi:e_method:src:TRELibD20:TREUtils.TTREUtils.GetZonePrimaryComputer(System.string)" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:TRELibD20:TREZones.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="572,598,0,0" />
+    </reference>
+  </view>
+</nodeSet>

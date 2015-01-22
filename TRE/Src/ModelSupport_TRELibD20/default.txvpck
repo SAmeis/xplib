@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nodeSet version="1.0">
+  <view uin="k0b99pddjso5t7ldm_v">
+    <property name="$defaultDiagram" value="true" />
+    <property name="$metaclass" value="Package Diagram" />
+    <property name="$name" value="default" />
+    <reference referencedUin="design:view:::zjhyd5qwsjj_v">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="10,10,119,151" />
+      <reference referencedUin="delphi:e_class:src:TRELibD20:TREConfig.TTREBaseConfig" />
+      <reference referencedUin="delphi:e_class:src:TRELibD20:TREConfig.@unitclass" />
+    </reference>
+    <reference referencedUin="design:view:::irldn0um2uo_v">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="148,1,139,196" />
+      <reference referencedUin="delphi:e_class:src:TRELibD20:TREConsts.TTRENetType" />
+      <reference referencedUin="delphi:e_class:src:TRELibD20:TREConsts.TTREComputerType" />
+      <reference referencedUin="delphi:e_class:src:TRELibD20:TREConsts.TTREAccessMedium" />
+      <reference referencedUin="delphi:e_class:src:TRELibD20:TREConsts.@unitclass" />
+    </reference>
+    <reference referencedUin="design:view:::1juflb515oj_v">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="39,180,104,151" />
+      <reference referencedUin="delphi:e_class:src:TRELibD20:TREUtils.@unitclass" />
+      <reference referencedUin="delphi:e_class:src:TRELibD20:TREUtils.TTREUtils" />
+    </reference>
+    <reference referencedUin="design:view:::tvmtrujfpoh_v">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="162,216,112,183" />
+      <reference referencedUin="delphi:e_class:src:TRELibD20:TREUsers.TUserScope" />
+      <reference referencedUin="delphi:e_class:src:TRELibD20:TREUsers.@unitclass" />
+      <reference referencedUin="delphi:e_class:src:TRELibD20:TREUsers.TTREZEUser" />
+    </reference>
+    <reference referencedUin="design:view:::pjeyht8e1ol_v">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="306,1,143,243" />
+      <reference referencedUin="delphi:e_class:src:TRELibD20:TREZones.TTRERegional" />
+      <reference referencedUin="delphi:e_class:src:TRELibD20:TREZones.@unitclass" />
+      <reference referencedUin="delphi:e_class:src:TRELibD20:TREZones.TTREStation" />
+      <reference referencedUin="delphi:e_class:src:TRELibD20:TREZones.TTREZone" />
+      <reference referencedUin="delphi:e_class:src:TRELibD20:TREZones.TTRECentralList" />
+      <reference referencedUin="delphi:e_class:src:TRELibD20:TREZones.TTRELocalNet" />
+      <reference referencedUin="delphi:e_class:src:TRELibD20:TREZones.TTRELocalNetworks" />
+      <reference referencedUin="delphi:e_class:src:TRELibD20:TREZones.TTRECentralMapping" />
+      <reference referencedUin="delphi:e_class:src:TRELibD20:TREZones.TTRECentral" />
+      <reference referencedUin="design:view:::itrob37sc93d4o24t_v" />
+    </reference>
+  </view>
+</nodeSet>

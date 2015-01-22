@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<TgConfig Version="3" SubLevelDisabled="False">
+  <Option Name="namespaceFolder.TREUsers" Type="System.String" Value="TREUsers" Category="General" IsBrowsable="False" />
+  <Option Name="namespaceFolder.TREConfig" Type="System.String" Value="TREConfig" Category="General" IsBrowsable="False" />
+  <Option Name="namespaceFolder.TREConsts" Type="System.String" Value="TREConsts" Category="General" IsBrowsable="False" />
+  <Option Name="namespaceFolder.TREUtils" Type="System.String" Value="TREUtils" Category="General" IsBrowsable="False" />
+  <Option Name="namespaceFolder.TREZones" Type="System.String" Value="TREZones" Category="General" IsBrowsable="False" />
+  <Option Name="SourceCode.AutoDependency" Type="System.Boolean" Value="True" Category="Source Code" />
+</TgConfig>
